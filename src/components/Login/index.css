@@ -1,0 +1,32 @@
+.login-page{
+    margin-top: 10%;
+    text-align: center;
+}
+
+.login-container {
+    display: inline-block;
+    width: 300px;
+}
+/* 
+.sign-up-container {
+} */
+
+.sign-up-text{
+    width: 50%;
+    float: left;
+    text-decoration: underline;
+}
+
+.sign-up-text:hover{
+    color: #1341ad;
+}
+
+.forgot-pass-text{
+    width: 50%;
+    float: right;
+    text-decoration: underline;
+}
+
+.forgot-pass-text:hover{
+    color: #1341ad;
+}
