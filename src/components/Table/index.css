@@ -8,13 +8,9 @@
    
 }
 body .p-datatable .p-datatable-tbody > tr > td {
+    width: 30px;
     background: none;
     border: none;
-    
-    border-right-color: rgb(200, 200, 200);
-    border-right-style: solid;
-    border-right-width: 1px;
-    border-right: none;
     padding: 13px;
     font-family: 'Courier New', Courier, monospace;
     color : black;  

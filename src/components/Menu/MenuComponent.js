@@ -3,7 +3,6 @@ import React from 'react';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 import 'primereact/resources/themes/nova-light/theme.css';
-
 import { PanelMenu } from 'primereact/panelmenu';
 import './index.css';
 
