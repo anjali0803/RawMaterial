@@ -20,13 +20,13 @@ class App extends React.Component {
         {this.props.userLogin ? (
           <div className="main-container">
             <MenuComponent />
-            <ViewComponent />\
+            <ViewComponent />
           </div>
         ) : (
-          <div className="main-container">
-            <LoginPage />
-          </div>
-        )}
+            <div className="main-container">
+              <LoginPage />
+            </div>
+          )}
       </div>
     );
   }
