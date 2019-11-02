@@ -1,15 +1,16 @@
 .p-panelmenu{
     width: 20%;
-    height: 85vh;
+    height: 95vh;
     float: left;
     padding: 6px;
+    background-color: aliceblue;
    
 }
 
 
-.p-component{
+/* .p-component{
     background-color: aliceblue;
-}
+} */
 
 /* .p-panelmenu .p-panelmenu-header > a{
     background-color: rgb(104, 113, 238) !important;

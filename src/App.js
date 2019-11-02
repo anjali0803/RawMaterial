@@ -37,10 +37,10 @@ class App extends React.Component {
             </div>
           )
         ) : (
-          <div className="main-container">
-            <LoginPage />
-          </div>
-        )}
+            <div className="main-container">
+              <LoginPage />
+            </div>
+          )}
       </div>
     );
   }
