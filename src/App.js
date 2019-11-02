@@ -8,20 +8,34 @@ import TopBanner from "./components/Banner/TopBanner.js";
 import MenuComponent from "./components/Menu/MenuComponent";
 import ViewComponent from "./components/View/ViewComponent";
 import LoginPage from "./components/Login/LoginPage";
+import PrivateRoute from "./components/PrivateRoute/PrivateRoute"
 import { connect } from "react-redux";
 import { setUserLogin, setUserName, setUserRole } from "./actions/loginActions";
 
 class App extends React.Component {
   render() {
-    console.log(this.props.userLogin);
+    const userName = this.props.userName;
+    const userLogin = this.props.userLogin;
+    const userRole = this.props.userRole;
     return (
       <div>
         <TopBanner />
-        {this.props.userLogin ? (
-          <div className="main-container">
-            <MenuComponent />
-            <ViewComponent />\
-          </div>
+        {userLogin ? (
+          userRole == "requested" ? (
+            <div className="main-container">
+              <p className="pending-access-msg">
+                Your approval request hasn't been approved yet,
+              </p>
+              <p className="pending-access-msg">
+                Please contact the admin.
+              </p>
+            </div>
+          ) : (
+            <div className="main-container">
+              <MenuComponent />
+              <ViewComponent />
+            </div>
+          )
         ) : (
           <div className="main-container">
             <LoginPage />

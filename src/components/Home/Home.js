@@ -11,7 +11,7 @@ import './index.css'
 class TopBanner extends React.Component {
     render() {
         return (
-            <div className="banner">
+            <div className="main-container">
                 <div className="banner-heading-primary">
                     AutoCIP
                 {this.props.userLogin ? <div className="sign-out-icon" onClick={() => this.props.setUserLogin(false)}>

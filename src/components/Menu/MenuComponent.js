@@ -3,39 +3,16 @@ import React from 'react';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 import 'primereact/resources/themes/nova-light/theme.css';
-
 import { PanelMenu } from 'primereact/panelmenu';
 import './index.css';
+import { connect } from "react-redux";
 
-
-
-
-export default class MenuComponent extends React.Component {
+class MenuComponent extends React.Component {
     render() {
 
 
         const items = [
-            {
-                label: 'Admin',
-                icon: 'pi pi-user',
-                items: [
-                    {
-                        label: 'Pending Requests',
-                        icon: 'pi pi-key',
-                        command: (event) => {
-                            window.location.hash = "/Admin/pending-requests";
-                        }
-
-                    },
-                    {
-                        label: 'All Users',
-                        icon: 'pi pi-fw pi-users',
-                        command: (event) => {
-                            window.location.hash = "/Admin/all-users";
-                        }
-                    }
-                ]
-            },
+            
             {
                 label: 'Inquiry',
                 icon: 'pi pi-fw pi-question',
@@ -137,13 +114,42 @@ export default class MenuComponent extends React.Component {
             }
         ]
 
+        this.props.userRole == 'admin' ? items.unshift({
+            label: 'Admin',
+            icon: 'pi pi-user',
+            items: [
+                {
+                    label: 'Pending Requests',
+                    icon: 'pi pi-key',
+                    command: (event) => {
+                        window.location.hash = "/Admin/pending-requests";
+                    }
 
-
+                },
+                {
+                    label: 'All Users',
+                    icon: 'pi pi-fw pi-users',
+                    command: (event) => {
+                        window.location.hash = "/Admin/all-users";
+                    }
+                }
+            ]
+            
+        }) : null
 
         return (
-            // <Tree value={data} />
             <PanelMenu model={items} />
-
         )
     }
 }
+
+const mapStateToProps = state => ({
+    userLogin: state.userLogin,
+    userName: state.userName,
+    userRole: state.userRole
+  });
+  
+  export default connect(
+    mapStateToProps
+  )(MenuComponent);
+  

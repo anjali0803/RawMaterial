@@ -40,6 +40,16 @@ class LoginPage extends React.Component {
 
   componentDidMount() {
     this.getUserInfo();
+    this.checkExistingLogin();
+  }
+
+  checkExistingLogin(){
+    const username = localStorage.getItem('username')
+    const password = localStorage.getItem('password')
+
+    this.setState({username: username, password: password},function(){this.handleSignIn()})
+    console.log(this.state.username)
+    console.log(this.state.password)
   }
 
   handleInputChange(e) {
@@ -55,16 +65,18 @@ class LoginPage extends React.Component {
     const username = this.state.username;
     const password = this.state.password;
     const role = this.state.role;
-
+    console.log("hi")
     const loginResponse = this.state.userList.find(function(item) {
       return item.username == username;
     });
 
-    // loggedIn ? this.setState({ loggedIn: true, role: loginResponse.role}) : null
     if (loginResponse) {
       this.props.setUserLogin(true);
       this.props.setUserName(loginResponse.username);
       this.props.setUserRole(loginResponse.role);
+
+      localStorage.setItem('username', this.state.username);
+      localStorage.setItem('password', this.state.password);
     }
   }
 
