@@ -1,10 +1,13 @@
 var initialState = {
   userLogin: false,
   userName: null,
-  userRole: null
+  userRole: null,
+  userList: [],
+  dataList: [],
+  colList: []
 };
 
-export default(state = initialState, action) => {
+export default (state = initialState, action) => {
   switch (action.type) {
     case 'SET_USER_LOGIN':
       return {
@@ -20,6 +23,21 @@ export default(state = initialState, action) => {
       return {
         ...state,
         userRole: action.userRole
+      };
+    case 'SET_USER_LIST':
+      return {
+        ...state,
+        userList: action.userList
+      };
+    case 'SET_DATA_LIST':
+      return {
+        ...state,
+        dataList: action.dataList
+      };
+    case 'SET_COL_LIST':
+      return {
+        ...state,
+        colList: action.colList
       };
     default:
       return state;

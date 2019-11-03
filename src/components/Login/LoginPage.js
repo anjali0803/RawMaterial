@@ -3,10 +3,12 @@ import React from "react";
 import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
 import "primereact/resources/themes/nova-light/theme.css";
+import { Redirect } from "react-router-dom";
 import {
   setUserLogin,
   setUserName,
-  setUserRole
+  setUserRole,
+  setUserList
 } from "../../actions/loginActions";
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
@@ -22,7 +24,6 @@ class LoginPage extends React.Component {
     this.state = {
       username: "",
       password: "",
-      userList: [],
       loggedIn: false,
       role: ""
     };
@@ -32,14 +33,43 @@ class LoginPage extends React.Component {
   }
 
   async getUserInfo() {
-    const userInfo = await axios.get(
-      "https://63bd0dc7-78bd-4f8b-a91d-c64e3441056a.mock.pstmn.io"
+
+  //   const userList= [
+  //     {
+  //         "username": "user1",
+  //         "password": "user1",
+  //         "role": "admin"
+  //     },
+  //     {
+  //         "username": "user2",
+  //         "password": "user2",
+  //         "role": "user"
+  //     },
+  //     {
+  //         "username": "user3",
+  //         "password": "user3",
+  //         "role": "requested"
+  //     }
+  // ]
+  // this.setState({ userList: userList });
+    const userList = await axios.get(
+      "http://5dbdaeb405a6f30014bcaee3.mockapi.io/users"
     );
-    this.setState({ userList: userInfo.data });
+    this.props.setUserList(userList.data)
   }
 
   componentDidMount() {
-    this.getUserInfo();
+    // this.getUserInfo();
+    const referer = this.props.location.state || '/'
+    const isAuthenticated = localStorage.getItem("isAuthenticated")
+    const username = localStorage.getItem("username")
+    const role = localStorage.getItem("role")
+    if (isAuthenticated == "true") {
+      this.props.setUserLogin(true)
+      this.props.setUserName(username)
+      this.props.setUserRole(role)
+      history.push(referer)
+    }
   }
 
   handleInputChange(e) {
@@ -51,75 +81,89 @@ class LoginPage extends React.Component {
     });
   }
 
-  handleSignIn() {
+  async handleSignIn() {
     const username = this.state.username;
     const password = this.state.password;
     const role = this.state.role;
-
-    const loginResponse = this.state.userList.find(function(item) {
+    const referer = this.props.location.state || '/'
+    const loginResponse = this.props.userList.find(function(item) {
       return item.username == username;
     });
 
-    // loggedIn ? this.setState({ loggedIn: true, role: loginResponse.role}) : null
     if (loginResponse) {
-      this.props.setUserLogin(true);
-      this.props.setUserName(loginResponse.username);
-      this.props.setUserRole(loginResponse.role);
+      await this.props.setUserLogin(true);
+      await this.props.setUserName(loginResponse.username);
+      await this.props.setUserRole(loginResponse.role);
+
+      localStorage.setItem("isAuthenticated","true")
+      localStorage.setItem("username", loginResponse.username);
+      localStorage.setItem("role", loginResponse.role);
+      history.push(referer)
+    }else{
+      await this.props.setUserLogin(false);
+      await this.props.setUserName(null);
+      await this.props.setUserRole(null);
+
+      localStorage.setItem("isAuthenticated","false")
+      localStorage.setItem("username", "");
+      localStorage.setItem("role", "");
     }
   }
 
   render() {
     return (
-      <div className="login-page">
-        <div className="login-container">
-          <div className="p-grid p-fluid">
-            <div className="p-col-12 p-md-4">
-              <div className="p-inputgroup">
-                <span className="p-inputgroup-addon">
-                  <i className="pi pi-user"></i>
-                </span>
-                <InputText
-                  placeholder="Username"
-                  name="username"
-                  type="text"
-                  onChange={this.handleInputChange}
-                  value={this.state.username}
-                />
+      <div className="main-container">
+        <div className="login-page">
+          <div className="login-container">
+            <div className="p-grid p-fluid">
+              <div className="p-col-12 p-md-4">
+                <div className="p-inputgroup">
+                  <span className="p-inputgroup-addon">
+                    <i className="pi pi-user"></i>
+                  </span>
+                  <InputText
+                    placeholder="Username"
+                    name="username"
+                    type="text"
+                    onChange={this.handleInputChange}
+                    value={this.state.username}
+                  />
+                </div>
+              </div>
+              <br />
+              <div className="p-col-12 p-md-4">
+                <div className="p-inputgroup">
+                  <span className="p-inputgroup-addon">
+                    <i className="pi pi-key"></i>
+                  </span>
+                  <InputText
+                    placeholder="Password"
+                    name="password"
+                    type="password"
+                    onChange={this.handleInputChange}
+                    value={this.state.password}
+                  />
+                </div>
               </div>
             </div>
             <br />
-            <div className="p-col-12 p-md-4">
-              <div className="p-inputgroup">
-                <span className="p-inputgroup-addon">
-                  <i className="pi pi-key"></i>
-                </span>
-                <InputText
-                  placeholder="Password"
-                  name="password"
-                  type="password"
-                  onChange={this.handleInputChange}
-                  value={this.state.password}
-                />
+            <div className="sign-in-container">
+              <Button label="Sign In" onClick={this.handleSignIn} />
+            </div>
+            <br />
+            <div className="sign-up-container">
+              <div
+                className="sign-up-text"
+                onClick={() => history.push("/sign-up")}
+              >
+                Sign Up
               </div>
-            </div>
-          </div>
-          <br />
-          <div className="sign-in-container">
-            <Button label="Sign In" onClick={this.handleSignIn} />
-          </div>
-          <br />
-          <div className="sign-up-container">
-            <div
-              className="sign-up-text"
-              onClick={() => history.push("/sign-up")}
-            >
-              Sign Up
-            </div>
-            <div
-              className="forgot-pass-text"
-              onClick={() => history.push("/forgot-password")}
-            >
-              Forgot Password
+              <div
+                className="forgot-pass-text"
+                onClick={() => history.push("/forgot-password")}
+              >
+                Forgot Password
+              </div>
             </div>
           </div>
         </div>
@@ -131,13 +175,15 @@ class LoginPage extends React.Component {
 const mapStateToProps = state => ({
   userLogin: state.userLogin,
   userName: state.userName,
-  userRole: state.userRole
+  userRole: state.userRole,
+  userList: state.userList
 });
 
 const mapDispatchToProps = dispatch => ({
   setUserLogin: userLogin => dispatch(setUserLogin(userLogin)),
   setUserName: userName => dispatch(setUserName(userName)),
-  setUserRole: userRole => dispatch(setUserRole(userRole))
+  setUserRole: userRole => dispatch(setUserRole(userRole)),
+  setUserList: userList => dispatch(setUserList(userList))
 });
 
 export default connect(
