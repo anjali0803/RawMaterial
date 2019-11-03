@@ -59,7 +59,7 @@ class LoginPage extends React.Component {
   }
 
   componentDidMount() {
-    // this.getUserInfo();
+    this.getUserInfo();
     const referer = this.props.location.state || '/'
     const isAuthenticated = localStorage.getItem("isAuthenticated")
     const username = localStorage.getItem("username")
@@ -82,6 +82,7 @@ class LoginPage extends React.Component {
   }
 
   async handleSignIn() {
+    console.log("userlist", this.props.userList)
     const username = this.state.username;
     const password = this.state.password;
     const role = this.state.role;
