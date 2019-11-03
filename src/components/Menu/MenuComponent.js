@@ -1,4 +1,5 @@
 import React from 'react';
+import Axios from 'axios'
 // import { PanelMenu } from 'primereact/panelmenu';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
@@ -7,7 +8,6 @@ import { PanelMenu } from 'primereact/panelmenu';
 import { connect } from 'react-redux';
 import { setDataList, setColList } from '../../actions/dataActions'
 import './index.css';
-import Axios from 'axios';
 
 class MenuComponent extends React.Component {
     async componentDidMount() {
@@ -30,27 +30,7 @@ class MenuComponent extends React.Component {
     }
     render() {
         const items = [
-            {
-                label: 'Admin',
-                icon: 'pi pi-user',
-                items: [
-                    {
-                        label: 'Pending Requests',
-                        icon: 'pi pi-key',
-                        command: (event) => {
-                            window.location.hash = "/Admin/pending-requests";
-                        }
-
-                    },
-                    {
-                        label: 'All Users',
-                        icon: 'pi pi-fw pi-users',
-                        command: (event) => {
-                            window.location.hash = "/Admin/all-users";
-                        }
-                    }
-                ]
-            },
+            
             {
                 label: 'Inquiry',
                 icon: 'pi pi-fw pi-question',
@@ -59,42 +39,42 @@ class MenuComponent extends React.Component {
                         label: 'Create new projects',
                         icon: 'pi pi-fw pi-plus',
                         command: (event) => {
-                            window.location.hash = "/Inquiry/create-new-projects";
+                            window.location.hash = "/inquiry/create-new-projects";
                         }
                     },
                     {
                         label: 'Projects assigned to me',
                         icon: 'pi pi-fw pi-align-left',
                         command: (event) => {
-                            window.location.hash = "/Inquiry/projects-assigned-to-me";
+                            window.location.hash = "/inquiry/projects-assigned-to-me";
                         }
                     },
                     {
                         label: 'Projects assigned by me',
                         icon: 'pi pi-fw pi-align-right',
                         command: (event) => {
-                            window.location.hash = "/Inquiry/projects-assigned-by-me";
+                            window.location.hash = "/inquiry/projects-assigned-by-me";
                         }
                     },
                     {
                         label: 'All ongoing projects',
                         icon: 'pi pi-fw pi-clone',
                         command: (event) => {
-                            window.location.hash = "/Inquiry/all-ongoing-projects";
+                            window.location.hash = "/inquiry/all-ongoing-projects";
                         }
                     },
                     {
                         label: 'Closed projects',
                         icon: 'pi pi-fw pi-copy',
                         command: (event) => {
-                            window.location.hash = "/Inquiry/closed-projects";
+                            window.location.hash = "/inquiry/closed-projects";
                         }
                     },
                     {
                         label: 'Archive projects',
                         icon: 'pi pi-fw pi-envelope',
                         command: (event) => {
-                            window.location.hash = "/Inquiry/archieve-projects";
+                            window.location.hash = "/inquiry/archieve-projects";
                         }
                     }
 
@@ -108,7 +88,7 @@ class MenuComponent extends React.Component {
                         label: 'Generate new reports',
                         icon: 'pi pi-fw pi-plus',
                         command: (event) => {
-                            window.location.hash = "/Report/generate-new-reports";
+                            window.location.hash = "/report/generate-new-reports";
                         }
 
                     },
@@ -116,7 +96,7 @@ class MenuComponent extends React.Component {
                         label: 'past reports',
                         icon: 'pi pi-fw pi-minus',
                         command: (event) => {
-                            window.location.hash = "/Report/past-reports";
+                            window.location.hash = "/report/past-reports";
                         }
 
                     }
@@ -151,25 +131,50 @@ class MenuComponent extends React.Component {
 
             }
         ]
-        return (
-            // <Tree value={data} />
-            <PanelMenu model={items} />
 
+        this.props.userRole == 'admin' ? items.unshift({
+            label: 'Admin',
+            icon: 'pi pi-user',
+            items: [
+                {
+                    label: 'Pending Requests',
+                    icon: 'pi pi-key',
+                    command: (event) => {
+                        window.location.hash = "/admin/pending-requests";
+                    }
+
+                },
+                {
+                    label: 'All Users',
+                    icon: 'pi pi-fw pi-users',
+                    command: (event) => {
+                        window.location.hash = "/admin/all-users";
+                    }
+                }
+            ]
+            
+        }) : null
+
+        return (
+            <PanelMenu model={items} />
         )
     }
 }
 
 const mapStateToProps = state => ({
+    userLogin: state.userLogin,
+    userName: state.userName,
+    userRole: state.userRole,
     dataList: state.dataList,
     colList: state.colList
-});
+  });
 
-const mapDispatchToProps = dispatch => ({
+  const mapDispatchToProps = dispatch => ({
     setDataList: dataList => dispatch(setDataList(dataList)),
     setColList: colList => dispatch(setColList(colList))
 });
-
+  
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(MenuComponent);
+  )(MenuComponent);

@@ -39,3 +39,9 @@
   .copyright-link.active {
       background-color: none;
   }
+
+  .sign-out-icon {
+      float: right;
+      margin-top: 10px;
+      margin-right: 20px;
+  }
