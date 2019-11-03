@@ -33,7 +33,7 @@ class LoginPage extends React.Component {
 
   async getUserInfo() {
     const userInfo = await axios.get(
-      "https://63bd0dc7-78bd-4f8b-a91d-c64e3441056a.mock.pstmn.io"
+      "http://5dbdaeb405a6f30014bcaee3.mockapi.io/users"
     );
     this.setState({ userList: userInfo.data });
   }
@@ -56,7 +56,7 @@ class LoginPage extends React.Component {
     const password = this.state.password;
     const role = this.state.role;
 
-    const loginResponse = this.state.userList.find(function(item) {
+    const loginResponse = this.state.userList.find(function (item) {
       return item.username == username;
     });
 

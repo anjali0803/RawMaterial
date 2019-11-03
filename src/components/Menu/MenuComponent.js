@@ -4,15 +4,31 @@ import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 import 'primereact/resources/themes/nova-light/theme.css';
 import { PanelMenu } from 'primereact/panelmenu';
+import { connect } from 'react-redux';
+import { setDataList, setColList } from '../../actions/dataActions'
 import './index.css';
+import Axios from 'axios';
 
+class MenuComponent extends React.Component {
+    async componentDidMount() {
+        let data;
+        data = await Axios.get('https://d8226649-f8f5-4bb3-b4ac-b403b5ff19f5.mock.pstmn.io/project-server/get-projects');
+        data = data.data;
+        this.props.setDataList(data);
 
-
-
-export default class MenuComponent extends React.Component {
+        const colList = [
+            { field: 'ProjectID', header: 'Project Id' },
+            { field: 'Title', header: 'Title' },
+            { field: 'Customer', header: 'Customer' },
+            { field: 'Type', header: 'Type' },
+            { field: 'AssignedDate', header: 'Assigned Date' },
+            { field: 'Status', header: 'Status' },
+            { field: 'AssignedTo', header: 'Assigned To' },
+            { field: 'createdBy', header: 'Created By' }
+        ]
+        this.props.setColList(colList);
+    }
     render() {
-
-
         const items = [
             {
                 label: 'Admin',
@@ -135,10 +151,6 @@ export default class MenuComponent extends React.Component {
 
             }
         ]
-
-
-
-
         return (
             // <Tree value={data} />
             <PanelMenu model={items} />
@@ -146,3 +158,18 @@ export default class MenuComponent extends React.Component {
         )
     }
 }
+
+const mapStateToProps = state => ({
+    dataList: state.dataList,
+    colList: state.colList
+});
+
+const mapDispatchToProps = dispatch => ({
+    setDataList: dataList => dispatch(setDataList(dataList)),
+    setColList: colList => dispatch(setColList(colList))
+});
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(MenuComponent);

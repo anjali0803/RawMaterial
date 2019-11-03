@@ -8,7 +8,6 @@ import './index.css';
 
 
 export default class TableComponent extends React.Component {
-
     render() {
         return (
             <div>
