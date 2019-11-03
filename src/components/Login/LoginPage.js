@@ -59,7 +59,7 @@ class LoginPage extends React.Component {
   }
 
   componentDidMount() {
-    // this.getUserInfo();
+    this.getUserInfo();
     const referer = this.props.location.state || '/'
     const isAuthenticated = localStorage.getItem("isAuthenticated")
     const username = localStorage.getItem("username")
