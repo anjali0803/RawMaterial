@@ -12,6 +12,8 @@ import { connect } from "react-redux";
 import { setUserLogin, setUserName, setUserRole } from "./actions/loginActions";
 
 class App extends React.Component {
+
+
   render() {
     console.log(this.props.userLogin);
     return (

@@ -41,7 +41,7 @@ export default class ViewComponent extends React.Component {
 
 
 
-        
+
         return (
             <div className="view-container" >
                 <HashRouter>
