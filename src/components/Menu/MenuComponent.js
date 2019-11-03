@@ -7,6 +7,7 @@ import 'primereact/resources/themes/nova-light/theme.css';
 import { PanelMenu } from 'primereact/panelmenu';
 import { connect } from 'react-redux';
 import { setDataList, setColList } from '../../actions/dataActions'
+import { setUserList } from '../../actions/loginActions'
 import './index.css';
 
 class MenuComponent extends React.Component {
@@ -15,6 +16,11 @@ class MenuComponent extends React.Component {
         data = await Axios.get('https://d8226649-f8f5-4bb3-b4ac-b403b5ff19f5.mock.pstmn.io/project-server/get-projects');
         data = data.data;
         this.props.setDataList(data);
+
+        let users;
+        users = await Axios.get('http://5dbdaeb405a6f30014bcaee3.mockapi.io/users');
+        users = users.data;
+        this.props.setUserList(users);
 
         const colList = [
             { field: 'ProjectID', header: 'Project Id' },
@@ -166,12 +172,14 @@ const mapStateToProps = state => ({
     userName: state.userName,
     userRole: state.userRole,
     dataList: state.dataList,
-    colList: state.colList
+    colList: state.colList,
+    userList: state.userList
   });
 
   const mapDispatchToProps = dispatch => ({
     setDataList: dataList => dispatch(setDataList(dataList)),
-    setColList: colList => dispatch(setColList(colList))
+    setColList: colList => dispatch(setColList(colList)),
+    setUserList: userList => dispatch(setUserList(userList))
 });
   
 export default connect(

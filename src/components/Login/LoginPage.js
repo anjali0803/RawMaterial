@@ -7,7 +7,8 @@ import { Redirect } from "react-router-dom";
 import {
   setUserLogin,
   setUserName,
-  setUserRole
+  setUserRole,
+  setUserList
 } from "../../actions/loginActions";
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
@@ -23,7 +24,6 @@ class LoginPage extends React.Component {
     this.state = {
       username: "",
       password: "",
-      userList: [],
       loggedIn: false,
       role: ""
     };
@@ -51,15 +51,15 @@ class LoginPage extends React.Component {
   //         "role": "requested"
   //     }
   // ]
-    const userInfo = await axios.get(
+  // this.setState({ userList: userList });
+    const userList = await axios.get(
       "http://5dbdaeb405a6f30014bcaee3.mockapi.io/users"
     );
-    this.setState({ userList: userInfo.data });
-    // this.setState({ userList: userList });
+    this.props.setUserList(userList.data)
   }
 
   componentDidMount() {
-    this.getUserInfo();
+    // this.getUserInfo();
     const referer = this.props.location.state || '/'
     const isAuthenticated = localStorage.getItem("isAuthenticated")
     const username = localStorage.getItem("username")
@@ -86,7 +86,7 @@ class LoginPage extends React.Component {
     const password = this.state.password;
     const role = this.state.role;
     const referer = this.props.location.state || '/'
-    const loginResponse = this.state.userList.find(function(item) {
+    const loginResponse = this.props.userList.find(function(item) {
       return item.username == username;
     });
 
@@ -175,13 +175,15 @@ class LoginPage extends React.Component {
 const mapStateToProps = state => ({
   userLogin: state.userLogin,
   userName: state.userName,
-  userRole: state.userRole
+  userRole: state.userRole,
+  userList: state.userList
 });
 
 const mapDispatchToProps = dispatch => ({
   setUserLogin: userLogin => dispatch(setUserLogin(userLogin)),
   setUserName: userName => dispatch(setUserName(userName)),
-  setUserRole: userRole => dispatch(setUserRole(userRole))
+  setUserRole: userRole => dispatch(setUserRole(userRole)),
+  setUserList: userList => dispatch(setUserList(userList))
 });
 
 export default connect(
