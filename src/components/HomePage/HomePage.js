@@ -6,22 +6,16 @@ import {
   setUserRole
 } from "../../actions/loginActions";
 import { connect } from "react-redux";
+import MenuComponent from "../Menu/MenuComponent";
+import ViewComponent from "../View/ViewComponent";
 import './index.css'
 
-class TopBanner extends React.Component {
+class HomePage extends React.Component {
     render() {
         return (
-            <div className="main-container">
-                <div className="banner-heading-primary">
-                    AutoCIP
-                {this.props.userLogin ? <div className="sign-out-icon" onClick={() => this.props.setUserLogin(false)}>
-                    <i className="pi pi-sign-out" style={{"fontSize": 40}}></i>
-                </div> : null}
-                </div>
-                <div className="copyright">
-                    &copy; by
-                <a href="https://www.matsci.ai/" target="_blank" className="copyright-link"> MatSci AI</a>
-                </div>
+            <div className="home-container">
+              <MenuComponent />
+              <ViewComponent />
             </div>
         );
     }
@@ -42,5 +36,5 @@ const mapStateToProps = state => ({
   export default connect(
     mapStateToProps,
     mapDispatchToProps
-  )(TopBanner);
+  )(HomePage);
   

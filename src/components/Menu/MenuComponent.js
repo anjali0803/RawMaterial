@@ -21,42 +21,42 @@ class MenuComponent extends React.Component {
                         label: 'Create new projects',
                         icon: 'pi pi-fw pi-plus',
                         command: (event) => {
-                            window.location.hash = "/Inquiry/create-new-projects";
+                            window.location.hash = "/inquiry/create-new-projects";
                         }
                     },
                     {
                         label: 'Projects assigned to me',
                         icon: 'pi pi-fw pi-align-left',
                         command: (event) => {
-                            window.location.hash = "/Inquiry/projects-assigned-to-me";
+                            window.location.hash = "/inquiry/projects-assigned-to-me";
                         }
                     },
                     {
                         label: 'Projects assigned by me',
                         icon: 'pi pi-fw pi-align-right',
                         command: (event) => {
-                            window.location.hash = "/Inquiry/projects-assigned-by-me";
+                            window.location.hash = "/inquiry/projects-assigned-by-me";
                         }
                     },
                     {
                         label: 'All ongoing projects',
                         icon: 'pi pi-fw pi-clone',
                         command: (event) => {
-                            window.location.hash = "/Inquiry/all-ongoing-projects";
+                            window.location.hash = "/inquiry/all-ongoing-projects";
                         }
                     },
                     {
                         label: 'Closed projects',
                         icon: 'pi pi-fw pi-copy',
                         command: (event) => {
-                            window.location.hash = "/Inquiry/closed-projects";
+                            window.location.hash = "/inquiry/closed-projects";
                         }
                     },
                     {
                         label: 'Archive projects',
                         icon: 'pi pi-fw pi-envelope',
                         command: (event) => {
-                            window.location.hash = "/Inquiry/archieve-projects";
+                            window.location.hash = "/inquiry/archieve-projects";
                         }
                     }
 
@@ -70,7 +70,7 @@ class MenuComponent extends React.Component {
                         label: 'Generate new reports',
                         icon: 'pi pi-fw pi-plus',
                         command: (event) => {
-                            window.location.hash = "/Report/generate-new-reports";
+                            window.location.hash = "/report/generate-new-reports";
                         }
 
                     },
@@ -78,7 +78,7 @@ class MenuComponent extends React.Component {
                         label: 'past reports',
                         icon: 'pi pi-fw pi-minus',
                         command: (event) => {
-                            window.location.hash = "/Report/past-reports";
+                            window.location.hash = "/report/past-reports";
                         }
 
                     }
@@ -122,7 +122,7 @@ class MenuComponent extends React.Component {
                     label: 'Pending Requests',
                     icon: 'pi pi-key',
                     command: (event) => {
-                        window.location.hash = "/Admin/pending-requests";
+                        window.location.hash = "/admin/pending-requests";
                     }
 
                 },
@@ -130,7 +130,7 @@ class MenuComponent extends React.Component {
                     label: 'All Users',
                     icon: 'pi pi-fw pi-users',
                     command: (event) => {
-                        window.location.hash = "/Admin/all-users";
+                        window.location.hash = "/admin/all-users";
                     }
                 }
             ]

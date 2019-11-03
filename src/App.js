@@ -4,43 +4,25 @@ import "primeicons/primeicons.css";
 import "primereact/resources/themes/nova-light/theme.css";
 import "./App.css";
 import TopBanner from "./components/Banner/TopBanner.js";
-// import { Button } from 'primereact/button';
-import MenuComponent from "./components/Menu/MenuComponent";
-import ViewComponent from "./components/View/ViewComponent";
 import LoginPage from "./components/Login/LoginPage";
-import PrivateRoute from "./components/PrivateRoute/PrivateRoute"
+import HomePage from "./components/HomePage/HomePage";
+import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 import { connect } from "react-redux";
+import { HashRouter, Route, Switch } from "react-router-dom";
 import { setUserLogin, setUserName, setUserRole } from "./actions/loginActions";
 
 class App extends React.Component {
+
   render() {
-    const userName = this.props.userName;
-    const userLogin = this.props.userLogin;
-    const userRole = this.props.userRole;
     return (
       <div>
         <TopBanner />
-        {userLogin ? (
-          userRole == "requested" ? (
-            <div className="main-container">
-              <p className="pending-access-msg">
-                Your approval request hasn't been approved yet,
-              </p>
-              <p className="pending-access-msg">
-                Please contact the admin.
-              </p>
-            </div>
-          ) : (
-            <div className="main-container">
-              <MenuComponent />
-              <ViewComponent />
-            </div>
-          )
-        ) : (
-            <div className="main-container">
-              <LoginPage />
-            </div>
-          )}
+        <HashRouter>
+          <Switch>
+            <Route path="/login" component={LoginPage} />
+            <PrivateRoute path="/" component={HomePage} isAuthenticated={this.props.userLogin}/>
+          </Switch>
+        </HashRouter>
       </div>
     );
   }

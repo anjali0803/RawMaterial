@@ -9,12 +9,21 @@ import { connect } from "react-redux";
 import './index.css'
 
 class TopBanner extends React.Component {
+    constructor(){
+        super();
+
+        this.logout = this.logout.bind(this)
+    }
+    logout(){
+        this.props.setUserLogin(false)
+        localStorage.setItem("isAuthenticated","false")
+    }
     render() {
         return (
             <div className="banner">
                 <div className="banner-heading-primary">
                     AutoCIP
-                {this.props.userLogin ? <div className="sign-out-icon" onClick={() => this.props.setUserLogin(false)}>
+                {this.props.userLogin ? <div className="sign-out-icon" onClick={() => this.logout()}>
                     <i className="pi pi-sign-out" style={{"fontSize": 40}}></i>
                 </div> : null}
                 </div>

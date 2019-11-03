@@ -3,6 +3,7 @@ import React from "react";
 import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
 import "primereact/resources/themes/nova-light/theme.css";
+import { Redirect } from "react-router-dom";
 import {
   setUserLogin,
   setUserName,
@@ -32,24 +33,43 @@ class LoginPage extends React.Component {
   }
 
   async getUserInfo() {
+
+  //   const userList= [
+  //     {
+  //         "username": "user1",
+  //         "password": "user1",
+  //         "role": "admin"
+  //     },
+  //     {
+  //         "username": "user2",
+  //         "password": "user2",
+  //         "role": "user"
+  //     },
+  //     {
+  //         "username": "user3",
+  //         "password": "user3",
+  //         "role": "requested"
+  //     }
+  // ]
     const userInfo = await axios.get(
-      "https://63bd0dc7-78bd-4f8b-a91d-c64e3441056a.mock.pstmn.io"
+      "http://5dbdaeb405a6f30014bcaee3.mockapi.io/users"
     );
     this.setState({ userList: userInfo.data });
+    // this.setState({ userList: userList });
   }
 
   componentDidMount() {
     this.getUserInfo();
-    this.checkExistingLogin();
-  }
-
-  checkExistingLogin(){
-    const username = localStorage.getItem('username')
-    const password = localStorage.getItem('password')
-
-    this.setState({username: username, password: password},function(){this.handleSignIn()})
-    console.log(this.state.username)
-    console.log(this.state.password)
+    const referer = this.props.location.state || '/'
+    const isAuthenticated = localStorage.getItem("isAuthenticated")
+    const username = localStorage.getItem("username")
+    const role = localStorage.getItem("role")
+    if (isAuthenticated == "true") {
+      this.props.setUserLogin(true)
+      this.props.setUserName(username)
+      this.props.setUserRole(role)
+      history.push(referer)
+    }
   }
 
   handleInputChange(e) {
@@ -61,77 +81,89 @@ class LoginPage extends React.Component {
     });
   }
 
-  handleSignIn() {
+  async handleSignIn() {
     const username = this.state.username;
     const password = this.state.password;
     const role = this.state.role;
-    console.log("hi")
+    const referer = this.props.location.state || '/'
     const loginResponse = this.state.userList.find(function(item) {
       return item.username == username;
     });
 
     if (loginResponse) {
-      this.props.setUserLogin(true);
-      this.props.setUserName(loginResponse.username);
-      this.props.setUserRole(loginResponse.role);
+      await this.props.setUserLogin(true);
+      await this.props.setUserName(loginResponse.username);
+      await this.props.setUserRole(loginResponse.role);
 
-      localStorage.setItem('username', this.state.username);
-      localStorage.setItem('password', this.state.password);
+      localStorage.setItem("isAuthenticated","true")
+      localStorage.setItem("username", loginResponse.username);
+      localStorage.setItem("role", loginResponse.role);
+      history.push(referer)
+    }else{
+      await this.props.setUserLogin(false);
+      await this.props.setUserName(null);
+      await this.props.setUserRole(null);
+
+      localStorage.setItem("isAuthenticated","false")
+      localStorage.setItem("username", "");
+      localStorage.setItem("role", "");
     }
   }
 
   render() {
     return (
-      <div className="login-page">
-        <div className="login-container">
-          <div className="p-grid p-fluid">
-            <div className="p-col-12 p-md-4">
-              <div className="p-inputgroup">
-                <span className="p-inputgroup-addon">
-                  <i className="pi pi-user"></i>
-                </span>
-                <InputText
-                  placeholder="Username"
-                  name="username"
-                  type="text"
-                  onChange={this.handleInputChange}
-                  value={this.state.username}
-                />
+      <div className="main-container">
+        <div className="login-page">
+          <div className="login-container">
+            <div className="p-grid p-fluid">
+              <div className="p-col-12 p-md-4">
+                <div className="p-inputgroup">
+                  <span className="p-inputgroup-addon">
+                    <i className="pi pi-user"></i>
+                  </span>
+                  <InputText
+                    placeholder="Username"
+                    name="username"
+                    type="text"
+                    onChange={this.handleInputChange}
+                    value={this.state.username}
+                  />
+                </div>
+              </div>
+              <br />
+              <div className="p-col-12 p-md-4">
+                <div className="p-inputgroup">
+                  <span className="p-inputgroup-addon">
+                    <i className="pi pi-key"></i>
+                  </span>
+                  <InputText
+                    placeholder="Password"
+                    name="password"
+                    type="password"
+                    onChange={this.handleInputChange}
+                    value={this.state.password}
+                  />
+                </div>
               </div>
             </div>
             <br />
-            <div className="p-col-12 p-md-4">
-              <div className="p-inputgroup">
-                <span className="p-inputgroup-addon">
-                  <i className="pi pi-key"></i>
-                </span>
-                <InputText
-                  placeholder="Password"
-                  name="password"
-                  type="password"
-                  onChange={this.handleInputChange}
-                  value={this.state.password}
-                />
+            <div className="sign-in-container">
+              <Button label="Sign In" onClick={this.handleSignIn} />
+            </div>
+            <br />
+            <div className="sign-up-container">
+              <div
+                className="sign-up-text"
+                onClick={() => history.push("/sign-up")}
+              >
+                Sign Up
               </div>
-            </div>
-          </div>
-          <br />
-          <div className="sign-in-container">
-            <Button label="Sign In" onClick={this.handleSignIn} />
-          </div>
-          <br />
-          <div className="sign-up-container">
-            <div
-              className="sign-up-text"
-              onClick={() => history.push("/sign-up")}
-            >
-              Sign Up
-            </div>
-            <div
-              className="forgot-pass-text"
-              onClick={() => history.push("/forgot-password")}
-            >
-              Forgot Password
+              <div
+                className="forgot-pass-text"
+                onClick={() => history.push("/forgot-password")}
+              >
+                Forgot Password
+              </div>
             </div>
           </div>
         </div>
