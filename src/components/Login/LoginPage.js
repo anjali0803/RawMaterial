@@ -82,7 +82,6 @@ class LoginPage extends React.Component {
   }
 
   async handleSignIn() {
-    console.log("userlist", this.props.userList)
     const username = this.state.username;
     const password = this.state.password;
     const role = this.state.role;
