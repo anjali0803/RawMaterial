@@ -18,70 +18,30 @@ import OpenIncidents from "../Pages/OpenIncidents";
 
 class ViewComponent extends React.Component {
   render() {
+    const routes = [
+        { path: '/admin/pending-requests', component: PendingRequests },
+        { path: '/admin/all-users', component: AllUsers },
+        { path: '/inquiry/create-new-projects', component: CreateNewProjects },
+        { path: '/inquiry/projects-assigned-to-me', component: ProjectAssignedToMe },
+        { path: '/inquiry/projects-assigned-by-me', component: ProjectAssignedByMe },
+        { path: '/inquiry/all-ongoing-projects', component: AllOngoingProjects },
+        { path: '/inquiry/closed-projects', component: ClosedProjects },
+        { path: '/inquiry/archieve-projects', component: ArchieveProjects },
+        { path: '/report/generate-new-reports', component: GenerateNewProjects },
+        { path: '/report/past-reports', component: PastReports },
+        { path: '/support/create-new-incident', component: CreateNewIncident },
+        { path: '/support/open-incidents', component: OpenIncidents }
+    ];
+
+    const routeComponents = routes.map(({ path, component }) => {
+        return <PrivateRoute key={path} path={path} component={component} isAuthenticated={this.props.userLogin}/>
+    })
+    
     return (
       <div className="view-container">
         <HashRouter>
           <Switch>
-            <PrivateRoute
-              path="/admin/pending-requests"
-              component={PendingRequests}
-              isAuthenticated={this.props.userLogin}
-            />
-            <PrivateRoute
-              path="/admin/all-users"
-              component={AllUsers}
-              isAuthenticated={this.props.userLogin}
-            />
-            <PrivateRoute
-              path="/inquiry/create-new-projects"
-              component={CreateNewProjects}
-              isAuthenticated={this.props.userLogin}
-            />
-            <PrivateRoute
-              path="/inquiry/projects-assigned-to-me"
-              component={ProjectAssignedToMe}
-              isAuthenticated={this.props.userLogin}
-            />
-            <PrivateRoute
-              path="/inquiry/projects-assigned-by-me"
-              component={ProjectAssignedByMe}
-              isAuthenticated={this.props.userLogin}
-            />
-            <PrivateRoute
-              path="/inquiry/all-ongoing-projects"
-              component={AllOngoingProjects}
-              isAuthenticated={this.props.userLogin}
-            />
-            <PrivateRoute
-              path="/inquiry/closed-projects"
-              component={ClosedProjects}
-              isAuthenticated={this.props.userLogin}
-            />
-            <PrivateRoute
-              path="/inquiry/archieve-projects"
-              component={ArchieveProjects}
-              isAuthenticated={this.props.userLogin}
-            />
-            <PrivateRoute
-              path="/report/generate-new-reports"
-              component={GenerateNewProjects}
-              isAuthenticated={this.props.userLogin}
-            />
-            <PrivateRoute
-              path="/report/past-reports"
-              component={PastReports}
-              isAuthenticated={this.props.userLogin}
-            />
-            <PrivateRoute
-              path="/support/create-new-incident"
-              component={CreateNewIncident}
-              isAuthenticated={this.props.userLogin}
-            />
-            <PrivateRoute
-              path="/support/open-incidents"
-              component={OpenIncidents}
-              isAuthenticated={this.props.userLogin}
-            />
+            {routeComponents}
           </Switch>
         </HashRouter>
       </div>
