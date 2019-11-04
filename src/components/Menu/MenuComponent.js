@@ -13,7 +13,7 @@ import './index.css';
 class MenuComponent extends React.Component {
     async componentDidMount() {
         let data;
-        data = await Axios.get('https://d8226649-f8f5-4bb3-b4ac-b403b5ff19f5.mock.pstmn.io/project-server/get-projects');
+        data = await Axios.get('http://5dbdaeb405a6f30014bcaee3.mockapi.io/projects');
         data = data.data;
         this.props.setDataList(data);
 
