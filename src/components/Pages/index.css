@@ -15,10 +15,22 @@
     width: 15%;
 }
 
-.p-steps-number{
+/* .p-steps-number{
 
 }
 
 .p-steps-title{
     
+} */
+
+.p-datatable .p-datatable-thead >  tr th div{
+    float: left;
+}
+
+.p-datatable .p-datatable-thead >  tr th span{
+    float: left;
+}
+
+tr.p-highlight {
+    background-color: #f9f9f9 !important;
 }
