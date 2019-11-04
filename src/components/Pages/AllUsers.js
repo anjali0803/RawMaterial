@@ -49,21 +49,23 @@ class AllUsers extends React.Component {
   }
 
   adminTemplate(rowData, column) {
+    const enable = this.state.selected.includes(rowData) && this.state.selected.length === 1
     return (
       <Button
-        label="Approve"
+        label="Admin"
         onClick={() => this.handleClick(rowData, true)}
-        disabled={!this.state.selected.includes(rowData)}
+        disabled={!enable}
       />
     );
   }
 
   removeTemplate(rowData, column) {
+    const enable = this.state.selected.includes(rowData) && this.state.selected.length === 1
     return (
       <Button
-        label="Reject"
+        label="Remove"
         onClick={() => this.handleClick(rowData, false)}
-        disabled={!this.state.selected.includes(rowData)}
+        disabled={!enable}
       />
     );
   }
@@ -82,6 +84,7 @@ class AllUsers extends React.Component {
             options={actions}
             onChange={(e) => this.handleClickAllSelected(e.value)}
             placeholder="Select Action"
+            disabled={this.state.selected.length <= 1}
           />
         )
       },
