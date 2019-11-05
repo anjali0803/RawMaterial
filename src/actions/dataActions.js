@@ -11,3 +11,24 @@ export function setColList(colList) {
         colList
     }
 }
+
+export function setProjectFields(projectId, projectTitle, projectCustomer, projectType) {
+    return {
+        type: 'SET_PROJECT_FIELDS',
+        projectId, projectTitle, projectCustomer, projectType
+    }
+}
+
+export function setProgressActiveIndex(progressActiveIndex) {
+    return {
+        type: 'SET_PROGRESS_ACTIVE_INDEX',
+        progressActiveIndex
+    }
+}
+
+export function setReadonly(readonly) {
+    return {
+        type: 'SET_READONLY',
+        readonly
+    }
+}

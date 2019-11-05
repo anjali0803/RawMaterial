@@ -1,0 +1,189 @@
+.details-container{
+    width:500px;
+    margin-left: 30% ;
+}
+.details-input-label{
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-weight: lighter;
+    font-size:14px;
+}
+.details-submit{
+    width: 100%;
+	height: 45px;
+	
+    border-radius: 10px;;
+    margin-top: 30px !important;
+    background: none;;
+    vertical-align: center;
+}
+
+.details-save-container{
+	margin:10px;
+	float: right;
+}
+.details-save{
+	width: 100px;
+	height:30px;
+	background-color: rgba(21, 167, 99, 0.979);
+	color: white;
+	border:none;
+	cursor: pointer;;
+	border-radius: 10px;
+}
+.details-save > span{
+	font-size: 16px;
+	
+	
+}
+
+.details-withdraw-container{
+	margin:10px;
+	float: right;
+}
+.details-withdraw{
+	width: 100px;
+	height:30px;
+	background-color: rgba(235, 33, 67, 0.979);
+	color: white;
+	border:none;
+	
+	border-radius: 10px;
+}
+.details-withdraw > span{
+	font-size: 16px;	
+}
+.details-pipe{
+    margin-top:30px;
+    border:none;
+    border-top: 2px solid rgb(192, 218, 247);
+    
+}
+.details-inner-coating{
+    margin-top:30px;
+    border-top: 2px solid  rgb(192, 218, 247);
+}
+.details-outer-coating{
+    margin-top:30px;
+    border-top: 2px solid  rgb(192, 218, 247);
+}
+
+
+
+.upload-label{
+    
+    padding: 3px;
+    width: 300px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+.cost-sheet-upload{
+    margin-bottom: 29px;
+}
+.pipe-upload{
+    margin-bottom: 10px;
+}
+.inner-coating-upload{
+    margin-bottom: 10px;
+}
+.outer-coating-upload{
+    margin-bottom: 10px;
+}
+.clearfix:after {
+    clear: both;
+    content: "";
+    display: block;
+    height: 0;
+}
+
+.progress-container {
+	font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+	width: 1200px;
+    margin: 2% auto
+}
+
+.progress-wrapper {
+	display: table-cell;
+    /* height: 400px; */
+    
+	/* vertical-align: middle; */
+}
+
+
+
+
+.progress-steps .progress-step {
+	font-size: 14px;
+	text-align: center;
+	color: white;
+	cursor: default;
+	margin: 0 3px;
+	padding: 10px 10px 10px 30px;
+	min-width: 180px;
+	float: left;
+	position: relative;
+	background-color: #764ceb;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none; 
+  transition: background-color 0.2s ease;
+}
+
+.progress-steps .progress-step:after,
+.progress-steps .progress-step:before {
+	content: " ";
+	position: absolute;
+	top: 0;
+	right: -17px;
+	width: 0;
+	height: 0;
+	border-top: 19px solid transparent;
+	border-bottom: 17px solid transparent;
+	border-left: 17px solid #764ceb;	
+	z-index: 2;
+  transition: border-color 0.2s ease;
+}
+
+.progress-steps .progress-step:before {
+	right: auto;
+	left: 0;
+	border-left: 17px solid #fff;	
+	z-index: 0;
+}
+
+.progress-steps .progress-step:first-child:before {
+	border: none;
+}
+
+.progress-steps .progress-step:first-child {
+	border-top-left-radius: 4px;
+	border-bottom-left-radius: 4px;
+}
+
+.progress-steps .progress-step span {
+	position: relative;
+}
+
+.progress-steps .progress-step span:before {
+	opacity: 0;
+	content: "✔";
+	position: absolute;
+	top: -2px;
+	left: -20px;
+}
+
+.progress-steps .progress-step.done span:before {
+	opacity: 1;
+	-webkit-transition: opacity 0.3s ease 0.5s;
+	-moz-transition: opacity 0.3s ease 0.5s;
+	-ms-transition: opacity 0.3s ease 0.5s;
+	transition: opacity 0.3s ease 0.5s;
+}
+
+.progress-steps .progress-step.progress-current {
+	color: #fff;
+	background-color: #23468c;
+}
+
+.progress-steps .progress-step.progress-current:after {
+	border-left: 17px solid #23468c;	
+}
