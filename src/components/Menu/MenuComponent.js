@@ -12,7 +12,7 @@ import './index.css';
 class MenuComponent extends React.Component {
     async componentDidMount() {
         let data;
-        data = await Axios.get('https://d8226649-f8f5-4bb3-b4ac-b403b5ff19f5.mock.pstmn.io/project-server/get-projects');
+        data = await Axios.get('http://5dbdaeb405a6f30014bcaee3.mockapi.io/projects');
         data = data.data;
         this.props.setDataList(data);
 
@@ -30,7 +30,7 @@ class MenuComponent extends React.Component {
     }
     render() {
         const items = [
-            
+
             {
                 label: 'Inquiry',
                 icon: 'pi pi-fw pi-question',
@@ -39,7 +39,7 @@ class MenuComponent extends React.Component {
                         label: 'Create new projects',
                         icon: 'pi pi-fw pi-plus',
                         command: (event) => {
-                            window.location.hash = "/inquiry/create-new-projects";
+                            window.location.hash = "/inquiry/create-new-projects/details";
                         }
                     },
                     {
@@ -152,7 +152,7 @@ class MenuComponent extends React.Component {
                     }
                 }
             ]
-            
+
         }) : null
 
         return (
@@ -167,14 +167,14 @@ const mapStateToProps = state => ({
     userRole: state.userRole,
     dataList: state.dataList,
     colList: state.colList
-  });
+});
 
-  const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = dispatch => ({
     setDataList: dataList => dispatch(setDataList(dataList)),
     setColList: colList => dispatch(setColList(colList))
 });
-  
+
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-  )(MenuComponent);
+)(MenuComponent);
