@@ -34,3 +34,20 @@
 tr.p-highlight {
     background-color: #f9f9f9 !important;
 }
+
+/* @keyframes ui-progress-spinner-color {
+    100%,
+    0% {
+        stroke: #03378a;
+    }
+    40% {
+        stroke: #1163e7;
+    }
+    66% {
+        stroke: #4686ec;
+    }
+    80%,
+    90% {
+        stroke: #1a54b3;
+    }
+} */
