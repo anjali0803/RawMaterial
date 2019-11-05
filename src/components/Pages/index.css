@@ -33,6 +33,10 @@ tr.p-highlight {
     background-color: #f9f9f9 !important;
 }
 
+.spinner-container {
+    text-align: center;
+}
+
 /* @keyframes ui-progress-spinner-color {
     100%,
     0% {
