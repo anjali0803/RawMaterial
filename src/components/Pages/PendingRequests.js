@@ -131,9 +131,9 @@ class PendingRequests extends React.Component {
         </DataTable>
       </div>
     ) : (
-      <div>
+      <div className="spinner-container">
         <ProgressSpinner
-          style={{ width: "40%", height: "40%", align: "center" }}
+          style={{ width: "40%", height: "40%"}}
           strokeWidth="1"
           animationDuration="1s"
         ></ProgressSpinner>
