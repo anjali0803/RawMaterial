@@ -28,7 +28,7 @@ class PendingRequests extends React.Component {
       "http://5dbdaeb405a6f30014bcaee3.mockapi.io/users"
     );
     this.props.setUserList(userList.data);
-    this.setState({isLoading: false})
+    this.setState({ selected: [], isLoading: false })
   }
 
   componentDidMount() {
