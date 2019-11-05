@@ -18,3 +18,10 @@ export function setUserLogin(userLogin) {
       userRole
     }
   }
+
+  export function setUserList(userList) {
+    return {
+      type: 'SET_USER_LIST',
+      userList
+    }
+  }

@@ -2,6 +2,7 @@ var initialState = {
   userLogin: false,
   userName: null,
   userRole: null,
+  userList: [],
   dataList: [],
   colList: [],
   projectId: null,
@@ -29,6 +30,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         userRole: action.userRole
+      };
+    case 'SET_USER_LIST':
+      return {
+        ...state,
+        userList: action.userList
       };
     case 'SET_DATA_LIST':
       return {
