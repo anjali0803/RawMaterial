@@ -1,33 +1,38 @@
 import React from "react";
-// import TableComponent from '../Table/TableComponent';
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from "primereact/button";
 import { Dropdown } from "primereact/dropdown";
-import { Checkbox } from "primereact/checkbox";
+import { ProgressSpinner } from "primereact/progressspinner";
 import "./index.css";
-import Axios from "axios";
-import { setDataList } from "../../actions/dataActions";
+import axios from "axios";
+import { setUserList } from "../../actions/loginActions";
 import { connect } from "react-redux";
-
-const ClickDropdownTemplate = () => {
-  return (
-    <div>
-      <Button label="Select" />
-    </div>
-  );
-};
 
 class AllUsers extends React.Component {
   constructor() {
     super();
     this.state = {
-      selected: []
+      selected: [],
+      isLoading: false
     };
 
     this.adminTemplate = this.adminTemplate.bind(this);
     this.removeTemplate = this.removeTemplate.bind(this);
     this.handleClickAllSelected = this.handleClickAllSelected.bind(this);
+  }
+
+  async getUserList() {
+    this.setState({ isLoading: true });
+    const userList = await axios.get(
+      "http://5dbdaeb405a6f30014bcaee3.mockapi.io/users"
+    );
+    this.props.setUserList(userList.data);
+    // this.setState({ isLoading: false });
+  }
+
+  componentDidMount() {
+    this.getUserList();
   }
 
   handleClick(rowData, action) {
@@ -36,34 +41,39 @@ class AllUsers extends React.Component {
     } else {
       console.log(rowData.username, " is removed from user");
     }
+    this.getUserList();
   }
 
   handleClickAllSelected(action) {
-    const data = this.state.selected
-    console.log(action)
+    const data = this.state.selected;
     if (action) {
       console.log(data, " is made admin");
     } else {
       console.log(data, " is removed from user");
     }
+    this.getUserList();
   }
 
   adminTemplate(rowData, column) {
+    const enable =
+      this.state.selected.includes(rowData) && this.state.selected.length === 1;
     return (
       <Button
-        label="Approve"
+        label="Admin"
         onClick={() => this.handleClick(rowData, true)}
-        disabled={!this.state.selected.includes(rowData)}
+        disabled={!enable}
       />
     );
   }
 
   removeTemplate(rowData, column) {
+    const enable =
+      this.state.selected.includes(rowData) && this.state.selected.length === 1;
     return (
       <Button
-        label="Reject"
+        label="Remove"
         onClick={() => this.handleClick(rowData, false)}
-        disabled={!this.state.selected.includes(rowData)}
+        disabled={!enable}
       />
     );
   }
@@ -80,8 +90,9 @@ class AllUsers extends React.Component {
         header: (
           <Dropdown
             options={actions}
-            onChange={(e) => this.handleClickAllSelected(e.value)}
+            onChange={e => this.handleClickAllSelected(e.value)}
             placeholder="Select Action"
+            disabled={this.state.selected.length <= 1}
           />
         )
       },
@@ -90,10 +101,10 @@ class AllUsers extends React.Component {
     ];
 
     const userList = this.props.userList.filter(function(item) {
-      return item.role == "requested";
+      return item.role == "user";
     });
 
-    return (
+    return !this.state.isLoading ? (
       <div>
         <DataTable
           className="hidden-header"
@@ -119,14 +130,27 @@ class AllUsers extends React.Component {
           })}
         </DataTable>
       </div>
+    ) : (
+      <div className="spinner-container">
+        <ProgressSpinner
+          style={{ width: "40%", height: "40%"}}
+          strokeWidth="1"
+          animationDuration="1s"
+        ></ProgressSpinner>
+      </div>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  dataList: state.dataList,
-  colList: state.colList,
   userList: state.userList
 });
 
-export default connect(mapStateToProps)(AllUsers);
+const mapDispatchToProps = dispatch => ({
+  setUserList: userList => dispatch(setUserList(userList))
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AllUsers);

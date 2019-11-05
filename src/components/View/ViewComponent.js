@@ -18,25 +18,30 @@ import OpenIncidents from "../Pages/OpenIncidents";
 
 class ViewComponent extends React.Component {
   render() {
-    const routes = [
-        { path: '/admin/pending-requests', component: PendingRequests },
-        { path: '/admin/all-users', component: AllUsers },
-        { path: '/inquiry/create-new-projects', component: CreateNewProjects },
-        { path: '/inquiry/projects-assigned-to-me', component: ProjectAssignedToMe },
-        { path: '/inquiry/projects-assigned-by-me', component: ProjectAssignedByMe },
-        { path: '/inquiry/all-ongoing-projects', component: AllOngoingProjects },
-        { path: '/inquiry/closed-projects', component: ClosedProjects },
-        { path: '/inquiry/archieve-projects', component: ArchieveProjects },
-        { path: '/report/generate-new-reports', component: GenerateNewProjects },
-        { path: '/report/past-reports', component: PastReports },
-        { path: '/support/create-new-incident', component: CreateNewIncident },
-        { path: '/support/open-incidents', component: OpenIncidents }
+    var routes = [
+      { path: '/inquiry/create-new-projects', component: CreateNewProjects },
+      { path: '/inquiry/projects-assigned-to-me', component: ProjectAssignedToMe },
+      { path: '/inquiry/projects-assigned-by-me', component: ProjectAssignedByMe },
+      { path: '/inquiry/all-ongoing-projects', component: AllOngoingProjects },
+      { path: '/inquiry/closed-projects', component: ClosedProjects },
+      { path: '/inquiry/archieve-projects', component: ArchieveProjects },
+      { path: '/report/generate-new-reports', component: GenerateNewProjects },
+      { path: '/report/past-reports', component: PastReports },
+      { path: '/support/create-new-incident', component: CreateNewIncident },
+      { path: '/support/open-incidents', component: OpenIncidents }
     ];
 
+    routes = this.props.userRole == 'admin' ? [
+      { path: '/admin/pending-requests', component: PendingRequests },
+      { path: '/admin/all-users', component: AllUsers }
+    ].concat(routes) : routes
+
     const routeComponents = routes.map(({ path, component }) => {
-        return <PrivateRoute key={path} path={path} component={component} isAuthenticated={this.props.userLogin}/>
+      return <PrivateRoute key={path} path={path} component={component} isAuthenticated={this.props.userLogin}>
+
+      </PrivateRoute>
     })
-    
+
     return (
       <div className="view-container">
         <HashRouter>
