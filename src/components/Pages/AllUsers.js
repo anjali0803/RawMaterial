@@ -28,7 +28,7 @@ class AllUsers extends React.Component {
       "http://5dbdaeb405a6f30014bcaee3.mockapi.io/users"
     );
     this.props.setUserList(userList.data);
-    this.setState({ isLoading: false });
+    this.setState({ selected: [], isLoading: false });
   }
 
   componentDidMount() {
@@ -115,7 +115,7 @@ class AllUsers extends React.Component {
           selection={this.state.selected}
           onSelectionChange={e => this.setState({ selected: e.value })}
         >
-          <Column selectionMode="multiple" />
+          <Column selectionMode="multiple" style={{width:'3em'}}/>
           {colList.map(el => {
             return (
               <Column
@@ -131,9 +131,9 @@ class AllUsers extends React.Component {
         </DataTable>
       </div>
     ) : (
-      <div>
+      <div className="spinner-container">
         <ProgressSpinner
-          style={{ width: "40%", height: "40%", align: "center" }}
+          style={{ width: "40%", height: "40%"}}
           strokeWidth="1"
           animationDuration="1s"
         ></ProgressSpinner>
