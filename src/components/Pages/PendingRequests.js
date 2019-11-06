@@ -115,7 +115,7 @@ class PendingRequests extends React.Component {
           selection={this.state.selected}
           onSelectionChange={e => this.setState({ selected: e.value })}
         >
-          <Column selectionMode="multiple" />
+          <Column selectionMode="multiple" style={{width:'3em'}} />
           {colList.map(el => {
             return (
               <Column

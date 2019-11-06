@@ -50,7 +50,7 @@ class Details extends React.Component {
 
                     <Dropdown value={this.props.type}
                         options={this.props.projectTypes}
-                        onChange={(e) => this.props.handleInputCustomer(e)}
+                        onChange={(e) => this.props.handleInputType(e)}
                         placeholder="Select a Type" />
 
 
