@@ -36,8 +36,6 @@ class CreateNewProjects extends React.Component {
     constructor() {
 
         super();
-
-
         this.state = {
 
             saveEnabled: true,
@@ -53,9 +51,117 @@ class CreateNewProjects extends React.Component {
                 'Output Key Value',
                 'Output Document'
             ],
+            inputKeyValueData: {
+                tableData: [
 
+
+                    {
+                        documentId: '123490',
+                        projectId: '125012',
+                        customer: 'Adante',
+                        type: 'Aplha',
+                        uploadedDate: '12-10-2017',
+                        sent: 'Yes',
+                        last: "Generated",
+                        sentOn: '24-11-2017'
+                    },
+                    {
+                        documentId: '123487',
+                        projectId: '125019',
+                        customer: 'Navi',
+                        type: 'Beta',
+                        uploadedDate: '11-10-2016',
+                        sent: 'No',
+                        last: "Non generated",
+                        sentOn: '24-11-2019'
+                    },
+                    {
+                        documentId: '123467',
+                        projectId: '125045',
+                        customer: 'Valve',
+                        type: 'Omega',
+                        uploadedDate: '12-10-2017',
+                        sent: 'Yes',
+                        last: "Generated",
+                        sentOn: '24-11-2017'
+                    },
+                    {
+                        documentId: '123493',
+                        projectId: '125142',
+                        customer: 'theta',
+                        type: 'Beta',
+                        uploadedDate: '12-10-2017',
+                        sent: 'Yes',
+                        last: "Generated",
+                        sentOn: '24-11-2017'
+                    },
+                    {
+                        documentId: '123490',
+                        projectId: '125012',
+                        customer: 'Adante',
+                        type: 'Aplha',
+                        uploadedDate: '12-10-2017',
+                        sent: 'Yes',
+                        last: "Generated",
+                        sentOn: '24-11-2017'
+                    },
+                    {
+                        documentId: '123490',
+                        projectId: '125012',
+                        customer: 'Adante',
+                        type: 'Aplha',
+                        uploadedDate: '12-10-2017',
+                        sent: 'Yes',
+                        last: "Generated",
+                        sentOn: '24-11-2017'
+                    },
+                    {
+                        documentId: '123490',
+                        projectId: '125012',
+                        customer: 'Adante',
+                        type: 'Aplha',
+                        uploadedDate: '12-10-2017',
+                        sent: 'Yes',
+                        last: "Generated",
+                        sentOn: '24-11-2017'
+                    },
+                    {
+                        documentId: '123490',
+                        projectId: '125012',
+                        customer: 'Adante',
+                        type: 'Aplha',
+                        uploadedDate: '12-10-2017',
+                        sent: 'Yes',
+                        last: "Generated",
+                        sentOn: '24-11-2017'
+                    }
+                ],
+                tableColList: [
+                    { field: 'documentId', header: 'Document Id' },
+                    { field: 'projectId', header: 'Project Id' },
+                    { field: 'customer', header: 'Customer' },
+                    { field: 'type', header: 'Type' },
+                    { field: 'uploadedDate', header: 'Uploaded Date' },
+                    { field: 'sent', header: 'Sent' },
+                    { field: 'last', header: 'Last' },
+                    { field: 'sentOn', header: 'Sent On' }
+
+                ],
+                keyValueData: [
+
+                    { key: 'Queue Size', value: 12000 },
+                    { key: 'Volume', value: '45 Cubic Meters' },
+                    { key: 'density', value: 67 }
+                ],
+                keyValueColList: [
+                    { field: 'key', header: 'Key' },
+                    { field: 'value', header: 'Value' }
+
+                ]
+            },
 
         }
+
         this.onSave = this.onSave.bind(this);
         this.onDelete = this.onDelete.bind(this);
         this.incMe = this.incMe.bind(this);
@@ -129,13 +235,60 @@ class CreateNewProjects extends React.Component {
                     handleInputTitle={this.handleInputTitle} projectTypes={projectTypes}
                     title={this.state.title} type={this.state.type} customer={this.state.customer} />
             },
-            { path: '/Inquiry/create-new-projects/input-key-value/second', component: () => <KeyValueTable /> },
+            {
+                path: '/Inquiry/create-new-projects/input-key-value/second', component: () => <KeyValueTable
+                    colList={this.state.inputKeyValueData.keyValueColList}
+                    dataList={this.state.inputKeyValueData.keyValueData}
 
-            { path: '/Inquiry/create-new-projects/input-key-value', component: () => <InputKeyValue /> },
-            { path: '/Inquiry/create-new-projects/recommendations', component: () => <Recommendations /> },
-            { path: '/Inquiry/create-new-projects/acceptance', component: () => <Acceptance /> },
-            { path: '/Inquiry/create-new-projects/output-key-value', component: () => <OutputKeyValue /> },
-            { path: '/Inquiry/create-new-projects/output-document', component: () => <OutputDocument /> },
+                />
+            },
+
+            {
+                path: '/Inquiry/create-new-projects/input-key-value', component: () => <InputKeyValue
+                    colList={this.state.inputKeyValueData.tableColList}
+                    dataList={this.state.inputKeyValueData.tableData} />
+            },
+            {
+                path: '/Inquiry/create-new-projects/recommendations', component: () => <Recommendations
+                    colList={this.state.inputKeyValueData.tableColList}
+                    dataList={this.state.inputKeyValueData.tableData} />
+            },
+            {
+                path: '/Inquiry/create-new-projects/recommendations/second', component: () => <KeyValueTable
+                    colList={this.state.inputKeyValueData.keyValueColList}
+                    dataList={this.state.inputKeyValueData.keyValueData} />
+            },
+            {
+                path: '/Inquiry/create-new-projects/acceptance', component: () => <Acceptance
+                    colList={this.state.inputKeyValueData.tableColList}
+                    dataList={this.state.inputKeyValueData.tableData} />
+            },
+            {
+                path: '/Inquiry/create-new-projects/acceptance/second', component: () => <KeyValueTable
+                    colList={this.state.inputKeyValueData.keyValueColList}
+                    dataList={this.state.inputKeyValueData.keyValueData} />
+            },
+            {
+                path: '/Inquiry/create-new-projects/output-key-value', component: () => <OutputKeyValue
+                    colList={this.state.inputKeyValueData.tableColList}
+                    dataList={this.state.inputKeyValueData.tableData} />
+            },
+            {
+                path: '/Inquiry/create-new-projects/output-key-value/second', component: () => <KeyValueTable
+                    colList={this.state.inputKeyValueData.keyValueColList}
+                    dataList={this.state.inputKeyValueData.keyValueData} />
+            },
+
+            {
+                path: '/Inquiry/create-new-projects/output-document', component: () => <OutputDocument
+                    colList={this.state.inputKeyValueData.tableColList}
+                    dataList={this.state.inputKeyValueData.tableData} />
+            },
+            {
+                path: '/Inquiry/create-new-projects/output-document/second', component: () => <KeyValueTable
+                    colList={this.state.inputKeyValueData.keyValueColList}
+                    dataList={this.state.inputKeyValueData.keyValueData} />
+            },
         ];
 
 

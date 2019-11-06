@@ -120,7 +120,7 @@
 	min-width: 184px;
 	float: left;
 	position: relative;
-	background-color: #764ceb;
+	background-color: #547bc4;
 	-webkit-user-select: none;
 	/* -moz-user-select: none; */
 	-ms-user-select: none;
@@ -138,7 +138,7 @@
 	height: 0;
 	border-top: 19px solid transparent;
 	border-bottom: 17px solid transparent;
-	border-left: 17px solid #764ceb;	
+	border-left: 17px solid #547bc4;	
 	z-index: 2;
   transition: border-color 0.2s ease;
 }
