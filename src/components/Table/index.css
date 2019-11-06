@@ -38,34 +38,10 @@ border: 1px solid rgb(13, 100, 199);
 .p-datatable-tfoot{
     display: none;
 }
-.p-column-title{
-
-}
-.p-sortable-column{
-
-}
 .p-column-filter{
     margin-top: 8px;
 }
-.p-datatable-scrollable-header{
 
-}
-.p-datatable-scrollable-body{
-
-}
-.p-datatable-scrollable-footer{
-
-}
-.p-datatable-responsive{
-   
-}
-.p-datatable-emptymessage{
-
-}
-.p-rowgroup-header{
-    
-
-}
-.p-rowgroup-footer{
-
+.p-datatable-footer {
+    text-align: left !important;
 }
