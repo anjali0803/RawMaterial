@@ -1,7 +1,14 @@
 .button-header{
-   /* padding: 10px;
-   margin: 10px; */
-   /* margin-left: 900px; */
+    margin-left: 84%;;
+   padding-top: 8px;
    display: table;
-   float: right;
+}
+.save-button {
+  
+    
+}
+
+.delete-button{
+  
+   transform: translateX(+10px);
 }
