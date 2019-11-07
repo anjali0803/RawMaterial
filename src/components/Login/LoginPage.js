@@ -1,6 +1,7 @@
 import React from "react";
 // import { PanelMenu } from 'primereact/panelmenu';
 import "primereact/resources/primereact.min.css";
+import { Messages } from "primereact/messages";
 import "primeicons/primeicons.css";
 import "primereact/resources/themes/nova-light/theme.css";
 import { Redirect } from "react-router-dom";
@@ -33,42 +34,41 @@ class LoginPage extends React.Component {
   }
 
   async getUserInfo() {
-
-  //   const userList= [
-  //     {
-  //         "username": "user1",
-  //         "password": "user1",
-  //         "role": "admin"
-  //     },
-  //     {
-  //         "username": "user2",
-  //         "password": "user2",
-  //         "role": "user"
-  //     },
-  //     {
-  //         "username": "user3",
-  //         "password": "user3",
-  //         "role": "requested"
-  //     }
-  // ]
-  // this.setState({ userList: userList });
+    //   const userList= [
+    //     {
+    //         "username": "user1",
+    //         "password": "user1",
+    //         "role": "admin"
+    //     },
+    //     {
+    //         "username": "user2",
+    //         "password": "user2",
+    //         "role": "user"
+    //     },
+    //     {
+    //         "username": "user3",
+    //         "password": "user3",
+    //         "role": "requested"
+    //     }
+    // ]
+    // this.setState({ userList: userList });
     const userList = await axios.get(
       "http://5dbdaeb405a6f30014bcaee3.mockapi.io/users"
     );
-    this.props.setUserList(userList.data)
+    this.props.setUserList(userList.data);
   }
 
   componentDidMount() {
     this.getUserInfo();
-    const referer = this.props.location.state || '/'
-    const isAuthenticated = localStorage.getItem("isAuthenticated")
-    const username = localStorage.getItem("username")
-    const role = localStorage.getItem("role")
+    const referer = this.props.location.state || "/";
+    const isAuthenticated = localStorage.getItem("isAuthenticated");
+    const username = localStorage.getItem("username");
+    const role = localStorage.getItem("role");
     if (isAuthenticated == "true") {
-      this.props.setUserLogin(true)
-      this.props.setUserName(username)
-      this.props.setUserRole(role)
-      history.push(referer)
+      this.props.setUserLogin(true);
+      this.props.setUserName(username);
+      this.props.setUserRole(role);
+      history.push(referer);
     }
   }
 
@@ -85,28 +85,42 @@ class LoginPage extends React.Component {
     const username = this.state.username;
     const password = this.state.password;
     const role = this.state.role;
-    const referer = this.props.location.state || '/'
+    const referer = this.props.location.state || "/";
     const loginResponse = this.props.userList.find(function(item) {
       return item.username == username;
     });
 
     if (loginResponse) {
-      await this.props.setUserLogin(true);
-      await this.props.setUserName(loginResponse.username);
-      await this.props.setUserRole(loginResponse.role);
+      if (loginResponse.role !== "requested") {
+        await this.props.setUserLogin(true);
+        await this.props.setUserName(loginResponse.username);
+        await this.props.setUserRole(loginResponse.role);
 
-      localStorage.setItem("isAuthenticated","true")
-      localStorage.setItem("username", loginResponse.username);
-      localStorage.setItem("role", loginResponse.role);
-      history.push(referer)
-    }else{
-      await this.props.setUserLogin(false);
-      await this.props.setUserName(null);
-      await this.props.setUserRole(null);
-
-      localStorage.setItem("isAuthenticated","false")
-      localStorage.setItem("username", "");
-      localStorage.setItem("role", "");
+        localStorage.setItem("isAuthenticated", "true");
+        localStorage.setItem("username", loginResponse.username);
+        localStorage.setItem("role", loginResponse.role);
+        history.push(referer);
+      } else {
+        this.messages.show({
+          closable: false,
+          severity: "warn",
+          summary: "Your request hasn't been accepted by the admin",
+          // detail: "Order submitted"
+        });
+      }
+    } else {
+      // await this.props.setUserLogin(false);
+      // await this.props.setUserName(null);
+      // await this.props.setUserRole(null);
+      // localStorage.setItem("isAuthenticated", "false");
+      // localStorage.setItem("username", "");
+      // localStorage.setItem("role", "");
+      this.messages.show({
+        closable: false,
+        severity: "error",
+        summary: "User does not exist, please Sign-up",
+        // detail: "Order submitted"
+      });
     }
   }
 
@@ -165,6 +179,8 @@ class LoginPage extends React.Component {
                 Forgot Password
               </div>
             </div>
+            <br/>
+            <Messages ref={el => (this.messages = el)}></Messages>
           </div>
         </div>
       </div>
