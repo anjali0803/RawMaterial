@@ -54,6 +54,7 @@ export default class TableComponent extends React.Component {
           onSelectionChange={e => this.setState({ selected: e.value })}
         >
         <Column selectionMode="multiple" style={{width:'3em'}}/>
+        <Column header={<i class="pi pi-refresh"></i>} style={{width:'3em'}}/>
           {colList.map(el => {
             return (
               <Column
