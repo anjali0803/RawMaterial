@@ -5,6 +5,7 @@ import "primereact/resources/themes/nova-light/theme.css";
 import "./App.css";
 import TopBanner from "./components/Banner/TopBanner.js";
 import LoginPage from "./components/Login/LoginPage";
+import SignUpPage from "./components/SignUp/SignUpPage";
 import HomePage from "./components/HomePage/HomePage";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 import { connect } from "react-redux";
@@ -20,6 +21,7 @@ class App extends React.Component {
         <HashRouter>
           <Switch>
             <Route path="/login" component={LoginPage} />
+            <Route path="/sign-up" component={SignUpPage} />
             <PrivateRoute path="/" component={HomePage} isAuthenticated={this.props.userLogin}/>
           </Switch>
         </HashRouter>

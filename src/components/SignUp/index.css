@@ -1,0 +1,17 @@
+.main-container {
+    width : 100%;
+    
+}
+
+.sign-up-page{
+    margin-top: 5%;
+    text-align: center;
+}
+
+.sign-up-container {
+    display: inline-block;
+    width: 300px;
+}
+/* 
+.sign-up-container {
+} */

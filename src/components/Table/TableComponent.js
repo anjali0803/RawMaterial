@@ -12,10 +12,15 @@ export default class TableComponent extends React.Component {
     super();
     this.state = {
       selected: [],
-      isLoading: false
+      isLoading: false,
     };
+    this.documentIdTemplate = this.documentIdTemplate.bind(this);
 
     this.handleClickAllSelected = this.handleClickAllSelected.bind(this);
+  }
+  documentIdTemplate(rowData) {
+    console.log(this.props);
+    return <a onClick={this.props.onDocumentIdClick} >{rowData['documentId']}</a>
   }
   handleClickAllSelected(action) {
     const data = this.state.selected;
@@ -53,18 +58,34 @@ export default class TableComponent extends React.Component {
           selection={this.state.selected}
           onSelectionChange={e => this.setState({ selected: e.value })}
         >
-        <Column selectionMode="multiple" style={{width:'3em'}}/>
-        <Column header={<i class="pi pi-refresh"></i>} style={{width:'3em'}}/>
+          <Column selectionMode="multiple" style={{ width: '3em' }} />
+          <Column header={<i className="pi pi-refresh"></i>} style={{ width: '3em' }} />
           {colList.map(el => {
-            return (
-              <Column
-                field={el.field}
+            const field = el.field;
+            const header = el.header;
+            console.log(header.toLowerCase().replace(/ /g, ''))
+            if (header.toLowerCase().replace(/ /g, '') == 'documentid') {
+              console.log(el);
+              return <Column
+
                 header={el.header}
                 filter={true}
                 sortable={true}
                 filterMatchMode="startsWith"
+                body={this.documentIdTemplate}
               />
-            );
+            }
+            else
+              return (
+                <Column
+                  field={el.field}
+                  header={el.header}
+                  filter={true}
+                  sortable={true}
+                  filterMatchMode="startsWith"
+
+                />
+              );
           })}
         </DataTable>
       </div>

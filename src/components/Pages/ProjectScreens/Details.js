@@ -5,104 +5,171 @@ import 'primereact/resources/themes/nova-light/theme.css';
 import FileUpload from '../../FileUpload/FileUpload';
 import { InputText } from 'primereact/inputtext';
 import { Dropdown } from 'primereact/dropdown'
+import { createHashHistory } from 'history'
 import './index.css';
-import { setProjectFields, setProgressActiveIndex } from '../../../actions/dataActions'
+import { setProjectId, setProjectTitle, setProjectType, setProjectCustomer } from '../../../actions/dataActions'
 import { connect } from 'react-redux';
-
-
+import ProgressBar from './ProgressBar';
+import ButtonHeader from '../../ButtonHeader/ButtonHeader'
+const history = createHashHistory();
+//readOnly props 
 class Details extends React.Component {
 
-    constructor() {
-        super()
-        //reset progbar index
+    constructor(props) {
+        super(props)
+        console.log("details", props)
+        this.state = {
+            projectId: props.projectId || '',
+            title: props.projectTitle || '',
+            type: props.projectType || '',
+            customer: props.projectCustomer || '',
+            projectTypes: [
+                { label: 'Alpha', value: 'Alpha' },
+                { label: 'Beta', value: 'Beta' },
+                { label: 'Gamma', value: 'Gamma' },
+                { label: 'theta', value: 'theta' },
+                { label: 'omega', value: 'omega' }
+            ]
+        }
+        this.handleInputCustomer = this.handleInputCustomer.bind(this);
+        this.handleInputType = this.handleInputType.bind(this);
+        this.handleInputTitle = this.handleInputTitle.bind(this);
+        this.onSave = this.onSave.bind(this);
+        this.onDelete = this.onDelete.bind(this);
+
+    }
+    componentDidMount() {
+        if (this.props.projectId === '')
+            return;
+        const { projectId, type, title, customer } = this.props;
+        this.setState({ projectId, type, title, customer })
+    }
+    uploadHandler() {
+        console.log('upload handled');
+    }
+    handleInputCustomer(e) {
+
+        this.setState({ customer: e.target.value })
 
 
     }
+    handleInputType(e) {
 
-    uploadHandler() {
-        console.log('upload handled');
+        this.setState({ type: e.value })
+    }
+    handleInputTitle(e) {
+
+        this.setState({ title: e.target.value })
+    }
+    onSave() {
+        const { title, customer, type } = this.state;
+        console.log({ title, customer, type })
+        const projectId = Math.round(Math.random() * 10000000)
+        console.log('project id on save = ' + projectId)
+        this.props.setProjectId(projectId);
+        this.props.setProjectCustomer(customer);
+        this.props.setProjectTitle(title);
+        this.props.setProjectType(type)
+        history.push('/Inquiry/create-new-projects/input-key-value')
+        //
+    }
+    onDelete() {
+        console.log('Data deleted');
     }
 
 
     render() {
-
-
         return (
             <div>
-
+                <ButtonHeader saveEnabled={this.props.saveEnabled} deleteEnabled={this.props.deleteEnabled} className="details-button-header" onSave={() => this.onSave()} onDelete={() => this.onDelete()} />
                 <div className="details-container">
-                    <h3 className="details-input-label">Title</h3>
-                    <InputText id="title"
-                        value={this.props.title}
-                        onChange={(e) => this.props.handleInputTitle(e)}
-                        readOnly={this.props.readOnly}
-                    />
-                    {/* <span style={{ marginLeft: '.5em' }}>Title</span> */}
+                    <div className="details-form-container">
+                        <div className="details-project-id-container">
+                            <div className="details-input-label">Project Id</div>
+                            <InputText id="projectId"
+                                value={this.props.projectId}
+                                readOnly={true}
+                                disabled={true}
+                            />
+                        </div>
+                        <br></br>
+                        <div className="details-title-container">
+                            <div className="details-input-label">Title</div>
+                            <InputText id="title"
+                                value={this.state.title}
+                                onChange={this.handleInputTitle}
+                                readOnly={this.props.readOnly}
+                            />
+                        </div>
 
-                    <h3 className="details-input-label">Customer</h3>
-                    <InputText id="customer"
-                        value={this.props.customer}
-                        onChange={(e) => this.props.handleInputCustomer(e)}
-                        readOnly={this.props.readOnly} />
-                    {/* <span style={{ marginLeft: '.5em' }}>Customer</span> */}
+                        <br></br>
 
-                    <h3 className="details-input-label">Type</h3>
+                        {/* <span style={{ marginLeft: '.5em' }}>Title</span> */}
+                        <div className="details-customer-container">
+                            <div className="details-input-label">Customer</div>
+                            <InputText id="customer"
+                                value={this.state.customer}
+                                onChange={this.handleInputCustomer}
+                                readOnly={this.props.readOnly} />
+                            {/* <span style={{ marginLeft: '.5em' }}>Customer</span> */}
 
-                    <Dropdown value={this.props.type}
-                        options={this.props.projectTypes}
-                        onChange={(e) => this.props.handleInputType(e)}
-                        placeholder="Select a Type" />
+                        </div>
+                        <br></br>
 
+                        <div className="details-type-container">
+                            <div className="details-input-label">Type</div>
+                            <Dropdown id="type" value={this.state.type}
+                                options={this.state.projectTypes}
+                                onChange={this.handleInputType}
+                            />
+                        </div>
+                        <br></br>
 
-                    {/* <span style={{ marginLeft: '.5em' }}>Type</span> */}
-                    <br /> <br />
+                    </div>
 
                     <div className="upload-label" >Cost Sheet</div>
                     <FileUpload
                         className="cost-sheet-upload"
                         disabled={this.props.readOnly} />
 
-                    {/* <Button disabled={this.props.readOnly} onClick={this.onSubmit} className="details-submit p-button-raised p-button-rounded" label="submit" /> */}
+                    <div className="upload-label" >PIPE</div>
+                    <FileUpload
+                        className="pipe-upload"
+                        disabled={this.props.readOnly}
+                    />
 
-                    <div className='details-pipe'>
-                        <div className="upload-label" >PIPE</div>
-                        <FileUpload
-                            className="pipe-upload"
-                            disabled={this.props.readOnly}
-                        />
-                    </div>
-                    <div className='details-inner-coating'>
-                        <div className="upload-label" >INNER-COATING</div>
-                        <FileUpload
-                            className="inner-coating-upload"
-                            disabled={this.props.readOnly}
-                        />
-                    </div>
-                    <div className='details-outer-coating'>
-                        <div className="upload-label" >OUTER-COATING</div>
-                        <FileUpload
-                            className="outer-coating-upload"
-                            disabled={this.props.readOnly}
-                        />
-                    </div>
+                    <div className="upload-label" >INNER-COATING</div>
+                    <FileUpload
+                        className="inner-coating-upload"
+                        disabled={this.props.readOnly}
+                    />
+                    <div className="upload-label" >OUTER-COATING</div>
+                    <FileUpload
+                        className="outer-coating-upload"
+                        disabled={this.props.readOnly}
+                    />
 
-                </div >
 
-            </div>
+                </div>
+
+            </div >
+
+
 
         )
     }
 }
 const mapStateToProps = state => ({
     projectId: state.projectId,
-    projectCustomer: state.customer,
-    projectType: state.type,
+    projectType: state.projectType,
     projectTitle: state.projectTitle,
-    readOnly: state.readOnly,
-    progressActiveIndex: state.progresActiveIndex
+    projectCustomer: state.projectCustomer
 })
 const mapDispatchToProps = dispatch => ({
-    setProjectFields: (projectId, projectTitle, projectCustomer, projectType) => dispatch(setProjectFields(projectId, projectTitle, projectCustomer, projectType)),
-    setProgressActiveIndex: (progressActiveIndex) => dispatch(setProgressActiveIndex(progressActiveIndex))
+    setProjectId: (projectId) => dispatch(setProjectId(projectId)),
+    setProjectTitle: (projectTitle) => dispatch(setProjectTitle(projectTitle)),
+    setProjectCustomer: (projectCustomer) => dispatch(setProjectCustomer(projectCustomer)),
+    setProjectType: (projectType) => dispatch(setProjectType(projectType))
+
 });
 export default connect(mapStateToProps, mapDispatchToProps)(Details);

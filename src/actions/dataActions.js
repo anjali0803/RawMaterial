@@ -12,17 +12,31 @@ export function setColList(colList) {
     }
 }
 
-export function setProjectFields(projectId, projectTitle, projectCustomer, projectType) {
+export function setProjectId(projectId) {
     return {
-        type: 'SET_PROJECT_FIELDS',
-        projectId, projectTitle, projectCustomer, projectType
+        type: 'SET_PROJECT_ID',
+        projectId
     }
 }
 
-export function setProgressActiveIndex(progressActiveIndex) {
+export function setProjectType(projectType) {
     return {
-        type: 'SET_PROGRESS_ACTIVE_INDEX',
-        progressActiveIndex
+        type: 'SET_PROJECT_TYPE',
+        projectType
+    }
+}
+
+export function setProjectTitle(projectTitle) {
+    return {
+        type: 'SET_PROJECT_TITLE',
+        projectTitle
+    }
+}
+
+export function setProjectCustomer(projectCustomer) {
+    return {
+        type: 'SET_PROJECT_CUSTOMER',
+        projectCustomer
     }
 }
 
