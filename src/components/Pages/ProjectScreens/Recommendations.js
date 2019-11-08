@@ -1,6 +1,7 @@
 import React from 'react';
 import { HashRouter, Route } from 'react-router-dom';
 import { createHashHistory } from 'history'
+import { connect } from "react-redux";
 import './index.css';
 import KeyValueTable from '../../KeyValueTable/KeyValueTable';
 import InputTable from '../../InputTable/InputTable';
@@ -9,8 +10,11 @@ import ButtonHeader from '../../ButtonHeader/ButtonHeader';
 import ProgressBar from './ProgressBar';
 const history = createHashHistory();
 class Recommendations extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
+        if (props.projectId === '') {
+            history.push('/Inquiry/create-new-projects/details')
+        }
         this.onSave = this.onSave.bind(this);
         this.onDelete = this.onDelete.bind(this);
         this.state = {
@@ -154,4 +158,9 @@ class Recommendations extends React.Component {
     }
 }
 
-export default Recommendations;
+const mapStateToProps = state => ({
+    projectId: state.projectId
+});
+export default connect(
+    mapStateToProps
+)(Recommendations);

@@ -1,5 +1,6 @@
 import React from 'react';
 import { createHashHistory } from 'history'
+import { connect } from 'react-redux'
 import './index.css';
 import TableComponent from '../../Table/TableComponent';
 import ButtonHeader from '../../ButtonHeader/ButtonHeader';
@@ -7,8 +8,11 @@ const history = createHashHistory();
 
 
 class OutputDocument extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
+        if (props.projectId === '') {
+            history.push('/Inquiry/create-new-projects/details')
+        }
         this.state = {
             saveEnabled: true,
             deleteEnabled: true,
@@ -145,4 +149,9 @@ class OutputDocument extends React.Component {
     }
 }
 
-export default OutputDocument;
+const mapStateToProps = state => ({
+    projectId: state.projectId
+});
+export default connect(
+    mapStateToProps
+)(OutputDocument);
