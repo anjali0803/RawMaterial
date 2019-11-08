@@ -154,12 +154,7 @@ class MenuComponent extends React.Component {
 }
 
 const mapStateToProps = state => ({
-    userLogin: state.userLogin,
-    userName: state.userName,
-    userRole: state.userRole,
-    dataList: state.dataList,
-    colList: state.colList,
-    userList: state.userList
+    userRole: state.userRole
 });
 
 const mapDispatchToProps = dispatch => ({
