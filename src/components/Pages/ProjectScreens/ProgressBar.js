@@ -2,12 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import './index.css';
 
-const getWindowUrlOrigin = () => {
-    return {
-        url: window.location.href,
-        origin: window.location.origin
-    }
-}
+
 class ProgressBar extends React.Component {
 
     render() {

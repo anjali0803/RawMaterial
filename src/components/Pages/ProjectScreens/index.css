@@ -1,11 +1,51 @@
+
+
 .details-container{
-    width:400px;
-    margin-left: 30% ;
+    
+	margin-left: 30% ;
+	width: 400px;
+	margin:auto;
+}
+
+.details-form-container{
+	width: 100%;
+	display: table;
+}
+
+.details-customer-container{
+	display: table-row;
+
+}
+.details-title-container{
+	display: table-row;
+	
+}
+.details-type-container{
+	display: table-row;
+}
+.details-empty-container{
+	display: table-row;
 }
 .details-input-label{
+	
+	display: table-cell;
+	
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     font-weight: lighter;
     font-size:14px;
+}
+
+#title{
+	display: table-cell;
+	width: 250px;;
+}
+#customer{
+	display: table-cell;
+	width: 250px;;
+}
+#type{
+	display: table-cell;
+	width: 250px;;
 }
 .details-submit{
     width: 100%;
@@ -52,31 +92,38 @@
 .details-withdraw > span{
 	font-size: 16px;	
 }
-.details-pipe{
+/* .details-cost-sheet{
+	display: table-row; 
+}*/
+/* .details-pipe{
     margin-top:20px;
-    border:none;
+	border:none;
     border-top: 2px solid rgb(192, 218, 247);
     
 }
 .details-inner-coating{
-    margin-top:20px;
+	margin-top:20px;
     border-top: 2px solid  rgb(192, 218, 247);
 }
 .details-outer-coating{
+	
     margin-top:20px;
     border-top: 2px solid  rgb(192, 218, 247);
-}
+} */
 
 
 
 .upload-label{
-    
-    padding: 3px;
-    width: 300px;
+	width: 100%;
+	border-top: 2px solid rgb(233, 233, 250);
+	margin : 10px;
+	margin-left: 0px;;
+    padding: 5px;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 .cost-sheet-upload{
-    margin-bottom: 29px;
+	/* margin-bottom: 29px; */
+	
 }
 .pipe-upload{
     margin-bottom: 10px;
@@ -98,7 +145,6 @@
 	font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 	width: 100%;
 	margin-top: 10px;
-	margin-bottom:10px;
 	margin-left : 9px;
 }
 
@@ -118,8 +164,9 @@
 	color: white;
 	cursor: default;
 	margin: 0 3px;
+	
 	padding: 10px 10px 10px 30px;
-	min-width: 180px;
+	min-width: 181px;
 	float: left;
 	position: relative;
 	background-color: #547bc4;

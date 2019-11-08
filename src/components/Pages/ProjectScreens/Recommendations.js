@@ -127,9 +127,7 @@ class Recommendations extends React.Component {
         }
     }
 
-    onClick() {
-        history.push("/Inquiry/create-new-projects/recommendations/second");
-    }
+
     onSave() {
         console.log('Recommendations Save..');
         history.push("/Inquiry/create-new-projects/acceptance");
@@ -150,8 +148,6 @@ class Recommendations extends React.Component {
         return (
             <div>
                 <ButtonHeader saveEnabled={this.props.saveEnabled} deleteEnabled={this.props.deleteEnabled} className="progbar-button-header" onSave={() => this.onSave()} onDelete={() => this.onDelete()} />
-                <ProgressBar steps={this.props.steps} unqURL={window.location.href.replace(window.location.origin, '')} />
-                <button onClick={this.onClick}>Click me</button>
                 <TableComponent colList={this.state.tableColList} dataList={this.state.tableData} onDocumentIdClick={this.recommendationsDocClick} />
             </div>
         )
