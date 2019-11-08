@@ -58,7 +58,8 @@ export default class TableComponent extends React.Component {
           selection={this.state.selected}
           onSelectionChange={e => this.setState({ selected: e.value })}
         >
-          <Column selectionMode="multiple" style={{ width: '3em' }} />
+        <Column selectionMode="multiple" style={{width:'3em'}}/>
+        <Column header={<i class="pi pi-refresh"></i>} style={{width:'3em'}}/>
           {colList.map(el => {
             const field = el.field;
             const header = el.header;
