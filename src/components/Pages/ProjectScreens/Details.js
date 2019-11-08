@@ -5,22 +5,63 @@ import 'primereact/resources/themes/nova-light/theme.css';
 import FileUpload from '../../FileUpload/FileUpload';
 import { InputText } from 'primereact/inputtext';
 import { Dropdown } from 'primereact/dropdown'
+import { createHashHistory } from 'history'
 import './index.css';
 import { setProjectFields, setProgressActiveIndex } from '../../../actions/dataActions'
 import { connect } from 'react-redux';
-
-
+import ProgressBar from './ProgressBar';
+import ButtonHeader from '../../ButtonHeader/ButtonHeader'
+const history = createHashHistory();
+//readOnly props 
 class Details extends React.Component {
 
     constructor() {
         super()
-        //reset progbar index
+        this.state = {
 
+            title: '',
+            type: '',
+            customer: '',
+            projectTypes: [
+                { label: 'Alpha', value: 'Alpha' },
+                { label: 'Beta', value: 'Beta' },
+                { label: 'Gamma', value: 'Gamma' },
+                { label: 'theta', value: 'theta' },
+                { label: 'omega', value: 'omega' }
+            ]
+        }
+        this.handleInputCustomer = this.handleInputCustomer.bind(this);
+        this.handleInputType = this.handleInputType.bind(this);
+        this.handleInputTitle = this.handleInputTitle.bind(this);
+        this.onSave = this.onSave.bind(this);
+        this.onDelete = this.onDelete.bind(this);
 
     }
 
     uploadHandler() {
         console.log('upload handled');
+    }
+    handleInputCustomer(e) {
+
+        this.setState({ customer: e.target.value })
+
+
+    }
+    handleInputType(e) {
+
+        this.setState({ type: e.value })
+    }
+    handleInputTitle(e) {
+
+        this.setState({ title: e.target.value })
+    }
+    onSave() {
+        const { title, customer, type } = this.state;
+        console.log({ title, customer, type })
+        history.push('/Inquiry/create-new-projects/input-key-value')
+    }
+    onDelete() {
+        console.log('Data deleted');
     }
 
 
@@ -30,27 +71,30 @@ class Details extends React.Component {
         return (
             <div>
 
+                <ButtonHeader saveEnabled={this.props.saveEnabled} deleteEnabled={this.props.deleteEnabled} className="progbar-button-header" onSave={() => this.onSave()} onDelete={() => this.onDelete()} />
+                <ProgressBar steps={this.props.steps} unqURL={window.location.href.replace(window.location.origin, '')} />
+
                 <div className="details-container">
                     <h3 className="details-input-label">Title</h3>
                     <InputText id="title"
-                        value={this.props.title}
-                        onChange={(e) => this.props.handleInputTitle(e)}
+                        value={this.state.title}
+                        onChange={this.handleInputTitle}
                         readOnly={this.props.readOnly}
                     />
                     {/* <span style={{ marginLeft: '.5em' }}>Title</span> */}
 
                     <h3 className="details-input-label">Customer</h3>
                     <InputText id="customer"
-                        value={this.props.customer}
-                        onChange={(e) => this.props.handleInputCustomer(e)}
+                        value={this.state.customer}
+                        onChange={this.handleInputCustomer}
                         readOnly={this.props.readOnly} />
                     {/* <span style={{ marginLeft: '.5em' }}>Customer</span> */}
 
                     <h3 className="details-input-label">Type</h3>
 
-                    <Dropdown value={this.props.type}
-                        options={this.props.projectTypes}
-                        onChange={(e) => this.props.handleInputType(e)}
+                    <Dropdown value={this.state.type}
+                        options={this.state.projectTypes}
+                        onChange={this.handleInputType}
                         placeholder="Select a Type" />
 
 
@@ -61,9 +105,6 @@ class Details extends React.Component {
                     <FileUpload
                         className="cost-sheet-upload"
                         disabled={this.props.readOnly} />
-
-                    {/* <Button disabled={this.props.readOnly} onClick={this.onSubmit} className="details-submit p-button-raised p-button-rounded" label="submit" /> */}
-
                     <div className='details-pipe'>
                         <div className="upload-label" >PIPE</div>
                         <FileUpload

@@ -21,9 +21,7 @@ class FileUpload extends React.Component {
         if (this.state.classString.search('active') === -1) {
             this.setState({ classString: this.state.classString + ' active' })
         }
-        // const fileName = e.target.value.substring(e.target.value.lastIndexOf('\\') + 1);
-        //console.log(new FileReader().readAsText(e.target.files[0]));
-
+        
         const reader = new FileReader()
         const readFileContent = (file) => {
             return new Promise((resolve, reject) => {
