@@ -2,12 +2,16 @@ import React from 'react';
 import { createHashHistory } from 'history'
 import TableComponent from '../../Table/TableComponent';
 import ButtonHeader from '../../ButtonHeader/ButtonHeader';
+import { connect } from 'react-redux'
 import './index.css';
-
 const history = createHashHistory();
 class InputKeyValue extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
+        console.log("here", this.props)
+        if (props.projectId === '') {
+            history.push('/Inquiry/create-new-projects/details')
+        }
         this.onSave = this.onSave.bind(this);
         this.onDelete = this.onDelete.bind(this);
         this.state = {
@@ -122,6 +126,8 @@ class InputKeyValue extends React.Component {
 
         }
     }
+
+
     onDocIdClick() {
         history.push("/Inquiry/create-new-projects/input-key-value/second");
     }
@@ -136,14 +142,19 @@ class InputKeyValue extends React.Component {
     }
 
     render() {
+
         return (
             <div>
-
                 <ButtonHeader saveEnabled={this.props.saveEnabled} deleteEnabled={this.props.deleteEnabled} className="progbar-button-header" onSave={() => this.onSave()} onDelete={() => this.onDelete()} />
                 <TableComponent colList={this.state.tableColList} dataList={this.state.tableData} onDocumentIdClick={this.onDocIdClick} />
             </div>
+
         )
     }
 }
-
-export default InputKeyValue;
+const mapStateToProps = state => ({
+    projectId: state.projectId
+});
+export default connect(
+    mapStateToProps
+)(InputKeyValue);

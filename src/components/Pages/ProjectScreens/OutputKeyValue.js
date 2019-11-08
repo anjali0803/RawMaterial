@@ -1,13 +1,17 @@
 import React from 'react';
 import { createHashHistory } from 'history'
+import { connect } from "react-redux";
 import './index.css';
 import TableComponent from '../../Table/TableComponent';
 import ButtonHeader from '../../ButtonHeader/ButtonHeader';
 
 const history = createHashHistory();
 class OutputKeyValue extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
+        if (props.projectId === '') {
+            history.push('/Inquiry/create-new-projects/details')
+        }
         this.onSave = this.onSave.bind(this);
         this.onDelete = this.onDelete.bind(this);
         this.state = {
@@ -150,4 +154,9 @@ class OutputKeyValue extends React.Component {
     }
 }
 
-export default OutputKeyValue;
+const mapStateToProps = state => ({
+    projectId: state.projectId
+});
+export default connect(
+    mapStateToProps
+)(OutputKeyValue);

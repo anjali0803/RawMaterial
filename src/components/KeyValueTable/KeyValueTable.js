@@ -5,10 +5,13 @@ import DocumentHeader from '../DocumentHeader/DocumentHeader';
 import ButtonHeader from '../ButtonHeader/ButtonHeader';
 import ProgressBar from '../Pages/ProjectScreens/ProgressBar';
 import { createHashHistory } from 'history'
+import { connect } from "react-redux";
 const history = createHashHistory();
 class KeyValueTable extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
+        if (this.props.projectId === '')
+            history.push('/Inquiry/create-new-projects/details')
         this.onSave = this.onSave.bind(this);
         this.onDelete = this.onDelete.bind(this);
         this.state = {
@@ -45,5 +48,7 @@ class KeyValueTable extends React.Component {
         )
     }
 }
-
-export default KeyValueTable;
+const mapStateToProps = state => ({
+    projectId: state.projectId
+})
+export default connect(mapStateToProps)(KeyValueTable);

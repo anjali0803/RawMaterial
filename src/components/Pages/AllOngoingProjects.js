@@ -4,6 +4,8 @@ import TableComponent from '../Table/TableComponent';
 import { connect } from 'react-redux';
 
 class AllOngoingProjects extends React.Component {
+
+
     render() {
         return (
             <div>

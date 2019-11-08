@@ -1,16 +1,19 @@
 import React from 'react';
-import { HashRouter, Route } from 'react-router-dom';
 import { createHashHistory } from 'history'
-import './index.css';
-import KeyValueTable from '../../KeyValueTable/KeyValueTable';
-import InputTable from '../../InputTable/InputTable';
+import { connect } from 'react-redux'
 import TableComponent from '../../Table/TableComponent';
 import ButtonHeader from '../../ButtonHeader/ButtonHeader';
-import ProgressBar from './ProgressBar';
+import './index.css';
+
 const history = createHashHistory();
+
 class Acceptance extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+
+        super(props);
+        if (props.projectId === '') {
+            history.push('/Inquiry/create-new-projects/details')
+        }
         this.onSave = this.onSave.bind(this);
         this.onDelete = this.onDelete.bind(this);
         this.state = {
@@ -151,4 +154,9 @@ class Acceptance extends React.Component {
     }
 }
 
-export default Acceptance;
+const mapStateToProps = state => ({
+    projectId: state.projectId
+});
+export default connect(
+    mapStateToProps
+)(Acceptance);

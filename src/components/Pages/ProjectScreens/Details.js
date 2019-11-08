@@ -7,7 +7,7 @@ import { InputText } from 'primereact/inputtext';
 import { Dropdown } from 'primereact/dropdown'
 import { createHashHistory } from 'history'
 import './index.css';
-import { setProjectFields, setProgressActiveIndex } from '../../../actions/dataActions'
+import { setProjectId, setProjectTitle, setProjectType, setProjectCustomer } from '../../../actions/dataActions'
 import { connect } from 'react-redux';
 import ProgressBar from './ProgressBar';
 import ButtonHeader from '../../ButtonHeader/ButtonHeader'
@@ -15,13 +15,14 @@ const history = createHashHistory();
 //readOnly props 
 class Details extends React.Component {
 
-    constructor() {
-        super()
+    constructor(props) {
+        super(props)
+        console.log("details", props)
         this.state = {
-
-            title: '',
-            type: '',
-            customer: '',
+            projectId: props.projectId || '',
+            title: props.projectTitle || '',
+            type: props.projectType || '',
+            customer: props.projectCustomer || '',
             projectTypes: [
                 { label: 'Alpha', value: 'Alpha' },
                 { label: 'Beta', value: 'Beta' },
@@ -37,7 +38,12 @@ class Details extends React.Component {
         this.onDelete = this.onDelete.bind(this);
 
     }
-
+    componentDidMount() {
+        if (this.props.projectId === '')
+            return;
+        const { projectId, type, title, customer } = this.props;
+        this.setState({ projectId, type, title, customer })
+    }
     uploadHandler() {
         console.log('upload handled');
     }
@@ -58,7 +64,14 @@ class Details extends React.Component {
     onSave() {
         const { title, customer, type } = this.state;
         console.log({ title, customer, type })
+        const projectId = Math.round(Math.random() * 10000000)
+        console.log('project id on save = ' + projectId)
+        this.props.setProjectId(projectId);
+        this.props.setProjectCustomer(customer);
+        this.props.setProjectTitle(title);
+        this.props.setProjectType(type)
         history.push('/Inquiry/create-new-projects/input-key-value')
+        //
     }
     onDelete() {
         console.log('Data deleted');
@@ -66,17 +79,20 @@ class Details extends React.Component {
 
 
     render() {
-
-
         return (
             <div>
-
-
-
                 <ButtonHeader saveEnabled={this.props.saveEnabled} deleteEnabled={this.props.deleteEnabled} className="details-button-header" onSave={() => this.onSave()} onDelete={() => this.onDelete()} />
                 <div className="details-container">
                     <div className="details-form-container">
-
+                        <div className="details-project-id-container">
+                            <div className="details-input-label">Project Id</div>
+                            <InputText id="projectId"
+                                value={this.props.projectId}
+                                readOnly={true}
+                                disabled={true}
+                            />
+                        </div>
+                        <br></br>
                         <div className="details-title-container">
                             <div className="details-input-label">Title</div>
                             <InputText id="title"
@@ -105,7 +121,7 @@ class Details extends React.Component {
                             <Dropdown id="type" value={this.state.type}
                                 options={this.state.projectTypes}
                                 onChange={this.handleInputType}
-                                placeholder="Select a Type" />
+                            />
                         </div>
                         <br></br>
 
@@ -145,14 +161,15 @@ class Details extends React.Component {
 }
 const mapStateToProps = state => ({
     projectId: state.projectId,
-    projectCustomer: state.customer,
-    projectType: state.type,
+    projectType: state.projectType,
     projectTitle: state.projectTitle,
-    readOnly: state.readOnly,
-    progressActiveIndex: state.progresActiveIndex
+    projectCustomer: state.projectCustomer
 })
 const mapDispatchToProps = dispatch => ({
-    setProjectFields: (projectId, projectTitle, projectCustomer, projectType) => dispatch(setProjectFields(projectId, projectTitle, projectCustomer, projectType)),
-    setProgressActiveIndex: (progressActiveIndex) => dispatch(setProgressActiveIndex(progressActiveIndex))
+    setProjectId: (projectId) => dispatch(setProjectId(projectId)),
+    setProjectTitle: (projectTitle) => dispatch(setProjectTitle(projectTitle)),
+    setProjectCustomer: (projectCustomer) => dispatch(setProjectCustomer(projectCustomer)),
+    setProjectType: (projectType) => dispatch(setProjectType(projectType))
+
 });
 export default connect(mapStateToProps, mapDispatchToProps)(Details);
