@@ -1,14 +1,23 @@
 .button-header{
-    margin-left: 84%;;
-   padding-top: 8px;
-   display: table;
-}
-.save-button {
+   margin-left:83%;
+   padding: 10px;
+   padding-right:0px;
+   width: auto;
   
-    
+   display: table;
+   /* overflow: auto; */
+   
 }
 
-.delete-button{
+.save-container{
+   display: table-cell;
+   padding-right: 7px;
+   width: auto;
+}
+
+.delete-container{
+   display: table-cell;
+   width: auto;
   
-   transform: translateX(+10px);
+
 }
