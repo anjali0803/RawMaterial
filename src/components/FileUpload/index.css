@@ -51,7 +51,7 @@
 }
 
 .file-upload.active .file-select {
-	border-color: #3fa46a;
+	border-color: #23468c;
 	transition: all .2s ease-in-out;
 	-moz-transition: all .2s ease-in-out;
 	-webkit-transition: all .2s ease-in-out;
@@ -59,7 +59,7 @@
 }
 
 .file-upload.active .file-select .file-select-button {
-	background: #3fa46a;
+	background: #23468c;
 	color: #FFFFFF;
 	transition: all .2s ease-in-out;
 	-moz-transition: all .2s ease-in-out;

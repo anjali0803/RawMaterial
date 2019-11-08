@@ -1,13 +1,11 @@
 import React from 'react';
-import { HashRouter, Route } from 'react-router-dom';
 import { createHashHistory } from 'history'
 import './index.css';
-import KeyValueTable from '../../KeyValueTable/KeyValueTable';
-import InputTable from '../../InputTable/InputTable';
 import TableComponent from '../../Table/TableComponent';
 import ButtonHeader from '../../ButtonHeader/ButtonHeader';
-import ProgressBar from './ProgressBar';
 const history = createHashHistory();
+
+
 class OutputDocument extends React.Component {
     constructor() {
         super();
@@ -128,9 +126,7 @@ class OutputDocument extends React.Component {
     onDocIdClick() {
         history.push('/Inquiry/create-new-projects/output-document/second')
     }
-    onClick() {
-        history.push("/Inquiry/create-new-projects/output-document/second");
-    }
+
     onSave() {
         console.log('Output document saved......')
         history.push("/");
@@ -143,9 +139,7 @@ class OutputDocument extends React.Component {
         return (
             <div>
                 <ButtonHeader saveEnabled={this.state.saveEnabled} deleteEnabled={this.state.deleteEnabled} className="progbar-button-header" onSave={() => this.onSave()} onDelete={() => this.onDelete()} />
-                <ProgressBar steps={this.props.steps} unqURL={window.location.href.replace(window.location.origin, '')} />
-                <button onClick={this.onClick}>Click me</button>
-                <TableComponent colList={this.props.colList} dataList={this.props.dataList} onDocumentIdClick={this.onDocIdClick} />
+                <TableComponent colList={this.state.tableColList} dataList={this.state.tableData} onDocumentIdClick={this.onDocIdClick} />
             </div>
         )
     }

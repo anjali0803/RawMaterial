@@ -71,65 +71,74 @@ class Details extends React.Component {
         return (
             <div>
 
-                <ButtonHeader saveEnabled={this.props.saveEnabled} deleteEnabled={this.props.deleteEnabled} className="progbar-button-header" onSave={() => this.onSave()} onDelete={() => this.onDelete()} />
-                <ProgressBar steps={this.props.steps} unqURL={window.location.href.replace(window.location.origin, '')} />
 
+
+                <ButtonHeader saveEnabled={this.props.saveEnabled} deleteEnabled={this.props.deleteEnabled} className="details-button-header" onSave={() => this.onSave()} onDelete={() => this.onDelete()} />
                 <div className="details-container">
-                    <h3 className="details-input-label">Title</h3>
-                    <InputText id="title"
-                        value={this.state.title}
-                        onChange={this.handleInputTitle}
-                        readOnly={this.props.readOnly}
-                    />
-                    {/* <span style={{ marginLeft: '.5em' }}>Title</span> */}
+                    <div className="details-form-container">
 
-                    <h3 className="details-input-label">Customer</h3>
-                    <InputText id="customer"
-                        value={this.state.customer}
-                        onChange={this.handleInputCustomer}
-                        readOnly={this.props.readOnly} />
-                    {/* <span style={{ marginLeft: '.5em' }}>Customer</span> */}
+                        <div className="details-title-container">
+                            <div className="details-input-label">Title</div>
+                            <InputText id="title"
+                                value={this.state.title}
+                                onChange={this.handleInputTitle}
+                                readOnly={this.props.readOnly}
+                            />
+                        </div>
 
-                    <h3 className="details-input-label">Type</h3>
+                        <br></br>
 
-                    <Dropdown value={this.state.type}
-                        options={this.state.projectTypes}
-                        onChange={this.handleInputType}
-                        placeholder="Select a Type" />
+                        {/* <span style={{ marginLeft: '.5em' }}>Title</span> */}
+                        <div className="details-customer-container">
+                            <div className="details-input-label">Customer</div>
+                            <InputText id="customer"
+                                value={this.state.customer}
+                                onChange={this.handleInputCustomer}
+                                readOnly={this.props.readOnly} />
+                            {/* <span style={{ marginLeft: '.5em' }}>Customer</span> */}
 
+                        </div>
+                        <br></br>
 
-                    {/* <span style={{ marginLeft: '.5em' }}>Type</span> */}
-                    <br /> <br />
+                        <div className="details-type-container">
+                            <div className="details-input-label">Type</div>
+                            <Dropdown id="type" value={this.state.type}
+                                options={this.state.projectTypes}
+                                onChange={this.handleInputType}
+                                placeholder="Select a Type" />
+                        </div>
+                        <br></br>
+
+                    </div>
 
                     <div className="upload-label" >Cost Sheet</div>
                     <FileUpload
                         className="cost-sheet-upload"
                         disabled={this.props.readOnly} />
-                    <div className='details-pipe'>
-                        <div className="upload-label" >PIPE</div>
-                        <FileUpload
-                            className="pipe-upload"
-                            disabled={this.props.readOnly}
-                        />
-                    </div>
-                    <div className='details-inner-coating'>
-                        <div className="upload-label" >INNER-COATING</div>
-                        <FileUpload
-                            className="inner-coating-upload"
-                            disabled={this.props.readOnly}
-                        />
-                    </div>
-                    <div className='details-outer-coating'>
-                        <div className="upload-label" >OUTER-COATING</div>
-                        <FileUpload
-                            className="outer-coating-upload"
-                            disabled={this.props.readOnly}
-                        />
-                    </div>
 
-                </div >
+                    <div className="upload-label" >PIPE</div>
+                    <FileUpload
+                        className="pipe-upload"
+                        disabled={this.props.readOnly}
+                    />
 
-            </div>
+                    <div className="upload-label" >INNER-COATING</div>
+                    <FileUpload
+                        className="inner-coating-upload"
+                        disabled={this.props.readOnly}
+                    />
+                    <div className="upload-label" >OUTER-COATING</div>
+                    <FileUpload
+                        className="outer-coating-upload"
+                        disabled={this.props.readOnly}
+                    />
+
+
+                </div>
+
+            </div >
+
+
 
         )
     }

@@ -8,9 +8,13 @@ class ButtonHeader extends React.Component {
     render() {
         return (
             <div className="button-header">
+                <div className="save-container" >
+                    <Button className="save-button" type="button" label="save" icon="pi pi-check" onClick={this.props.onSave} disabled={!this.props.saveEnabled} />
+                </div>
 
-                {this.props.saveEnabled ? <Button className="save-button" type="button" label="save" icon="pi pi-check" onClick={this.props.onSave} /> : null}
-                {this.props.deleteEnabled ? <Button className="delete-button" type="button" label="delete" icon="pi pi-times" onClick={this.props.onDelete} /> : null}
+                <div className="delete-container" >
+                    <Button className="delete-button" type="button" label="delete" icon="pi pi-times" onClick={this.props.onDelete} disabled={!this.props.deleteEnabled} />
+                </div>
 
             </div>
         )

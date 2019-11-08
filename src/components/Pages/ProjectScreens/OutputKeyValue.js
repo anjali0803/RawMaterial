@@ -1,14 +1,11 @@
 import React from 'react';
-import { HashRouter, Route } from 'react-router-dom';
 import { createHashHistory } from 'history'
 import './index.css';
-import KeyValueTable from '../../KeyValueTable/KeyValueTable';
-import InputTable from '../../InputTable/InputTable';
 import TableComponent from '../../Table/TableComponent';
 import ButtonHeader from '../../ButtonHeader/ButtonHeader';
-import ProgressBar from './ProgressBar';
+
 const history = createHashHistory();
-class Recommendations extends React.Component {
+class OutputKeyValue extends React.Component {
     constructor() {
         super();
         this.onSave = this.onSave.bind(this);
@@ -129,9 +126,7 @@ class Recommendations extends React.Component {
     onDocIdClick() {
         history.push("/Inquiry/create-new-projects/output-key-value/second");
     }
-    onClick() {
-        history.push("/Inquiry/create-new-projects/output-document/second");
-    }
+
     onSave() {
         console.log('Recommendations Save..');
         history.push("/Inquiry/create-new-projects/output-document");
@@ -148,12 +143,11 @@ class Recommendations extends React.Component {
         return (
             <div>
                 <ButtonHeader saveEnabled={this.props.saveEnabled} deleteEnabled={this.props.deleteEnabled} className="progbar-button-header" onSave={() => this.onSave()} onDelete={() => this.onDelete()} />
-                <ProgressBar steps={this.props.steps} unqURL={window.location.href.replace(window.location.origin, '')} />
-                <button onClick={this.onClick}>Click me</button>
-                <TableComponent colList={this.props.colList} dataList={this.props.dataList} onDocumentIdClick={this.onDocIdClick} />
+
+                <TableComponent colList={this.state.tableColList} dataList={this.state.tableData} onDocumentIdClick={this.onDocIdClick} />
             </div>
         )
     }
 }
 
-export default Recommendations;
+export default OutputKeyValue;

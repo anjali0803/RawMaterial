@@ -1,6 +1,5 @@
 import React from 'react';
 import { createHashHistory } from 'history'
-import ProgressBar from './ProgressBar'
 import TableComponent from '../../Table/TableComponent';
 import ButtonHeader from '../../ButtonHeader/ButtonHeader';
 import './index.css';
@@ -126,9 +125,7 @@ class InputKeyValue extends React.Component {
     onDocIdClick() {
         history.push("/Inquiry/create-new-projects/input-key-value/second");
     }
-    onClick() {
-        history.push("/Inquiry/create-new-projects/input-key-value/second");
-    }
+
     onSave() {
         console.log('Input-key-value Save..');
         history.push("/Inquiry/create-new-projects/recommendations");
@@ -141,9 +138,8 @@ class InputKeyValue extends React.Component {
     render() {
         return (
             <div>
+
                 <ButtonHeader saveEnabled={this.props.saveEnabled} deleteEnabled={this.props.deleteEnabled} className="progbar-button-header" onSave={() => this.onSave()} onDelete={() => this.onDelete()} />
-                <ProgressBar steps={this.props.steps} unqURL={window.location.href.replace(window.location.origin, '')} />
-                <button onClick={this.onClick}>Click me</button>
                 <TableComponent colList={this.state.tableColList} dataList={this.state.tableData} onDocumentIdClick={this.onDocIdClick} />
             </div>
         )

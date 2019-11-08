@@ -8,7 +8,7 @@ import TableComponent from '../../Table/TableComponent';
 import ButtonHeader from '../../ButtonHeader/ButtonHeader';
 import ProgressBar from './ProgressBar';
 const history = createHashHistory();
-class Recommendations extends React.Component {
+class Acceptance extends React.Component {
     constructor() {
         super();
         this.onSave = this.onSave.bind(this);
@@ -127,9 +127,7 @@ class Recommendations extends React.Component {
         }
     }
 
-    onClick() {
-        history.push("/Inquiry/create-new-projects/output-key-value/second");
-    }
+
     onSave() {
         console.log('Acceptance Save..');
         history.push("/Inquiry/create-new-projects/output-key-value");
@@ -144,18 +142,13 @@ class Recommendations extends React.Component {
     }
 
     render() {
-
-
-
         return (
             <div>
                 <ButtonHeader saveEnabled={this.props.saveEnabled} deleteEnabled={this.props.deleteEnabled} className="progbar-button-header" onSave={() => this.onSave()} onDelete={() => this.onDelete()} />
-                <ProgressBar steps={this.props.steps} unqURL={window.location.href.replace(window.location.origin, '')} />
-                <button onClick={this.onClick}>Click me</button>
                 <TableComponent colList={this.state.tableColList} dataList={this.state.tableData} onDocumentIdClick={this.onDocIdClick} />
             </div>
         )
     }
 }
 
-export default Recommendations;
+export default Acceptance;
