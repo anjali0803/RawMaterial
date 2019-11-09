@@ -60,3 +60,10 @@ export function setCurrentURL(currentURL) {
         currentURL
     }
 }
+
+export function setDocumentArray(documentArray) {
+    return {
+        type: 'SET_DOCUMENT_ARRAY',
+        documentArray
+    }
+}

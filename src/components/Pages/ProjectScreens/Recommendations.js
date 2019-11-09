@@ -1,7 +1,7 @@
 import React from 'react';
 import { createHashHistory } from 'history'
 import { connect } from "react-redux";
-import { setDocumentId } from "../../../actions/dataActions"
+import { setDocumentArray } from "../../../actions/dataActions"
 import './index.css';
 import TableComponent from '../../Table/TableComponent';
 import ButtonHeader from '../../ButtonHeader/ButtonHeader';
@@ -131,7 +131,9 @@ class Recommendations extends React.Component {
     }
 
     onDocIdClick(rowData) {
-        this.props.setDocumentId(rowData['documentId']);
+        let documentArray = this.props.documentArray;
+        documentArray[1] = rowData['documentId'];
+        this.props.setDocumentArray(documentArray)
         history.push("/Inquiry/create-new-projects/recommendations/second");
     }
 
@@ -149,10 +151,11 @@ class Recommendations extends React.Component {
 }
 
 const mapStateToProps = state => ({
-    projectId: state.projectId
+    projectId: state.projectId,
+    documentArray: state.documentArray
 });
 const mapDispatchToProps = dispatch => ({
-    setDocumentId: (documentId) => dispatch(setDocumentId(documentId)),
+    setDocumentArray: (documentArray) => dispatch(setDocumentArray(documentArray)),
 
 });
 export default connect(

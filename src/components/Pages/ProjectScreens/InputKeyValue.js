@@ -2,7 +2,7 @@ import React from 'react';
 import { createHashHistory } from 'history'
 import TableComponent from '../../Table/TableComponent';
 import ButtonHeader from '../../ButtonHeader/ButtonHeader';
-import { setDocumentId } from "../../../actions/dataActions"
+import { setDocumentArray } from "../../../actions/dataActions"
 import { connect } from 'react-redux'
 import './index.css';
 const history = createHashHistory();
@@ -10,11 +10,9 @@ class InputKeyValue extends React.Component {
     constructor(props) {
         super(props);
         //console.log("here", this.props)
-
         if (props.projectId === '') {
             history.push('/Inquiry/create-new-projects/details')
         }
-        //if (props.currentURL === '' + window.location.href.replace(window.location.origin, ''))
         this.onSave = this.onSave.bind(this);
         this.onDelete = this.onDelete.bind(this);
         this.state = {
@@ -124,8 +122,11 @@ class InputKeyValue extends React.Component {
 
 
     onDocIdClick(rowData) {
-        // console.log(rowData)
-        this.props.setDocumentId(rowData['documentId']);
+        console.log(this.props.documentArray)
+
+        let documentArray = this.props.documentArray;
+        documentArray[0] = rowData['documentId'];
+        this.props.setDocumentArray(documentArray)
         history.push("/Inquiry/create-new-projects/input-key-value/second");
     }
 
@@ -151,11 +152,10 @@ class InputKeyValue extends React.Component {
 }
 const mapStateToProps = state => ({
     projectId: state.projectId,
-    currentURL: state.currentURL
+    documentArray: state.documentArray
 });
 const mapDispatchToProps = dispatch => ({
-    setDocumentId: (documentId) => dispatch(setDocumentId(documentId)),
-
+    setDocumentArray: (documentArray) => dispatch(setDocumentArray(documentArray))
 });
 export default connect(
     mapStateToProps, mapDispatchToProps

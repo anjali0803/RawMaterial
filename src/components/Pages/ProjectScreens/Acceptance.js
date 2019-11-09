@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import TableComponent from '../../Table/TableComponent';
 import ButtonHeader from '../../ButtonHeader/ButtonHeader';
 import './index.css';
+import { setDocumentArray } from '../../../actions/dataActions';
 
 const history = createHashHistory();
 
@@ -134,7 +135,9 @@ class Acceptance extends React.Component {
     }
 
     onDocIdClick(rowData) {
-        this.props.setDocumentId(rowData['documentId']);
+        let documentArray = this.props.documentArray;
+        documentArray[2] = rowData['documentId'];
+        this.props.setDocumentArray(documentArray)
         history.push("/Inquiry/create-new-projects/acceptance/second");
     }
 
@@ -149,8 +152,12 @@ class Acceptance extends React.Component {
 }
 
 const mapStateToProps = state => ({
-    projectId: state.projectId
+    projectId: state.projectId,
+    documentArray: state.documentArray
 });
+const mapDispatchToProps = dispatch => ({
+    setDocumentArray: (documentArray => dispatch(setDocumentArray(documentArray)))
+})
 export default connect(
-    mapStateToProps
+    mapStateToProps, mapDispatchToProps
 )(Acceptance);
