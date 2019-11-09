@@ -173,7 +173,7 @@ class SignUpPage extends React.Component {
                 className={validation.username.isInvalid ? "p-error" : ""}
                 style={{ marginRight: ".25em" }}
               />
-              {validation.username.isInvalid ? <Message className="validation-msg" severity="error" text={validation.username.message} /> : null}
+              <Message className="validation-msg" severity="error" text={validation.username.message} />
             </div>
             <div
               className="p-inputgroup"
@@ -191,7 +191,7 @@ class SignUpPage extends React.Component {
                 className={validation.name.isInvalid ? "p-error" : ""}
                 style={{ marginRight: ".25em" }}
               />
-              {validation.name.isInvalid ? <Message className="validation-msg" severity="error" text={validation.name.message} /> : null}
+              <Message className="validation-msg" severity="error" text={validation.name.message} />
             </div>
             <div
               className="p-inputgroup"
@@ -209,7 +209,7 @@ class SignUpPage extends React.Component {
                 className={validation.password.isInvalid ? "p-error" : ""}
                 style={{ marginRight: ".25em" }}
               />
-              {validation.password.isInvalid ? <Message className="validation-msg" severity="error" text={validation.password.message} /> : null}
+              <Message className="validation-msg" severity="error" text={validation.password.message} />
             </div>
             <div
               className="p-inputgroup"
@@ -227,7 +227,7 @@ class SignUpPage extends React.Component {
                 className={validation.confirmpassword.isInvalid ? "p-error" : ""}
                 style={{ marginRight: ".25em" }}
               />
-              {validation.confirmpassword.isInvalid ? <Message className="validation-msg" severity="error" text={validation.confirmpassword.message} /> : null}
+              <Message className="validation-msg" severity="error" text={validation.confirmpassword.message} />
             </div>
             <div
               className="p-inputgroup"
@@ -245,7 +245,7 @@ class SignUpPage extends React.Component {
                 className={validation.email.isInvalid ? "p-error" : ""}
                 style={{ marginRight: ".25em" }}
               />
-              {validation.email.isInvalid ? <Message className="validation-msg" severity="error" text={validation.email.message} /> : null}
+              <Message className="validation-msg" severity="error" text={validation.email.message} />
             </div>
             <div
               className="p-inputgroup"
