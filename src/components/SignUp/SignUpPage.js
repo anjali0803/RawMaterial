@@ -2,8 +2,11 @@ import React from "react";
 // import { PanelMenu } from 'primereact/panelmenu';
 import "primereact/resources/primereact.min.css";
 import { Messages } from "primereact/messages";
+import { Message } from "primereact/message";
+import { Password } from "primereact/password";
 import "primeicons/primeicons.css";
 import "primereact/resources/themes/nova-light/theme.css";
+import FormValidator from '../FormValidator/FormValidator';
 import { Redirect } from "react-router-dom";
 import {
   setUserLogin,
@@ -22,18 +25,68 @@ const history = createHashHistory();
 class SignUpPage extends React.Component {
   constructor() {
     super();
+    
+    this.validator = new FormValidator([
+      { 
+        field: 'username', 
+        method: 'isEmpty', 
+        validWhen: false, 
+        message: 'username is required.' 
+      },
+      { 
+        field: 'name',
+        method: 'isEmpty', 
+        validWhen: false, 
+        message: 'name is required.'
+      },
+      { 
+        field: 'password', 
+        method: 'isEmpty', 
+        validWhen: false, 
+        message: 'password is required.'
+      },
+      { 
+        field: 'confirmpassword', 
+        method: 'isEmpty', 
+        validWhen: false, 
+        message: 'Password confirmation is required.'
+      },
+      { 
+        field: 'confirmpassword', 
+        method: this.passwordMatch, 
+        validWhen: true, 
+        message: 'Password and password confirmation do not match.'
+      },
+      // { 
+      //   field: 'email',
+      //   method: 'isEmpty', 
+      //   validWhen: false, 
+      //   message: 'email is required.'
+      // },
+      { 
+        field: 'email', 
+        method: 'isEmail',
+        validWhen: true, 
+        message: 'That is not a valid email.'
+      }
+    ]);
+
     this.state = {
       username: "",
       name: "",
       password: "",
       confirmpassword: "",
       email: "",
-      department: ""
+      department: "",
+      validation: this.validator.valid(),
     };
 
+    this.submitted = false;
     this.handleSignUp = this.handleSignUp.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
   }
+
+  passwordMatch(confirmation, state) {return(state.password === confirmation)}
 
   componentDidMount() {
     // this.getUserInfo();
@@ -69,128 +122,154 @@ class SignUpPage extends React.Component {
       username: username,
       name: name,
       password: password,
-      confirmpassword: confirmpassword,
       email: email,
       department: department
     });
 
-    if (this.state.password === this.state.confirmpassword) {
+    // if (this.state.password === this.state.confirmpassword) {
+    //   history.push("/login");
+    // } else {
+    //   this.messages.show({
+    //     severity: "error",
+    //     summary: "Error Message",
+    //     detail: "Password confirmation failed"
+    //   });
+    // }
+
+    const validation = this.validator.validate(this.state);
+    this.setState({ validation });
+    this.submitted = true;
+
+    if (validation.isValid) {
       history.push("/login");
-    } else {
-      this.messages.show({
-        severity: "error",
-        summary: "Error Message",
-        detail: "Password confirmation failed"
-      });
     }
   }
 
   render() {
+    // const validUsername = this.state.username !== ""
+    // const validName = this.state.name !== ""
+    // const validPassword = this.state.password !== ""
+    // const validConfirmPassword = this.state.confirmpassword !== ""
+    // const validEmail = this.state.email !== ""
+    // const validDepartment = this.state.department !== ""
+    let validation = this.submitted ? this.validator.validate(this.state) : this.state.validation
     return (
       <div className="main-container">
         <div className="sign-up-page">
           <div className="sign-up-container">
-            <div className="p-grid p-fluid">
-              <div className="p-col-12 p-md-4">
-                <div className="p-inputgroup">
-                  <span className="p-inputgroup-addon">
-                    <i className="pi pi-user"></i>
-                  </span>
-                  <InputText
-                    placeholder="Username"
-                    name="username"
-                    type="text"
-                    onChange={this.handleInputChange}
-                    value={this.state.username}
-                  />
-                </div>
-              </div>
-              <br />
-              <div className="p-col-12 p-md-4">
-                <div className="p-inputgroup">
-                  <span className="p-inputgroup-addon">
-                    <i className="pi pi-user"></i>
-                  </span>
-                  <InputText
-                    placeholder="Name"
-                    name="name"
-                    type="text"
-                    onChange={this.handleInputChange}
-                    value={this.state.name}
-                  />
-                </div>
-              </div>
-              <br />
-              <div className="p-col-12 p-md-4">
-                <div className="p-inputgroup">
-                  <span className="p-inputgroup-addon">
-                    <i className="pi pi-key"></i>
-                  </span>
-                  <InputText
-                    placeholder="Password"
-                    name="password"
-                    type="password"
-                    onChange={this.handleInputChange}
-                    value={this.state.password}
-                  />
-                </div>
-              </div>
-              <br />
-              <div className="p-col-12 p-md-4">
-                <div className="p-inputgroup">
-                  <span className="p-inputgroup-addon">
-                    <i className="pi pi-lock"></i>
-                  </span>
-                  <InputText
-                    placeholder="Confirm Password"
-                    name="confirmpassword"
-                    type="password"
-                    onChange={this.handleInputChange}
-                    value={this.state.confirmpassword}
-                  />
-                  <Messages
-                    severity="error"
-                    text="Password didn't match"
-                  ></Messages>
-                </div>
-              </div>
-              <br />
-              <div className="p-col-12 p-md-4">
-                <div className="p-inputgroup">
-                  <span className="p-inputgroup-addon">
-                    <i className="pi pi-envelope"></i>
-                  </span>
-                  <InputText
-                    placeholder="E-mail"
-                    name="email"
-                    type="email"
-                    onChange={this.handleInputChange}
-                    value={this.state.email}
-                  />
-                </div>
-              </div>
-              <br />
-              <div className="p-col-12 p-md-4">
-                <div className="p-inputgroup">
-                  <span className="p-inputgroup-addon">
-                    <i className="pi pi-home"></i>
-                  </span>
-                  <InputText
-                    placeholder="Department"
-                    name="department"
-                    type="text"
-                    onChange={this.handleInputChange}
-                    value={this.state.department}
-                  />
-                </div>
-              </div>
+            <div
+              className="p-inputgroup"
+              style={{ marginTop: "30px", paddingLeft: ".5em" }}
+            >
+              <span className="p-inputgroup-addon">
+                <i className="pi pi-user"></i>
+              </span>
+              <InputText
+                placeholder="Username"
+                name="username"
+                type="text"
+                onChange={this.handleInputChange}
+                value={this.state.username}
+                className={validation.username.isInvalid ? "p-error" : ""}
+                style={{ marginRight: ".25em" }}
+              />
+              {validation.username.isInvalid ? <Message className="validation-msg" severity="error" text={validation.username.message} /> : null}
+            </div>
+            <div
+              className="p-inputgroup"
+              style={{ marginTop: "30px", paddingLeft: ".5em" }}
+            >
+              <span className="p-inputgroup-addon">
+                <i className="pi pi-user"></i>
+              </span>
+              <InputText
+                placeholder="Name"
+                name="name"
+                type="text"
+                onChange={this.handleInputChange}
+                value={this.state.name}
+                className={validation.name.isInvalid ? "p-error" : ""}
+                style={{ marginRight: ".25em" }}
+              />
+              {validation.name.isInvalid ? <Message className="validation-msg" severity="error" text={validation.name.message} /> : null}
+            </div>
+            <div
+              className="p-inputgroup"
+              style={{ marginTop: "30px", paddingLeft: ".5em" }}
+            >
+              <span className="p-inputgroup-addon">
+                <i className="pi pi-key"></i>
+              </span>
+              <Password
+                placeholder="Password"
+                name="password"
+                type="password"
+                onChange={this.handleInputChange}
+                value={this.state.password}
+                className={validation.password.isInvalid ? "p-error" : ""}
+                style={{ marginRight: ".25em" }}
+              />
+              {validation.password.isInvalid ? <Message className="validation-msg" severity="error" text={validation.password.message} /> : null}
+            </div>
+            <div
+              className="p-inputgroup"
+              style={{ marginTop: "30px", paddingLeft: ".5em" }}
+            >
+              <span className="p-inputgroup-addon">
+                <i className="pi pi-lock"></i>
+              </span>
+              <InputText
+                placeholder="Confirm Password"
+                name="confirmpassword"
+                type="password"
+                onChange={this.handleInputChange}
+                value={this.state.confirmpassword}
+                className={validation.confirmpassword.isInvalid ? "p-error" : ""}
+                style={{ marginRight: ".25em" }}
+              />
+              {validation.confirmpassword.isInvalid ? <Message className="validation-msg" severity="error" text={validation.confirmpassword.message} /> : null}
+            </div>
+            <div
+              className="p-inputgroup"
+              style={{ marginTop: "30px", paddingLeft: ".5em" }}
+            >
+              <span className="p-inputgroup-addon">
+                <i className="pi pi-envelope"></i>
+              </span>
+              <InputText
+                placeholder="E-mail"
+                name="email"
+                type="email"
+                onChange={this.handleInputChange}
+                value={this.state.email}
+                className={validation.email.isInvalid ? "p-error" : ""}
+                style={{ marginRight: ".25em" }}
+              />
+              {validation.email.isInvalid ? <Message className="validation-msg" severity="error" text={validation.email.message} /> : null}
+            </div>
+            <div
+              className="p-inputgroup"
+              style={{ marginTop: "30px", paddingLeft: ".5em" }}
+            >
+              <span className="p-inputgroup-addon">
+                <i className="pi pi-home"></i>
+              </span>
+              <InputText
+                placeholder="Department"
+                name="department"
+                type="text"
+                onChange={this.handleInputChange}
+                value={this.state.department}
+                style={{ marginRight: ".25em" }}
+              />
+              {/* {validation.department.isInvalid ? <Message className="validation-msg" severity="error" text={validation.department.message} /> : null} */}
             </div>
             <br />
             <div className="sign-in-container">
               <Button label="Sign Up" onClick={this.handleSignUp} />
             </div>
-            <br />
-            <Messages ref={el => (this.messages = el)}></Messages>
+            {/* <br />
+            <Messages ref={el => (this.messages = el)}></Messages> */}
           </div>
         </div>
       </div>
