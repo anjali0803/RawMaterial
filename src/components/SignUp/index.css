@@ -4,14 +4,21 @@
 }
 
 .sign-up-page{
-    margin-top: 5%;
+    margin-top: 2%;
     text-align: center;
 }
 
 .sign-up-container {
     display: inline-block;
-    width: 300px;
+    width: 700px;
+    /* margin-left: 30% */
+    /* width: 600px; */
 }
-/* 
-.sign-up-container {
-} */
+.sign-in-container{
+    text-align: left;
+    margin-left: 15%;
+}
+
+.sign-up-container-inner{
+    margin-left: 35%;
+}

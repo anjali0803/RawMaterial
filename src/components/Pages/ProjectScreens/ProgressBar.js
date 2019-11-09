@@ -6,16 +6,16 @@ import './index.css';
 class ProgressBar extends React.Component {
 
     render() {
-        console.log(window.location);
+
         const URL = '' + window.location.href.replace(window.location.origin, '');
-        console.log(URL)
+
 
         return (
             < div className="progress-container" >
                 <div className="progress-wrapper">
                     <div className="progress-steps clearfix">
                         {this.props.steps.map((el, index) => {
-                            console.log(el.toLowerCase().replace(' ', '-'))
+
                             if (URL.search(el.toLowerCase().replace(/ /g, '-')) !== -1)
                                 return < div key={`progress-step-${index}`} className="progress-step progress-current" > <span> {el}</span> </div>
                             else

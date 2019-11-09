@@ -2,13 +2,14 @@ import React from 'react';
 import { createHashHistory } from 'history'
 import TableComponent from '../../Table/TableComponent';
 import ButtonHeader from '../../ButtonHeader/ButtonHeader';
+import { setDocumentArray } from "../../../actions/dataActions"
 import { connect } from 'react-redux'
 import './index.css';
 const history = createHashHistory();
 class InputKeyValue extends React.Component {
     constructor(props) {
         super(props);
-        console.log("here", this.props)
+        //console.log("here", this.props)
         if (props.projectId === '') {
             history.push('/Inquiry/create-new-projects/details')
         }
@@ -20,7 +21,6 @@ class InputKeyValue extends React.Component {
 
                 {
                     documentId: '123490',
-                    projectId: '125012',
                     customer: 'Adante',
                     type: 'Aplha',
                     uploadedDate: '12-10-2017',
@@ -30,7 +30,6 @@ class InputKeyValue extends React.Component {
                 },
                 {
                     documentId: '123487',
-                    projectId: '125019',
                     customer: 'Navi',
                     type: 'Beta',
                     uploadedDate: '11-10-2016',
@@ -40,7 +39,6 @@ class InputKeyValue extends React.Component {
                 },
                 {
                     documentId: '123467',
-                    projectId: '125045',
                     customer: 'Valve',
                     type: 'Omega',
                     uploadedDate: '12-10-2017',
@@ -50,7 +48,6 @@ class InputKeyValue extends React.Component {
                 },
                 {
                     documentId: '123493',
-                    projectId: '125142',
                     customer: 'theta',
                     type: 'Beta',
                     uploadedDate: '12-10-2017',
@@ -60,7 +57,6 @@ class InputKeyValue extends React.Component {
                 },
                 {
                     documentId: '123490',
-                    projectId: '125012',
                     customer: 'Adante',
                     type: 'Aplha',
                     uploadedDate: '12-10-2017',
@@ -70,7 +66,6 @@ class InputKeyValue extends React.Component {
                 },
                 {
                     documentId: '123490',
-                    projectId: '125012',
                     customer: 'Adante',
                     type: 'Aplha',
                     uploadedDate: '12-10-2017',
@@ -80,7 +75,6 @@ class InputKeyValue extends React.Component {
                 },
                 {
                     documentId: '123490',
-                    projectId: '125012',
                     customer: 'Adante',
                     type: 'Aplha',
                     uploadedDate: '12-10-2017',
@@ -90,7 +84,6 @@ class InputKeyValue extends React.Component {
                 },
                 {
                     documentId: '123490',
-                    projectId: '125012',
                     customer: 'Adante',
                     type: 'Aplha',
                     uploadedDate: '12-10-2017',
@@ -101,7 +94,6 @@ class InputKeyValue extends React.Component {
             ],
             tableColList: [
                 { field: 'documentId', header: 'Document Id' },
-                { field: 'projectId', header: 'Project Id' },
                 { field: 'customer', header: 'Customer' },
                 { field: 'type', header: 'Type' },
                 { field: 'uploadedDate', header: 'Uploaded Date' },
@@ -125,10 +117,16 @@ class InputKeyValue extends React.Component {
 
 
         }
+        this.onDocIdClick = this.onDocIdClick.bind(this);
     }
 
 
-    onDocIdClick() {
+    onDocIdClick(rowData) {
+        console.log(this.props.documentArray)
+
+        let documentArray = this.props.documentArray;
+        documentArray[0] = rowData['documentId'];
+        this.props.setDocumentArray(documentArray)
         history.push("/Inquiry/create-new-projects/input-key-value/second");
     }
 
@@ -153,8 +151,12 @@ class InputKeyValue extends React.Component {
     }
 }
 const mapStateToProps = state => ({
-    projectId: state.projectId
+    projectId: state.projectId,
+    documentArray: state.documentArray
+});
+const mapDispatchToProps = dispatch => ({
+    setDocumentArray: (documentArray) => dispatch(setDocumentArray(documentArray))
 });
 export default connect(
-    mapStateToProps
+    mapStateToProps, mapDispatchToProps
 )(InputKeyValue);
