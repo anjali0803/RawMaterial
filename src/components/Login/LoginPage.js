@@ -17,6 +17,9 @@ import "./index.css";
 import { createHashHistory } from "history";
 import axios from "axios";
 import { connect } from "react-redux";
+import { backendUrl } from '../../constant';
+// axios.defaults.withCredentials = true;
+
 const history = createHashHistory();
 
 class LoginPage extends React.Component {
@@ -34,26 +37,8 @@ class LoginPage extends React.Component {
   }
 
   async getUserInfo() {
-    //   const userList= [
-    //     {
-    //         "username": "user1",
-    //         "password": "user1",
-    //         "role": "admin"
-    //     },
-    //     {
-    //         "username": "user2",
-    //         "password": "user2",
-    //         "role": "user"
-    //     },
-    //     {
-    //         "username": "user3",
-    //         "password": "user3",
-    //         "role": "requested"
-    //     }
-    // ]
-    // this.setState({ userList: userList });
     const userList = await axios.get(
-      "http://5dbdaeb405a6f30014bcaee3.mockapi.io/users"
+      `${backendUrl}/dashboard/users`
     );
     this.props.setUserList(userList.data);
   }
@@ -86,21 +71,40 @@ class LoginPage extends React.Component {
     const password = this.state.password;
     const role = this.state.role;
     const referer = this.props.location.state || "/";
-    const loginResponse = this.props.userList.find(function(item) {
-      return item.username == username;
-    });
+
+    const loginResponse = await axios.post(
+      `${backendUrl}/auth/login`,
+      {
+        username: username,
+        password: password
+      }
+    )
 
     if (loginResponse) {
-      if (loginResponse.role !== "requested") {
+      if (loginResponse.data.code === 0) {
         await this.props.setUserLogin(true);
-        await this.props.setUserName(loginResponse.username);
-        await this.props.setUserRole(loginResponse.role);
+
+        // const userData = await axios.get(
+        //   `${backendUrl}/dashboard/get_user`,
+        // )
+        
+        await this.props.setUserName(loginResponse.data.username);
+        await this.props.setUserRole(loginResponse.data.role);
 
         localStorage.setItem("isAuthenticated", "true");
-        localStorage.setItem("username", loginResponse.username);
-        localStorage.setItem("role", loginResponse.role);
+        localStorage.setItem("username", loginResponse.data.username);
+        localStorage.setItem("role", loginResponse.data.role);
         history.push(referer);
-      } else {
+      }
+      if(loginResponse.data.code === 2) {
+        this.messages.show({
+          closable: false,
+          severity: "error",
+          summary: "Your username or password is incorrect!",
+          // detail: "Order submitted"
+        });
+      }
+      if(loginResponse.data.code === 1) {
         this.messages.show({
           closable: false,
           severity: "warn",
@@ -108,21 +112,8 @@ class LoginPage extends React.Component {
           // detail: "Order submitted"
         });
       }
-    } else {
-      // await this.props.setUserLogin(false);
-      // await this.props.setUserName(null);
-      // await this.props.setUserRole(null);
-      // localStorage.setItem("isAuthenticated", "false");
-      // localStorage.setItem("username", "");
-      // localStorage.setItem("role", "");
-      this.messages.show({
-        closable: false,
-        severity: "error",
-        summary: "User does not exist, please Sign-up",
-        // detail: "Order submitted"
-      });
     }
-  }
+}
 
   render() {
     return (
