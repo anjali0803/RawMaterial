@@ -7,7 +7,7 @@ import { InputText } from 'primereact/inputtext';
 import { Dropdown } from 'primereact/dropdown'
 import { createHashHistory } from 'history'
 import './index.css';
-import { setProjectId, setProjectTitle, setProjectType, setProjectCustomer } from '../../../actions/dataActions'
+import { setProjectId, setProjectTitle, setProjectType, setProjectCustomer, setCurrentURL } from '../../../actions/dataActions'
 import { connect } from 'react-redux';
 import ProgressBar from './ProgressBar';
 import ButtonHeader from '../../ButtonHeader/ButtonHeader'
@@ -17,7 +17,7 @@ class Details extends React.Component {
 
     constructor(props) {
         super(props)
-        console.log("details", props)
+        //console.log("details", props)
         this.state = {
             projectId: props.projectId || '',
             title: props.projectTitle || '',
@@ -38,12 +38,7 @@ class Details extends React.Component {
         this.onDelete = this.onDelete.bind(this);
 
     }
-    componentDidMount() {
-        if (this.props.projectId === '')
-            return;
-        const { projectId, type, title, customer } = this.props;
-        this.setState({ projectId, type, title, customer })
-    }
+
     uploadHandler() {
         console.log('upload handled');
     }
@@ -64,12 +59,16 @@ class Details extends React.Component {
     onSave() {
         const { title, customer, type } = this.state;
         console.log({ title, customer, type })
-        const projectId = Math.round(Math.random() * 10000000)
-        console.log('project id on save = ' + projectId)
-        this.props.setProjectId(projectId);
+        if (this.props.projectId === '') {
+            const projectId = Math.round(Math.random() * 10000000)
+            console.log('project id on save = ' + projectId)
+            this.props.setProjectId(projectId);
+        }
+
         this.props.setProjectCustomer(customer);
         this.props.setProjectTitle(title);
         this.props.setProjectType(type)
+        this.props.setCurrentURL('/Inquiry/create-new-projects/input-key-value')
         history.push('/Inquiry/create-new-projects/input-key-value')
         //
     }
@@ -169,7 +168,8 @@ const mapDispatchToProps = dispatch => ({
     setProjectId: (projectId) => dispatch(setProjectId(projectId)),
     setProjectTitle: (projectTitle) => dispatch(setProjectTitle(projectTitle)),
     setProjectCustomer: (projectCustomer) => dispatch(setProjectCustomer(projectCustomer)),
-    setProjectType: (projectType) => dispatch(setProjectType(projectType))
+    setProjectType: (projectType) => dispatch(setProjectType(projectType)),
+    setCurrentURL: (currentURL) => dispatch(setCurrentURL(currentURL))
 
 });
 export default connect(mapStateToProps, mapDispatchToProps)(Details);

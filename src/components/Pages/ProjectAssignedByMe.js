@@ -1,8 +1,6 @@
 import React from "react";
 import TableComponent from "../Table/TableComponent";
 import "./index.css";
-import Axios from "axios";
-import { setDataList } from "../../actions/dataActions";
 import { connect } from "react-redux";
 
 class ProjectAssignedByMe extends React.Component {

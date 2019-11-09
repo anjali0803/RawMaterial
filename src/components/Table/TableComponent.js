@@ -19,8 +19,9 @@ export default class TableComponent extends React.Component {
     this.handleClickAllSelected = this.handleClickAllSelected.bind(this);
   }
   documentIdTemplate(rowData) {
-    console.log(this.props);
-    return <a onClick={this.props.onDocumentIdClick} >{rowData['documentId']}</a>
+    //console.log(this.props);
+    // /console.log(rowData)
+    return <a onClick={() => this.props.onDocumentIdClick(rowData)} >{rowData['documentId']}</a>
   }
   handleClickAllSelected(action) {
     const data = this.state.selected;
@@ -60,14 +61,16 @@ export default class TableComponent extends React.Component {
         >
           <Column selectionMode="multiple" style={{ width: '3em' }} />
           <Column header={<i className="pi pi-refresh"></i>} style={{ width: '3em' }} />
-          {colList.map(el => {
+          {colList.map((el, index) => {
             const field = el.field;
             const header = el.header;
-            console.log(header.toLowerCase().replace(/ /g, ''))
-            if (header.toLowerCase().replace(/ /g, '') == 'documentid') {
-              console.log(el);
-              return <Column
 
+            //console.log(header.toLowerCase().replace(/ /g, ''))
+
+            if (header.toLowerCase().replace(/ /g, '') == 'documentid') {
+              //console.log(el);
+              return <Column
+                id={`table-${index}`}
                 header={el.header}
                 filter={true}
                 sortable={true}
