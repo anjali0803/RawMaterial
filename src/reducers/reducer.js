@@ -5,11 +5,13 @@ var initialState = {
   userList: [],
   dataList: [],
   colList: [],
-  projectId: null,
-  projectType: null,
-  projectCustomer: null,
-  projectTitle: null,
-  progressActiveIndex: 0,
+  projectId: '',
+  projectType: '',
+  projectTitle: '',
+  projectCustomer: '',
+  documentId: '',
+  documentArray: ['', '', '', '', ''],
+  currentURL: '',
   readOnly: false
 
 };
@@ -46,26 +48,46 @@ export default (state = initialState, action) => {
         ...state,
         colList: action.colList
       };
-    case 'SET_PROJECT_FIELDS':
+    case 'SET_PROJECT_ID':
       return {
         ...state,
-        projectId: action.id,
-        projectType: action.type,
-        customer: action.customer,
-        projectTitle: action.title
+        projectId: action.projectId
+      };
+    case 'SET_PROJECT_TITLE':
+      return {
+        ...state,
+        projectTitle: action.projectTitle
+      };
+    case 'SET_PROJECT_CUSTOMER':
+      return {
+        ...state,
+        projectCustomer: action.projectCustomer
+      };
+    case 'SET_PROJECT_TYPE':
+      return {
+        ...state,
+        projectType: action.projectType
+      };
+    case 'SET_DOCUMENT_ID':
+      return {
+        ...state,
+        documentId: action.documentId
       };
     case 'SET_READONLY':
       return {
         ...state,
         readOnly: action.readOnly
       };
-
-    case 'SET_PROGRESS_ACTIVE_INDEX':
+    case 'SET_CURRENT_URL':
       return {
         ...state,
-        progressActiveIndex: action.progressActiveIndex
+        currentURL: action.currentURL
       };
-
+    case 'SET_DOCUMENT_ARRAY':
+      return {
+        ...state,
+        documentArray: action.documentArray
+      };
     default:
       return state;
   }

@@ -1,16 +1,20 @@
 import React from 'react';
-import { HashRouter, Route } from 'react-router-dom';
 import { createHashHistory } from 'history'
-import './index.css';
-import KeyValueTable from '../../KeyValueTable/KeyValueTable';
-import InputTable from '../../InputTable/InputTable';
+import { connect } from 'react-redux'
 import TableComponent from '../../Table/TableComponent';
 import ButtonHeader from '../../ButtonHeader/ButtonHeader';
-import ProgressBar from './ProgressBar';
+import './index.css';
+import { setDocumentArray } from '../../../actions/dataActions';
+
 const history = createHashHistory();
+
 class Acceptance extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+
+        super(props);
+        if (props.projectId === '') {
+            history.push('/Inquiry/create-new-projects/details')
+        }
         this.onSave = this.onSave.bind(this);
         this.onDelete = this.onDelete.bind(this);
         this.state = {
@@ -20,7 +24,6 @@ class Acceptance extends React.Component {
 
                 {
                     documentId: '123490',
-                    projectId: '125012',
                     customer: 'Adante',
                     type: 'Aplha',
                     uploadedDate: '12-10-2017',
@@ -30,7 +33,6 @@ class Acceptance extends React.Component {
                 },
                 {
                     documentId: '123487',
-                    projectId: '125019',
                     customer: 'Navi',
                     type: 'Beta',
                     uploadedDate: '11-10-2016',
@@ -40,7 +42,6 @@ class Acceptance extends React.Component {
                 },
                 {
                     documentId: '123467',
-                    projectId: '125045',
                     customer: 'Valve',
                     type: 'Omega',
                     uploadedDate: '12-10-2017',
@@ -50,7 +51,6 @@ class Acceptance extends React.Component {
                 },
                 {
                     documentId: '123493',
-                    projectId: '125142',
                     customer: 'theta',
                     type: 'Beta',
                     uploadedDate: '12-10-2017',
@@ -60,7 +60,6 @@ class Acceptance extends React.Component {
                 },
                 {
                     documentId: '123490',
-                    projectId: '125012',
                     customer: 'Adante',
                     type: 'Aplha',
                     uploadedDate: '12-10-2017',
@@ -70,7 +69,6 @@ class Acceptance extends React.Component {
                 },
                 {
                     documentId: '123490',
-                    projectId: '125012',
                     customer: 'Adante',
                     type: 'Aplha',
                     uploadedDate: '12-10-2017',
@@ -80,7 +78,6 @@ class Acceptance extends React.Component {
                 },
                 {
                     documentId: '123490',
-                    projectId: '125012',
                     customer: 'Adante',
                     type: 'Aplha',
                     uploadedDate: '12-10-2017',
@@ -90,7 +87,6 @@ class Acceptance extends React.Component {
                 },
                 {
                     documentId: '123490',
-                    projectId: '125012',
                     customer: 'Adante',
                     type: 'Aplha',
                     uploadedDate: '12-10-2017',
@@ -101,7 +97,7 @@ class Acceptance extends React.Component {
             ],
             tableColList: [
                 { field: 'documentId', header: 'Document Id' },
-                { field: 'projectId', header: 'Project Id' },
+
                 { field: 'customer', header: 'Customer' },
                 { field: 'type', header: 'Type' },
                 { field: 'uploadedDate', header: 'Uploaded Date' },
@@ -125,6 +121,7 @@ class Acceptance extends React.Component {
 
 
         }
+        this.onDocIdClick = this.onDocIdClick.bind(this);
     }
 
 
@@ -137,7 +134,10 @@ class Acceptance extends React.Component {
         console.log('Acceptance Delete..');
     }
 
-    onDocIdClick() {
+    onDocIdClick(rowData) {
+        let documentArray = this.props.documentArray;
+        documentArray[2] = rowData['documentId'];
+        this.props.setDocumentArray(documentArray)
         history.push("/Inquiry/create-new-projects/acceptance/second");
     }
 
@@ -151,4 +151,13 @@ class Acceptance extends React.Component {
     }
 }
 
-export default Acceptance;
+const mapStateToProps = state => ({
+    projectId: state.projectId,
+    documentArray: state.documentArray
+});
+const mapDispatchToProps = dispatch => ({
+    setDocumentArray: (documentArray => dispatch(setDocumentArray(documentArray)))
+})
+export default connect(
+    mapStateToProps, mapDispatchToProps
+)(Acceptance);

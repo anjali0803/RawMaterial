@@ -1,17 +1,33 @@
 import React from 'react';
 import './index.css'
-import TableComponent from '../Table/TableComponent';
+import TableComponent from '../ProjectsTable/ProjectsTable';
 import DocumentHeader from '../DocumentHeader/DocumentHeader';
 import ButtonHeader from '../ButtonHeader/ButtonHeader';
 import ProgressBar from '../Pages/ProjectScreens/ProgressBar';
 import { createHashHistory } from 'history'
+import { connect } from "react-redux";
 const history = createHashHistory();
+const pageMapIndex = [
+    'input-key-value',
+    'recommendations',
+    'acceptance',
+    'output-key-value',
+    'output-document'
+
+]
 class KeyValueTable extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
+        if (props.projectId === '')
+            history.push('/Inquiry/create-new-projects/details')
+
+        if (props.documentArray[props.screenNumber - 1] === '')
+            history.push(`/Inquiry/create-new-projects/${pageMapIndex[props.screenNumber - 1]}`)
+
         this.onSave = this.onSave.bind(this);
         this.onDelete = this.onDelete.bind(this);
         this.state = {
+            documentId: props.documentArray[props.screenNumber - 1] || '',
             keyValueData: [
 
                 { key: 'Queue Size', value: 12000 },
@@ -26,9 +42,14 @@ class KeyValueTable extends React.Component {
         }
 
     }
+    componentDidMount() {
+        //get data based on document id and project id
+        //set keyValueData and keyvalueColList here
+    }
     onSave() {
         console.log('recommendations screen save ....');
         history.push(this.props.redirectTo);
+
     }
     onDelete() {
         console.log('recommendations screen delete ....');
@@ -39,11 +60,15 @@ class KeyValueTable extends React.Component {
         return (
             <div>
                 <ButtonHeader saveEnabled={this.props.saveEnabled} deleteEnabled={this.props.deleteEnabled} className="progbar-button-header" onSave={() => this.onSave()} onDelete={() => this.onDelete()} />
-                <DocumentHeader documentId={'123456'} projectId={'121245'} />
+                <DocumentHeader documentId={this.state.documentId} projectId={this.props.projectId} />
                 <TableComponent colList={this.state.keyValueColList} dataList={this.state.keyValueData} />
             </div>
         )
     }
 }
-
-export default KeyValueTable;
+const mapStateToProps = state => ({
+    projectId: state.projectId,
+    documentId: state.documentId,
+    documentArray: state.documentArray
+})
+export default connect(mapStateToProps)(KeyValueTable);

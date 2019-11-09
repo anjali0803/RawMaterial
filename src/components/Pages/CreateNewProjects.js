@@ -165,6 +165,7 @@ export default class CreateNewProjects extends React.Component {
                 path: '/Inquiry/create-new-projects/input-key-value/second', component: () => <KeyValueTable
                     saveEnabled={true} deleteEnabled={true}
                     steps={this.state.steps}
+                    screenNumber={1}
                     redirectTo='/Inquiry/create-new-projects/recommendations'
                 />
             },
@@ -185,6 +186,7 @@ export default class CreateNewProjects extends React.Component {
                     steps={this.state.steps}
                     saveEnabled={true} deleteEnabled={true}
                     redirectTo='/Inquiry/create-new-projects/acceptance'
+                    screenNumber={2}
                 />
             },
             {
@@ -197,7 +199,9 @@ export default class CreateNewProjects extends React.Component {
                 path: '/Inquiry/create-new-projects/acceptance/second', component: () => <KeyValueTable
                     steps={this.state.steps}
                     saveEnabled={true} deleteEnabled={true}
-                    redirectTo='/Inquiry/create-new-projects/output-key-value/' />
+                    redirectTo='/Inquiry/create-new-projects/output-key-value/'
+                    screenNumber={3}
+                />
             },
             {
                 path: '/Inquiry/create-new-projects/output-key-value', component: () => <OutputKeyValue
@@ -212,7 +216,9 @@ export default class CreateNewProjects extends React.Component {
 
                     steps={this.state.steps}
                     redirectTo='/Inquiry/create-new-projects/output-document'
-                    saveEnabled={true} deleteEnabled={true} />
+                    saveEnabled={true} deleteEnabled={true}
+                    screenNumber={4}
+                />
             },
 
             {
@@ -225,6 +231,7 @@ export default class CreateNewProjects extends React.Component {
                     steps={this.state.steps}
                     redirectTo='/'
                     saveEnabled={true} deleteEnabled={true}
+                    screenNumber={5}
                 />
             },
         ];
