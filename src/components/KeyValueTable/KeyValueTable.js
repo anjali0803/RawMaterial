@@ -1,6 +1,6 @@
 import React from 'react';
 import './index.css'
-import TableComponent from '../Table/TableComponent';
+import TableComponent from '../ProjectsTable/ProjectsTable';
 import DocumentHeader from '../DocumentHeader/DocumentHeader';
 import ButtonHeader from '../ButtonHeader/ButtonHeader';
 import ProgressBar from '../Pages/ProjectScreens/ProgressBar';

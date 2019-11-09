@@ -127,6 +127,7 @@ class OutputDocument extends React.Component {
 
 
         }
+        this.onDocIdClick = this.onDocIdClick.bind(this);
     }
     onDocIdClick(rowData) {
         let documentArray = this.props.documentArray;

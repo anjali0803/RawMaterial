@@ -13,8 +13,7 @@ class OutputKeyValue extends React.Component {
         if (props.projectId === '') {
             history.push('/Inquiry/create-new-projects/details')
         }
-        this.onSave = this.onSave.bind(this);
-        this.onDelete = this.onDelete.bind(this);
+
         this.state = {
 
             tableData: [
@@ -127,6 +126,10 @@ class OutputKeyValue extends React.Component {
 
 
         }
+        this.onSave = this.onSave.bind(this);
+        this.onDelete = this.onDelete.bind(this);
+        this.onDocIdClick = this.onDocIdClick.bind(this);
+
     }
     onDocIdClick(rowData) {
         let documentArray = this.props.documentArray;
