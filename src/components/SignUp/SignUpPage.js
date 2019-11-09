@@ -156,7 +156,7 @@ class SignUpPage extends React.Component {
     return (
       <div className="main-container">
         <div className="sign-up-page">
-          <div className="sign-up-container">
+          <div className="sign-up-container-outer">
            <div className="sign-up-container-inner">
             <div
               className="p-inputgroup"
@@ -266,7 +266,7 @@ class SignUpPage extends React.Component {
               {/* {validation.department.isInvalid ? <Message className="validation-msg" severity="error" text={validation.department.message} /> : null} */}
             </div>
             <br />
-            <div className="sign-in-container">
+            <div className="sign-up-button-container">
               <Button label="Sign Up" onClick={this.handleSignUp} />
             </div>
             {/* <br />
