@@ -40,9 +40,30 @@ export function setProjectCustomer(projectCustomer) {
     }
 }
 
+export function setDocumentId(documentId) {
+    return {
+        type: 'SET_DOCUMENT_ID',
+        documentId
+    }
+}
+
 export function setReadonly(readonly) {
     return {
         type: 'SET_READONLY',
         readonly
+    }
+}
+
+export function setCurrentURL(currentURL) {
+    return {
+        type: 'SET_CURRENT_URL',
+        currentURL
+    }
+}
+
+export function setDocumentArray(documentArray) {
+    return {
+        type: 'SET_DOCUMENT_ARRAY',
+        documentArray
     }
 }
