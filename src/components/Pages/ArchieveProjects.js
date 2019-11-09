@@ -3,11 +3,18 @@ import './index.css';
 import TableComponent from '../Table/TableComponent';
 import { connect } from 'react-redux';
 import ProjectsTable from '../ProjectsTable/ProjectsTable';
+import { createHashHistory } from "history";
+import { setDocumentArray, setProjectCustomer, setProjectId, setProjectTitle, setProjectType } from '../../actions/dataActions'
+const history = createHashHistory()
 
 
 
 
 class ArchieveProjects extends React.Component {
+    constructor() {
+        super();
+        this.onProjectIdClick = this.onProjectIdClick.bind(this);
+    }
     onProjectIdClick(rowData) {
         //refresh the document array and project id
         const { Type, Title, Customer, ProjectID } = rowData;

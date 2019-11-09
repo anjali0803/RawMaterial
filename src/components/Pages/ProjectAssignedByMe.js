@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 import ProjectsTable from "../ProjectsTable/ProjectsTable";
 import { setProjectId, setProjectTitle, setProjectCustomer, setProjectType, setDocumentArray } from "../../actions/dataActions";
 import "./index.css";
+import { createHashHistory } from 'history';
+const history = createHashHistory();
 
 
 class ProjectAssignedByMe extends React.Component {

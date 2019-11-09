@@ -3,7 +3,8 @@ import './index.css';
 import { setProjectId, setProjectTitle, setProjectCustomer, setProjectType, setDocumentArray } from "../../actions/dataActions";
 import { connect } from 'react-redux';
 import ProjectsTable from '../ProjectsTable/ProjectsTable';
-
+import { createHashHistory } from 'history';
+const history = createHashHistory();
 
 
 
