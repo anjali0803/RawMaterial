@@ -12,7 +12,6 @@ import { HashRouter, Route } from 'react-router-dom';
 import './index.css';
 import { createHashHistory } from "history";
 import ProgressBar from './ProjectScreens/ProgressBar';
-import KeyValueTable from '../KeyValueTable/KeyValueTable';
 import InputKeyValueTable from './ProjectScreens/KeyValueTables/InputKeyValueTable/InputKeyValueTable';
 import RecKeyValueTable from './ProjectScreens/KeyValueTables/RecKeyValueTable/RecKeyValueTable';
 import AccKeyValueTable from './ProjectScreens/KeyValueTables/AccKeyValueTable/AccKeyValueTable';

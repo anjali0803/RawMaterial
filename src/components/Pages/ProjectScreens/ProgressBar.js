@@ -4,7 +4,13 @@ import './index.css';
 
 
 class ProgressBar extends React.Component {
-
+    constructor() {
+        super()
+        this.onStepsClick = this.onStepsClick.bind(this);
+    }
+    onStepsClick() {
+        console.log('steps clicked')
+    }
     render() {
 
         const URL = '' + window.location.href.replace(window.location.origin, '');
@@ -17,9 +23,9 @@ class ProgressBar extends React.Component {
                         {this.props.steps.map((el, index) => {
 
                             if (URL.search(el.toLowerCase().replace(/ /g, '-')) !== -1)
-                                return < div key={`progress-step-${index}`} className="progress-step progress-current" > <span> {el}</span> </div>
+                                return < div onClick={(e) => this.onStepsClick(e)} key={`progress-step-${index}`} className="progress-step progress-current" > <span> {el}</span> </div>
                             else
-                                return <div key={`progress-step-${index}`} className="progress-step"> <span> {el}</span> </div>
+                                return <div onClick={(e) => this.onStepsClick(e)} key={`progress-step-${index}`} className="progress-step"> <span> {el}</span> </div>
 
                         })}
                     </div>

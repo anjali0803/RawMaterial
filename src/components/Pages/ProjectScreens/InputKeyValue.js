@@ -122,7 +122,7 @@ class InputKeyValue extends React.Component {
 
 
     onDocIdClick(rowData) {
-        console.log(this.props.documentArray)
+        //console.log(this.props.documentArray)
 
         let documentArray = this.props.documentArray;
         documentArray[0] = rowData['documentId'];
