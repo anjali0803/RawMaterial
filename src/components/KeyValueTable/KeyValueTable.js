@@ -6,6 +6,9 @@ import ButtonHeader from '../ButtonHeader/ButtonHeader';
 import ProgressBar from '../Pages/ProjectScreens/ProgressBar';
 import { createHashHistory } from 'history'
 import { connect } from "react-redux";
+import axios from 'axios';
+import { backendUrl } from '../../constant';
+
 const history = createHashHistory();
 const pageMapIndex = [
     'input-key-value',
@@ -28,23 +31,27 @@ class KeyValueTable extends React.Component {
         this.onDelete = this.onDelete.bind(this);
         this.state = {
             documentId: props.documentArray[props.screenNumber - 1] || '',
-            keyValueData: [
-
-                { key: 'Queue Size', value: 12000 },
-                { key: 'Volume', value: '45 Cubic Meters' },
-                { key: 'density', value: 67 }
-            ],
+            keyValueData: [],
             keyValueColList: [
-                { field: 'key', header: 'Key' },
-                { field: 'value', header: 'Value' }
-
+                { field: 'WorkDescription', header: 'Work Description' },
+                { field: 'ClientSpecNumber', header: 'Client Spec Number' },
+                { field: 'TestingFrequency', header: 'Testing Frequency' },
+                { field: 'AcceptanceCriteria', header: 'Acceptance Criteria' }
             ]
         }
 
     }
-    componentDidMount() {
+    async componentDidMount() {
         //get data based on document id and project id
         //set keyValueData and keyvalueColList here
+        const  keyValueData  = await axios.get(
+            `${backendUrl}/dashboard/get_ikv_doc_docid`,{
+                params:{
+                    docID : this.state.documentId
+                }
+            }
+        )
+        this.setState({ keyValueData: keyValueData.data.data });
     }
     onSave() {
         console.log('recommendations screen save ....');

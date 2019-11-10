@@ -12,89 +12,14 @@ class Acceptance extends React.Component {
     constructor(props) {
 
         super(props);
-        if (props.projectId === '') {
+        if (this.props.projectId === '') {
             history.push('/Inquiry/create-new-projects/details')
         }
         this.onSave = this.onSave.bind(this);
         this.onDelete = this.onDelete.bind(this);
         this.state = {
 
-            tableData: [
-
-
-                {
-                    documentId: '123490',
-                    customer: 'Adante',
-                    type: 'Aplha',
-                    uploadedDate: '12-10-2017',
-                    sent: 'Yes',
-                    last: "Generated",
-                    sentOn: '24-11-2017'
-                },
-                {
-                    documentId: '123487',
-                    customer: 'Navi',
-                    type: 'Beta',
-                    uploadedDate: '11-10-2016',
-                    sent: 'No',
-                    last: "Non generated",
-                    sentOn: '24-11-2019'
-                },
-                {
-                    documentId: '123467',
-                    customer: 'Valve',
-                    type: 'Omega',
-                    uploadedDate: '12-10-2017',
-                    sent: 'Yes',
-                    last: "Generated",
-                    sentOn: '24-11-2017'
-                },
-                {
-                    documentId: '123493',
-                    customer: 'theta',
-                    type: 'Beta',
-                    uploadedDate: '12-10-2017',
-                    sent: 'Yes',
-                    last: "Generated",
-                    sentOn: '24-11-2017'
-                },
-                {
-                    documentId: '123490',
-                    customer: 'Adante',
-                    type: 'Aplha',
-                    uploadedDate: '12-10-2017',
-                    sent: 'Yes',
-                    last: "Generated",
-                    sentOn: '24-11-2017'
-                },
-                {
-                    documentId: '123490',
-                    customer: 'Adante',
-                    type: 'Aplha',
-                    uploadedDate: '12-10-2017',
-                    sent: 'Yes',
-                    last: "Generated",
-                    sentOn: '24-11-2017'
-                },
-                {
-                    documentId: '123490',
-                    customer: 'Adante',
-                    type: 'Aplha',
-                    uploadedDate: '12-10-2017',
-                    sent: 'Yes',
-                    last: "Generated",
-                    sentOn: '24-11-2017'
-                },
-                {
-                    documentId: '123490',
-                    customer: 'Adante',
-                    type: 'Aplha',
-                    uploadedDate: '12-10-2017',
-                    sent: 'Yes',
-                    last: "Generated",
-                    sentOn: '24-11-2017'
-                }
-            ],
+            tableData: [],
             tableColList: [
                 { field: 'documentId', header: 'Document Id' },
 

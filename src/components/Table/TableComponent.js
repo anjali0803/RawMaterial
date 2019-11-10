@@ -21,7 +21,7 @@ export default class TableComponent extends React.Component {
   documentIdTemplate(rowData) {
 
     console.log(rowData)
-    return <a onClick={() => this.props.onDocumentIdClick(rowData)} >{rowData['documentId']}</a>
+    return <a onClick={() => this.props.onDocumentIdClick(rowData)} >{rowData['DocID']}</a>
   }
   handleClickAllSelected(action) {
     const data = this.state.selected;
@@ -67,7 +67,7 @@ export default class TableComponent extends React.Component {
 
             //console.log(header.toLowerCase().replace(/ /g, ''))
 
-            if (header.toLowerCase().replace(/ /g, '') == 'DocID') {
+            if (header.toLowerCase().replace(/ /g, '') == 'documentid') {
               //console.log(el);
               return <Column
                 id={`table-${index}`}

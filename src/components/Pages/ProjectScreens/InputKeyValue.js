@@ -49,8 +49,7 @@ class InputKeyValue extends React.Component {
     }
 
     async componentDidMount(){
-        const formData = new FormData();
-        formData.append('projectID', 'MASTERHFW')
+        
         const  tableData  = await axios.get(
             `${backendUrl}/dashboard/get_ikv_doc`,{
                 params:{
@@ -63,8 +62,9 @@ class InputKeyValue extends React.Component {
     onDocIdClick(rowData) {
         console.log(this.props.documentArray)
 
-        let documentArray = this.props.documentArray;
-        documentArray[0] = rowData['DocId'];
+        let documentArray = this.props.documentArray[0] || [];
+        // let documentArray = [];
+        documentArray.push(rowData.DocID);
         this.props.setDocumentArray(documentArray)
         history.push("/Inquiry/create-new-projects/input-key-value/second");
     }
