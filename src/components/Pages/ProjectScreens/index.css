@@ -167,10 +167,11 @@
 
 
 .progress-steps .progress-step {
+	
 	font-size: 14px;
 	text-align: center;
 	color: white;
-	cursor: default;
+	cursor: pointer;
 	margin: 0 3px;
 	
 	padding: 10px 10px 10px 30px;
@@ -187,6 +188,7 @@
 
 .progress-steps .progress-step:after,
 .progress-steps .progress-step:before {
+	
 	content: " ";
 	position: absolute;
 	top: 0;

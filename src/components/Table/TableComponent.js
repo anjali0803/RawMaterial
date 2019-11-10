@@ -20,7 +20,7 @@ export default class TableComponent extends React.Component {
   }
   documentIdTemplate(rowData) {
 
-    console.log(rowData)
+    //console.log(rowData)
     return <a onClick={() => this.props.onDocumentIdClick(rowData)} >{rowData['documentId']}</a>
   }
   handleClickAllSelected(action) {
