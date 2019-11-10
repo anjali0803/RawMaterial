@@ -29,7 +29,7 @@ class InputKeyValueTable extends React.Component {
             documentId: props.documentArray[props.screenNumber - 1] || '',
             keyValueData: [
 
-                { workDescription: 'Clean up  and Cover', referenceStandardValue: 234, technicalSpecificationValue: 12, acceptanceCriteriaValue: 456 },
+                { workDescription: 'Clean up  and Cover', referenceStandardValue: 234, technicalSpecificationValue: 12, acceptanceCriteriaValue: 456,color: 'red' },
                 { workDescription: 'Maintainence and fixtures', referenceStandardValue: 223, technicalSpecificationValue: 7, acceptanceCriteriaValue: 456 },
                 { workDescription: 'Drills and exercies', referenceStandardValue: 234, technicalSpecificationValue: 9, acceptanceCriteriaValue: 456 },
                 { workDescription: 'Inventory management', referenceStandardValue: 94, technicalSpecificationValue: 3, acceptanceCriteriaValue: 456 },
