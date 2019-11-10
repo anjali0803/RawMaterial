@@ -2,8 +2,11 @@ import React from "react";
 // import { PanelMenu } from 'primereact/panelmenu';
 import "primereact/resources/primereact.min.css";
 import { Messages } from "primereact/messages";
+import { Message } from "primereact/message";
+import { Password } from "primereact/password";
 import "primeicons/primeicons.css";
 import "primereact/resources/themes/nova-light/theme.css";
+import FormValidator from '../FormValidator/FormValidator';
 import { Redirect } from "react-router-dom";
 import {
   setUserLogin,
@@ -24,6 +27,52 @@ const history = createHashHistory();
 class SignUpPage extends React.Component {
   constructor() {
     super();
+    
+    this.validator = new FormValidator([
+      { 
+        field: 'username', 
+        method: 'isEmpty', 
+        validWhen: false, 
+        message: 'username is required.' 
+      },
+      { 
+        field: 'name',
+        method: 'isEmpty', 
+        validWhen: false, 
+        message: 'name is required.'
+      },
+      { 
+        field: 'password', 
+        method: 'isEmpty', 
+        validWhen: false, 
+        message: 'password is required.'
+      },
+      { 
+        field: 'confirmpassword', 
+        method: 'isEmpty', 
+        validWhen: false, 
+        message: 'Passwords do not match.'
+      },
+      { 
+        field: 'confirmpassword', 
+        method: this.passwordMatch, 
+        validWhen: true, 
+        message: 'Password and password confirmation do not match.'
+      },
+      // { 
+      //   field: 'email',
+      //   method: 'isEmpty', 
+      //   validWhen: false, 
+      //   message: 'email is required.'
+      // },
+      { 
+        field: 'email', 
+        method: 'isEmail',
+        validWhen: true, 
+        message: 'That is not a valid email.'
+      }
+    ]);
+
     this.state = {
       username: "",
       name: "",
@@ -34,9 +83,12 @@ class SignUpPage extends React.Component {
       role: ""
     };
 
+    this.submitted = false;
     this.handleSignUp = this.handleSignUp.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
   }
+
+  passwordMatch(confirmation, state) {return(state.password === confirmation)}
 
   componentDidMount() {
     // this.getUserInfo();
@@ -81,17 +133,34 @@ class SignUpPage extends React.Component {
         `${backendUrl}/auth/register_user`,
         userData
       )
+    // if (this.state.password === this.state.confirmpassword) {
+    //   history.push("/login");
+    // } else {
+    //   this.messages.show({
+    //     severity: "error",
+    //     summary: "Error Message",
+    //     detail: "Password confirmation failed"
+    //   });
+    // }
+
+    const validation = this.validator.validate(this.state);
+    this.setState({ validation });
+    this.submitted = true;
+
+    if (validation.isValid) {
       history.push("/login");
-    } else {
-      this.messages.show({
-        severity: "error",
-        summary: "Error Message",
-        detail: "Password confirmation failed"
-      });
     }
+  }
   }
 
   render() {
+    // const validUsername = this.state.username !== ""
+    // const validName = this.state.name !== ""
+    // const validPassword = this.state.password !== ""
+    // const validConfirmPassword = this.state.confirmpassword !== ""
+    // const validEmail = this.state.email !== ""
+    // const validDepartment = this.state.department !== ""
+    let validation = this.submitted ? this.validator.validate(this.state) : this.state.validation;
     return (
       <div className="main-container">
         <div className="sign-up-page">
@@ -193,16 +262,16 @@ class SignUpPage extends React.Component {
             <br />
             </div>
             <br />
-            <div className="sign-in-container">
+            <div className="sign-up-button-container">
               <Button label="Sign Up" onClick={this.handleSignUp} />
             </div>
-            <br />
-            <Messages ref={el => (this.messages = el)}></Messages>
+            {/* <br />
+            <Messages ref={el => (this.messages = el)}></Messages> */}
+          </div>
           </div>
         </div>
-      </div>
     );
-  }
+  };
 }
 
 const mapStateToProps = state => ({

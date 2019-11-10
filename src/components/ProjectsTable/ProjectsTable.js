@@ -7,21 +7,19 @@ import { Column } from "primereact/column";
 import { Dropdown } from "primereact/dropdown";
 import "./index.css";
 
-export default class TableComponent extends React.Component {
+export default class ProjectsTable extends React.Component {
   constructor() {
     super();
     this.state = {
       selected: [],
       isLoading: false,
     };
-    this.documentIdTemplate = this.documentIdTemplate.bind(this);
-
+    this.projectIdTemplate = this.projectIdTemplate.bind(this);
     this.handleClickAllSelected = this.handleClickAllSelected.bind(this);
   }
-  documentIdTemplate(rowData) {
+  projectIdTemplate(rowData) {
 
-    console.log(rowData)
-    return <a onClick={() => this.props.onDocumentIdClick(rowData)} >{rowData['documentId']}</a>
+    return <a onClick={() => this.props.onProjectIdClick(rowData)} >{rowData['ProjectID']}</a>
   }
   handleClickAllSelected(action) {
     const data = this.state.selected;
@@ -67,7 +65,7 @@ export default class TableComponent extends React.Component {
 
             //console.log(header.toLowerCase().replace(/ /g, ''))
 
-            if (header.toLowerCase().replace(/ /g, '') == 'documentid') {
+            if (header.toLowerCase().replace(/ /g, '') == 'projectid') {
               //console.log(el);
               return <Column
                 id={`table-${index}`}
@@ -75,7 +73,7 @@ export default class TableComponent extends React.Component {
                 filter={true}
                 sortable={true}
                 filterMatchMode="startsWith"
-                body={this.documentIdTemplate}
+                body={this.projectIdTemplate}
               />
             }
             else

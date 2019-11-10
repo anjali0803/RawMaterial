@@ -9,6 +9,9 @@ var initialState = {
   projectType: '',
   projectTitle: '',
   projectCustomer: '',
+  documentId: '',
+  documentArray: ['', '', '', '', ''],
+  currentURL: '',
   readOnly: false
 
 };
@@ -65,10 +68,25 @@ export default (state = initialState, action) => {
         ...state,
         projectType: action.projectType
       };
+    case 'SET_DOCUMENT_ID':
+      return {
+        ...state,
+        documentId: action.documentId
+      };
     case 'SET_READONLY':
       return {
         ...state,
         readOnly: action.readOnly
+      };
+    case 'SET_CURRENT_URL':
+      return {
+        ...state,
+        currentURL: action.currentURL
+      };
+    case 'SET_DOCUMENT_ARRAY':
+      return {
+        ...state,
+        documentArray: action.documentArray
       };
     default:
       return state;

@@ -7,7 +7,7 @@ import { InputText } from 'primereact/inputtext';
 import { Dropdown } from 'primereact/dropdown'
 import { createHashHistory } from 'history'
 import './index.css';
-import { setProjectId, setProjectTitle, setProjectType, setProjectCustomer } from '../../../actions/dataActions'
+import { setProjectId, setProjectTitle, setProjectType, setProjectCustomer, setCurrentURL } from '../../../actions/dataActions'
 import { connect } from 'react-redux';
 import ProgressBar from './ProgressBar';
 import ButtonHeader from '../../ButtonHeader/ButtonHeader'
@@ -21,7 +21,7 @@ class Details extends React.Component {
 
     constructor(props) {
         super(props)
-        console.log("details", props)
+        //console.log("details", props)
         this.state = {
             projectId: props.projectId || '',
             title: props.projectTitle || '',
@@ -50,12 +50,7 @@ class Details extends React.Component {
         this.onSave = this.onSave.bind(this);
         this.onDelete = this.onDelete.bind(this);
     }
-    componentDidMount() {
-        if (this.props.projectId === '')
-            return;
-        const { projectId, type, title, customer } = this.props;
-        this.setState({ projectId, type, title, customer })
-    }
+
     uploadHandler() {
         console.log('upload handled');
     }
@@ -235,7 +230,8 @@ const mapDispatchToProps = dispatch => ({
     setProjectId: (projectId) => dispatch(setProjectId(projectId)),
     setProjectTitle: (projectTitle) => dispatch(setProjectTitle(projectTitle)),
     setProjectCustomer: (projectCustomer) => dispatch(setProjectCustomer(projectCustomer)),
-    setProjectType: (projectType) => dispatch(setProjectType(projectType))
+    setProjectType: (projectType) => dispatch(setProjectType(projectType)),
+    setCurrentURL: (currentURL) => dispatch(setCurrentURL(currentURL))
 
 });
 export default connect(mapStateToProps, mapDispatchToProps)(Details);
