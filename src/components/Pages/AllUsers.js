@@ -10,7 +10,7 @@ import { setUserList } from "../../actions/loginActions";
 import { connect } from "react-redux";
 
 class AllUsers extends React.Component {
-  constructor() {
+  constructor(props) {
     super();
     this.state = {
       selected: [],
@@ -20,19 +20,6 @@ class AllUsers extends React.Component {
     this.adminTemplate = this.adminTemplate.bind(this);
     this.removeTemplate = this.removeTemplate.bind(this);
     this.handleClickAllSelected = this.handleClickAllSelected.bind(this);
-  }
-
-  async getUserList() {
-    this.setState({ isLoading: true });
-    const userList = await axios.get(
-      "http://5dbdaeb405a6f30014bcaee3.mockapi.io/users"
-    );
-    this.props.setUserList(userList.data);
-    this.setState({ selected: [], isLoading: false });
-  }
-
-  componentDidMount() {
-    this.getUserList();
   }
 
   handleClick(rowData, action) {
@@ -100,8 +87,9 @@ class AllUsers extends React.Component {
       { body: this.removeTemplate }
     ];
 
-    const userList = this.props.userList.filter(function(item) {
-      return item.role == "user";
+    let userList = [];
+    this.props.userList.forEach(element => {
+      userList.push({username:  element.user.username});
     });
 
     return !this.state.isLoading ? (

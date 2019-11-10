@@ -12,7 +12,6 @@ import {
   setUserLogin,
   setUserName,
   setUserRole,
-  setUserList
 } from "../../actions/loginActions";
 import { InputText } from "primereact/inputtext";
 import { Dropdown } from "primereact/dropdown";
@@ -285,7 +284,6 @@ const mapDispatchToProps = dispatch => ({
   setUserLogin: userLogin => dispatch(setUserLogin(userLogin)),
   setUserName: userName => dispatch(setUserName(userName)),
   setUserRole: userRole => dispatch(setUserRole(userRole)),
-  setUserList: userList => dispatch(setUserList(userList))
 });
 
 export default connect(

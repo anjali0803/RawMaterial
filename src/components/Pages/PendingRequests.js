@@ -4,9 +4,11 @@ import { Column } from "primereact/column";
 import { Button } from "primereact/button";
 import { Dropdown } from "primereact/dropdown";
 import { ProgressSpinner } from "primereact/progressspinner";
+import {
+  setUserList
+} from "../../actions/loginActions";
 import "./index.css";
 import axios from "axios";
-import { setUserList } from "../../actions/loginActions";
 import { connect } from "react-redux";
 import { backendUrl } from '../../constant';
 
@@ -36,8 +38,17 @@ class PendingRequests extends React.Component {
     this.getUserList();
   }
 
-  handleClick(rowData, action) {
+  async handleClick(rowData, action) {
     if (action) {
+      let userList = [];
+      userList.push(rowData.username);
+      await axios.post(
+        `${backendUrl}/dashboard/approve_user`,
+        {
+          username_list: userList
+        }
+      );
+
       console.log(rowData.username, " is Approved");
     } else {
       console.log(rowData.username, " is Rejected");
@@ -57,7 +68,7 @@ class PendingRequests extends React.Component {
 
   approveTemplate(rowData, column) {
     const enable =
-      this.state.selected.includes(rowData) && this.state.selected.length === 1;
+      (JSON.stringify(this.state.selected[0]) === JSON.stringify(rowData)) && this.state.selected.length === 1;
     return (
       <Button
         label="Approve"
@@ -69,7 +80,7 @@ class PendingRequests extends React.Component {
 
   rejectTemplate(rowData, column) {
     const enable =
-      this.state.selected.includes(rowData) && this.state.selected.length === 1;
+    (JSON.stringify(this.state.selected[0]) === JSON.stringify(rowData)) && this.state.selected.length === 1;
     return (
       <Button
         label="Reject"
@@ -101,14 +112,11 @@ class PendingRequests extends React.Component {
       { body: this.rejectTemplate }
     ];
     let userList = [];
-    this.props.userList.filter(user => 
-      { 
-        if(user.is_approved == "false"){
-          userList.push(user.user)
-        }
+    this.props.userList.forEach(element => {
+      if(!element.is_approved){
+        userList.push({username:  element.user.username});
       }
-    );
-    console.log(userList);
+    });
     
     return !this.state.isLoading ? (
       <div>

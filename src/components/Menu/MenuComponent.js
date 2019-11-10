@@ -7,7 +7,6 @@ import "primereact/resources/themes/nova-light/theme.css";
 import { PanelMenu } from "primereact/panelmenu";
 import { connect } from "react-redux";
 import { setDataList, setColList } from "../../actions/dataActions";
-import { setUserList } from "../../actions/loginActions";
 import "./index.css";
 import { backendUrl } from "../../constant";
 
@@ -160,7 +159,6 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
     setDataList: dataList => dispatch(setDataList(dataList)),
     setColList: colList => dispatch(setColList(colList)),
-    setUserList: userList => dispatch(setUserList(userList))
 });
 
 export default connect(
