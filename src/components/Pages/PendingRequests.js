@@ -39,29 +39,45 @@ class PendingRequests extends React.Component {
   }
 
   async handleClick(rowData, action) {
+    let userList = [];
+    userList.push(rowData.username);
     if (action) {
-      let userList = [];
-      userList.push(rowData.username);
       await axios.post(
         `${backendUrl}/dashboard/approve_user`,
         {
           username_list: userList
         }
       );
-
-      console.log(rowData.username, " is Approved");
     } else {
-      console.log(rowData.username, " is Rejected");
+      await axios.post(
+        `${backendUrl}/dashboard/reject_user`,
+        {
+          username_list: userList
+        }
+      );
     }
     this.getUserList();
   }
 
-  handleClickAllSelected(action) {
-    const data = this.state.selected;
+  async handleClickAllSelected(action) {
+    let userList = [];
+    this.state.selected.forEach(user => {
+      userList.push(user.username);
+    });
     if (action) {
-      console.log(data, " is Approved");
+      await axios.post(
+        `${backendUrl}/dashboard/approve_user`,
+        {
+          username_list: userList
+        }
+      );
     } else {
-      console.log(data, " is Rejected");
+      await axios.post(
+        `${backendUrl}/dashboard/reject_user`,
+        {
+          username_list: userList
+        }
+      );
     }
     this.getUserList();
   }
