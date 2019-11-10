@@ -119,7 +119,7 @@ class Details extends React.Component {
                 createdBy: this.props.userName,
             }
         )
-        const projectId = createProjectRes.data.ProjectID;
+        const projectId = createProjectRes.data.data.ProjectID;
         this.props.setProjectId(projectId);
         this.props.setProjectCustomer(customer);
         this.props.setProjectTitle(title);
