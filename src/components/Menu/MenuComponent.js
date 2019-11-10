@@ -1,6 +1,5 @@
 import React from "react";
 import Axios from "axios";
-// import { PanelMenu } from 'primereact/panelmenu';
 import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
 import "primereact/resources/themes/nova-light/theme.css";

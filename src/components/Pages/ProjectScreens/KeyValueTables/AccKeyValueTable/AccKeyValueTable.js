@@ -1,11 +1,10 @@
 import React from 'react';
 import './index.css'
-import TableComponent from '../ProjectsTable/ProjectsTable';
-import DocumentHeader from '../DocumentHeader/DocumentHeader';
-import ButtonHeader from '../ButtonHeader/ButtonHeader';
-import ProgressBar from '../Pages/ProjectScreens/ProgressBar';
+import DocumentHeader from '../../../../DocumentHeader/DocumentHeader';
+import ButtonHeader from '../../../../ButtonHeader/ButtonHeader';
 import { createHashHistory } from 'history'
 import { connect } from "react-redux";
+import TableComponent from '../../../../Table/TableComponent';
 const history = createHashHistory();
 const pageMapIndex = [
     'input-key-value',
@@ -15,7 +14,7 @@ const pageMapIndex = [
     'output-document'
 
 ]
-class KeyValueTable extends React.Component {
+class AccKeyValueTable extends React.Component {
     constructor(props) {
         super(props);
         if (props.projectId === '')
@@ -30,13 +29,20 @@ class KeyValueTable extends React.Component {
             documentId: props.documentArray[props.screenNumber - 1] || '',
             keyValueData: [
 
-                { key: 'Queue Size', value: 12000 },
-                { key: 'Volume', value: '45 Cubic Meters' },
-                { key: 'density', value: 67 }
+                { workDescription: 'Clean up  and Cover', referenceStandardValue: 234, technicalSpecificationValue: 12, acceptanceCriteriaValue: 456 },
+                { workDescription: 'Maintainence and fixtures', referenceStandardValue: 223, technicalSpecificationValue: 7, acceptanceCriteriaValue: 456 },
+                { workDescription: 'Drills and exercies', referenceStandardValue: 234, technicalSpecificationValue: 9, acceptanceCriteriaValue: 456 },
+                { workDescription: 'Inventory management', referenceStandardValue: 94, technicalSpecificationValue: 3, acceptanceCriteriaValue: 456 },
+                { workDescription: 'Asset acquisitions', referenceStandardValue: 111, technicalSpecificationValue: 12, acceptanceCriteriaValue: 456 },
+                { workDescription: 'Classification', referenceStandardValue: 178, technicalSpecificationValue: 13, acceptanceCriteriaValue: 456 },
             ],
             keyValueColList: [
-                { field: 'key', header: 'Key' },
-                { field: 'value', header: 'Value' }
+                { field: 'workDescription', header: 'Work Description' },
+                { field: 'referenceStandardValue', header: 'Reference Standard Value' },
+                { field: 'technicalSpecificationValue', header: 'Technical Specification Value' },
+                { field: 'acceptanceCriteriaValue', header: 'Acceptance Criteria Value' }
+
+
 
             ]
         }
@@ -71,4 +77,4 @@ const mapStateToProps = state => ({
     documentId: state.documentId,
     documentArray: state.documentArray
 })
-export default connect(mapStateToProps)(KeyValueTable);
+export default connect(mapStateToProps)(AccKeyValueTable);

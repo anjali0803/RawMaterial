@@ -13,6 +13,11 @@ import './index.css';
 import { createHashHistory } from "history";
 import ProgressBar from './ProjectScreens/ProgressBar';
 import KeyValueTable from '../KeyValueTable/KeyValueTable';
+import InputKeyValueTable from './ProjectScreens/KeyValueTables/InputKeyValueTable/InputKeyValueTable';
+import RecKeyValueTable from './ProjectScreens/KeyValueTables/RecKeyValueTable/RecKeyValueTable';
+import AccKeyValueTable from './ProjectScreens/KeyValueTables/AccKeyValueTable/AccKeyValueTable';
+import OutputKeyValueTable from './ProjectScreens/KeyValueTables/OutputKeyValueTable/OutputKeyValueTable';
+import OutputDocValueTable from './ProjectScreens/KeyValueTables/OutputDocValueTable/OutputDocValueTable';
 const history = createHashHistory();
 
 
@@ -162,7 +167,7 @@ export default class CreateNewProjects extends React.Component {
                 />
             },
             {
-                path: '/Inquiry/create-new-projects/input-key-value/second', component: () => <KeyValueTable
+                path: '/Inquiry/create-new-projects/input-key-value/second', component: () => <InputKeyValueTable
                     saveEnabled={true} deleteEnabled={true}
                     steps={this.state.steps}
                     screenNumber={1}
@@ -181,7 +186,7 @@ export default class CreateNewProjects extends React.Component {
                     steps={this.state.steps} />
             },
             {
-                path: '/Inquiry/create-new-projects/recommendations/second', component: () => <KeyValueTable
+                path: '/Inquiry/create-new-projects/recommendations/second', component: () => <RecKeyValueTable
 
                     steps={this.state.steps}
                     saveEnabled={true} deleteEnabled={true}
@@ -196,7 +201,7 @@ export default class CreateNewProjects extends React.Component {
                     deleteEnabled={false} />
             },
             {
-                path: '/Inquiry/create-new-projects/acceptance/second', component: () => <KeyValueTable
+                path: '/Inquiry/create-new-projects/acceptance/second', component: () => <AccKeyValueTable
                     steps={this.state.steps}
                     saveEnabled={true} deleteEnabled={true}
                     redirectTo='/Inquiry/create-new-projects/output-key-value/'
@@ -212,7 +217,7 @@ export default class CreateNewProjects extends React.Component {
                 />
             },
             {
-                path: '/Inquiry/create-new-projects/output-key-value/second', component: () => <KeyValueTable
+                path: '/Inquiry/create-new-projects/output-key-value/second', component: () => <OutputKeyValueTable
 
                     steps={this.state.steps}
                     redirectTo='/Inquiry/create-new-projects/output-document'
@@ -227,7 +232,7 @@ export default class CreateNewProjects extends React.Component {
                     saveEnabled={true} deleteEnabled={true} />
             },
             {
-                path: '/Inquiry/create-new-projects/output-document/second', component: () => <KeyValueTable
+                path: '/Inquiry/create-new-projects/output-document/second', component: () => <OutputDocValueTable
                     steps={this.state.steps}
                     redirectTo='/'
                     saveEnabled={true} deleteEnabled={true}
