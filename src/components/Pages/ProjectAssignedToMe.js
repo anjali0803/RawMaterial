@@ -46,8 +46,6 @@ class ProjectAssignedToMe extends React.Component {
 
                 />
             </div>
-
-
         )
     }
 }
