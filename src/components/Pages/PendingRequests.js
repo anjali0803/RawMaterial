@@ -8,6 +8,7 @@ import "./index.css";
 import axios from "axios";
 import { setUserList } from "../../actions/loginActions";
 import { connect } from "react-redux";
+import { backendUrl } from '../../constant';
 
 class PendingRequests extends React.Component {
   constructor() {
@@ -25,7 +26,7 @@ class PendingRequests extends React.Component {
   async getUserList() {
     this.setState({ isLoading: true });
     const userList = await axios.get(
-      "http://5dbdaeb405a6f30014bcaee3.mockapi.io/users"
+      `${backendUrl}/dashboard/users`
     );
     this.props.setUserList(userList.data);
     this.setState({ selected: [], isLoading: false })
@@ -99,11 +100,16 @@ class PendingRequests extends React.Component {
       { body: this.approveTemplate },
       { body: this.rejectTemplate }
     ];
-
-    const userList = this.props.userList.filter(function(item) {
-      return item.role == "requested";
-    });
-
+    let userList = [];
+    this.props.userList.filter(user => 
+      { 
+        if(user.is_approved == "false"){
+          userList.push(user.user)
+        }
+      }
+    );
+    console.log(userList);
+    
     return !this.state.isLoading ? (
       <div>
         <DataTable

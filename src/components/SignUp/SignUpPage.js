@@ -12,11 +12,13 @@ import {
   setUserList
 } from "../../actions/loginActions";
 import { InputText } from "primereact/inputtext";
+import { Dropdown } from "primereact/dropdown";
 import { Button } from "primereact/button";
 import "./index.css";
 import { createHashHistory } from "history";
 import axios from "axios";
 import { connect } from "react-redux";
+import { backendUrl } from '../../constant';
 const history = createHashHistory();
 
 class SignUpPage extends React.Component {
@@ -26,9 +28,10 @@ class SignUpPage extends React.Component {
       username: "",
       name: "",
       password: "",
-      confirmpassword: "",
+      confirmPassword: "",
       email: "",
-      department: ""
+      department: "",
+      role: ""
     };
 
     this.handleSignUp = this.handleSignUp.bind(this);
@@ -62,19 +65,22 @@ class SignUpPage extends React.Component {
     const username = this.state.username;
     const name = this.state.name;
     const password = this.state.password;
-    const confirmpassword = this.state.confirmpassword;
+    const confirmPassword = this.state.confirmPassword;
     const email = this.state.email;
     const department = this.state.department;
-    console.log("userData", {
+    const userData = {
       username: username,
-      name: name,
       password: password,
-      confirmpassword: confirmpassword,
+      confirmPassword: confirmPassword,
       email: email,
-      department: department
-    });
+      project: department,
+    };
 
-    if (this.state.password === this.state.confirmpassword) {
+    if (this.state.password === this.state.confirmPassword) {
+      const signUpRes = await axios.post(
+        `${backendUrl}/auth/register_user`,
+        userData
+      )
       history.push("/login");
     } else {
       this.messages.show({
@@ -143,10 +149,10 @@ class SignUpPage extends React.Component {
                   </span>
                   <InputText
                     placeholder="Confirm Password"
-                    name="confirmpassword"
+                    name="confirmPassword"
                     type="password"
                     onChange={this.handleInputChange}
-                    value={this.state.confirmpassword}
+                    value={this.state.confirmPassword}
                   />
                   <Messages
                     severity="error"
@@ -184,6 +190,7 @@ class SignUpPage extends React.Component {
                   />
                 </div>
               </div>
+            <br />
             </div>
             <br />
             <div className="sign-in-container">

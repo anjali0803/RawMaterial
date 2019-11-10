@@ -82,18 +82,13 @@ class LoginPage extends React.Component {
 
     if (loginResponse) {
       if (loginResponse.data.code === 0) {
-        await this.props.setUserLogin(true);
-
-        // const userData = await axios.get(
-        //   `${backendUrl}/dashboard/get_user`,
-        // )
-        
+        await this.props.setUserLogin(true);        
         await this.props.setUserName(loginResponse.data.username);
-        await this.props.setUserRole(loginResponse.data.role);
+        await this.props.setUserRole(loginResponse.data.is_superuser ? 'admin' : '');
 
         localStorage.setItem("isAuthenticated", "true");
         localStorage.setItem("username", loginResponse.data.username);
-        localStorage.setItem("role", loginResponse.data.role);
+        localStorage.setItem("role", loginResponse.data.is_superuser ? 'admin' : '');
         history.push(referer);
       }
       if(loginResponse.data.code === 2) {
