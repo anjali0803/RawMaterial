@@ -29,15 +29,15 @@ class AllOngoingProjects extends React.Component {
     render() {
         return (
             <div>
-                <ProjectsTable colList={this.props.colList} dataList={this.props.dataList}
+                <ProjectsTable projectTableColList={this.props.projectTableColList} projectList={this.props.projectList}
                     onProjectIdClick={this.onProjectIdClick} />
             </div>
         )
     }
 }
 const mapStateToProps = state => ({
-    dataList: state.dataList,
-    colList: state.colList,
+    projectList: state.projectList,
+    projectTableColList: state.projectTableColList,
     projectId: state.projectId,
     projectTitle: state.projectTitle,
     projectType: state.projectType,

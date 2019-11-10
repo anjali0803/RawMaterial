@@ -31,9 +31,9 @@ export default class ProjectsTable extends React.Component {
     this.getUserList();
   }
   render() {
-    const colList = this.props.colList;
+    const projectTableColList = this.props.projectTableColList;
     const selected = this.state.selected;
-    var dataList = this.props.dataList;
+    var projectList = this.props.projectList;
     const actions = [
       { label: "Approve All Selected", value: 1 },
       { label: "Reject All Selected", value: 0 }
@@ -49,7 +49,7 @@ export default class ProjectsTable extends React.Component {
     return (
       <div>
         <DataTable
-          value={dataList}
+          value={projectList}
           footer={footer}
           paginator={true}
           paginatorPosition={"top"}
@@ -59,7 +59,7 @@ export default class ProjectsTable extends React.Component {
         >
           <Column selectionMode="multiple" style={{ width: '3em' }} />
           <Column header={<i className="pi pi-refresh"></i>} style={{ width: '3em' }} />
-          {colList.map((el, index) => {
+          {projectTableColList.map((el, index) => {
             const field = el.field;
             const header = el.header;
 

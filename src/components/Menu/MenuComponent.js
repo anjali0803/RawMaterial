@@ -15,20 +15,19 @@ class MenuComponent extends React.Component {
     async componentDidMount() {
         let data;
         data = await Axios.get(
-            `${backendUrl}/dashboard/projects`
+            `${backendUrl}/dashboard/all_project`
         );
-        data = data.data;
-        this.props.setDataList(data);
+        this.props.setDataList(data.data.data.Items);
 
         const colList = [
             { field: "ProjectID", header: "Project Id" },
             { field: "Title", header: "Title" },
-            { field: "Customer", header: "Customer" },
-            { field: "Type", header: "Type" },
-            { field: "AssignedDate", header: "Assigned Date" },
-            { field: "Status", header: "Status" },
+            { field: "Client", header: "Customer" },
+            { field: "ProjectType", header: "Type" },
+            { field: "AssignedOn", header: "Assigned Date" },
+            { field: "ProjectStatus", header: "Status" },
             { field: "AssignedTo", header: "Assigned To" },
-            { field: "createdBy", header: "Created By" }
+            { field: "CreatedBy", header: "Created By" }
         ];
         this.props.setColList(colList);
     }

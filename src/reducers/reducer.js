@@ -41,12 +41,12 @@ export default (state = initialState, action) => {
     case 'SET_DATA_LIST':
       return {
         ...state,
-        dataList: action.dataList
+        projectList: action.dataList
       };
     case 'SET_COL_LIST':
       return {
         ...state,
-        colList: action.colList
+        projectTableColList: action.colList
       };
     case 'SET_PROJECT_ID':
       return {

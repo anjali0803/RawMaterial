@@ -8,8 +8,8 @@ const history = createHashHistory();
 
 
 class ProjectAssignedByMe extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.onProjectIdClick = this.onProjectIdClick.bind(this);
   }
   onProjectIdClick(rowData) {
@@ -29,13 +29,13 @@ class ProjectAssignedByMe extends React.Component {
     return (
       <div>
         <ProjectsTable
-          colList={this.props.colList.filter(element => {
-            if (element.field != "createdBy") {
+          projectTableColList={this.props.projectTableColList.filter(element => {
+            if (element.field != "CreatedBy") {
               return element;
             }
           })}
-          dataList={this.props.dataList.filter(element => {
-            if (element["createdBy"] == "user1") return element;
+          projectList={this.props.projectList.filter(element => {
+            if (element["CreatedBy"] == this.props.userName) return element;
           })}
 
           onProjectIdClick={this.onProjectIdClick}
@@ -46,8 +46,9 @@ class ProjectAssignedByMe extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  dataList: state.dataList,
-  colList: state.colList,
+  userName: state.userName,
+  projectList: state.projectList,
+  projectTableColList: state.projectTableColList,
   projectId: state.projectId,
   projectType: state.projectType,
   projectTitle: state.projectTitle,
