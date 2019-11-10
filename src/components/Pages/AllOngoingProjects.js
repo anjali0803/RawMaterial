@@ -32,8 +32,6 @@ class AllOngoingProjects extends React.Component {
                 <ProjectsTable colList={this.props.colList} dataList={this.props.dataList}
                     onProjectIdClick={this.onProjectIdClick} />
             </div>
-
-
         )
     }
 }
@@ -53,8 +51,6 @@ const mapDispatchToProps = dispatch => ({
     setProjectCustomer: (projectCustomer) => dispatch(setProjectCustomer(projectCustomer)),
     setProjectType: (projectType) => dispatch(setProjectType(projectType)),
     setDocumentArray: (documentArray) => dispatch(setDocumentArray(documentArray)),
-
-
 })
 export default connect(
     mapStateToProps, mapDispatchToProps
