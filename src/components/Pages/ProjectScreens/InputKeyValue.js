@@ -101,20 +101,7 @@ class InputKeyValue extends React.Component {
                 { field: 'last', header: 'Last' },
                 { field: 'sentOn', header: 'Sent On' }
 
-            ],
-            keyValueData: [
-
-                { key: 'Queue Size', value: 12000 },
-                { key: 'Volume', value: '45 Cubic Meters' },
-                { key: 'density', value: 67 }
-            ],
-            keyValueColList: [
-                { field: 'key', header: 'Key' },
-                { field: 'value', header: 'Value' }
-
-            ],
-
-
+            ]
 
         }
         this.onDocIdClick = this.onDocIdClick.bind(this);

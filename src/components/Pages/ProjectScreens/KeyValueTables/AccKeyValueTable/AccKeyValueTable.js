@@ -60,6 +60,15 @@ class AccKeyValueTable extends React.Component {
     onDelete() {
         console.log('recommendations screen delete ....');
     }
+    rowClassName(rowData) {
+        console.log('Row class Name :', rowData['technicalSpecificationValue'] > 5);
+
+        return {
+            'table-on-green': (parseInt(rowData['technicalSpecificationValue']) > 5),
+            'table-on-red': (parseInt(rowData['technicalSpecificationValue']) < 5)
+        };
+
+    }
 
     render() {
 
@@ -67,7 +76,7 @@ class AccKeyValueTable extends React.Component {
             <div>
                 <ButtonHeader saveEnabled={this.props.saveEnabled} deleteEnabled={this.props.deleteEnabled} className="progbar-button-header" onSave={() => this.onSave()} onDelete={() => this.onDelete()} />
                 <DocumentHeader documentId={this.state.documentId} projectId={this.props.projectId} />
-                <TableComponent colList={this.state.keyValueColList} dataList={this.state.keyValueData} />
+                <TableComponent colList={this.state.keyValueColList} dataList={this.state.keyValueData} rowClassName={this.rowClassName} />
             </div>
         )
     }

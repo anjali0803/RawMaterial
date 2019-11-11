@@ -29,21 +29,18 @@ class InputKeyValueTable extends React.Component {
             documentId: props.documentArray[props.screenNumber - 1] || '',
             keyValueData: [
 
-                { workDescription: 'Clean up  and Cover', referenceStandardValue: 234, technicalSpecificationValue: 12, acceptanceCriteriaValue: 456,color: 'red' },
+                { workDescription: 'Clean up  and Cover', referenceStandardValue: 234, technicalSpecificationValue: 12, acceptanceCriteriaValue: 456 },
                 { workDescription: 'Maintainence and fixtures', referenceStandardValue: 223, technicalSpecificationValue: 7, acceptanceCriteriaValue: 456 },
                 { workDescription: 'Drills and exercies', referenceStandardValue: 234, technicalSpecificationValue: 9, acceptanceCriteriaValue: 456 },
                 { workDescription: 'Inventory management', referenceStandardValue: 94, technicalSpecificationValue: 3, acceptanceCriteriaValue: 456 },
                 { workDescription: 'Asset acquisitions', referenceStandardValue: 111, technicalSpecificationValue: 12, acceptanceCriteriaValue: 456 },
-                { workDescription: 'Classification', referenceStandardValue: 178, technicalSpecificationValue: 13, acceptanceCriteriaValue: 456 },
+                { workDescription: 'Classification', referenceStandardValue: 178, technicalSpecificationValue: 13, acceptanceCriteriaValue: 456, color: 'green' },
             ],
             keyValueColList: [
                 { field: 'workDescription', header: 'Work Description' },
                 { field: 'referenceStandardValue', header: 'Reference Standard Value' },
                 { field: 'technicalSpecificationValue', header: 'Technical Specification Value' },
                 { field: 'acceptanceCriteriaValue', header: 'Acceptance Criteria Value' }
-
-
-
             ]
         }
 
@@ -60,14 +57,22 @@ class InputKeyValueTable extends React.Component {
     onDelete() {
         console.log('recommendations screen delete ....');
     }
+    rowClassName(rowData) {
+        console.log('Row class Name :', rowData['technicalSpecificationValue'] > 5);
 
+        return {
+            'table-on-green': (parseInt(rowData['technicalSpecificationValue']) > 5),
+            'table-on-red': (parseInt(rowData['technicalSpecificationValue']) < 5)
+        };
+
+    }
     render() {
 
         return (
             <div>
                 <ButtonHeader saveEnabled={this.props.saveEnabled} deleteEnabled={this.props.deleteEnabled} className="progbar-button-header" onSave={() => this.onSave()} onDelete={() => this.onDelete()} />
                 <DocumentHeader documentId={this.state.documentId} projectId={this.props.projectId} />
-                <TableComponent colList={this.state.keyValueColList} dataList={this.state.keyValueData} />
+                <TableComponent colList={this.state.keyValueColList} dataList={this.state.keyValueData} rowClassName={this.rowClassName} />
             </div>
         )
     }

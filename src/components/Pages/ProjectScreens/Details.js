@@ -9,10 +9,11 @@ import { createHashHistory } from 'history'
 import './index.css';
 import { setProjectId, setProjectTitle, setProjectType, setProjectCustomer, setCurrentURL } from '../../../actions/dataActions'
 import { connect } from 'react-redux';
-import ProgressBar from './ProgressBar';
 import ButtonHeader from '../../ButtonHeader/ButtonHeader'
 const history = createHashHistory();
-//readOnly props 
+
+
+
 class Details extends React.Component {
 
     constructor(props) {
@@ -58,19 +59,18 @@ class Details extends React.Component {
     }
     onSave() {
         const { title, customer, type } = this.state;
-        console.log({ title, customer, type })
+        //console.log({ title, customer, type })
         if (this.props.projectId === '') {
             const projectId = Math.round(Math.random() * 10000000)
-            console.log('project id on save = ' + projectId)
+            //console.log('project id on save = ' + projectId)
             this.props.setProjectId(projectId);
         }
 
         this.props.setProjectCustomer(customer);
         this.props.setProjectTitle(title);
         this.props.setProjectType(type)
-        this.props.setCurrentURL('/Inquiry/create-new-projects/input-key-value')
         history.push('/Inquiry/create-new-projects/input-key-value')
-        //
+
     }
     onDelete() {
         console.log('Data deleted');
