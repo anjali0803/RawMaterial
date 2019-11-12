@@ -15,11 +15,13 @@ import {
   setUserList
 } from "../../actions/loginActions";
 import { InputText } from "primereact/inputtext";
+import { Dropdown } from "primereact/dropdown";
 import { Button } from "primereact/button";
 import "./index.css";
 import { createHashHistory } from "history";
 import axios from "axios";
 import { connect } from "react-redux";
+import { backendUrl } from '../../constant';
 const history = createHashHistory();
 
 class SignUpPage extends React.Component {
@@ -75,10 +77,10 @@ class SignUpPage extends React.Component {
       username: "",
       name: "",
       password: "",
-      confirmpassword: "",
+      confirmPassword: "",
       email: "",
       department: "",
-      validation: this.validator.valid(),
+      role: ""
     };
 
     this.submitted = false;
@@ -115,17 +117,22 @@ class SignUpPage extends React.Component {
     const username = this.state.username;
     const name = this.state.name;
     const password = this.state.password;
-    const confirmpassword = this.state.confirmpassword;
+    const confirmPassword = this.state.confirmPassword;
     const email = this.state.email;
     const department = this.state.department;
-    console.log("userData", {
+    const userData = {
       username: username,
-      name: name,
       password: password,
+      confirmPassword: confirmPassword,
       email: email,
-      department: department
-    });
+      project: department,
+    };
 
+    if (this.state.password === this.state.confirmPassword) {
+      const signUpRes = await axios.post(
+        `${backendUrl}/auth/register_user`,
+        userData
+      )
     // if (this.state.password === this.state.confirmpassword) {
     //   history.push("/login");
     // } else {
@@ -144,6 +151,7 @@ class SignUpPage extends React.Component {
       history.push("/login");
     }
   }
+  }
 
   render() {
     // const validUsername = this.state.username !== ""
@@ -152,118 +160,106 @@ class SignUpPage extends React.Component {
     // const validConfirmPassword = this.state.confirmpassword !== ""
     // const validEmail = this.state.email !== ""
     // const validDepartment = this.state.department !== ""
-    let validation = this.submitted ? this.validator.validate(this.state) : this.state.validation
+    let validation = this.submitted ? this.validator.validate(this.state) : this.state.validation;
     return (
       <div className="main-container">
         <div className="sign-up-page">
-          <div className="sign-up-container-outer">
-           <div className="sign-up-container-inner">
-            <div
-              className="p-inputgroup"
-              style={{ marginTop: "30px", paddingLeft: ".5em" }}
-            >
-              <span className="p-inputgroup-addon">
-                <i className="pi pi-user"></i>
-              </span>
-              <InputText
-                placeholder="Username"
-                name="username"
-                type="text"
-                onChange={this.handleInputChange}
-                value={this.state.username}
-                className={validation.username.isInvalid ? "p-error" : ""}
-                style={{ marginRight: ".25em" }}
-              />
-              {validation.username.isInvalid ? <Message className="validation-msg" severity="error" text={validation.username.message} />: null}
-            </div>
-            <div
-              className="p-inputgroup"
-              style={{ marginTop: "30px", paddingLeft: ".5em" }}
-            >
-              <span className="p-inputgroup-addon">
-                <i className="pi pi-user"></i>
-              </span>
-              <InputText
-                placeholder="Name"
-                name="name"
-                type="text"
-                onChange={this.handleInputChange}
-                value={this.state.name}
-                className={validation.name.isInvalid ? "p-error" : ""}
-                style={{ marginRight: ".25em" }}
-              />
-              { validation.username.isInvalid ? <Message className="validation-msg" severity="error" text={validation.name.message} /> : null }
-            </div>
-            <div
-              className="p-inputgroup"
-              style={{ marginTop: "30px", paddingLeft: ".5em" }}
-            >
-              <span className="p-inputgroup-addon">
-                <i className="pi pi-key"></i>
-              </span>
-              <Password
-                placeholder="Password"
-                name="password"
-                type="password"
-                onChange={this.handleInputChange}
-                value={this.state.password}
-                className={validation.password.isInvalid ? "p-error" : ""}
-                style={{ marginRight: ".25em" }}
-              />
-              { validation.username.isInvalid ? <Message className="validation-msg" severity="error" text={validation.password.message} /> : null }
-            </div>
-            <div
-              className="p-inputgroup"
-              style={{ marginTop: "30px", paddingLeft: ".5em" }}
-            >
-              <span className="p-inputgroup-addon">
-                <i className="pi pi-lock"></i>
-              </span>
-              <InputText
-                placeholder="Confirm Password"
-                name="confirmpassword"
-                type="password"
-                onChange={this.handleInputChange}
-                value={this.state.confirmpassword}
-                className={validation.confirmpassword.isInvalid ? "p-error" : ""}
-                style={{ marginRight: ".25em" }}
-              />
-              { validation.username.isInvalid ? <Message className="validation-msg" severity="error" text={validation.confirmpassword.message} /> : null }
-            </div>
-            <div
-              className="p-inputgroup"
-              style={{ marginTop: "30px", paddingLeft: ".5em" }}
-            >
-              <span className="p-inputgroup-addon">
-                <i className="pi pi-envelope"></i>
-              </span>
-              <InputText
-                placeholder="E-mail"
-                name="email"
-                type="email"
-                onChange={this.handleInputChange}
-                value={this.state.email}
-                className={validation.email.isInvalid ? "p-error" : ""}
-                style={{ marginRight: ".25em" }}
-              />
-              { validation.username.isInvalid ? <Message className="validation-msg" severity="error" text={validation.email.message} /> : null }
-            </div>
-            <div
-              className="p-inputgroup"
-              style={{ marginTop: "30px", paddingLeft: ".5em" }}
-            >
-              <span className="p-inputgroup-addon">
-                <i className="pi pi-home"></i>
-              </span>
-              <InputText
-                placeholder="Department"
-                name="department"
-                type="text"
-                onChange={this.handleInputChange}
-                value={this.state.department}
-                style={{ marginRight: ".25em" }}
-              />
-              {/* {validation.department.isInvalid ? <Message className="validation-msg" severity="error" text={validation.department.message} /> : null} */}
+          <div className="sign-up-container">
+            <div className="p-grid p-fluid">
+              <div className="p-col-12 p-md-4">
+                <div className="p-inputgroup">
+                  <span className="p-inputgroup-addon">
+                    <i className="pi pi-user"></i>
+                  </span>
+                  <InputText
+                    placeholder="Username"
+                    name="username"
+                    type="text"
+                    onChange={this.handleInputChange}
+                    value={this.state.username}
+                  />
+                </div>
+              </div>
+              <br />
+              <div className="p-col-12 p-md-4">
+                <div className="p-inputgroup">
+                  <span className="p-inputgroup-addon">
+                    <i className="pi pi-user"></i>
+                  </span>
+                  <InputText
+                    placeholder="Name"
+                    name="name"
+                    type="text"
+                    onChange={this.handleInputChange}
+                    value={this.state.name}
+                  />
+                </div>
+              </div>
+              <br />
+              <div className="p-col-12 p-md-4">
+                <div className="p-inputgroup">
+                  <span className="p-inputgroup-addon">
+                    <i className="pi pi-key"></i>
+                  </span>
+                  <InputText
+                    placeholder="Password"
+                    name="password"
+                    type="password"
+                    onChange={this.handleInputChange}
+                    value={this.state.password}
+                  />
+                </div>
+              </div>
+              <br />
+              <div className="p-col-12 p-md-4">
+                <div className="p-inputgroup">
+                  <span className="p-inputgroup-addon">
+                    <i className="pi pi-lock"></i>
+                  </span>
+                  <InputText
+                    placeholder="Confirm Password"
+                    name="confirmPassword"
+                    type="password"
+                    onChange={this.handleInputChange}
+                    value={this.state.confirmPassword}
+                  />
+                  <Messages
+                    severity="error"
+                    text="Password didn't match"
+                  ></Messages>
+                </div>
+              </div>
+              <br />
+              <div className="p-col-12 p-md-4">
+                <div className="p-inputgroup">
+                  <span className="p-inputgroup-addon">
+                    <i className="pi pi-envelope"></i>
+                  </span>
+                  <InputText
+                    placeholder="E-mail"
+                    name="email"
+                    type="email"
+                    onChange={this.handleInputChange}
+                    value={this.state.email}
+                  />
+                </div>
+              </div>
+              <br />
+              <div className="p-col-12 p-md-4">
+                <div className="p-inputgroup">
+                  <span className="p-inputgroup-addon">
+                    <i className="pi pi-home"></i>
+                  </span>
+                  <InputText
+                    placeholder="Department"
+                    name="department"
+                    type="text"
+                    onChange={this.handleInputChange}
+                    value={this.state.department}
+                  />
+                </div>
+              </div>
+            <br />
             </div>
             <br />
             <div className="sign-up-button-container">
@@ -274,9 +270,8 @@ class SignUpPage extends React.Component {
           </div>
           </div>
         </div>
-      </div>
     );
-  }
+  };
 }
 
 const mapStateToProps = state => ({

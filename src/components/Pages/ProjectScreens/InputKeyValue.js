@@ -5,107 +5,37 @@ import ButtonHeader from '../../ButtonHeader/ButtonHeader';
 import { setDocumentArray } from "../../../actions/dataActions"
 import { connect } from 'react-redux'
 import './index.css';
-import Axios from 'axios';
 import { ProgressSpinner } from 'primereact/progressspinner';
+import axios from 'axios';
+import { backendUrl } from '../../../constant';
+
 const history = createHashHistory();
 class InputKeyValue extends React.Component {
     constructor(props) {
         super(props);
         //console.log("here", this.props)
-        if (props.projectId === '') {
+        if (this.props.projectId === '') {
             history.push('/Inquiry/create-new-projects/details')
         }
         this.onSave = this.onSave.bind(this);
         this.onDelete = this.onDelete.bind(this);
         this.state = {
             isLoading: false,
-            tableData: [
-
-                {
-                    documentId: '123490',
-                    customer: 'Adante',
-                    type: 'Aplha',
-                    uploadedDate: '12-10-2017',
-                    sent: 'Yes',
-                    last: "Generated",
-                    sentOn: '24-11-2017'
-                },
-                {
-                    documentId: '123487',
-                    customer: 'Navi',
-                    type: 'Beta',
-                    uploadedDate: '11-10-2016',
-                    sent: 'No',
-                    last: "Non generated",
-                    sentOn: '24-11-2019'
-                },
-                {
-                    documentId: '123467',
-                    customer: 'Valve',
-                    type: 'Omega',
-                    uploadedDate: '12-10-2017',
-                    sent: 'Yes',
-                    last: "Generated",
-                    sentOn: '24-11-2017'
-                },
-                {
-                    documentId: '123493',
-                    customer: 'theta',
-                    type: 'Beta',
-                    uploadedDate: '12-10-2017',
-                    sent: 'Yes',
-                    last: "Generated",
-                    sentOn: '24-11-2017'
-                },
-                {
-                    documentId: '123490',
-                    customer: 'Adante',
-                    type: 'Aplha',
-                    uploadedDate: '12-10-2017',
-                    sent: 'Yes',
-                    last: "Generated",
-                    sentOn: '24-11-2017'
-                },
-                {
-                    documentId: '123490',
-                    customer: 'Adante',
-                    type: 'Aplha',
-                    uploadedDate: '12-10-2017',
-                    sent: 'Yes',
-                    last: "Generated",
-                    sentOn: '24-11-2017'
-                },
-                {
-                    documentId: '123490',
-                    customer: 'Adante',
-                    type: 'Aplha',
-                    uploadedDate: '12-10-2017',
-                    sent: 'Yes',
-                    last: "Generated",
-                    sentOn: '24-11-2017'
-                },
-                {
-                    documentId: '123490',
-                    customer: 'Adante',
-                    type: 'Aplha',
-                    uploadedDate: '12-10-2017',
-                    sent: 'Yes',
-                    last: "Generated",
-                    sentOn: '24-11-2017'
-                }
-            ],
             tableColList: [
-                { field: 'documentId', header: 'Document Id' },
-                { field: 'customer', header: 'Customer' },
-                { field: 'type', header: 'Type' },
-                { field: 'uploadedDate', header: 'Uploaded Date' },
-                { field: 'sent', header: 'Sent' },
-                { field: 'last', header: 'Last' },
-                { field: 'sentOn', header: 'Sent On' }
-
-            ]
-
+                { field: 'DocID', header: 'Document Id' },
+                { field: 'ClientName', header: 'Customer' },
+                { field: 'ProjectType', header: 'Project Type' },
+                { field: 'FileType', header: 'File Type' },
+                { field: 'CreatedOn', header: 'Created On' },
+                { field: 'LastUpdatedBy', header: 'Last Updated By' },
+                { field: 'LastUpdatedOn', header: 'Last Updated On' },
+                { field: 'FileRevisionDate', header: 'File Revision Date' },
+                { field: 'RevNumber', header: 'File Revision Number' },
+                { field: 'SpecNumber', header: 'File Spec Number' }
+            ],
+            tableData: []
         }
+        
         this.onDocIdClick = this.onDocIdClick.bind(this);
         this.onRefresh = this.onRefresh.bind(this);
     }
@@ -113,11 +43,23 @@ class InputKeyValue extends React.Component {
         this.getTabledata();
     }
 
+    async componentDidMount(){
+        const formData = new FormData();
+        formData.append('projectID', 'MASTERHFW')
+        const  tableData  = await axios.get(
+            `${backendUrl}/dashboard/get_ikv_doc`,{
+                params:{
+                    projectID : 'MASTERHFW'
+                }
+            }
+        )
+        this.setState({ tableData: tableData.data.data });
+    }
     onDocIdClick(rowData) {
         //console.log(this.props.documentArray)
 
         let documentArray = this.props.documentArray;
-        documentArray[0] = rowData['documentId'];
+        documentArray[0] = rowData['DocId'];
         this.props.setDocumentArray(documentArray)
         history.push("/Inquiry/create-new-projects/input-key-value/second");
     }

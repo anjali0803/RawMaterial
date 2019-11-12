@@ -72,7 +72,7 @@ export default class TableComponent extends React.Component {
 
             //console.log(header.toLowerCase().replace(/ /g, ''))
 
-            if (header.toLowerCase().replace(/ /g, '') == 'documentid') {
+            if (header.toLowerCase().replace(/ /g, '') == 'DocID') {
               //console.log(el);
               return <Column
                 id={`table-${index}`}

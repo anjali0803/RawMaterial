@@ -8,12 +8,13 @@ import { connect } from "react-redux";
 import { setDataList, setColList } from "../../actions/dataActions";
 import { setUserList } from "../../actions/loginActions";
 import "./index.css";
+import { backendUrl } from "../../constant";
 
 class MenuComponent extends React.Component {
     async componentDidMount() {
         let data;
         data = await Axios.get(
-            "http://5dbdaeb405a6f30014bcaee3.mockapi.io/projects"
+            `${backendUrl}/dashboard/projects`
         );
         data = data.data;
         this.props.setDataList(data);

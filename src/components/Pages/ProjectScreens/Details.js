@@ -10,15 +10,15 @@ import './index.css';
 import { setProjectId, setProjectTitle, setProjectType, setProjectCustomer, setCurrentURL } from '../../../actions/dataActions'
 import { connect } from 'react-redux';
 import ButtonHeader from '../../ButtonHeader/ButtonHeader'
+import axios from 'axios';
+import { backendUrl } from '../../../constant';
+
 const history = createHashHistory();
-
-
 
 class Details extends React.Component {
 
     constructor(props) {
         super(props)
-        //console.log("details", props)
         this.state = {
             projectId: props.projectId || '',
             title: props.projectTitle || '',
@@ -30,14 +30,22 @@ class Details extends React.Component {
                 { label: 'Gamma', value: 'Gamma' },
                 { label: 'theta', value: 'theta' },
                 { label: 'omega', value: 'omega' }
-            ]
+            ],
+            file1: '',
+            file2: '',
+            file3: '',
+            file4: ''
         }
         this.handleInputCustomer = this.handleInputCustomer.bind(this);
         this.handleInputType = this.handleInputType.bind(this);
+        this.saveFile1 = this.saveFile1.bind(this);
+        this.saveFile2 = this.saveFile2.bind(this);
+        this.saveFile3 = this.saveFile3.bind(this);
+        this.saveFile4 = this.saveFile4.bind(this);
+        this.upLoadFiletoS3 = this.upLoadFiletoS3.bind(this);
         this.handleInputTitle = this.handleInputTitle.bind(this);
         this.onSave = this.onSave.bind(this);
         this.onDelete = this.onDelete.bind(this);
-
     }
 
     uploadHandler() {
@@ -49,6 +57,19 @@ class Details extends React.Component {
 
 
     }
+    saveFile1(e){
+        this.setState({ file1: e });
+    }
+    saveFile2(e){
+        this.setState({ file2: e });
+    }
+    saveFile3(e){
+        this.setState({ file3: e });
+    }
+    saveFile4(e){
+        this.setState({ file4: e });
+    }
+
     handleInputType(e) {
 
         this.setState({ type: e.value })
@@ -57,15 +78,46 @@ class Details extends React.Component {
 
         this.setState({ title: e.target.value })
     }
-    onSave() {
-        const { title, customer, type } = this.state;
-        //console.log({ title, customer, type })
-        if (this.props.projectId === '') {
-            const projectId = Math.round(Math.random() * 10000000)
-            //console.log('project id on save = ' + projectId)
-            this.props.setProjectId(projectId);
-        }
 
+    async upLoadFiletoS3(file){
+        let formData = new FormData();
+        formData.append('file', file);
+        // formData.append('filepath', '/sada/')
+        const fileRes = await axios.post(
+            `${backendUrl}/dashboard/uploadfile`,
+            formData,
+            {headers: {
+                'Content-Type': 'multipart/form-data'
+            }}
+        )
+        return fileRes;
+    }
+
+    async onSave() {
+        const { title, customer, type } = this.state;
+        const { file1, file2, file3, file4 } = this.state;
+
+        const file1Res = await this.upLoadFiletoS3(file1);
+        const file2Res = await this.upLoadFiletoS3(file2);
+        const file3Res = await this.upLoadFiletoS3(file3);
+        const file4Res = await this.upLoadFiletoS3(file4);
+
+        const createProjectRes = await axios.post(
+            `${backendUrl}/dashboard/create_project`,
+            {
+                title: title,
+                client: customer,
+                project_type: type,
+                cost_sheet: file1Res.data.data,
+                specs_pipe: file2Res.data.data,
+                inner_coating: file3Res.data.data,
+                outer_coating: file4Res.data.data,
+                assignedTo: this.props.userName,
+                createdBy: this.props.userName,
+            }
+        )
+        const projectId = createProjectRes.data.data.ProjectID;
+        this.props.setProjectId(projectId);
         this.props.setProjectCustomer(customer);
         this.props.setProjectTitle(title);
         this.props.setProjectType(type)
@@ -80,7 +132,8 @@ class Details extends React.Component {
     render() {
         return (
             <div>
-                <ButtonHeader saveEnabled={this.props.saveEnabled} deleteEnabled={this.props.deleteEnabled} className="details-button-header" onSave={() => this.onSave()} onDelete={() => this.onDelete()} />
+                <form onSubmit={obj => this.onSave(obj)}>
+                <ButtonHeader type="button" saveEnabled={this.props.saveEnabled} deleteEnabled={this.props.deleteEnabled} className="details-button-header" onSave={() => this.onSave()} onDelete={() => this.onDelete()} />
                 <div className="details-container">
                     <div className="details-form-container">
                         <div className="details-project-id-container">
@@ -129,11 +182,14 @@ class Details extends React.Component {
                     <div className="upload-label" >Cost Sheet</div>
                     <FileUpload
                         className="cost-sheet-upload"
-                        disabled={this.props.readOnly} />
+                        onFileSelect={this.saveFile1}
+                        disabled={this.props.readOnly} 
+                        />
 
                     <div className="upload-label" >PIPE</div>
                     <FileUpload
                         className="pipe-upload"
+                        onFileSelect={this.saveFile2}
                         disabled={this.props.readOnly}
                     />
 
@@ -141,16 +197,18 @@ class Details extends React.Component {
                     <FileUpload
                         className="inner-coating-upload"
                         disabled={this.props.readOnly}
+                        onFileSelect={this.saveFile3}
                     />
                     <div className="upload-label" >OUTER-COATING</div>
                     <FileUpload
                         className="outer-coating-upload"
                         disabled={this.props.readOnly}
+                        onFileSelect={this.saveFile4}
                     />
 
 
                 </div>
-
+                </form>
             </div >
 
 
@@ -162,7 +220,8 @@ const mapStateToProps = state => ({
     projectId: state.projectId,
     projectType: state.projectType,
     projectTitle: state.projectTitle,
-    projectCustomer: state.projectCustomer
+    projectCustomer: state.projectCustomer,
+    userName: state.userName,
 })
 const mapDispatchToProps = dispatch => ({
     setProjectId: (projectId) => dispatch(setProjectId(projectId)),
