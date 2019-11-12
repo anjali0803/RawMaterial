@@ -5,6 +5,8 @@ import ButtonHeader from '../../ButtonHeader/ButtonHeader';
 import { setDocumentArray } from "../../../actions/dataActions"
 import { connect } from 'react-redux'
 import './index.css';
+import Axios from 'axios';
+import { ProgressSpinner } from 'primereact/progressspinner';
 const history = createHashHistory();
 class InputKeyValue extends React.Component {
     constructor(props) {
@@ -16,7 +18,7 @@ class InputKeyValue extends React.Component {
         this.onSave = this.onSave.bind(this);
         this.onDelete = this.onDelete.bind(this);
         this.state = {
-
+            isLoading: false,
             tableData: [
 
                 {
@@ -105,8 +107,11 @@ class InputKeyValue extends React.Component {
 
         }
         this.onDocIdClick = this.onDocIdClick.bind(this);
+        this.onRefresh = this.onRefresh.bind(this);
     }
-
+    componentDidMount() {
+        this.getTabledata();
+    }
 
     onDocIdClick(rowData) {
         //console.log(this.props.documentArray)
@@ -125,16 +130,34 @@ class InputKeyValue extends React.Component {
     onDelete() {
         console.log('Input-key-value Delete..');
     }
-
+    async getTabledata() {
+        this.setState({ isLoading: true })
+        let data = await Axios.get('http://5dbdaeb405a6f30014bcaee3.mockapi.io/documents');
+        data = data.data;
+        this.setState({ tableData: data });
+        this.setState({ isLoading: false })
+    }
+    onRefresh() {
+        this.getTabledata();
+    }
     render() {
 
-        return (
+        return !this.state.isLoading ? (
+
             <div>
                 <ButtonHeader saveEnabled={this.props.saveEnabled} deleteEnabled={this.props.deleteEnabled} className="progbar-button-header" onSave={() => this.onSave()} onDelete={() => this.onDelete()} />
-                <TableComponent colList={this.state.tableColList} dataList={this.state.tableData} onDocumentIdClick={this.onDocIdClick} />
+                <TableComponent colList={this.state.tableColList} dataList={this.state.tableData} onDocumentIdClick={this.onDocIdClick} onRefresh={this.onRefresh} />
             </div>
 
-        )
+        ) : (
+                <div className="spinner-container">
+                    <ProgressSpinner
+                        style={{ width: "40%", height: "40%" }}
+                        strokeWidth="1"
+                        animationDuration="1s"
+                    ></ProgressSpinner>
+                </div>
+            )
     }
 }
 const mapStateToProps = state => ({

@@ -1,10 +1,14 @@
 import React from 'react';
-import './index.css'
 import DocumentHeader from '../../../../DocumentHeader/DocumentHeader';
 import ButtonHeader from '../../../../ButtonHeader/ButtonHeader';
 import { createHashHistory } from 'history'
 import { connect } from "react-redux";
 import TableComponent from '../../../../Table/TableComponent';
+import Axios from 'axios';
+import { ProgressSpinner } from 'primereact/progressspinner';
+import './index.css'
+
+
 const history = createHashHistory();
 const pageMapIndex = [
     'input-key-value',
@@ -14,7 +18,7 @@ const pageMapIndex = [
     'output-document'
 
 ]
-class KeyValueTable extends React.Component {
+class OutputDocValueTable extends React.Component {
     constructor(props) {
         super(props);
         if (props.projectId === '')
@@ -26,6 +30,7 @@ class KeyValueTable extends React.Component {
         this.onSave = this.onSave.bind(this);
         this.onDelete = this.onDelete.bind(this);
         this.state = {
+            isLoading: false,
             documentId: props.documentArray[props.screenNumber - 1] || '',
             keyValueData: [
 
@@ -46,11 +51,21 @@ class KeyValueTable extends React.Component {
 
             ]
         }
+        this.onRefresh = this.onRefresh.bind(this);
+    }
+    async getKeyValueData() {
+        this.setState({ isLoading: true })
+        let data = await Axios.get('http://5dbdaeb405a6f30014bcaee3.mockapi.io/key-value-data');
+        data = data.data;
+        this.setState({ keyValueData: data });
+        this.setState({ isLoading: false })
 
     }
     componentDidMount() {
-        //get data based on document id and project id
-        //set keyValueData and keyvalueColList here
+        this.getKeyValueData();
+    }
+    onRefresh() {
+        this.getKeyValueData();
     }
     onSave() {
         console.log('recommendations screen save ....');
@@ -71,13 +86,21 @@ class KeyValueTable extends React.Component {
     }
     render() {
 
-        return (
+        return !this.state.isLoading ? (
             <div>
                 <ButtonHeader saveEnabled={this.props.saveEnabled} deleteEnabled={this.props.deleteEnabled} className="progbar-button-header" onSave={() => this.onSave()} onDelete={() => this.onDelete()} />
                 <DocumentHeader documentId={this.state.documentId} projectId={this.props.projectId} />
-                <TableComponent colList={this.state.keyValueColList} dataList={this.state.keyValueData} rowClassName={this.rowClassName} />
+                <TableComponent colList={this.state.keyValueColList} dataList={this.state.keyValueData} rowClassName={this.rowClassName} onRefresh={this.onRefresh} />
             </div>
-        )
+        ) : (
+                <div className="spinner-container">
+                    <ProgressSpinner
+                        style={{ width: "40%", height: "40%" }}
+                        strokeWidth="1"
+                        animationDuration="1s"
+                    ></ProgressSpinner>
+                </div>
+            )
     }
 }
 const mapStateToProps = state => ({
@@ -85,4 +108,4 @@ const mapStateToProps = state => ({
     documentId: state.documentId,
     documentArray: state.documentArray
 })
-export default connect(mapStateToProps)(KeyValueTable);
+export default connect(mapStateToProps)(OutputDocValueTable);

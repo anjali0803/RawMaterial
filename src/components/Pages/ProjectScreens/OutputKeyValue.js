@@ -5,6 +5,8 @@ import { setDocumentArray } from "../../../actions/dataActions";
 import './index.css';
 import TableComponent from '../../Table/TableComponent';
 import ButtonHeader from '../../ButtonHeader/ButtonHeader';
+import Axios from 'axios';
+import { ProgressSpinner } from 'primereact/progressspinner';
 
 const history = createHashHistory();
 class OutputKeyValue extends React.Component {
@@ -15,7 +17,7 @@ class OutputKeyValue extends React.Component {
         }
 
         this.state = {
-
+            isLoading: false,
             tableData: [
 
 
@@ -102,7 +104,6 @@ class OutputKeyValue extends React.Component {
             ],
             tableColList: [
                 { field: 'documentId', header: 'Document Id' },
-                { field: 'projectId', header: 'Project Id' },
                 { field: 'customer', header: 'Customer' },
                 { field: 'type', header: 'Type' },
                 { field: 'uploadedDate', header: 'Uploaded Date' },
@@ -110,26 +111,29 @@ class OutputKeyValue extends React.Component {
                 { field: 'last', header: 'Last' },
                 { field: 'sentOn', header: 'Sent On' }
 
-            ],
-            keyValueData: [
-
-                { key: 'Queue Size', value: 12000 },
-                { key: 'Volume', value: '45 Cubic Meters' },
-                { key: 'density', value: 67 }
-            ],
-            keyValueColList: [
-                { field: 'key', header: 'Key' },
-                { field: 'value', header: 'Value' }
-
-            ],
-
-
+            ]
 
         }
         this.onSave = this.onSave.bind(this);
         this.onDelete = this.onDelete.bind(this);
         this.onDocIdClick = this.onDocIdClick.bind(this);
+        this.onRefresh = this.onRefresh.bind(this);
+    }
 
+
+    async getTableData() {
+        this.setState({ isLoading: true })
+        let data = await Axios.get('http://5dbdaeb405a6f30014bcaee3.mockapi.io/documents');
+        data = data.data;
+        this.setState({ tableData: data });
+        this.setState({ isLoading: false })
+    }
+    onRefresh() {
+        this.getTableData();
+    }
+
+    componentDidMount() {
+        this.getTableData();
     }
     onDocIdClick(rowData) {
         let documentArray = this.props.documentArray;
@@ -151,13 +155,22 @@ class OutputKeyValue extends React.Component {
 
 
 
-        return (
+        return !this.state.isLoading ? (
             <div>
                 <ButtonHeader saveEnabled={this.props.saveEnabled} deleteEnabled={this.props.deleteEnabled} className="progbar-button-header" onSave={() => this.onSave()} onDelete={() => this.onDelete()} />
 
-                <TableComponent colList={this.state.tableColList} dataList={this.state.tableData} onDocumentIdClick={this.onDocIdClick} />
+                <TableComponent colList={this.state.tableColList} dataList={this.state.tableData} onDocumentIdClick={this.onDocIdClick} onRefresh={this.onRefresh} />
             </div>
-        )
+        ) : (
+
+                <div className="spinner-container">
+                    <ProgressSpinner
+                        style={{ width: "40%", height: "40%" }}
+                        strokeWidth="1"
+                        animationDuration="1s"
+                    ></ProgressSpinner>
+                </div>
+            )
     }
 }
 
