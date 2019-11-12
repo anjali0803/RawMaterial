@@ -34,6 +34,7 @@ export default class ProjectsTable extends React.Component {
     const colList = this.props.colList;
     const selected = this.state.selected;
     var dataList = this.props.dataList;
+
     const actions = [
       { label: "Approve All Selected", value: 1 },
       { label: "Reject All Selected", value: 0 }
@@ -58,7 +59,7 @@ export default class ProjectsTable extends React.Component {
           onSelectionChange={e => this.setState({ selected: e.value })}
         >
           <Column selectionMode="multiple" style={{ width: '3em' }} />
-          <Column header={<i className="pi pi-refresh"></i>} style={{ width: '3em' }} />
+          <Column header={<i onClick={this.props.onRefresh} className="pi pi-refresh"></i>} style={{ width: '3em' }} />
           {colList.map((el, index) => {
             const field = el.field;
             const header = el.header;

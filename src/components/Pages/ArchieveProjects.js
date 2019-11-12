@@ -1,11 +1,12 @@
 import React from 'react';
-import './index.css';
-import TableComponent from '../Table/TableComponent';
-import { connect } from 'react-redux';
 import ProjectsTable from '../ProjectsTable/ProjectsTable';
-import { createHashHistory } from "history";
-import { setDocumentArray, setProjectCustomer, setProjectId, setProjectTitle, setProjectType } from '../../actions/dataActions'
-const history = createHashHistory()
+import { ProgressSpinner } from 'primereact/progressspinner'
+import './index.css';
+import { setDocumentArray, setProjectId, setProjectCustomer, setProjectTitle, setProjectType } from '../../actions/dataActions'
+import { connect } from 'react-redux';
+import { createHashHistory } from 'history';
+import Axios from 'axios';
+const history = createHashHistory();
 
 
 
@@ -13,12 +14,41 @@ const history = createHashHistory()
 class ArchieveProjects extends React.Component {
     constructor() {
         super();
+        this.state = {
+            isLoading: true,
+            tableData: [
+            ],
+            tableColList: [
+                { field: "ProjectID", header: "Project Id" },
+                { field: "Title", header: "Title" },
+                { field: "Customer", header: "Customer" },
+                { field: "Type", header: "Type" },
+                { field: "AssignedDate", header: "Assigned Date" },
+                { field: "Status", header: "Status" },
+                { field: "createdBy", header: "Created By" }
+            ]
+        }
+
         this.onProjectIdClick = this.onProjectIdClick.bind(this);
+        this.onRefresh = this.onRefresh.bind(this);
+    }
+    async getTableData() {
+        this.setState({ isLoading: true });
+        let res = await Axios.get('http://5dbdaeb405a6f30014bcaee3.mockapi.io/projects');
+        let data = res.data;
+        this.setState({ tableData: data });
+        this.setState({ isLoading: false });
+    }
+    componentDidMount() {
+        this.getTableData();
+    }
+    onRefresh() {
+        this.getTableData();
     }
     onProjectIdClick(rowData) {
         //refresh the document array and project id
         const { Type, Title, Customer, ProjectID } = rowData;
-        console.log({ Type, Title, Customer, ProjectID })
+        //sconsole.log({ Type, Title, Customer, ProjectID })
         this.props.setProjectId(ProjectID);
         this.props.setProjectCustomer(Customer);
         this.props.setProjectType(Type);
@@ -27,16 +57,26 @@ class ArchieveProjects extends React.Component {
         history.push('/Inquiry/create-new-projects/details');
 
     }
-
     render() {
-        return (
+        //console.log(typeof this.props.dataList)
+        return this.state.isLoading === false ? (
             <div>
-                <ProjectsTable colList={this.props.colList} dataList={this.props.dataList}
-                    onProjectIdClick={this.onProjectIdClick} />
+                <ProjectsTable
+                    colList={this.state.tableColList}
+                    dataList={this.state.tableData}
+                    onProjectIdClick={this.onProjectIdClick}
+                    onRefresh={this.onRefresh}
+                />
             </div>
-
-
-        )
+        ) : (
+                <div className="spinner-container">
+                    <ProgressSpinner
+                        style={{ width: "40%", height: "40%" }}
+                        strokeWidth="1"
+                        animationDuration="1s"
+                    ></ProgressSpinner>
+                </div>
+            );
     }
 }
 

@@ -5,6 +5,8 @@ import ButtonHeader from '../../../../ButtonHeader/ButtonHeader';
 import { createHashHistory } from 'history'
 import { connect } from "react-redux";
 import TableComponent from '../../../../Table/TableComponent';
+import Axios from 'axios';
+import { ProgressSpinner } from 'primereact/progressspinner';
 const history = createHashHistory();
 const pageMapIndex = [
     'input-key-value',
@@ -26,6 +28,7 @@ class RecKeyValueTable extends React.Component {
         this.onSave = this.onSave.bind(this);
         this.onDelete = this.onDelete.bind(this);
         this.state = {
+            isLoading: false,
             documentId: props.documentArray[props.screenNumber - 1] || '',
             keyValueData: [
 
@@ -47,10 +50,21 @@ class RecKeyValueTable extends React.Component {
             ]
         }
 
+        this.onRefresh = this.onRefresh.bind(this);
+
+    }
+    async getKeyValueTable() {
+        this.setState({ isLoading: true });
+        let res = await Axios.get('http://5dbdaeb405a6f30014bcaee3.mockapi.io/key-value-data');
+        res = res.data;
+        this.setState({ keyValueData: res })
+        this.setState({ isLoading: false });
     }
     componentDidMount() {
-        //get data based on document id and project id
-        //set keyValueData and keyvalueColList here
+        this.getKeyValueTable();
+    }
+    onRefresh() {
+        this.getKeyValueTable();
     }
     onSave() {
         console.log('recommendations screen save ....');
@@ -60,16 +74,32 @@ class RecKeyValueTable extends React.Component {
     onDelete() {
         console.log('recommendations screen delete ....');
     }
+    rowClassName(rowData) {
+        console.log('Row class Name :', rowData['technicalSpecificationValue'] > 5);
 
+        return {
+            'table-on-green': (parseInt(rowData['technicalSpecificationValue']) > 5),
+            'table-on-red': (parseInt(rowData['technicalSpecificationValue']) < 5)
+        };
+
+    }
     render() {
 
-        return (
+        return !this.state.isLoading ? (
             <div>
                 <ButtonHeader saveEnabled={this.props.saveEnabled} deleteEnabled={this.props.deleteEnabled} className="progbar-button-header" onSave={() => this.onSave()} onDelete={() => this.onDelete()} />
                 <DocumentHeader documentId={this.state.documentId} projectId={this.props.projectId} />
-                <TableComponent colList={this.state.keyValueColList} dataList={this.state.keyValueData} />
+                <TableComponent colList={this.state.keyValueColList} dataList={this.state.keyValueData} rowClassName={this.rowClassName} onRefresh={this.onRefresh} />
             </div>
-        )
+        ) : (
+                <div className="spinner-container">
+                    <ProgressSpinner
+                        style={{ width: "40%", height: "40%" }}
+                        strokeWidth="1"
+                        animationDuration="1s"
+                    ></ProgressSpinner>
+                </div>
+            )
     }
 }
 const mapStateToProps = state => ({
