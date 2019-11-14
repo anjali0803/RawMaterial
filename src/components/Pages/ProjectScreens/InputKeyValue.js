@@ -5,6 +5,7 @@ import ButtonHeader from '../../ButtonHeader/ButtonHeader';
 import { setDocumentArray } from "../../../actions/dataActions"
 import { connect } from 'react-redux'
 import './index.css';
+import { ProgressSpinner } from 'primereact/progressspinner';
 import axios from 'axios';
 import { backendUrl } from '../../../constant';
 
@@ -19,6 +20,7 @@ class InputKeyValue extends React.Component {
         this.onSave = this.onSave.bind(this);
         this.onDelete = this.onDelete.bind(this);
         this.state = {
+            isLoading: false,
             tableColList: [
                 { field: 'DocID', header: 'Document Id' },
                 { field: 'ClientName', header: 'Customer' },
@@ -31,21 +33,14 @@ class InputKeyValue extends React.Component {
                 { field: 'RevNumber', header: 'File Revision Number' },
                 { field: 'SpecNumber', header: 'File Spec Number' }
             ],
-            keyValueData: [
-
-                { key: 'Queue Size', value: 12000 },
-                { key: 'Volume', value: '45 Cubic Meters' },
-                { key: 'density', value: 67 }
-            ],
-            keyValueColList: [
-                { field: 'key', header: 'Key' },
-                { field: 'value', header: 'Value' }
-
-            ],
             tableData: []
         }
         
         this.onDocIdClick = this.onDocIdClick.bind(this);
+        this.onRefresh = this.onRefresh.bind(this);
+    }
+    componentDidMount() {
+        this.getTabledata();
     }
 
     async componentDidMount(){
@@ -61,7 +56,7 @@ class InputKeyValue extends React.Component {
         this.setState({ tableData: tableData.data.data });
     }
     onDocIdClick(rowData) {
-        console.log(this.props.documentArray)
+        //console.log(this.props.documentArray)
 
         let documentArray = this.props.documentArray;
         documentArray[0] = rowData['DocId'];
@@ -77,16 +72,34 @@ class InputKeyValue extends React.Component {
     onDelete() {
         console.log('Input-key-value Delete..');
     }
-
+    async getTabledata() {
+        this.setState({ isLoading: true })
+        let data = await Axios.get('http://5dbdaeb405a6f30014bcaee3.mockapi.io/documents');
+        data = data.data;
+        this.setState({ tableData: data });
+        this.setState({ isLoading: false })
+    }
+    onRefresh() {
+        this.getTabledata();
+    }
     render() {
 
-        return (
+        return !this.state.isLoading ? (
+
             <div>
                 <ButtonHeader saveEnabled={this.props.saveEnabled} deleteEnabled={this.props.deleteEnabled} className="progbar-button-header" onSave={() => this.onSave()} onDelete={() => this.onDelete()} />
-                <TableComponent colList={this.state.tableColList} dataList={this.state.tableData} onDocumentIdClick={this.onDocIdClick} />
+                <TableComponent colList={this.state.tableColList} dataList={this.state.tableData} onDocumentIdClick={this.onDocIdClick} onRefresh={this.onRefresh} />
             </div>
 
-        )
+        ) : (
+                <div className="spinner-container">
+                    <ProgressSpinner
+                        style={{ width: "40%", height: "40%" }}
+                        strokeWidth="1"
+                        animationDuration="1s"
+                    ></ProgressSpinner>
+                </div>
+            )
     }
 }
 const mapStateToProps = state => ({

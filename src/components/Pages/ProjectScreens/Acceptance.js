@@ -5,6 +5,8 @@ import TableComponent from '../../Table/TableComponent';
 import ButtonHeader from '../../ButtonHeader/ButtonHeader';
 import './index.css';
 import { setDocumentArray } from '../../../actions/dataActions';
+import { ProgressSpinner } from 'primereact/progressspinner';
+import Axios from 'axios';
 
 const history = createHashHistory();
 
@@ -15,10 +17,9 @@ class Acceptance extends React.Component {
         if (props.projectId === '') {
             history.push('/Inquiry/create-new-projects/details')
         }
-        this.onSave = this.onSave.bind(this);
-        this.onDelete = this.onDelete.bind(this);
-        this.state = {
 
+        this.state = {
+            isLoading: false,
             tableData: [
 
 
@@ -121,10 +122,25 @@ class Acceptance extends React.Component {
 
 
         }
+        this.onSave = this.onSave.bind(this);
+        this.onDelete = this.onDelete.bind(this);
         this.onDocIdClick = this.onDocIdClick.bind(this);
+        this.onRefresh = this.onRefresh.bind(this);
+    }
+    async getTableData() {
+        this.setState({ isLoading: true })
+        let data = await Axios.get('http://5dbdaeb405a6f30014bcaee3.mockapi.io/documents');
+        data = data.data;
+        this.setState({ tableData: data });
+        this.setState({ isLoading: false })
     }
 
-
+    componentDidMount() {
+        this.getTableData();
+    }
+    onRefresh() {
+        this.getTableData();
+    }
     onSave() {
         console.log('Acceptance Save..');
         history.push("/Inquiry/create-new-projects/output-key-value");
@@ -142,12 +158,20 @@ class Acceptance extends React.Component {
     }
 
     render() {
-        return (
+        return !this.state.isLoading ? (
             <div>
                 <ButtonHeader saveEnabled={this.props.saveEnabled} deleteEnabled={this.props.deleteEnabled} className="progbar-button-header" onSave={() => this.onSave()} onDelete={() => this.onDelete()} />
-                <TableComponent colList={this.state.tableColList} dataList={this.state.tableData} onDocumentIdClick={this.onDocIdClick} />
+                <TableComponent colList={this.state.tableColList} dataList={this.state.tableData} onDocumentIdClick={this.onDocIdClick} onRefresh={this.onRefresh} />
             </div>
-        )
+        ) : (
+                <div className="spinner-container">
+                    <ProgressSpinner
+                        style={{ width: "40%", height: "40%" }}
+                        strokeWidth="1"
+                        animationDuration="1s"
+                    ></ProgressSpinner>
+                </div>
+            )
     }
 }
 

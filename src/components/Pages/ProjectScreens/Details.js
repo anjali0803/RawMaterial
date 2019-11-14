@@ -9,19 +9,16 @@ import { createHashHistory } from 'history'
 import './index.css';
 import { setProjectId, setProjectTitle, setProjectType, setProjectCustomer, setCurrentURL } from '../../../actions/dataActions'
 import { connect } from 'react-redux';
-import ProgressBar from './ProgressBar';
 import ButtonHeader from '../../ButtonHeader/ButtonHeader'
 import axios from 'axios';
 import { backendUrl } from '../../../constant';
 
 const history = createHashHistory();
 
-//readOnly props 
 class Details extends React.Component {
 
     constructor(props) {
         super(props)
-        //console.log("details", props)
         this.state = {
             projectId: props.projectId || '',
             title: props.projectTitle || '',
@@ -123,9 +120,9 @@ class Details extends React.Component {
         this.props.setProjectId(projectId);
         this.props.setProjectCustomer(customer);
         this.props.setProjectTitle(title);
-        this.props.setProjectType(type);
+        this.props.setProjectType(type)
         history.push('/Inquiry/create-new-projects/input-key-value')
-        //
+
     }
     onDelete() {
         console.log('Data deleted');
