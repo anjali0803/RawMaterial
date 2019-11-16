@@ -29,7 +29,7 @@ class AllOngoingProjects extends React.Component {
     render() {
         return (
             <div>
-                <ProjectsTable projectTableColList={this.props.projectTableColList} projectList={this.props.projectList}
+                <ProjectsTable colList={this.props.projectTableColList} dataList={this.props.projectList}
                     onProjectIdClick={this.onProjectIdClick} />
             </div>
         )

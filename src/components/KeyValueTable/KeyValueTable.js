@@ -24,13 +24,13 @@ class KeyValueTable extends React.Component {
         if (props.projectId === '')
             history.push('/Inquiry/create-new-projects/details')
 
-        if (props.documentArray[props.screenNumber - 1] === '')
+        if (props.documentArray[props.screenNumber - 1].DocID === '')
             history.push(`/Inquiry/create-new-projects/${pageMapIndex[props.screenNumber - 1]}`)
 
         this.onSave = this.onSave.bind(this);
         this.onDelete = this.onDelete.bind(this);
         this.state = {
-            documentId: props.documentArray[props.screenNumber - 1] || '',
+            documentId: props.documentArray[props.screenNumber - 1].DocID || '',
             keyValueData: [],
             keyValueColList: [
                 { field: 'WorkDescription', header: 'Work Description' },

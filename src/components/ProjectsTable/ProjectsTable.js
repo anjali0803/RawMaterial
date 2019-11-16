@@ -6,8 +6,11 @@ import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Dropdown } from "primereact/dropdown";
 import "./index.css";
+import { connect } from "react-redux";
+import axios from "axios";
+import { backendUrl } from '../../constant';
 
-export default class ProjectsTable extends React.Component {
+export class ProjectsTable extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -21,22 +24,29 @@ export default class ProjectsTable extends React.Component {
 
     return <a onClick={() => this.props.onProjectIdClick(rowData)} >{rowData['ProjectID']}</a>
   }
-  handleClickAllSelected(action) {
+  async handleClickAllSelected(action) {
     const data = this.state.selected;
+        
     if (action) {
-      console.log(data, " is Approved");
+      const sendRecommendationRed = await axios.post(
+        `${backendUrl}/dashboard/send_rec_from_ikv`,
+        {
+          projectID: this.props.projectId,
+          fileType: this.props.documentArray[0].FileType,
+          ikvValues: data
+        }
+      );
     } else {
       console.log(data, " is Rejected");
     }
-    this.getUserList();
   }
   render() {
-    const projectTableColList = this.props.projectTableColList;
+    const colList = this.props.colList;
     const selected = this.state.selected;
-    var projectList = this.props.projectList;
+    var dataList = this.props.dataList;
     const actions = [
-      { label: "Approve All Selected", value: 1 },
-      { label: "Reject All Selected", value: 0 }
+      { label: "Send to recommendation", value: 1 },
+      { label: "Send to acceptance", value: 0 }
     ];
     const footer = (
       <Dropdown
@@ -49,7 +59,7 @@ export default class ProjectsTable extends React.Component {
     return (
       <div>
         <DataTable
-          value={projectList}
+          value={dataList}
           footer={footer}
           paginator={true}
           paginatorPosition={"top"}
@@ -59,7 +69,7 @@ export default class ProjectsTable extends React.Component {
         >
           <Column selectionMode="multiple" style={{ width: '3em' }} />
           <Column header={<i className="pi pi-refresh"></i>} style={{ width: '3em' }} />
-          {projectTableColList.map((el, index) => {
+          {colList.map((el, index) => {
             const field = el.field;
             const header = el.header;
 
@@ -93,3 +103,11 @@ export default class ProjectsTable extends React.Component {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  projectId: state.projectId,
+  documentId: state.documentId,
+  documentArray: state.documentArray
+})
+
+export default connect(mapStateToProps)(ProjectsTable);

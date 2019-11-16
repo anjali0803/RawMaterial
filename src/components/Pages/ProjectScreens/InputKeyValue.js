@@ -64,7 +64,7 @@ class InputKeyValue extends React.Component {
 
         let documentArray = this.props.documentArray[0] || [];
         // let documentArray = [];
-        documentArray.push(rowData.DocID);
+        documentArray.push(rowData);
         this.props.setDocumentArray(documentArray)
         history.push("/Inquiry/create-new-projects/input-key-value/second");
     }

@@ -29,12 +29,12 @@ class ProjectAssignedByMe extends React.Component {
     return (
       <div>
         <ProjectsTable
-          projectTableColList={this.props.projectTableColList.filter(element => {
+          colList={this.props.projectTableColList.filter(element => {
             if (element.field != "CreatedBy") {
               return element;
             }
           })}
-          projectList={this.props.projectList.filter(element => {
+          dataList={this.props.projectList.filter(element => {
             if (element["CreatedBy"] == this.props.userName) return element;
           })}
 

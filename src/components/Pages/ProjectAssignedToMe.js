@@ -30,13 +30,13 @@ class ProjectAssignedToMe extends React.Component {
         return (
             <div>
                 <ProjectsTable
-                    projectTableColList={this.props.projectTableColList.filter(element => {
+                    colList={this.props.projectTableColList.filter(element => {
                         if (element.field != 'AssignedTo') {
                             return element;
                         }
                     })}
 
-                    projectList={this.props.projectList.filter((element) => {
+                    dataList={this.props.projectList.filter((element) => {
                         if (element['AssignedTo'] === this.props.userName)
                             return element;
 
