@@ -19,27 +19,19 @@ export default class TableComponent extends React.Component {
     this.handleClickAllSelected = this.handleClickAllSelected.bind(this);
   }
   documentIdTemplate(rowData) {
-
     console.log(rowData)
     return <a onClick={() => this.props.onDocumentIdClick(rowData)} >{rowData['DocID']}</a>
   }
   handleClickAllSelected(action) {
     const data = this.state.selected;
-    if (action) {
-      console.log(data, " is Approved");
-    } else {
-      console.log(data, " is Rejected");
-    }
+    this.props.handleClickAllSelected(action, data);
     this.getUserList();
   }
   render() {
     const colList = this.props.colList;
     const selected = this.state.selected;
     var dataList = this.props.dataList;
-    const actions = [
-      { label: "Approve All Selected", value: 1 },
-      { label: "Reject All Selected", value: 0 }
-    ];
+    const actions = this.props.actionsLabel;
     const footer = (
       <Dropdown
         options={actions}

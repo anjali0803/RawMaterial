@@ -25,10 +25,10 @@ export class ProjectsTable extends React.Component {
     return <a onClick={() => this.props.onProjectIdClick(rowData)} >{rowData['ProjectID']}</a>
   }
   async handleClickAllSelected(action) {
-    const data = this.state.selected;
+    let data = this.state.selected;
         
     if (action) {
-      const sendRecommendationRed = await axios.post(
+      let sendRecommendationRes = await axios.post(
         `${backendUrl}/dashboard/send_rec_from_ikv`,
         {
           projectID: this.props.projectId,
@@ -37,9 +37,17 @@ export class ProjectsTable extends React.Component {
         }
       );
     } else {
-      console.log(data, " is Rejected");
+      let sendAcceptanceRes = await axios.post(
+        `${backendUrl}/dashboard/send_acceptance_from_ikv`,
+        {
+          projectID: this.props.projectId,
+          fileType: this.props.documentArray[0].FileType,
+          ikvValues: data
+        }
+      );
     }
   }
+
   render() {
     const colList = this.props.colList;
     const selected = this.state.selected;
