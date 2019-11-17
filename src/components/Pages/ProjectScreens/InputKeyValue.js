@@ -2,7 +2,7 @@ import React from 'react';
 import { createHashHistory } from 'history'
 import TableComponent from '../../Table/TableComponent';
 import ButtonHeader from '../../ButtonHeader/ButtonHeader';
-import { setDocumentArray, setDocumentId } from "../../../actions/dataActions"
+import { setDocumentArray, setDocumentId, setDocumentType } from "../../../actions/dataActions"
 import { connect } from 'react-redux'
 import './index.css';
 import { ProgressSpinner } from 'primereact/progressspinner';
@@ -56,9 +56,10 @@ class InputKeyValue extends React.Component {
     onDocIdClick(rowData) {
         let documentArray = this.props.documentArray[0] || [];
         // let documentArray = [];
-        documentArray.push(rowData);
+        // documentArray.push(rowData);
         this.props.setDocumentId(rowData['DocID']);
-        this.props.setDocumentArray(documentArray);
+        this.props.setDocumentType(rowData['FileType']);
+        // this.props.setDocumentArray(documentArray);
         history.push("/Inquiry/create-new-projects/input-key-value/second");
     }
 
@@ -106,7 +107,8 @@ const mapStateToProps = state => ({
 });
 const mapDispatchToProps = dispatch => ({
     setDocumentArray: (documentArray) => dispatch(setDocumentArray(documentArray)),
-    setDocumentId: (docID) => dispatch(setDocumentId(docID))
+    setDocumentId: (docID) => dispatch(setDocumentId(docID)),
+    setDocumentType: (fileType) => dispatch(setDocumentType(fileType))
 });
 export default connect(
     mapStateToProps, mapDispatchToProps

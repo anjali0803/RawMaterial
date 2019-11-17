@@ -26,7 +26,7 @@ export default class TableComponent extends React.Component {
   handleClickAllSelected(action) {
     const data = this.state.selected;
     this.props.handleClickAllSelected(action, data);
-    this.getUserList();
+    // this.getUserList();
   }
 
 

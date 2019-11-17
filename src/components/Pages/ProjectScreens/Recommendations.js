@@ -1,7 +1,7 @@
 import React from 'react';
 import { createHashHistory } from 'history'
 import { connect } from "react-redux";
-import { setDocumentArray, setDocumentId } from "../../../actions/dataActions"
+import { setDocumentArray, setDocumentId, setDocumentType } from "../../../actions/dataActions"
 import './index.css';
 import TableComponent from '../../Table/TableComponent';
 import ButtonHeader from '../../ButtonHeader/ButtonHeader';
@@ -57,20 +57,20 @@ class Recommendations extends React.Component {
 	}
 	
 	async handleClickAllSelected(action, data) {
-    if (action) {
-      let sendAcceptanceRes = await axios.post(
-        `${backendUrl}/dashboard/send_acceptance_from_ikv`,
-        {
-          projectID: this.props.projectId,
-          fileType: this.props.documentArray[0].FileType,
-          ikvValues: data
-        }
-      );
-    } else {
-      //TODO reject recommendation call 
-      console.log(data, " is Rejected");
-    }
-    this.getUserList();
+		if (action) {
+		let sendAcceptanceRes = await axios.post(
+			`${backendUrl}/dashboard/send_acceptance_from_ikv`,
+			{
+				projectID: this.props.projectId,
+				fileType: this.props.documentArray[0].FileType,
+				ikvValues: data
+			}
+		);
+		} else {
+		//TODO reject recommendation call 
+		console.log(data, " is Rejected");
+		}
+		// this.getUserList();
 	}
 	
 	onSave() {
@@ -82,10 +82,11 @@ class Recommendations extends React.Component {
 	}
 	
 	onDocIdClick(rowData) {
-		let documentArray = this.props.documentArray;
-		documentArray[1] = rowData['DocID'];
-		this.props.setDocumentArray(documentArray);
+		// let documentArray = this.props.documentArray;
+		// documentArray[1] = rowData['DocID'];
+		// this.props.setDocumentArray(documentArray);
 		this.props.setDocumentId(rowData['DocID']);
+        this.props.setDocumentType(rowData['FileType']);
 		history.push("/Inquiry/create-new-projects/recommendations/second");
 	}
 	
@@ -106,6 +107,7 @@ class Recommendations extends React.Component {
 	});
 	const mapDispatchToProps = dispatch => ({
 		setDocumentArray: (documentArray) => dispatch(setDocumentArray(documentArray)),
+		setDocumentType: (fileType) => dispatch(setDocumentType(fileType)),
 		setDocumentId: (documentId) => dispatch(setDocumentId(documentId)),
 	});
 	export default connect(

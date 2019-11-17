@@ -67,3 +67,10 @@ export function setDocumentArray(documentArray) {
         documentArray
     }
 }
+
+export function setDocumentType(fileType) {
+    return {
+        type: 'SET_DOCUMENT_FILETYPE',
+        fileType
+    }
+}

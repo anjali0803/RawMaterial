@@ -12,8 +12,8 @@ var initialState = {
   documentId: '',
   documentArray: ['', '', '', '', ''],
   currentURL: '',
-  readOnly: false
-
+  readOnly: false,
+  documentFiletype: ''
 };
 
 export default (state = initialState, action) => {
@@ -88,6 +88,11 @@ export default (state = initialState, action) => {
         ...state,
         documentArray: action.documentArray
       };
+    case 'SET_DOCUMENT_FILETYPE':
+      return {
+        ...state,
+        documentFiletype: action.fileType
+    };
     default:
       return state;
   }
