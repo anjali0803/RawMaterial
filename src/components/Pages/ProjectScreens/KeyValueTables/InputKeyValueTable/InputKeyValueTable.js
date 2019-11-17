@@ -5,8 +5,9 @@ import ButtonHeader from '../../../../ButtonHeader/ButtonHeader';
 import { createHashHistory } from 'history'
 import { connect } from "react-redux";
 import TableComponent from '../../../../Table/TableComponent';
-import Axios from 'axios';
+import axios from 'axios';
 import { ProgressSpinner } from 'primereact/progressspinner';
+import { backendUrl } from '../../../../../constant';
 const history = createHashHistory();
 const pageMapIndex = [
     'input-key-value',
@@ -29,32 +30,36 @@ class InputKeyValueTable extends React.Component {
         this.onDelete = this.onDelete.bind(this);
         this.state = {
             isLoading: false,
-            documentId: props.documentArray[props.screenNumber - 1] || '',
+            documentId: props.documentId,
             keyValueData: [
-
-                { workDescription: 'Clean up  and Cover', referenceStandardValue: 234, technicalSpecificationValue: 12, acceptanceCriteriaValue: 456 },
-                { workDescription: 'Maintainence and fixtures', referenceStandardValue: 223, technicalSpecificationValue: 7, acceptanceCriteriaValue: 456 },
-                { workDescription: 'Drills and exercies', referenceStandardValue: 234, technicalSpecificationValue: 9, acceptanceCriteriaValue: 456 },
-                { workDescription: 'Inventory management', referenceStandardValue: 94, technicalSpecificationValue: 3, acceptanceCriteriaValue: 456 },
-                { workDescription: 'Asset acquisitions', referenceStandardValue: 111, technicalSpecificationValue: 12, acceptanceCriteriaValue: 456 },
-                { workDescription: 'Classification', referenceStandardValue: 178, technicalSpecificationValue: 13, acceptanceCriteriaValue: 456, color: 'green' },
             ],
             keyValueColList: [
-                { field: 'workDescription', header: 'Work Description' },
-                { field: 'referenceStandardValue', header: 'Reference Standard Value' },
-                { field: 'technicalSpecificationValue', header: 'Technical Specification Value' },
-                { field: 'acceptanceCriteriaValue', header: 'Acceptance Criteria Value' }
-            ]
+                { field: 'WorkDescription', header: 'Work Description' },
+                { field: 'ClientSpecNumber', header: 'Client Spec Number' },
+                { field: 'TestingFrequency', header: 'Testing Frequency' },
+                { field: 'AcceptanceCriteria', header: 'Acceptance Criteria Value' }
+            ],
+            actions: [
+                { label: "Send selected to Recommendation", value: 1 },
+				{ label: "Send selected to Acceptance", value: 0 }
+			]
         }
         this.onRefresh = this.onRefresh.bind(this);
+		this.handleClickAllSelected = this.handleClickAllSelected.bind(this);
+		// // this.onDocIdClick = this.onDocIdClick.bind(this);
     }
     async getKeyValueData() {
         this.setState({ isLoading: true })
-        let data = await Axios.get('http://5dbdaeb405a6f30014bcaee3.mockapi.io/key-value-data');
-        data = data.data;
+        let data = await axios.get(
+            `${backendUrl}/dashboard/get_ikv_doc_docid`,{
+                params:{
+                    docID : this.state.documentId
+                }
+            }
+        );
+        data = data.data.data;
         this.setState({ keyValueData: data });
         this.setState({ isLoading: false })
-
     }
     componentDidMount() {
         this.getKeyValueData();
@@ -71,13 +76,35 @@ class InputKeyValueTable extends React.Component {
         console.log('recommendations screen delete ....');
     }
     rowClassName(rowData) {
-        console.log('Row class Name :', rowData['technicalSpecificationValue'] > 5);
+        console.log('Row class Name :', rowData['TestingFrequency'] > 5);
 
         return {
-            'table-on-green': (parseInt(rowData['technicalSpecificationValue']) > 5),
-            'table-on-red': (parseInt(rowData['technicalSpecificationValue']) < 5)
+            'table-on-green': (parseInt(rowData['TestingFrequency']) > 5),
+            'table-on-red': (parseInt(rowData['TestingFrequency']) < 5)
         };
+    }
 
+    async handleClickAllSelected(action, data) {
+        if (action) {
+            let sendAcceptanceRes = await axios.post(
+                `${backendUrl}/dashboard/send_rec_from_ikv`,
+                {
+                    projectID: this.props.projectId,
+                    fileType: this.props.documentFiletype,
+                    ikvValues: data
+                }
+            );
+        } else {
+            let sendAcceptanceRes = await axios.post(
+                `${backendUrl}/dashboard/send_acceptance_from_ikv`,
+                {
+                    projectID: this.props.projectId,
+                    fileType: this.props.documentFiletype,
+                    ikvValues: data
+                }
+            );
+        }
+        // this.getUserList();
     }
 
     render() {
@@ -86,7 +113,7 @@ class InputKeyValueTable extends React.Component {
             <div>
                 <ButtonHeader saveEnabled={this.props.saveEnabled} deleteEnabled={this.props.deleteEnabled} className="progbar-button-header" onSave={() => this.onSave()} onDelete={() => this.onDelete()} />
                 <DocumentHeader documentId={this.state.documentId} projectId={this.props.projectId} />
-                <TableComponent colList={this.state.keyValueColList} dataList={this.state.keyValueData} rowClassName={this.rowClassName} onRefresh={this.onRefresh} />
+                <TableComponent colList={this.state.keyValueColList} dataList={this.state.keyValueData} rowClassName={this.rowClassName} onRefresh={this.onRefresh} actionsLabel={this.state.actions} handleClickAllSelected={this.handleClickAllSelected}/>
             </div>
         ) : (
                 <div className="spinner-container">
@@ -102,6 +129,7 @@ class InputKeyValueTable extends React.Component {
 const mapStateToProps = state => ({
     projectId: state.projectId,
     documentId: state.documentId,
-    documentArray: state.documentArray
+    documentArray: state.documentArray,
+    documentFiletype: state.documentFiletype
 })
 export default connect(mapStateToProps)(InputKeyValueTable);

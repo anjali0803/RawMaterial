@@ -5,9 +5,11 @@ import ButtonHeader from '../../../../ButtonHeader/ButtonHeader';
 import { createHashHistory } from 'history'
 import { connect } from "react-redux";
 import TableComponent from '../../../../Table/TableComponent';
-import Axios from 'axios';
+import axios from 'axios';
 import { ProgressSpinner } from 'primereact/progressspinner';
+import {backendUrl} from '../../../../../constant';
 const history = createHashHistory();
+
 const pageMapIndex = [
     'input-key-value',
     'recommendations',
@@ -22,46 +24,46 @@ class RecKeyValueTable extends React.Component {
         if (props.projectId === '')
             history.push('/Inquiry/create-new-projects/details')
 
-        if (props.documentArray[props.screenNumber - 1] === '')
+        if (props.documentId === '')
             history.push(`/Inquiry/create-new-projects/${pageMapIndex[props.screenNumber - 1]}`)
 
         this.onSave = this.onSave.bind(this);
         this.onDelete = this.onDelete.bind(this);
         this.state = {
             isLoading: false,
-            documentId: props.documentArray[props.screenNumber - 1] || '',
+            documentId: props.documentId,
             keyValueData: [
-
-                { workDescription: 'Clean up  and Cover', referenceStandardValue: 234, technicalSpecificationValue: 12, acceptanceCriteriaValue: 456 },
-                { workDescription: 'Maintainence and fixtures', referenceStandardValue: 223, technicalSpecificationValue: 7, acceptanceCriteriaValue: 456 },
-                { workDescription: 'Drills and exercies', referenceStandardValue: 234, technicalSpecificationValue: 9, acceptanceCriteriaValue: 456 },
-                { workDescription: 'Inventory management', referenceStandardValue: 94, technicalSpecificationValue: 3, acceptanceCriteriaValue: 456 },
-                { workDescription: 'Asset acquisitions', referenceStandardValue: 111, technicalSpecificationValue: 12, acceptanceCriteriaValue: 456 },
-                { workDescription: 'Classification', referenceStandardValue: 178, technicalSpecificationValue: 13, acceptanceCriteriaValue: 456 },
             ],
             keyValueColList: [
-                { field: 'workDescription', header: 'Work Description' },
-                { field: 'referenceStandardValue', header: 'Reference Standard Value' },
-                { field: 'technicalSpecificationValue', header: 'Technical Specification Value' },
-                { field: 'acceptanceCriteriaValue', header: 'Acceptance Criteria Value' }
-
-
-
-            ]
+				{ field: 'ClientSpecNumber', header: 'Client Spec Number' },
+                { field: 'CostImpact', header: 'Cost Impact' },
+				{ field: 'WorkDescription', header: 'Work Description' },
+                { field: 'TestingFrequencyProposal', header: 'Testing Ferquency Proposal' },
+                { field: 'TestingFrequency', header: 'Testing Ferquency' },
+				{ field: 'AcceptanceCriteriaProposal', header: 'Acceptance Criteria Proposal' },
+				{ field: 'AcceptanceCriteria', header: 'Acceptance Criteria' }
+			],
+            actions: [
+				{ label: "pikachu thunder bolt please", value: 1 }
+			]
         }
 
         this.onRefresh = this.onRefresh.bind(this);
-
+		this.handleClickAllSelected = this.handleClickAllSelected.bind(this);
     }
-    async getKeyValueTable() {
-        this.setState({ isLoading: true });
-        let res = await Axios.get('http://5dbdaeb405a6f30014bcaee3.mockapi.io/key-value-data');
-        res = res.data;
-        this.setState({ keyValueData: res })
+    
+    async componentDidMount() {
+        let getRecommedationData = await axios.get(
+			`${backendUrl}/dashboard/get_rec_doc_docid/`,{
+				params: {
+                    docID: this.state.documentId
+                    
+					// projectID: this.props.projectId
+				}
+			}
+		);
+		this.setState({keyValueData: getRecommedationData.data.data});
         this.setState({ isLoading: false });
-    }
-    componentDidMount() {
-        this.getKeyValueTable();
     }
     onRefresh() {
         this.getKeyValueTable();
@@ -83,13 +85,31 @@ class RecKeyValueTable extends React.Component {
         };
 
     }
+
+    async handleClickAllSelected(action, data) {
+		if (action) {
+		let sendAcceptanceRes = await axios.post(
+			`${backendUrl}/dashboard/send_acceptance_from_ikv`,
+			{
+                projectID: this.props.projectId,
+                fileType: this.props.documentFiletype,
+                ikvValues: data
+			}
+		);
+		} else {
+		//TODO reject recommendation call 
+		console.log(data, " is Rejected");
+		}
+		// this.getUserList();
+    }
+    
     render() {
 
         return !this.state.isLoading ? (
             <div>
                 <ButtonHeader saveEnabled={this.props.saveEnabled} deleteEnabled={this.props.deleteEnabled} className="progbar-button-header" onSave={() => this.onSave()} onDelete={() => this.onDelete()} />
                 <DocumentHeader documentId={this.state.documentId} projectId={this.props.projectId} />
-                <TableComponent colList={this.state.keyValueColList} dataList={this.state.keyValueData} rowClassName={this.rowClassName} onRefresh={this.onRefresh} />
+                <TableComponent colList={this.state.keyValueColList} dataList={this.state.keyValueData} rowClassName={this.rowClassName} onRefresh={this.onRefresh} handleClickAllSelected={this.handleClickAllSelected} actionsLabel={this.state.actions}/>
             </div>
         ) : (
                 <div className="spinner-container">

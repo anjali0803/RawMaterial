@@ -12,8 +12,8 @@ const history = createHashHistory();
 
 
 class ProjectAssignedToMe extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             isLoading: true,
             tableData: [
@@ -55,7 +55,7 @@ class ProjectAssignedToMe extends React.Component {
         this.props.setProjectCustomer(Customer);
         this.props.setProjectType(Type);
         this.props.setProjectTitle(Title)
-        this.props.setDocumentArray(['', '', '', '', '']);
+        this.props.setDocumentArray([]);
         history.push('/Inquiry/create-new-projects/details');
 
     }
@@ -67,8 +67,18 @@ class ProjectAssignedToMe extends React.Component {
         return this.state.isLoading === false ? (
             <div>
                 <ProjectsTable
-                    colList={this.state.tableColList}
-                    dataList={this.state.tableData}
+                    colList={this.props.projectTableColList.filter(element => {
+                        if (element.field != 'AssignedTo') {
+                            return element;
+                        }
+                    })}
+
+                    dataList={this.props.projectList.filter((element) => {
+                        if (element['AssignedTo'] === this.props.userName)
+                            return element;
+
+                    })}
+
                     onProjectIdClick={this.onProjectIdClick}
                     onRefresh={this.onRefresh}
                 />
@@ -86,8 +96,9 @@ class ProjectAssignedToMe extends React.Component {
 }
 
 const mapStateToProps = state => ({
-    dataList: state.dataList,
-    colList: state.colList,
+    userName: state.userName,
+    projectList: state.projectList,
+    projectTableColList: state.projectTableColList,
     projectId: state.projectId,
     projectType: state.projectType,
     projectTitle: state.projectTitle,

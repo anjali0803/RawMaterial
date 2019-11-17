@@ -6,8 +6,11 @@ import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Dropdown } from "primereact/dropdown";
 import "./index.css";
+import { connect } from "react-redux";
+import axios from "axios";
+import { backendUrl } from '../../constant';
 
-export default class ProjectsTable extends React.Component {
+export class ProjectsTable extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -21,23 +24,38 @@ export default class ProjectsTable extends React.Component {
 
     return <a onClick={() => this.props.onProjectIdClick(rowData)} >{rowData['ProjectID']}</a>
   }
-  handleClickAllSelected(action) {
-    const data = this.state.selected;
+  async handleClickAllSelected(action) {
+    let data = this.state.selected;
+        
     if (action) {
-      console.log(data, " is Approved");
+      let sendRecommendationRes = await axios.post(
+        `${backendUrl}/dashboard/send_rec_from_ikv`,
+        {
+          projectID: this.props.projectId,
+          fileType: this.props.documentArray[0].FileType,
+          ikvValues: data
+        }
+      );
     } else {
-      console.log(data, " is Rejected");
+      let sendAcceptanceRes = await axios.post(
+        `${backendUrl}/dashboard/send_acceptance_from_ikv`,
+        {
+          projectID: this.props.projectId,
+          fileType: this.props.documentArray[0].FileType,
+          ikvValues: data
+        }
+      );
     }
-    this.getUserList();
   }
+
   render() {
     const colList = this.props.colList;
     const selected = this.state.selected;
     var dataList = this.props.dataList;
 
     const actions = [
-      { label: "Approve All Selected", value: 1 },
-      { label: "Reject All Selected", value: 0 }
+      { label: "Send to recommendation", value: 1 },
+      { label: "Send to acceptance", value: 0 }
     ];
     const footer = (
       <Dropdown
@@ -94,3 +112,11 @@ export default class ProjectsTable extends React.Component {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  projectId: state.projectId,
+  documentId: state.documentId,
+  documentArray: state.documentArray
+})
+
+export default connect(mapStateToProps)(ProjectsTable);

@@ -5,8 +5,9 @@ import TableComponent from '../../Table/TableComponent';
 import ButtonHeader from '../../ButtonHeader/ButtonHeader';
 import './index.css';
 import { setDocumentArray } from '../../../actions/dataActions';
+import { backendUrl } from '../../../constant';
+import axios from 'axios';
 import { ProgressSpinner } from 'primereact/progressspinner';
-import Axios from 'axios';
 
 const history = createHashHistory();
 
@@ -14,130 +15,62 @@ class Acceptance extends React.Component {
     constructor(props) {
 
         super(props);
-        if (props.projectId === '') {
+        if (this.props.projectId === '') {
             history.push('/Inquiry/create-new-projects/details')
         }
-
+        this.onSave = this.onSave.bind(this);
+        this.onDelete = this.onDelete.bind(this);
         this.state = {
-            isLoading: false,
-            tableData: [
-
-
-                {
-                    documentId: '123490',
-                    customer: 'Adante',
-                    type: 'Aplha',
-                    uploadedDate: '12-10-2017',
-                    sent: 'Yes',
-                    last: "Generated",
-                    sentOn: '24-11-2017'
-                },
-                {
-                    documentId: '123487',
-                    customer: 'Navi',
-                    type: 'Beta',
-                    uploadedDate: '11-10-2016',
-                    sent: 'No',
-                    last: "Non generated",
-                    sentOn: '24-11-2019'
-                },
-                {
-                    documentId: '123467',
-                    customer: 'Valve',
-                    type: 'Omega',
-                    uploadedDate: '12-10-2017',
-                    sent: 'Yes',
-                    last: "Generated",
-                    sentOn: '24-11-2017'
-                },
-                {
-                    documentId: '123493',
-                    customer: 'theta',
-                    type: 'Beta',
-                    uploadedDate: '12-10-2017',
-                    sent: 'Yes',
-                    last: "Generated",
-                    sentOn: '24-11-2017'
-                },
-                {
-                    documentId: '123490',
-                    customer: 'Adante',
-                    type: 'Aplha',
-                    uploadedDate: '12-10-2017',
-                    sent: 'Yes',
-                    last: "Generated",
-                    sentOn: '24-11-2017'
-                },
-                {
-                    documentId: '123490',
-                    customer: 'Adante',
-                    type: 'Aplha',
-                    uploadedDate: '12-10-2017',
-                    sent: 'Yes',
-                    last: "Generated",
-                    sentOn: '24-11-2017'
-                },
-                {
-                    documentId: '123490',
-                    customer: 'Adante',
-                    type: 'Aplha',
-                    uploadedDate: '12-10-2017',
-                    sent: 'Yes',
-                    last: "Generated",
-                    sentOn: '24-11-2017'
-                },
-                {
-                    documentId: '123490',
-                    customer: 'Adante',
-                    type: 'Aplha',
-                    uploadedDate: '12-10-2017',
-                    sent: 'Yes',
-                    last: "Generated",
-                    sentOn: '24-11-2017'
-                }
-            ],
+            tableData: [],
             tableColList: [
-                { field: 'documentId', header: 'Document Id' },
-
-                { field: 'customer', header: 'Customer' },
-                { field: 'type', header: 'Type' },
-                { field: 'uploadedDate', header: 'Uploaded Date' },
-                { field: 'sent', header: 'Sent' },
-                { field: 'last', header: 'Last' },
+                { field: 'DocID', header: 'Document Id' },
+                { field: 'ClientName', header: 'Customer' },
+                { field: 'FileType', header: 'Type' },
+                { field: 'CreatedOn', header: 'Uploaded Date' },
+                { field: 'LastUpdatedBy', header: 'Last Updated By' },
+                { field: 'LastUpdatedOn', header: 'Last' },
                 { field: 'sentOn', header: 'Sent On' }
-
             ],
             keyValueData: [
-
-                { key: 'Queue Size', value: 12000 },
-                { key: 'Volume', value: '45 Cubic Meters' },
-                { key: 'density', value: 67 }
             ],
             keyValueColList: [
                 { field: 'key', header: 'Key' },
                 { field: 'value', header: 'Value' }
-
-            ],
-
-
-
+						],
+						actions: [
+							{ label: "Send selected to Acceptance", value: 1 }
+						]
         }
+		this.handleClickAllSelected = this.handleClickAllSelected.bind(this);
+        this.onDocIdClick = this.onDocIdClick.bind(this);
         this.onSave = this.onSave.bind(this);
         this.onDelete = this.onDelete.bind(this);
-        this.onDocIdClick = this.onDocIdClick.bind(this);
         this.onRefresh = this.onRefresh.bind(this);
     }
-    async getTableData() {
-        this.setState({ isLoading: true })
-        let data = await Axios.get('http://5dbdaeb405a6f30014bcaee3.mockapi.io/documents');
-        data = data.data;
-        this.setState({ tableData: data });
-        this.setState({ isLoading: false })
+
+    async componentDidMount() {
+			let getRecommedationData = await axios.get(
+				`${backendUrl}/dashboard/get_acc_doc/`,{
+					params: {
+						projectID: 'MASTERHFW'
+						// projectID: this.props.projectId
+					}
+				}
+			);
+			this.setState({tableData: getRecommedationData.data.data});
     }
 
-    componentDidMount() {
-        this.getTableData();
-    }
+		async handleClickAllSelected(action, data) {
+			if (action) {
+				console.log(data, " is Accepted");
+			
+			} else {
+				//TODO reject acceptance call 
+				console.log(data, " is Rejected");
+			}
+			this.getUserList();
+		}
+    
     onRefresh() {
         this.getTableData();
     }
@@ -161,7 +94,7 @@ class Acceptance extends React.Component {
         return !this.state.isLoading ? (
             <div>
                 <ButtonHeader saveEnabled={this.props.saveEnabled} deleteEnabled={this.props.deleteEnabled} className="progbar-button-header" onSave={() => this.onSave()} onDelete={() => this.onDelete()} />
-                <TableComponent colList={this.state.tableColList} dataList={this.state.tableData} onDocumentIdClick={this.onDocIdClick} onRefresh={this.onRefresh} />
+                <TableComponent colList={this.state.tableColList} dataList={this.state.tableData} onDocumentIdClick={this.onDocIdClick} handleClickAllSelected={this.handleClickAllSelected} actionsLabel={this.state.actions}/>
             </div>
         ) : (
                 <div className="spinner-container">
@@ -177,6 +110,7 @@ class Acceptance extends React.Component {
 
 const mapStateToProps = state => ({
     projectId: state.projectId,
+    documentId: state.documentId,
     documentArray: state.documentArray
 });
 const mapDispatchToProps = dispatch => ({

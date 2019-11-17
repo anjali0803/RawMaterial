@@ -90,8 +90,8 @@ class AllOngoingProjects extends React.Component {
 }
 
 const mapStateToProps = state => ({
-    dataList: state.dataList,
-    colList: state.colList,
+    projectList: state.projectList,
+    projectTableColList: state.projectTableColList,
     projectId: state.projectId,
     projectType: state.projectType,
     projectTitle: state.projectTitle,

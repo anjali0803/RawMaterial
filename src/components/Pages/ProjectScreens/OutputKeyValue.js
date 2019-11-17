@@ -5,7 +5,8 @@ import { setDocumentArray } from "../../../actions/dataActions";
 import './index.css';
 import TableComponent from '../../Table/TableComponent';
 import ButtonHeader from '../../ButtonHeader/ButtonHeader';
-import Axios from 'axios';
+import { backendUrl } from '../../../constant';
+import axios from 'axios';
 import { ProgressSpinner } from 'primereact/progressspinner';
 
 const history = createHashHistory();
@@ -17,124 +18,62 @@ class OutputKeyValue extends React.Component {
         }
 
         this.state = {
-            isLoading: false,
             tableData: [
-
-
-                {
-                    documentId: '123490',
-                    projectId: '125012',
-                    customer: 'Adante',
-                    type: 'Aplha',
-                    uploadedDate: '12-10-2017',
-                    sent: 'Yes',
-                    last: "Generated",
-                    sentOn: '24-11-2017'
-                },
-                {
-                    documentId: '123487',
-                    projectId: '125019',
-                    customer: 'Navi',
-                    type: 'Beta',
-                    uploadedDate: '11-10-2016',
-                    sent: 'No',
-                    last: "Non generated",
-                    sentOn: '24-11-2019'
-                },
-                {
-                    documentId: '123467',
-                    projectId: '125045',
-                    customer: 'Valve',
-                    type: 'Omega',
-                    uploadedDate: '12-10-2017',
-                    sent: 'Yes',
-                    last: "Generated",
-                    sentOn: '24-11-2017'
-                },
-                {
-                    documentId: '123493',
-                    projectId: '125142',
-                    customer: 'theta',
-                    type: 'Beta',
-                    uploadedDate: '12-10-2017',
-                    sent: 'Yes',
-                    last: "Generated",
-                    sentOn: '24-11-2017'
-                },
-                {
-                    documentId: '123490',
-                    projectId: '125012',
-                    customer: 'Adante',
-                    type: 'Aplha',
-                    uploadedDate: '12-10-2017',
-                    sent: 'Yes',
-                    last: "Generated",
-                    sentOn: '24-11-2017'
-                },
-                {
-                    documentId: '123490',
-                    projectId: '125012',
-                    customer: 'Adante',
-                    type: 'Aplha',
-                    uploadedDate: '12-10-2017',
-                    sent: 'Yes',
-                    last: "Generated",
-                    sentOn: '24-11-2017'
-                },
-                {
-                    documentId: '123490',
-                    projectId: '125012',
-                    customer: 'Adante',
-                    type: 'Aplha',
-                    uploadedDate: '12-10-2017',
-                    sent: 'Yes',
-                    last: "Generated",
-                    sentOn: '24-11-2017'
-                },
-                {
-                    documentId: '123490',
-                    projectId: '125012',
-                    customer: 'Adante',
-                    type: 'Aplha',
-                    uploadedDate: '12-10-2017',
-                    sent: 'Yes',
-                    last: "Generated",
-                    sentOn: '24-11-2017'
-                }
             ],
             tableColList: [
-                { field: 'documentId', header: 'Document Id' },
-                { field: 'customer', header: 'Customer' },
-                { field: 'type', header: 'Type' },
-                { field: 'uploadedDate', header: 'Uploaded Date' },
-                { field: 'sent', header: 'Sent' },
-                { field: 'last', header: 'Last' },
-                { field: 'sentOn', header: 'Sent On' }
-
-            ]
-
+							{ field: 'DocID', header: 'Document Id' },
+							{ field: 'ClientName', header: 'Customer' },
+							{ field: 'FileType', header: 'Type' },
+							{ field: 'CreatedOn', header: 'Uploaded Date' },
+							{ field: 'LastUpdatedBy', header: 'Last Updated By' },
+							{ field: 'LastUpdatedOn', header: 'Last' },
+							{ field: 'sentOn', header: 'Sent On' }
+            ],
+            keyValueData: [
+            ],
+            keyValueColList: [
+                { field: 'key', header: 'Key' },
+                { field: 'value', header: 'Value' }
+            ],
+						actions: [
+							{ label: "kuchh to hoga click karne pe", value: 1 }
+						]
         }
         this.onSave = this.onSave.bind(this);
         this.onDelete = this.onDelete.bind(this);
-        this.onDocIdClick = this.onDocIdClick.bind(this);
-        this.onRefresh = this.onRefresh.bind(this);
+				this.onDocIdClick = this.onDocIdClick.bind(this);
+				this.handleClickAllSelected = this.handleClickAllSelected.bind(this);	
     }
 
+    async componentDidMount() {
+			let getRecommedationData = await axios.get(
+				`${backendUrl}/dashboard/get_itp_doc/`,{
+					params: {
+						projectID: 'MASTERHFW'
+						// projectID: this.props.projectId
+					}
+				}
+			);
+			this.setState({tableData: getRecommedationData.data.data});
+    }
+    
+    async handleClickAllSelected(action, data) {
+			if (action) {
+				let sendAcceptanceRes = await axios.post(
+				`${backendUrl}/dashboard/send_acceptance_from_ikv`,
+				{
+					projectID: this.props.projectId,
+					fileType: this.props.documentArray[0].FileType,
+					ikvValues: data
+				}
+				);
+			} else {
+					//TODO reject recommendation call 
+					console.log(data, " is Rejected");
+			}
+			this.getUserList();
+		}
 
-    async getTableData() {
-        this.setState({ isLoading: true })
-        let data = await Axios.get('http://5dbdaeb405a6f30014bcaee3.mockapi.io/documents');
-        data = data.data;
-        this.setState({ tableData: data });
-        this.setState({ isLoading: false })
-    }
-    onRefresh() {
-        this.getTableData();
-    }
-
-    componentDidMount() {
-        this.getTableData();
-    }
     onDocIdClick(rowData) {
         let documentArray = this.props.documentArray;
         documentArray[3] = rowData['documentId'];
@@ -152,14 +91,11 @@ class OutputKeyValue extends React.Component {
     }
 
     render() {
-
-
-
         return !this.state.isLoading ? (
             <div>
                 <ButtonHeader saveEnabled={this.props.saveEnabled} deleteEnabled={this.props.deleteEnabled} className="progbar-button-header" onSave={() => this.onSave()} onDelete={() => this.onDelete()} />
 
-                <TableComponent colList={this.state.tableColList} dataList={this.state.tableData} onDocumentIdClick={this.onDocIdClick} onRefresh={this.onRefresh} />
+                <TableComponent colList={this.state.tableColList} dataList={this.state.tableData} onDocumentIdClick={this.onDocIdClick} onRefresh={this.onRefresh} handleClickAllSelected={this.handleClickAllSelected} actionsLabel={this.state.actions} />
             </div>
         ) : (
 

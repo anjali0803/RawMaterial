@@ -12,8 +12,8 @@ var initialState = {
   documentId: '',
   documentArray: ['', '', '', '', ''],
   currentURL: '',
-  readOnly: false
-
+  readOnly: false,
+  documentFiletype: ''
 };
 
 export default (state = initialState, action) => {
@@ -41,12 +41,12 @@ export default (state = initialState, action) => {
     case 'SET_DATA_LIST':
       return {
         ...state,
-        dataList: action.dataList
+        projectList: action.dataList
       };
     case 'SET_COL_LIST':
       return {
         ...state,
-        colList: action.colList
+        projectTableColList: action.colList
       };
     case 'SET_PROJECT_ID':
       return {
@@ -88,6 +88,11 @@ export default (state = initialState, action) => {
         ...state,
         documentArray: action.documentArray
       };
+    case 'SET_DOCUMENT_FILETYPE':
+      return {
+        ...state,
+        documentFiletype: action.fileType
+    };
     default:
       return state;
   }

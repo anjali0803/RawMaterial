@@ -2,7 +2,7 @@ import React from 'react';
 import { createHashHistory } from 'history'
 import TableComponent from '../../Table/TableComponent';
 import ButtonHeader from '../../ButtonHeader/ButtonHeader';
-import { setDocumentArray } from "../../../actions/dataActions"
+import { setDocumentArray, setDocumentId, setDocumentType } from "../../../actions/dataActions"
 import { connect } from 'react-redux'
 import './index.css';
 import { ProgressSpinner } from 'primereact/progressspinner';
@@ -44,8 +44,6 @@ class InputKeyValue extends React.Component {
     }
 
     async componentDidMount(){
-        const formData = new FormData();
-        formData.append('projectID', 'MASTERHFW')
         const  tableData  = await axios.get(
             `${backendUrl}/dashboard/get_ikv_doc`,{
                 params:{
@@ -56,11 +54,12 @@ class InputKeyValue extends React.Component {
         this.setState({ tableData: tableData.data.data });
     }
     onDocIdClick(rowData) {
-        //console.log(this.props.documentArray)
-
-        let documentArray = this.props.documentArray;
-        documentArray[0] = rowData['DocId'];
-        this.props.setDocumentArray(documentArray)
+        let documentArray = this.props.documentArray[0] || [];
+        // let documentArray = [];
+        // documentArray.push(rowData);
+        this.props.setDocumentId(rowData['DocID']);
+        this.props.setDocumentType(rowData['FileType']);
+        // this.props.setDocumentArray(documentArray);
         history.push("/Inquiry/create-new-projects/input-key-value/second");
     }
 
@@ -107,7 +106,9 @@ const mapStateToProps = state => ({
     documentArray: state.documentArray
 });
 const mapDispatchToProps = dispatch => ({
-    setDocumentArray: (documentArray) => dispatch(setDocumentArray(documentArray))
+    setDocumentArray: (documentArray) => dispatch(setDocumentArray(documentArray)),
+    setDocumentId: (docID) => dispatch(setDocumentId(docID)),
+    setDocumentType: (fileType) => dispatch(setDocumentType(fileType))
 });
 export default connect(
     mapStateToProps, mapDispatchToProps
