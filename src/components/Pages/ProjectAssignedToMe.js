@@ -55,7 +55,7 @@ class ProjectAssignedToMe extends React.Component {
         this.props.setProjectCustomer(Customer);
         this.props.setProjectType(Type);
         this.props.setProjectTitle(Title)
-        this.props.setDocumentArray(['', '', '', '', '']);
+        this.props.setDocumentArray([]);
         history.push('/Inquiry/create-new-projects/details');
 
     }
