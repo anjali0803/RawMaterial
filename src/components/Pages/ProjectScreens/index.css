@@ -100,26 +100,6 @@
 .details-withdraw > span{
 	font-size: 16px;	
 }
-/* .details-cost-sheet{
-	display: table-row; 
-}*/
-/* .details-pipe{
-    margin-top:20px;
-	border:none;
-    border-top: 2px solid rgb(192, 218, 247);
-    
-}
-.details-inner-coating{
-	margin-top:20px;
-    border-top: 2px solid  rgb(192, 218, 247);
-}
-.details-outer-coating{
-	
-    margin-top:20px;
-    border-top: 2px solid  rgb(192, 218, 247);
-} */
-
-
 
 .upload-label{
 	width: 100%;
@@ -128,11 +108,7 @@
 	margin-left: 0px;;
     padding: 5px;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-}
-.cost-sheet-upload{
-	/* margin-bottom: 29px; */
-	
-}
+} 
 .pipe-upload{
     margin-bottom: 10px;
 }
@@ -167,10 +143,11 @@
 
 
 .progress-steps .progress-step {
+	
 	font-size: 14px;
 	text-align: center;
 	color: white;
-	cursor: default;
+	cursor: pointer;
 	margin: 0 3px;
 	
 	padding: 10px 10px 10px 30px;
@@ -187,6 +164,7 @@
 
 .progress-steps .progress-step:after,
 .progress-steps .progress-step:before {
+	
 	content: " ";
 	position: absolute;
 	top: 0;

@@ -7,6 +7,7 @@ import './index.css';
 import { setDocumentArray } from '../../../actions/dataActions';
 import { backendUrl } from '../../../constant';
 import axios from 'axios';
+import { ProgressSpinner } from 'primereact/progressspinner';
 
 const history = createHashHistory();
 
@@ -41,7 +42,10 @@ class Acceptance extends React.Component {
 						]
         }
 		this.handleClickAllSelected = this.handleClickAllSelected.bind(this);
-		this.onDocIdClick = this.onDocIdClick.bind(this);
+        this.onDocIdClick = this.onDocIdClick.bind(this);
+        this.onSave = this.onSave.bind(this);
+        this.onDelete = this.onDelete.bind(this);
+        this.onRefresh = this.onRefresh.bind(this);
     }
 
     async componentDidMount() {
@@ -66,7 +70,10 @@ class Acceptance extends React.Component {
 			}
 			this.getUserList();
 		}
-
+    
+    onRefresh() {
+        this.getTableData();
+    }
     onSave() {
         console.log('Acceptance Save..');
         history.push("/Inquiry/create-new-projects/output-key-value");
@@ -84,12 +91,20 @@ class Acceptance extends React.Component {
     }
 
     render() {
-        return (
+        return !this.state.isLoading ? (
             <div>
                 <ButtonHeader saveEnabled={this.props.saveEnabled} deleteEnabled={this.props.deleteEnabled} className="progbar-button-header" onSave={() => this.onSave()} onDelete={() => this.onDelete()} />
                 <TableComponent colList={this.state.tableColList} dataList={this.state.tableData} onDocumentIdClick={this.onDocIdClick} handleClickAllSelected={this.handleClickAllSelected} actionsLabel={this.state.actions}/>
             </div>
-        )
+        ) : (
+                <div className="spinner-container">
+                    <ProgressSpinner
+                        style={{ width: "40%", height: "40%" }}
+                        strokeWidth="1"
+                        animationDuration="1s"
+                    ></ProgressSpinner>
+                </div>
+            )
     }
 }
 

@@ -6,6 +6,7 @@ import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Dropdown } from "primereact/dropdown";
 import "./index.css";
+import { throws } from "assert";
 
 export default class TableComponent extends React.Component {
   constructor() {
@@ -27,6 +28,8 @@ export default class TableComponent extends React.Component {
     this.props.handleClickAllSelected(action, data);
     this.getUserList();
   }
+
+
   render() {
     const colList = this.props.colList;
     const selected = this.state.selected;
@@ -50,9 +53,11 @@ export default class TableComponent extends React.Component {
           rows={10}
           selection={this.state.selected}
           onSelectionChange={e => this.setState({ selected: e.value })}
+
+          rowClassName={this.props.rowClassName ? (rowData) => this.props.rowClassName(rowData) : () => { }}
         >
           <Column selectionMode="multiple" style={{ width: '3em' }} />
-          <Column header={<i className="pi pi-refresh"></i>} style={{ width: '3em' }} />
+          <Column header={<i onClick={this.props.onRefresh} className="pi pi-refresh"></i>} style={{ width: '3em' }} />
           {colList.map((el, index) => {
             const field = el.field;
             const header = el.header;

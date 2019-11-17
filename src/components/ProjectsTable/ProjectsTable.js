@@ -52,6 +52,7 @@ export class ProjectsTable extends React.Component {
     const colList = this.props.colList;
     const selected = this.state.selected;
     var dataList = this.props.dataList;
+
     const actions = [
       { label: "Send to recommendation", value: 1 },
       { label: "Send to acceptance", value: 0 }
@@ -76,7 +77,7 @@ export class ProjectsTable extends React.Component {
           onSelectionChange={e => this.setState({ selected: e.value })}
         >
           <Column selectionMode="multiple" style={{ width: '3em' }} />
-          <Column header={<i className="pi pi-refresh"></i>} style={{ width: '3em' }} />
+          <Column header={<i onClick={this.props.onRefresh} className="pi pi-refresh"></i>} style={{ width: '3em' }} />
           {colList.map((el, index) => {
             const field = el.field;
             const header = el.header;

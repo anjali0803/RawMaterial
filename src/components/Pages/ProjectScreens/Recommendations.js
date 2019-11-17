@@ -7,6 +7,7 @@ import TableComponent from '../../Table/TableComponent';
 import ButtonHeader from '../../ButtonHeader/ButtonHeader';
 import { backendUrl } from '../../../constant';
 import axios from 'axios';
+import { ProgressSpinner } from 'primereact/progressspinner';
 
 const history = createHashHistory();
 class Recommendations extends React.Component {

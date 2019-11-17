@@ -7,6 +7,7 @@ import TableComponent from '../../Table/TableComponent';
 import ButtonHeader from '../../ButtonHeader/ButtonHeader';
 import { backendUrl } from '../../../constant';
 import axios from 'axios';
+import { ProgressSpinner } from 'primereact/progressspinner';
 
 const history = createHashHistory();
 class OutputKeyValue extends React.Component {
@@ -90,12 +91,22 @@ class OutputKeyValue extends React.Component {
     }
 
     render() {
-        return (
+        return !this.state.isLoading ? (
             <div>
                 <ButtonHeader saveEnabled={this.props.saveEnabled} deleteEnabled={this.props.deleteEnabled} className="progbar-button-header" onSave={() => this.onSave()} onDelete={() => this.onDelete()} />
-                <TableComponent colList={this.state.tableColList} dataList={this.state.tableData} onDocumentIdClick={this.onDocIdClick} handleClickAllSelected={this.handleClickAllSelected} actionsLabel={this.state.actions} />
+
+                <TableComponent colList={this.state.tableColList} dataList={this.state.tableData} onDocumentIdClick={this.onDocIdClick} onRefresh={this.onRefresh} handleClickAllSelected={this.handleClickAllSelected} actionsLabel={this.state.actions} />
             </div>
-        )
+        ) : (
+
+                <div className="spinner-container">
+                    <ProgressSpinner
+                        style={{ width: "40%", height: "40%" }}
+                        strokeWidth="1"
+                        animationDuration="1s"
+                    ></ProgressSpinner>
+                </div>
+            )
     }
 }
 

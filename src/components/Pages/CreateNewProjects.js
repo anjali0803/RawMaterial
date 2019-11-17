@@ -12,7 +12,11 @@ import { HashRouter, Route } from 'react-router-dom';
 import './index.css';
 import { createHashHistory } from "history";
 import ProgressBar from './ProjectScreens/ProgressBar';
-import KeyValueTable from '../KeyValueTable/KeyValueTable';
+import InputKeyValueTable from './ProjectScreens/KeyValueTables/InputKeyValueTable/InputKeyValueTable';
+import RecKeyValueTable from './ProjectScreens/KeyValueTables/RecKeyValueTable/RecKeyValueTable';
+import AccKeyValueTable from './ProjectScreens/KeyValueTables/AccKeyValueTable/AccKeyValueTable';
+import OutputKeyValueTable from './ProjectScreens/KeyValueTables/OutputKeyValueTable/OutputKeyValueTable';
+import OutputDocValueTable from './ProjectScreens/KeyValueTables/OutputDocValueTable/OutputDocValueTable';
 const history = createHashHistory();
 
 
@@ -36,116 +40,7 @@ export default class CreateNewProjects extends React.Component {
                 'Acceptance',
                 'Output Key Value',
                 'Output Document'
-            ],
-            inputKeyValueData: {
-                tableData: [
-
-
-                    {
-                        documentId: '123490',
-                        projectId: '125012',
-                        customer: 'Adante',
-                        type: 'Aplha',
-                        uploadedDate: '12-10-2017',
-                        sent: 'Yes',
-                        last: "Generated",
-                        sentOn: '24-11-2017'
-                    },
-                    {
-                        documentId: '123487',
-                        projectId: '125019',
-                        customer: 'Navi',
-                        type: 'Beta',
-                        uploadedDate: '11-10-2016',
-                        sent: 'No',
-                        last: "Non generated",
-                        sentOn: '24-11-2019'
-                    },
-                    {
-                        documentId: '123467',
-                        projectId: '125045',
-                        customer: 'Valve',
-                        type: 'Omega',
-                        uploadedDate: '12-10-2017',
-                        sent: 'Yes',
-                        last: "Generated",
-                        sentOn: '24-11-2017'
-                    },
-                    {
-                        documentId: '123493',
-                        projectId: '125142',
-                        customer: 'theta',
-                        type: 'Beta',
-                        uploadedDate: '12-10-2017',
-                        sent: 'Yes',
-                        last: "Generated",
-                        sentOn: '24-11-2017'
-                    },
-                    {
-                        documentId: '123490',
-                        projectId: '125012',
-                        customer: 'Adante',
-                        type: 'Aplha',
-                        uploadedDate: '12-10-2017',
-                        sent: 'Yes',
-                        last: "Generated",
-                        sentOn: '24-11-2017'
-                    },
-                    {
-                        documentId: '123490',
-                        projectId: '125012',
-                        customer: 'Adante',
-                        type: 'Aplha',
-                        uploadedDate: '12-10-2017',
-                        sent: 'Yes',
-                        last: "Generated",
-                        sentOn: '24-11-2017'
-                    },
-                    {
-                        documentId: '123490',
-                        projectId: '125012',
-                        customer: 'Adante',
-                        type: 'Aplha',
-                        uploadedDate: '12-10-2017',
-                        sent: 'Yes',
-                        last: "Generated",
-                        sentOn: '24-11-2017'
-                    },
-                    {
-                        documentId: '123490',
-                        projectId: '125012',
-                        customer: 'Adante',
-                        type: 'Aplha',
-                        uploadedDate: '12-10-2017',
-                        sent: 'Yes',
-                        last: "Generated",
-                        sentOn: '24-11-2017'
-                    }
-                ],
-                tableColList: [
-                    { field: 'documentId', header: 'Document Id' },
-                    { field: 'projectId', header: 'Project Id' },
-                    { field: 'customer', header: 'Customer' },
-                    { field: 'type', header: 'Type' },
-                    { field: 'uploadedDate', header: 'Uploaded Date' },
-                    { field: 'sent', header: 'Sent' },
-                    { field: 'last', header: 'Last' },
-                    { field: 'sentOn', header: 'Sent On' }
-
-                ],
-                keyValueData: [
-
-                    { key: 'Queue Size', value: 12000 },
-                    { key: 'Volume', value: '45 Cubic Meters' },
-                    { key: 'density', value: 67 }
-                ],
-                keyValueColList: [
-                    { field: 'key', header: 'Key' },
-                    { field: 'value', header: 'Value' }
-
-                ]
-            },
-
+            ]
         }
     }
 
@@ -162,7 +57,7 @@ export default class CreateNewProjects extends React.Component {
                 />
             },
             {
-                path: '/Inquiry/create-new-projects/input-key-value/second', component: () => <KeyValueTable
+                path: '/Inquiry/create-new-projects/input-key-value/second', component: () => <InputKeyValueTable
                     saveEnabled={true} deleteEnabled={true}
                     steps={this.state.steps}
                     screenNumber={1}
@@ -181,7 +76,7 @@ export default class CreateNewProjects extends React.Component {
                     steps={this.state.steps} />
             },
             {
-                path: '/Inquiry/create-new-projects/recommendations/second', component: () => <KeyValueTable
+                path: '/Inquiry/create-new-projects/recommendations/second', component: () => <RecKeyValueTable
 
                     steps={this.state.steps}
                     saveEnabled={true} deleteEnabled={true}
@@ -196,7 +91,7 @@ export default class CreateNewProjects extends React.Component {
                     deleteEnabled={false} />
             },
             {
-                path: '/Inquiry/create-new-projects/acceptance/second', component: () => <KeyValueTable
+                path: '/Inquiry/create-new-projects/acceptance/second', component: () => <AccKeyValueTable
                     steps={this.state.steps}
                     saveEnabled={true} deleteEnabled={true}
                     redirectTo='/Inquiry/create-new-projects/output-key-value/'
@@ -212,7 +107,7 @@ export default class CreateNewProjects extends React.Component {
                 />
             },
             {
-                path: '/Inquiry/create-new-projects/output-key-value/second', component: () => <KeyValueTable
+                path: '/Inquiry/create-new-projects/output-key-value/second', component: () => <OutputKeyValueTable
 
                     steps={this.state.steps}
                     redirectTo='/Inquiry/create-new-projects/output-document'
@@ -227,7 +122,7 @@ export default class CreateNewProjects extends React.Component {
                     saveEnabled={true} deleteEnabled={true} />
             },
             {
-                path: '/Inquiry/create-new-projects/output-document/second', component: () => <KeyValueTable
+                path: '/Inquiry/create-new-projects/output-document/second', component: () => <OutputDocValueTable
                     steps={this.state.steps}
                     redirectTo='/'
                     saveEnabled={true} deleteEnabled={true}

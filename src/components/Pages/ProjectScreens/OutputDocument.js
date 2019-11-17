@@ -5,6 +5,8 @@ import { setDocumentArray } from "../../../actions/dataActions";
 import './index.css';
 import TableComponent from '../../Table/TableComponent';
 import ButtonHeader from '../../ButtonHeader/ButtonHeader';
+import { ProgressSpinner } from 'primereact/progressspinner';
+import Axios from 'axios';
 const history = createHashHistory();
 
 
@@ -15,6 +17,7 @@ class OutputDocument extends React.Component {
             history.push('/Inquiry/create-new-projects/details')
         }
         this.state = {
+            isLoading: false,
             saveEnabled: true,
             deleteEnabled: true,
             tableData: [
@@ -111,23 +114,24 @@ class OutputDocument extends React.Component {
                 { field: 'last', header: 'Last' },
                 { field: 'sentOn', header: 'Sent On' }
 
-            ],
-            keyValueData: [
-
-                { key: 'Queue Size', value: 12000 },
-                { key: 'Volume', value: '45 Cubic Meters' },
-                { key: 'density', value: 67 }
-            ],
-            keyValueColList: [
-                { field: 'key', header: 'Key' },
-                { field: 'value', header: 'Value' }
-
-            ],
-
-
-
+            ]
         }
         this.onDocIdClick = this.onDocIdClick.bind(this);
+        this.onRefresh = this.onRefresh.bind(this);
+    }
+    async getTableData() {
+        this.setState({ isLoading: true })
+        let data = await Axios.get('http://5dbdaeb405a6f30014bcaee3.mockapi.io/key-value-data');
+        data = data.data;
+        this.setState({ keyValueData: data });
+        this.setState({ isLoading: false })
+
+    }
+    componentDidMount() {
+        this.getTableData();
+    }
+    onRefresh() {
+        this.getTableData();
     }
     onDocIdClick(rowData) {
         let documentArray = this.props.documentArray;
@@ -144,13 +148,22 @@ class OutputDocument extends React.Component {
         console.log('Output document deleted......')
         history.push("/");
     }
+
     render() {
-        return (
+        return !this.state.isLoading ? (
             <div>
                 <ButtonHeader saveEnabled={this.state.saveEnabled} deleteEnabled={this.state.deleteEnabled} className="progbar-button-header" onSave={() => this.onSave()} onDelete={() => this.onDelete()} />
-                <TableComponent colList={this.state.tableColList} dataList={this.state.tableData} onDocumentIdClick={this.onDocIdClick} />
+                <TableComponent colList={this.state.tableColList} dataList={this.state.tableData} onDocumentIdClick={this.onDocIdClick} onRefresh={this.onRefresh} />
             </div>
-        )
+        ) : (
+                <div className="spinner-container">
+                    <ProgressSpinner
+                        style={{ width: "40%", height: "40%" }}
+                        strokeWidth="1"
+                        animationDuration="1s"
+                    ></ProgressSpinner>
+                </div>
+            )
     }
 }
 
