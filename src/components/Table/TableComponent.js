@@ -4,23 +4,26 @@ import "primeicons/primeicons.css";
 import "primereact/resources/themes/nova-light/theme.css";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
+import {InputText} from 'primereact/inputtext';
 import { Dropdown } from "primereact/dropdown";
 import "./index.css";
 import { throws } from "assert";
 
 export default class TableComponent extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       selected: [],
       isLoading: false,
     };
     this.documentIdTemplate = this.documentIdTemplate.bind(this);
-
+    this.cellEditor = this.cellEditor.bind(this);
+    this.inputTextEditor = this.inputTextEditor.bind(this);
+    this.onEditorValueChange = this.onEditorValueChange.bind(this);
     this.handleClickAllSelected = this.handleClickAllSelected.bind(this);
   }
+
   documentIdTemplate(rowData) {
-    console.log(rowData)
     return <a onClick={() => this.props.onDocumentIdClick(rowData)} >{rowData['DocID']}</a>
   }
   handleClickAllSelected(action) {
@@ -28,7 +31,20 @@ export default class TableComponent extends React.Component {
     this.props.handleClickAllSelected(action, data);
     // this.getUserList();
   }
-
+  cellEditor(props){
+    // console.log(props);
+    return this.inputTextEditor(props, props.field);
+  }
+  inputTextEditor( props, field ) {
+    return <InputText type="text" value={props.rowData[field]} onBlur={(e) => console.log(props.rowData[field])} onChange={(e) => this.onEditorValueChange(e.target.value, props)} />;
+  }
+  onEditorValueChange(value, props) {
+    let tempDummyObj = [...props.value];
+    tempDummyObj[props.rowIndex][props.field] = value;
+    this.setState({
+      tableData : tempDummyObj
+    });
+  }
 
   render() {
     const colList = this.props.colList;
@@ -46,14 +62,14 @@ export default class TableComponent extends React.Component {
     return (
       <div>
         <DataTable
-          value={dataList}
+          value={this.state.tableData || dataList}
           footer={footer}
           paginator={true}
           paginatorPosition={"top"}
           rows={10}
           selection={this.state.selected}
           onSelectionChange={e => this.setState({ selected: e.value })}
-
+          editable={true}
           rowClassName={this.props.rowClassName ? (rowData) => this.props.rowClassName(rowData) : () => { }}
         >
           <Column selectionMode="multiple" style={{ width: '3em' }} />
@@ -73,6 +89,7 @@ export default class TableComponent extends React.Component {
                 sortable={true}
                 filterMatchMode="startsWith"
                 body={this.documentIdTemplate}
+                editor={this.cellEditor}
               />
             }
             else
@@ -83,7 +100,7 @@ export default class TableComponent extends React.Component {
                   filter={true}
                   sortable={true}
                   filterMatchMode="startsWith"
-
+                  editor={this.cellEditor}
                 />
               );
           })}
