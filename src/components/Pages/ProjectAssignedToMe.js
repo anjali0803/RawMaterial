@@ -6,6 +6,7 @@ import { setDocumentArray, setProjectId, setProjectCustomer, setProjectTitle, se
 import { connect } from 'react-redux';
 import { createHashHistory } from 'history';
 import Axios from 'axios';
+import { backendUrl } from '../../constant';
 const history = createHashHistory();
 
 
@@ -21,11 +22,11 @@ class ProjectAssignedToMe extends React.Component {
             tableColList: [
                 { field: "ProjectID", header: "Project Id" },
                 { field: "Title", header: "Title" },
-                { field: "Customer", header: "Customer" },
-                { field: "Type", header: "Type" },
-                { field: "AssignedDate", header: "Assigned Date" },
-                { field: "Status", header: "Status" },
-                { field: "createdBy", header: "Created By" }
+                { field: "Client", header: "Customer" },
+                { field: "ProjectType", header: "Type" },
+                { field: "AssignedOn", header: "Assigned Date" },
+                { field: "ProjectStatus", header: "Status" },
+                { field: "CreatedBy", header: "Created By" }
             ]
         }
 
@@ -34,13 +35,12 @@ class ProjectAssignedToMe extends React.Component {
     }
     async getTableData() {
         this.setState({ isLoading: true });
-        let res = await Axios.get('http://5dbdaeb405a6f30014bcaee3.mockapi.io/projects');
-        let data = res.data;
-        data = data.filter((element, index) => {
-            if (element['AssignedTo'] == 'user1') {
-                return element;
+        let res = await Axios.get(`${backendUrl}/dashboard/myproject`, {
+            params: {
+                username: this.props.userName
             }
-        })
+        });
+        let data = res.data.data;
         this.setState({ tableData: data });
         this.setState({ isLoading: false });
     }
@@ -67,13 +67,13 @@ class ProjectAssignedToMe extends React.Component {
         return this.state.isLoading === false ? (
             <div>
                 <ProjectsTable
-                    colList={this.props.projectTableColList.filter(element => {
+                    colList={this.state.tableColList.filter(element => {
                         if (element.field != 'AssignedTo') {
                             return element;
                         }
                     })}
 
-                    dataList={this.props.projectList.filter((element) => {
+                    dataList={this.state.tableData.filter((element) => {
                         if (element['AssignedTo'] === this.props.userName)
                             return element;
 

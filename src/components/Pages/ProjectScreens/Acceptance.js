@@ -52,8 +52,7 @@ class Acceptance extends React.Component {
 			let getRecommedationData = await axios.get(
 				`${backendUrl}/dashboard/get_acc_doc/`,{
 					params: {
-						projectID: 'MASTERHFW'
-						// projectID: this.props.projectId
+						projectID: this.props.projectId
 					}
 				}
 			);

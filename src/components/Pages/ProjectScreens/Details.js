@@ -25,11 +25,8 @@ class Details extends React.Component {
             type: props.projectType || '',
             customer: props.projectCustomer || '',
             projectTypes: [
-                { label: 'Alpha', value: 'Alpha' },
-                { label: 'Beta', value: 'Beta' },
-                { label: 'Gamma', value: 'Gamma' },
-                { label: 'theta', value: 'theta' },
-                { label: 'omega', value: 'omega' }
+                { label: 'HFW', value: 'HFW' },
+                { label: 'SAWH', value: 'SAWH' },
             ],
             file1: '',
             file2: '',

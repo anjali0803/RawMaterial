@@ -48,8 +48,7 @@ class Recommendations extends React.Component {
 		let getRecommedationData = await axios.get(
 			`${backendUrl}/dashboard/get_rec_doc/`,{
 				params: {
-					projectID: 'MASTERHFW'
-					// projectID: this.props.projectId
+					projectID: this.props.projectId
 				}
 			}
 		);

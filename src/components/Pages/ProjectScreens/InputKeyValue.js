@@ -47,11 +47,12 @@ class InputKeyValue extends React.Component {
         const  tableData  = await axios.get(
             `${backendUrl}/dashboard/get_ikv_doc`,{
                 params:{
-                    projectID : 'MASTERHFW'
+                    projectID : this.props.projectId
                 }
             }
         )
         this.setState({ tableData: tableData.data.data });
+        this.setState({ isLoading: false })
     }
     onDocIdClick(rowData) {
         let documentArray = this.props.documentArray[0] || [];
@@ -71,13 +72,13 @@ class InputKeyValue extends React.Component {
     onDelete() {
         console.log('Input-key-value Delete..');
     }
-    async getTabledata() {
-        this.setState({ isLoading: true })
-        let data = await Axios.get('http://5dbdaeb405a6f30014bcaee3.mockapi.io/documents');
-        data = data.data;
-        this.setState({ tableData: data });
-        this.setState({ isLoading: false })
-    }
+    // async getTabledata() {
+    //     this.setState({ isLoading: true })
+    //     let data = await Axios.get('http://5dbdaeb405a6f30014bcaee3.mockapi.io/documents');
+    //     data = data.data;
+    //     this.setState({ tableData: data });
+    //     this.setState({ isLoading: false })
+    // }
     onRefresh() {
         this.getTabledata();
     }
