@@ -7,6 +7,7 @@ import TableComponent from '../../Table/TableComponent';
 import ButtonHeader from '../../ButtonHeader/ButtonHeader';
 import { ProgressSpinner } from 'primereact/progressspinner';
 import Axios from 'axios';
+import { backendUrl } from '../../../../src/constant';
 const history = createHashHistory();
 
 
@@ -20,100 +21,10 @@ class OutputDocument extends React.Component {
             isLoading: false,
             saveEnabled: true,
             deleteEnabled: true,
-            tableData: [
-
-
-                {
-                    documentId: '123490',
-                    projectId: '125012',
-                    customer: 'Adante',
-                    type: 'Aplha',
-                    uploadedDate: '12-10-2017',
-                    sent: 'Yes',
-                    last: "Generated",
-                    sentOn: '24-11-2017'
-                },
-                {
-                    documentId: '123487',
-                    projectId: '125019',
-                    customer: 'Navi',
-                    type: 'Beta',
-                    uploadedDate: '11-10-2016',
-                    sent: 'No',
-                    last: "Non generated",
-                    sentOn: '24-11-2019'
-                },
-                {
-                    documentId: '123467',
-                    projectId: '125045',
-                    customer: 'Valve',
-                    type: 'Omega',
-                    uploadedDate: '12-10-2017',
-                    sent: 'Yes',
-                    last: "Generated",
-                    sentOn: '24-11-2017'
-                },
-                {
-                    documentId: '123493',
-                    projectId: '125142',
-                    customer: 'theta',
-                    type: 'Beta',
-                    uploadedDate: '12-10-2017',
-                    sent: 'Yes',
-                    last: "Generated",
-                    sentOn: '24-11-2017'
-                },
-                {
-                    documentId: '123490',
-                    projectId: '125012',
-                    customer: 'Adante',
-                    type: 'Aplha',
-                    uploadedDate: '12-10-2017',
-                    sent: 'Yes',
-                    last: "Generated",
-                    sentOn: '24-11-2017'
-                },
-                {
-                    documentId: '123490',
-                    projectId: '125012',
-                    customer: 'Adante',
-                    type: 'Aplha',
-                    uploadedDate: '12-10-2017',
-                    sent: 'Yes',
-                    last: "Generated",
-                    sentOn: '24-11-2017'
-                },
-                {
-                    documentId: '123490',
-                    projectId: '125012',
-                    customer: 'Adante',
-                    type: 'Aplha',
-                    uploadedDate: '12-10-2017',
-                    sent: 'Yes',
-                    last: "Generated",
-                    sentOn: '24-11-2017'
-                },
-                {
-                    documentId: '123490',
-                    projectId: '125012',
-                    customer: 'Adante',
-                    type: 'Aplha',
-                    uploadedDate: '12-10-2017',
-                    sent: 'Yes',
-                    last: "Generated",
-                    sentOn: '24-11-2017'
-                }
-            ],
+            tableData: [],
             tableColList: [
-                { field: 'documentId', header: 'Document Id' },
-                { field: 'projectId', header: 'Project Id' },
-                { field: 'customer', header: 'Customer' },
-                { field: 'type', header: 'Type' },
-                { field: 'uploadedDate', header: 'Uploaded Date' },
-                { field: 'sent', header: 'Sent' },
-                { field: 'last', header: 'Last' },
-                { field: 'sentOn', header: 'Sent On' }
-
+                { field: 'fileType', header: 'File Type' },
+                { field: 'downloadLink', header: 'Download Button' }
             ]
         }
         this.onDocIdClick = this.onDocIdClick.bind(this);
@@ -121,11 +32,34 @@ class OutputDocument extends React.Component {
     }
     async getTableData() {
         this.setState({ isLoading: true })
-        let data = await Axios.get('http://5dbdaeb405a6f30014bcaee3.mockapi.io/key-value-data');
-        data = data.data;
-        this.setState({ keyValueData: data });
+        let data = await Axios.get(`${backendUrl}/dashboard/project`,
+        {
+            params: {
+                projectid: this.props.projectId
+            }
+        });
+        data = data.data.data;
+        const obj = [
+            {
+                fileType: 'Cost Sheet',
+                downloadLink: <a href={data[0].CostSheet}>Download</a>
+            },
+            
+            {
+                fileType: 'Client SpecPipe',
+                downloadLink: <a href={data[0].ClientSpecPipe}>Download</a>
+            },
+            { 
+                fileType: 'Client Spec Inner Coating',
+                downloadLink: <a href={data[0].ClientSpecInnerCoating}>Download</a>
+            },
+            { 
+                fileType: 'Client Spec Outer Coating',
+                downloadLink: <a href={data[0].ClientSpecOuterrCoating}>Download</a>
+            }
+        ];
+        this.setState({ tableData: obj });
         this.setState({ isLoading: false })
-
     }
     componentDidMount() {
         this.getTableData();
@@ -173,7 +107,6 @@ const mapStateToProps = state => ({
 });
 const mapDispatchToProps = dispatch => ({
     setDocumentArray: (documentArray) => dispatch(setDocumentArray(documentArray)),
-
 });
 export default connect(
     mapStateToProps, mapDispatchToProps
