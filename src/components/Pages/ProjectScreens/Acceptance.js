@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import TableComponent from '../../Table/TableComponent';
 import ButtonHeader from '../../ButtonHeader/ButtonHeader';
 import './index.css';
-import { setDocumentArray } from '../../../actions/dataActions';
+import { setDocumentId, setDocumentType } from '../../../actions/dataActions';
 import { backendUrl } from '../../../constant';
 import axios from 'axios';
 import { ProgressSpinner } from 'primereact/progressspinner';
@@ -83,9 +83,8 @@ class Acceptance extends React.Component {
     }
 
     onDocIdClick(rowData) {
-        let documentArray = this.props.documentArray;
-        documentArray[2] = rowData['documentId'];
-        this.props.setDocumentArray(documentArray)
+        this.props.setDocumentId(rowData['DocID']);
+        this.props.setDocumentType(rowData['FileType']);
         history.push("/Inquiry/create-new-projects/acceptance/second");
     }
 
@@ -113,7 +112,8 @@ const mapStateToProps = state => ({
     documentArray: state.documentArray
 });
 const mapDispatchToProps = dispatch => ({
-    setDocumentArray: (documentArray => dispatch(setDocumentArray(documentArray)))
+    setDocumentId: (documentId => dispatch(setDocumentId(documentId))),
+    setDocumentType: (FileType => dispatch(setDocumentType(FileType))),
 })
 export default connect(
     mapStateToProps, mapDispatchToProps

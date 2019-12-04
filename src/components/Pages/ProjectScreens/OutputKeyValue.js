@@ -1,7 +1,7 @@
 import React from 'react';
 import { createHashHistory } from 'history'
 import { connect } from "react-redux";
-import { setDocumentArray } from "../../../actions/dataActions";
+import { setDocumentId, setDocumentType } from "../../../actions/dataActions";
 import './index.css';
 import TableComponent from '../../Table/TableComponent';
 import ButtonHeader from '../../ButtonHeader/ButtonHeader';
@@ -74,9 +74,8 @@ class OutputKeyValue extends React.Component {
 		}
 
     onDocIdClick(rowData) {
-        let documentArray = this.props.documentArray;
-        documentArray[3] = rowData['documentId'];
-        this.props.setDocumentArray(documentArray)
+        this.props.setDocumentId(rowData['DocID']);
+        this.props.setDocumentType(rowData['FileType']);
         history.push("/Inquiry/create-new-projects/output-key-value/second");
     }
 
@@ -111,11 +110,12 @@ class OutputKeyValue extends React.Component {
 
 const mapStateToProps = state => ({
     projectId: state.projectId,
+    documentId: state.documentId,
     documentArray: state.documentArray
 });
 const mapDispatchToProps = dispatch => ({
-    setDocumentArray: (documentArray) => dispatch(setDocumentArray(documentArray)),
-
+    setDocumentId: (documentId => dispatch(setDocumentId(documentId))),
+    setDocumentType: (FileType => dispatch(setDocumentType(FileType))),
 });
 export default connect(
     mapStateToProps, mapDispatchToProps

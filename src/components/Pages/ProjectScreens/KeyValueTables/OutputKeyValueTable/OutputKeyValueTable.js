@@ -7,6 +7,8 @@ import { connect } from "react-redux";
 import TableComponent from '../../../../Table/TableComponent';
 import { ProgressSpinner } from 'primereact/progressspinner';
 import Axios from 'axios';
+import { backendUrl } from '../../../../../constant';
+
 const history = createHashHistory();
 const pageMapIndex = [
     'input-key-value',
@@ -30,30 +32,25 @@ class OutputKeyValueTable extends React.Component {
         this.state = {
             isLoading: false,
             documentId: props.documentArray[props.screenNumber - 1] || '',
-            keyValueData: [
-
-                { workDescription: 'Clean up  and Cover', referenceStandardValue: 234, technicalSpecificationValue: 12, acceptanceCriteriaValue: 456 },
-                { workDescription: 'Maintainence and fixtures', referenceStandardValue: 223, technicalSpecificationValue: 7, acceptanceCriteriaValue: 456 },
-                { workDescription: 'Drills and exercies', referenceStandardValue: 234, technicalSpecificationValue: 9, acceptanceCriteriaValue: 456 },
-                { workDescription: 'Inventory management', referenceStandardValue: 94, technicalSpecificationValue: 3, acceptanceCriteriaValue: 456 },
-                { workDescription: 'Asset acquisitions', referenceStandardValue: 111, technicalSpecificationValue: 12, acceptanceCriteriaValue: 456 },
-                { workDescription: 'Classification', referenceStandardValue: 178, technicalSpecificationValue: 13, acceptanceCriteriaValue: 456 },
-            ],
+            keyValueData: [],
             keyValueColList: [
                 { field: 'workDescription', header: 'Work Description' },
                 { field: 'referenceStandardValue', header: 'Reference Standard Value' },
                 { field: 'technicalSpecificationValue', header: 'Technical Specification Value' },
                 { field: 'acceptanceCriteriaValue', header: 'Acceptance Criteria Value' }
-
-
-
             ]
         }
         this.onRefresh = this.onRefresh.bind(this);
     }
     async getTableData() {
         this.setState({ isLoading: true })
-        let data = await Axios.get('http://5dbdaeb405a6f30014bcaee3.mockapi.io/key-value-data');
+        let data = await Axios.get(`${backendUrl}/dashboard/get_itp_doc_docid`,
+            {
+                params: {
+                    docID: this.props.documentId
+                }
+            }
+        );
         data = data.data;
         this.setState({ keyValueData: data });
         this.setState({ isLoading: false })
