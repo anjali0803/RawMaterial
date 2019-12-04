@@ -77,32 +77,36 @@ export default class TableComponent extends React.Component {
           {colList.map((el, index) => {
             const field = el.field;
             const header = el.header;
-
+            let columnProps = {
+              id : el.header,
+              filter: true,
+              sortable: true,
+              filterMatchMode:'startsWith',
+            }
             //console.log(header.toLowerCase().replace(/ /g, ''))
 
             if (header.toLowerCase().replace(/ /g, '') == 'documentid') {
               //console.log(el);
               return <Column
                 id={`table-${index}`}
-                header={el.header}
-                filter={true}
-                sortable={true}
-                filterMatchMode="startsWith"
+                {...columnProps}
                 body={this.documentIdTemplate}
-                editor={this.cellEditor}
               />
             }
-            else
+            else{
+              if(this.props.editable){
+                columnProps = {
+                  ...columnProps,
+                  editor: this.cellEditor
+                }
+              }
               return (
                 <Column
                   field={el.field}
-                  header={el.header}
-                  filter={true}
-                  sortable={true}
-                  filterMatchMode="startsWith"
-                  editor={this.cellEditor}
+                  {...columnProps}
                 />
               );
+            }
           })}
         </DataTable>
       </div>

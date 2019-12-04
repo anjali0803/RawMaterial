@@ -111,9 +111,26 @@ class InputKeyValueTable extends React.Component {
 
         return !this.state.isLoading ? (
             <div>
-                <ButtonHeader saveEnabled={this.props.saveEnabled} deleteEnabled={this.props.deleteEnabled} className="progbar-button-header" onSave={() => this.onSave()} onDelete={() => this.onDelete()} />
-                <DocumentHeader documentId={this.state.documentId} projectId={this.props.projectId} />
-                <TableComponent colList={this.state.keyValueColList} dataList={this.state.keyValueData} rowClassName={this.rowClassName} onRefresh={this.onRefresh} actionsLabel={this.state.actions} handleClickAllSelected={this.handleClickAllSelected}/>
+                <ButtonHeader
+                    saveEnabled={this.props.saveEnabled}
+                    deleteEnabled={this.props.deleteEnabled}
+                    className="progbar-button-header"
+                    onSave={() => this.onSave()}
+                    onDelete={() => this.onDelete()}
+                />
+                <DocumentHeader
+                    documentId={this.state.documentId}
+                    projectId={this.props.projectId}
+                />
+                <TableComponent
+                    colList={this.state.keyValueColList}
+                    dataList={this.state.keyValueData}
+                    rowClassName={this.rowClassName}
+                    onRefresh={this.onRefresh}
+                    actionsLabel={this.state.actions}
+                    handleClickAllSelected={this.handleClickAllSelected}
+                    editable={true}
+                />
             </div>
         ) : (
                 <div className="spinner-container">
