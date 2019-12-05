@@ -81,6 +81,9 @@ export default class TableComponent extends React.Component {
         item: {...temp}
       })
     })
+    this.setState({
+      tableData: this.props.dataList
+    })
     // this.setState({item: temp}, () =>{
     //   console.log(this.state.item);
     // });
@@ -93,7 +96,7 @@ export default class TableComponent extends React.Component {
 
   renderDialogModal(colList){
     const modal = colList.map(column => {
-      return (
+      return ( this.state.newItem && 
         <>
           <div className="p-col-4" style={{padding:'.75em'}}><label>{column['header']}</label></div>
           <div className="p-col-8" style={{padding:'.5em'}}>
@@ -111,7 +114,7 @@ export default class TableComponent extends React.Component {
         items.push(this.state.item);
     else
         items[this.findSelectedItemIndex()] = this.state.item;
-    this.setState({tableData:items, selectedItem:null, item: null, displayDialog:false});
+    this.setState({tableData:items, selectedItem:null, item: null, displayDialog:false, newItem: false});
   }
 
   delete(){
@@ -120,7 +123,8 @@ export default class TableComponent extends React.Component {
       tableData: this.state.tableData.filter((val,i) => i !== index),
       selectedItem: null,
       item: null,
-      displayDialog: false
+      displayDialog: false,
+      newItem: false
     });
   }
 
