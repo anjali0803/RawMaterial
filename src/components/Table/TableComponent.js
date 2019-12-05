@@ -8,7 +8,7 @@ import {InputText} from 'primereact/inputtext';
 import { Dropdown } from "primereact/dropdown";
 import { Button } from "primereact/button";
 import { Dialog } from 'primereact/dialog';
-
+import isEqual from 'lodash.isequal';
 import "./index.css";
 import { throws } from "assert";
 
@@ -51,7 +51,7 @@ export default class TableComponent extends React.Component {
   handleClickAllSelected(action) {
     const data = this.state.selected;
     if(action === 'deleteRow'){
-      this.delete();
+      this.delete(data);
     }else{
       this.props.handleClickAllSelected(action, data);
     }
@@ -120,10 +120,18 @@ export default class TableComponent extends React.Component {
     this.setState({tableData:items, selectedItem:null, item: null, displayDialog:false, newItem: false});
   }
 
-  delete(){
-    let index = this.findSelectedCarIndex();
+  delete(data){
+    let tableData = this.props.dataList;
+    for(let i=0; i< data.length; i++){
+      for(let j=0;j<this.props.dataList.length;j++){
+        if(isEqual(tableData[j], data[i])){
+          tableData.splice(j,1);
+          continue;
+        }
+      }
+    }
     this.setState({
-      tableData: this.state.tableData.filter((val,i) => i !== index),
+      tableData: tableData,
       selectedItem: null,
       item: null,
       displayDialog: false,
