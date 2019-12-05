@@ -79,6 +79,7 @@ export default class TableComponent extends React.Component {
             const header = el.header;
             let columnProps = {
               id : el.header,
+              header: el.header,
               filter: true,
               sortable: true,
               filterMatchMode:'startsWith',
