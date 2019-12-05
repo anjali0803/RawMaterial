@@ -44,7 +44,7 @@ class RecKeyValueTable extends React.Component {
 				{ field: 'AcceptanceCriteria', header: 'Acceptance Criteria' }
 			],
             actions: [
-				{ label: "pikachu thunder bolt please", value: 1 }
+				{ label: "Send selected to Acceptance", value: 1 }
 			]
         }
 
@@ -89,11 +89,11 @@ class RecKeyValueTable extends React.Component {
     async handleClickAllSelected(action, data) {
 		if (action) {
 		let sendAcceptanceRes = await axios.post(
-			`${backendUrl}/dashboard/send_acceptance_from_ikv`,
+			`${backendUrl}/dashboard/send_acceptance_from_rec`,
 			{
                 projectID: this.props.projectId,
                 fileType: this.props.documentFiletype,
-                ikvValues: data
+                recValues: data
 			}
 		);
 		} else {
@@ -142,6 +142,7 @@ class RecKeyValueTable extends React.Component {
 const mapStateToProps = state => ({
     projectId: state.projectId,
     documentId: state.documentId,
-    documentArray: state.documentArray
+    documentArray: state.documentArray,
+    documentFiletype: state.documentFiletype
 })
 export default connect(mapStateToProps)(RecKeyValueTable);

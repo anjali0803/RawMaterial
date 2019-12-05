@@ -33,11 +33,14 @@ class AccKeyValueTable extends React.Component {
             documentId: props.documentArray[props.screenNumber - 1] || '',
             keyValueData: [],
             keyValueColList: [
-                { field: 'workDescription', header: 'Work Description' },
-                { field: 'referenceStandardValue', header: 'Reference Standard Value' },
-                { field: 'technicalSpecificationValue', header: 'Technical Specification Value' },
-                { field: 'acceptanceCriteriaValue', header: 'Acceptance Criteria Value' }
-            ]
+				{ field: 'ClientSpecNumber', header: 'Client Spec Number' },
+				{ field: 'WorkDescription', header: 'Work Description' },
+                { field: 'TestingFrequency', header: 'Testing Ferquency' },
+				{ field: 'AcceptanceCriteria', header: 'Acceptance Criteria' }
+            ],
+            actions: [
+				{ label: "Send selected to ITP", value: 1 }
+			]
         }
         this.onRefresh = this.onRefresh.bind(this);
     }
@@ -51,7 +54,7 @@ class AccKeyValueTable extends React.Component {
             }
         );
         res = res.data;
-        this.setState({ keyValueData: res })
+        this.setState({ keyValueData: res.data })
         this.setState({ isLoading: false });
     }
     componentDidMount() {
