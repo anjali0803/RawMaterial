@@ -44,7 +44,8 @@ class RecKeyValueTable extends React.Component {
 				{ field: 'AcceptanceCriteria', header: 'Acceptance Criteria' }
 			],
             actions: [
-				{ label: "Send selected to Acceptance", value: 1 }
+                { label: "Send selected to Acceptance", value: 1 },
+                {label: "Delete selected rows", value: 'deleteRow' }
 			]
         }
 
@@ -97,10 +98,9 @@ class RecKeyValueTable extends React.Component {
 			}
 		);
 		} else {
-		//TODO reject recommendation call 
-		console.log(data, " is Rejected");
+            console.log('actions taken')
+		    // this.deleteRowAction();
 		}
-		// this.getUserList();
     }
     
     render() {
@@ -126,6 +126,7 @@ class RecKeyValueTable extends React.Component {
                     handleClickAllSelected={this.handleClickAllSelected}
                     actionsLabel={this.state.actions}
                     editable={true}
+                    deleteRowAction={this.deleteRowAction}
                 />
             </div>
         ) : (

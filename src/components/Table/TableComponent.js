@@ -50,7 +50,11 @@ export default class TableComponent extends React.Component {
   }
   handleClickAllSelected(action) {
     const data = this.state.selected;
-    this.props.handleClickAllSelected(action, data);
+    if(action === 'deleteRow'){
+      this.delete();
+    }else{
+      this.props.handleClickAllSelected(action, data);
+    }
     // this.getUserList();
   }
   cellEditor(props){
@@ -112,8 +116,7 @@ export default class TableComponent extends React.Component {
     let items = this.state.tableData;
     if(this.state.newItem)
         items.push(this.state.item);
-    else
-        items[this.findSelectedItemIndex()] = this.state.item;
+
     this.setState({tableData:items, selectedItem:null, item: null, displayDialog:false, newItem: false});
   }
 
