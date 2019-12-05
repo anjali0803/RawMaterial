@@ -6,6 +6,7 @@ import { setDocumentArray, setProjectId, setProjectCustomer, setProjectTitle, se
 import { connect } from 'react-redux';
 import { createHashHistory } from 'history';
 import Axios from 'axios';
+import { backendUrl } from '../../constant';
 const history = createHashHistory();
 
 
@@ -35,16 +36,16 @@ class AllOngoingProjects extends React.Component {
     }
     async getTableData() {
         this.setState({ isLoading: true });
-        let res = await Axios.get('http://5dbdaeb405a6f30014bcaee3.mockapi.io/projects');
+        let res = await Axios.get(`${backendUrl}/dashboard/all_project`);
         let data = res.data;
-        data = data.filter((element, index) => {
+        // data = data.filter((element, index) => {
 
-            if (element['Status'] === 'In Process' || element['Status'] === 'In Progress') {
-                return element;
-            }
-        })
+        //     if (element['Status'] === 'In Process' || element['Status'] === 'In Progress') {
+        //         return element;
+        //     }
+        // })
 
-        this.setState({ tableData: data });
+        this.setState({ tableData: data.data });
         this.setState({ isLoading: false });
 
     }

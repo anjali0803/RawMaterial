@@ -6,21 +6,43 @@ import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import {InputText} from 'primereact/inputtext';
 import { Dropdown } from "primereact/dropdown";
+import { Button } from "primereact/button";
+import { Dialog } from 'primereact/dialog';
+
 import "./index.css";
 import { throws } from "assert";
 
 export default class TableComponent extends React.Component {
   constructor(props) {
     super(props);
+    let temp = {};
+    this.props.colList.forEach(obj => {
+      temp[obj['field']] = ''
+    })
+    this.setState({item: temp}, () =>{
+      console.log(this.state.item);
+    });
+
     this.state = {
       selected: [],
       isLoading: false,
+      displayDialog: false,
+      newItem: false,
+      item: {
+        ...temp,
+      },
     };
+
     this.documentIdTemplate = this.documentIdTemplate.bind(this);
     this.cellEditor = this.cellEditor.bind(this);
     this.inputTextEditor = this.inputTextEditor.bind(this);
     this.onEditorValueChange = this.onEditorValueChange.bind(this);
     this.handleClickAllSelected = this.handleClickAllSelected.bind(this);
+    this.addNew = this.addNew.bind(this);
+    this.renderDialogModal = this.renderDialogModal.bind(this);
+    this.updateProperty = this.updateProperty.bind(this);
+    this.save = this.save.bind(this);
+    this.delete = this.delete.bind(this);
   }
 
   documentIdTemplate(rowData) {
@@ -45,20 +67,86 @@ export default class TableComponent extends React.Component {
       tableData : tempDummyObj
     });
   }
+  updateProperty(property, value) {
+    let item = this.state.item;
+    item[property] = value;
+    this.setState({item: item});
+  }
+  addNew() {
+    let temp = {};
+    this.props.colList.forEach(obj => {
+      // const temp
+      temp[obj['field']] = ''
+      this.setState({
+        item: {...temp}
+      })
+    })
+    // this.setState({item: temp}, () =>{
+    //   console.log(this.state.item);
+    // });
+
+    this.state.newItem = true;
+    this.setState({
+        displayDialog: true
+    });
+  }
+
+  renderDialogModal(colList){
+    const modal = colList.map(column => {
+      return (
+        <>
+          <div className="p-col-4" style={{padding:'.75em'}}><label>{column['header']}</label></div>
+          <div className="p-col-8" style={{padding:'.5em'}}>
+              <InputText id={column['field']} onChange={(e) => {this.updateProperty(`${column['field']}`, e.target.value)}} value={this.state.item[column['field']]}/>
+          </div>
+        </>
+      )
+    });
+    return modal;
+  }
+
+  save(){
+    let items = this.state.tableData;
+    if(this.state.newItem)
+        items.push(this.state.item);
+    else
+        items[this.findSelectedItemIndex()] = this.state.item;
+    this.setState({tableData:items, selectedItem:null, item: null, displayDialog:false});
+  }
+
+  delete(){
+    let index = this.findSelectedCarIndex();
+    this.setState({
+      tableData: this.state.tableData.filter((val,i) => i !== index),
+      selectedItem: null,
+      item: null,
+      displayDialog: false
+    });
+  }
 
   render() {
     const colList = this.props.colList;
     const selected = this.state.selected;
     var dataList = this.props.dataList;
     const actions = this.props.actionsLabel;
+    
+    const dialogModal = this.renderDialogModal(colList);
+
     const footer = (
-      <Dropdown
-        options={actions}
-        onChange={e => this.handleClickAllSelected(e.value)}
-        placeholder="Select Action"
-        disabled={selected.length == 0}
-      />
+      <div className="p-clearfix" style={{width:'100%'}}>
+        <Dropdown
+          options={actions}
+          onChange={e => this.handleClickAllSelected(e.value)}
+          placeholder="Select Action"
+          disabled={selected.length == 0}
+        />
+        <Button style={{float:'right'}} label="Add" icon="pi pi-plus" onClick={this.addNew}/>
+      </div>
     );
+    const dialogFooter = <div className="ui-dialog-buttonpane p-clearfix">
+      <Button label="Delete" icon="pi pi-times" onClick={this.delete}/>
+      <Button label="Save" icon="pi pi-check" onClick={this.save}/>
+    </div>;
     return (
       <div>
         <DataTable
@@ -110,6 +198,15 @@ export default class TableComponent extends React.Component {
             }
           })}
         </DataTable>
+        <Dialog visible={this.state.displayDialog} width="300px" header="New Item Details" modal={true} footer={dialogFooter} onHide={() => this.setState({displayDialog: false})}>
+          {
+              this.state.newItem && 
+              
+              <div className="p-grid p-fluid">
+                {dialogModal}
+              </div>
+          }
+        </Dialog>
       </div>
     );
   }
