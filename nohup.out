@@ -1,0 +1,395 @@
+
+> auto-cip-ui@0.0.1 start /matsci/CIP-Front-End
+> webpack-dev-server --mode development
+
+[34mℹ[39m [90m｢wds｣[39m: Project is running at http://0.0.0.0:3000/
+[34mℹ[39m [90m｢wds｣[39m: webpack output is served from /
+[34mℹ[39m [90m｢wds｣[39m: Content not from webpack is served from ./src
+[34mℹ[39m [90m｢wdm｣[39m: Hash: 6c5c129fce89ae2f2189
+Version: webpack 4.41.2
+Time: 6599ms
+Built at: 12/07/2019 5:39:22 AM
+                                 Asset       Size  Chunks             Chunk Names
+  0614c27197fc3ce572e161840d23b2af.png  293 bytes          [emitted]  
+  148a6749baa5f658a45183ddb5ee159f.eot   15.3 KiB          [emitted]  
+  177cc92d2e8027712a8c1724abd272cd.ttf     27 KiB          [emitted]  
+  27ef0b062b2e221df16f3bbd97c2dca8.svg   53.9 KiB          [emitted]  
+  2d2afb2719a1ee903e576e7c457daf81.eot   38.8 KiB          [emitted]  
+  2e00b2635b51ba336b4b67a5d0bc03c7.svg   54.3 KiB          [emitted]  
+ 521d17bc9f3526c690e8ada6eee55bec.woff   17.9 KiB          [emitted]  
+  567f57385ea3dde2c9aec797d07850d2.gif   12.8 KiB          [emitted]  
+60c866748ff15f5b347fdba64596b1b1.woff2   14.2 KiB          [emitted]  
+ 623e3205570002af47fc2b88f9335d19.woff     18 KiB          [emitted]  
+ 66ee0deb739ca71f0ecdc39d7c1b22cb.woff   38.7 KiB          [emitted]  
+  76b56857ebbae3a5a689f213feb11af0.eot   15.2 KiB          [emitted]  
+  7aab4c13671282c90669eb6a10357e41.svg   54.9 KiB          [emitted]  
+  7e08cc656863d52bcb5cd34805ac605b.ttf   27.5 KiB          [emitted]  
+  8732a6660b528fadfaeb35bcf568875f.gif   9.21 KiB          [emitted]  
+  9dce7f01715340861bdb57318e2f3fdc.eot   14.7 KiB          [emitted]  
+ bf2d0783515b7d75c35bde69e01b3135.woff   17.3 KiB          [emitted]  
+  c045b73d86803686f4cd1cc3f9ceba59.ttf   25.9 KiB          [emitted]  
+  c7a33805ffda0d32bd2a9904c8b02750.png   10.1 KiB          [emitted]  
+cffb686d7d2f4682df8342bd4d276e09.woff2   13.7 KiB          [emitted]  
+d08c09f2f169f4a6edbcf8b8d1636cb4.woff2   14.4 KiB          [emitted]  
+  d59e6dc2616c53ce8e77b161e094cca8.png  118 bytes          [emitted]  
+  df0140f8e79ecfeffaf85220aaecd7c4.ttf   38.6 KiB          [emitted]  
+  e5e0e94474d5fd92e7e800a8865d297c.svg    160 KiB          [emitted]  
+                            index.html  189 bytes          [emitted]  
+                              index.js   3.06 MiB    main  [emitted]  main
+Entrypoint main = index.js
+[0] multi (webpack)-dev-server/client?http://0.0.0.0:3000 (webpack)/hot/dev-server.js ./src/index.js 52 bytes {main} [built]
+[./node_modules/react-dom/index.js] 1.33 KiB {main} [built]
+[./node_modules/react-redux/es/index.js] 776 bytes {main} [built]
+[./node_modules/react/index.js] 190 bytes {main} [built]
+[./node_modules/redux/es/redux.js] 23.5 KiB {main} [built]
+[./node_modules/strip-ansi/index.js] 161 bytes {main} [built]
+[./node_modules/webpack-dev-server/client/index.js?http://0.0.0.0:3000] (webpack)-dev-server/client?http://0.0.0.0:3000 4.29 KiB {main} [built]
+[./node_modules/webpack-dev-server/client/overlay.js] (webpack)-dev-server/client/overlay.js 3.51 KiB {main} [built]
+[./node_modules/webpack-dev-server/client/socket.js] (webpack)-dev-server/client/socket.js 1.53 KiB {main} [built]
+[./node_modules/webpack-dev-server/client/utils/createSocketUrl.js] (webpack)-dev-server/client/utils/createSocketUrl.js 2.89 KiB {main} [built]
+[./node_modules/webpack-dev-server/client/utils/log.js] (webpack)-dev-server/client/utils/log.js 964 bytes {main} [built]
+[./node_modules/webpack-dev-server/client/utils/reloadApp.js] (webpack)-dev-server/client/utils/reloadApp.js 1.59 KiB {main} [built]
+[./node_modules/webpack-dev-server/client/utils/sendMessage.js] (webpack)-dev-server/client/utils/sendMessage.js 402 bytes {main} [built]
+[./node_modules/webpack/hot/dev-server.js] (webpack)/hot/dev-server.js 1.59 KiB {main} [built]
+[./src/index.js] 397 bytes {main} [built]
+    + 371 hidden modules
+Child html-webpack-plugin for "index.html":
+     1 asset
+    Entrypoint undefined = index.html
+    [./node_modules/html-webpack-plugin/lib/loader.js!./src/index.html] 168 bytes {0} [built]
+[34mℹ[39m [90m｢wdm｣[39m: Compiled successfully.
+
+> auto-cip-ui@0.0.1 start /matsci/CIP-Front-End
+> webpack-dev-server --mode development
+
+[34mℹ[39m [90m｢wds｣[39m: Project is running at http://0.0.0.0:3000/
+[34mℹ[39m [90m｢wds｣[39m: webpack output is served from /
+[34mℹ[39m [90m｢wds｣[39m: Content not from webpack is served from ./src
+
+> auto-cip-ui@0.0.1 start /matsci/CIP-Front-End
+> webpack-dev-server --mode development
+
+[34mℹ[39m [90m｢wds｣[39m: Project is running at http://0.0.0.0:3000/
+[34mℹ[39m [90m｢wds｣[39m: webpack output is served from /
+[34mℹ[39m [90m｢wds｣[39m: Content not from webpack is served from ./src
+[34mℹ[39m [90m｢wdm｣[39m: Hash: 6c5c129fce89ae2f2189
+Version: webpack 4.41.2
+Time: 5731ms
+Built at: 12/07/2019 5:51:34 AM
+                                 Asset       Size  Chunks             Chunk Names
+  0614c27197fc3ce572e161840d23b2af.png  293 bytes          [emitted]  
+  148a6749baa5f658a45183ddb5ee159f.eot   15.3 KiB          [emitted]  
+  177cc92d2e8027712a8c1724abd272cd.ttf     27 KiB          [emitted]  
+  27ef0b062b2e221df16f3bbd97c2dca8.svg   53.9 KiB          [emitted]  
+  2d2afb2719a1ee903e576e7c457daf81.eot   38.8 KiB          [emitted]  
+  2e00b2635b51ba336b4b67a5d0bc03c7.svg   54.3 KiB          [emitted]  
+ 521d17bc9f3526c690e8ada6eee55bec.woff   17.9 KiB          [emitted]  
+  567f57385ea3dde2c9aec797d07850d2.gif   12.8 KiB          [emitted]  
+60c866748ff15f5b347fdba64596b1b1.woff2   14.2 KiB          [emitted]  
+ 623e3205570002af47fc2b88f9335d19.woff     18 KiB          [emitted]  
+ 66ee0deb739ca71f0ecdc39d7c1b22cb.woff   38.7 KiB          [emitted]  
+  76b56857ebbae3a5a689f213feb11af0.eot   15.2 KiB          [emitted]  
+  7aab4c13671282c90669eb6a10357e41.svg   54.9 KiB          [emitted]  
+  7e08cc656863d52bcb5cd34805ac605b.ttf   27.5 KiB          [emitted]  
+  8732a6660b528fadfaeb35bcf568875f.gif   9.21 KiB          [emitted]  
+  9dce7f01715340861bdb57318e2f3fdc.eot   14.7 KiB          [emitted]  
+ bf2d0783515b7d75c35bde69e01b3135.woff   17.3 KiB          [emitted]  
+  c045b73d86803686f4cd1cc3f9ceba59.ttf   25.9 KiB          [emitted]  
+  c7a33805ffda0d32bd2a9904c8b02750.png   10.1 KiB          [emitted]  
+cffb686d7d2f4682df8342bd4d276e09.woff2   13.7 KiB          [emitted]  
+d08c09f2f169f4a6edbcf8b8d1636cb4.woff2   14.4 KiB          [emitted]  
+  d59e6dc2616c53ce8e77b161e094cca8.png  118 bytes          [emitted]  
+  df0140f8e79ecfeffaf85220aaecd7c4.ttf   38.6 KiB          [emitted]  
+  e5e0e94474d5fd92e7e800a8865d297c.svg    160 KiB          [emitted]  
+                            index.html  189 bytes          [emitted]  
+                              index.js   3.06 MiB    main  [emitted]  main
+Entrypoint main = index.js
+[0] multi (webpack)-dev-server/client?http://0.0.0.0:3000 (webpack)/hot/dev-server.js ./src/index.js 52 bytes {main} [built]
+[./node_modules/react-dom/index.js] 1.33 KiB {main} [built]
+[./node_modules/react-redux/es/index.js] 776 bytes {main} [built]
+[./node_modules/react/index.js] 190 bytes {main} [built]
+[./node_modules/redux/es/redux.js] 23.5 KiB {main} [built]
+[./node_modules/strip-ansi/index.js] 161 bytes {main} [built]
+[./node_modules/webpack-dev-server/client/index.js?http://0.0.0.0:3000] (webpack)-dev-server/client?http://0.0.0.0:3000 4.29 KiB {main} [built]
+[./node_modules/webpack-dev-server/client/overlay.js] (webpack)-dev-server/client/overlay.js 3.51 KiB {main} [built]
+[./node_modules/webpack-dev-server/client/socket.js] (webpack)-dev-server/client/socket.js 1.53 KiB {main} [built]
+[./node_modules/webpack-dev-server/client/utils/createSocketUrl.js] (webpack)-dev-server/client/utils/createSocketUrl.js 2.89 KiB {main} [built]
+[./node_modules/webpack-dev-server/client/utils/log.js] (webpack)-dev-server/client/utils/log.js 964 bytes {main} [built]
+[./node_modules/webpack-dev-server/client/utils/reloadApp.js] (webpack)-dev-server/client/utils/reloadApp.js 1.59 KiB {main} [built]
+[./node_modules/webpack-dev-server/client/utils/sendMessage.js] (webpack)-dev-server/client/utils/sendMessage.js 402 bytes {main} [built]
+[./node_modules/webpack/hot/dev-server.js] (webpack)/hot/dev-server.js 1.59 KiB {main} [built]
+[./src/index.js] 397 bytes {main} [built]
+    + 371 hidden modules
+Child html-webpack-plugin for "index.html":
+     1 asset
+    Entrypoint undefined = index.html
+    [./node_modules/html-webpack-plugin/lib/loader.js!./src/index.html] 168 bytes {0} [built]
+[34mℹ[39m [90m｢wdm｣[39m: Compiled successfully.
+
+> auto-cip-ui@0.0.1 start /matsci/CIP-Front-End
+> webpack-dev-server --mode development
+
+[34mℹ[39m [90m｢wds｣[39m: Project is running at http://0.0.0.0:3000/
+[34mℹ[39m [90m｢wds｣[39m: webpack output is served from /
+[34mℹ[39m [90m｢wds｣[39m: Content not from webpack is served from ./src
+[34mℹ[39m [90m｢wdm｣[39m: wait until bundle finished: /
+[34mℹ[39m [90m｢wdm｣[39m: Hash: c487c5d935000ca47ad4
+Version: webpack 4.41.2
+Time: 5652ms
+Built at: 12/07/2019 6:12:10 AM
+                                 Asset       Size  Chunks             Chunk Names
+  0614c27197fc3ce572e161840d23b2af.png  293 bytes          [emitted]  
+  148a6749baa5f658a45183ddb5ee159f.eot   15.3 KiB          [emitted]  
+  177cc92d2e8027712a8c1724abd272cd.ttf     27 KiB          [emitted]  
+  27ef0b062b2e221df16f3bbd97c2dca8.svg   53.9 KiB          [emitted]  
+  2d2afb2719a1ee903e576e7c457daf81.eot   38.8 KiB          [emitted]  
+  2e00b2635b51ba336b4b67a5d0bc03c7.svg   54.3 KiB          [emitted]  
+ 521d17bc9f3526c690e8ada6eee55bec.woff   17.9 KiB          [emitted]  
+  567f57385ea3dde2c9aec797d07850d2.gif   12.8 KiB          [emitted]  
+60c866748ff15f5b347fdba64596b1b1.woff2   14.2 KiB          [emitted]  
+ 623e3205570002af47fc2b88f9335d19.woff     18 KiB          [emitted]  
+ 66ee0deb739ca71f0ecdc39d7c1b22cb.woff   38.7 KiB          [emitted]  
+  76b56857ebbae3a5a689f213feb11af0.eot   15.2 KiB          [emitted]  
+  7aab4c13671282c90669eb6a10357e41.svg   54.9 KiB          [emitted]  
+  7e08cc656863d52bcb5cd34805ac605b.ttf   27.5 KiB          [emitted]  
+  8732a6660b528fadfaeb35bcf568875f.gif   9.21 KiB          [emitted]  
+  9dce7f01715340861bdb57318e2f3fdc.eot   14.7 KiB          [emitted]  
+ bf2d0783515b7d75c35bde69e01b3135.woff   17.3 KiB          [emitted]  
+  c045b73d86803686f4cd1cc3f9ceba59.ttf   25.9 KiB          [emitted]  
+  c7a33805ffda0d32bd2a9904c8b02750.png   10.1 KiB          [emitted]  
+cffb686d7d2f4682df8342bd4d276e09.woff2   13.7 KiB          [emitted]  
+d08c09f2f169f4a6edbcf8b8d1636cb4.woff2   14.4 KiB          [emitted]  
+  d59e6dc2616c53ce8e77b161e094cca8.png  118 bytes          [emitted]  
+  df0140f8e79ecfeffaf85220aaecd7c4.ttf   38.6 KiB          [emitted]  
+  e5e0e94474d5fd92e7e800a8865d297c.svg    160 KiB          [emitted]  
+                            index.html  189 bytes          [emitted]  
+                              index.js   3.06 MiB    main  [emitted]  main
+Entrypoint main = index.js
+[0] multi (webpack)-dev-server/client?http://0.0.0.0:3000 (webpack)/hot/dev-server.js ./src/index.js 52 bytes {main} [built]
+[./node_modules/react-dom/index.js] 1.33 KiB {main} [built]
+[./node_modules/react-redux/es/index.js] 776 bytes {main} [built]
+[./node_modules/react/index.js] 190 bytes {main} [built]
+[./node_modules/redux/es/redux.js] 23.5 KiB {main} [built]
+[./node_modules/strip-ansi/index.js] 161 bytes {main} [built]
+[./node_modules/webpack-dev-server/client/index.js?http://0.0.0.0:3000] (webpack)-dev-server/client?http://0.0.0.0:3000 4.29 KiB {main} [built]
+[./node_modules/webpack-dev-server/client/overlay.js] (webpack)-dev-server/client/overlay.js 3.51 KiB {main} [built]
+[./node_modules/webpack-dev-server/client/socket.js] (webpack)-dev-server/client/socket.js 1.53 KiB {main} [built]
+[./node_modules/webpack-dev-server/client/utils/createSocketUrl.js] (webpack)-dev-server/client/utils/createSocketUrl.js 2.89 KiB {main} [built]
+[./node_modules/webpack-dev-server/client/utils/log.js] (webpack)-dev-server/client/utils/log.js 964 bytes {main} [built]
+[./node_modules/webpack-dev-server/client/utils/reloadApp.js] (webpack)-dev-server/client/utils/reloadApp.js 1.59 KiB {main} [built]
+[./node_modules/webpack-dev-server/client/utils/sendMessage.js] (webpack)-dev-server/client/utils/sendMessage.js 402 bytes {main} [built]
+[./node_modules/webpack/hot/dev-server.js] (webpack)/hot/dev-server.js 1.59 KiB {main} [built]
+[./src/index.js] 397 bytes {main} [built]
+    + 371 hidden modules
+Child html-webpack-plugin for "index.html":
+     1 asset
+    Entrypoint undefined = index.html
+    [./node_modules/html-webpack-plugin/lib/loader.js!./src/index.html] 168 bytes {0} [built]
+[34mℹ[39m [90m｢wdm｣[39m: Compiled successfully.
+
+> auto-cip-ui@0.0.1 start /matsci/CIP-Front-End
+> webpack-dev-server --mode development
+
+[34mℹ[39m [90m｢wds｣[39m: Project is running at http://0.0.0.0:3000/
+[34mℹ[39m [90m｢wds｣[39m: webpack output is served from /
+[34mℹ[39m [90m｢wds｣[39m: Content not from webpack is served from ./src
+[34mℹ[39m [90m｢wdm｣[39m: wait until bundle finished: /
+[34mℹ[39m [90m｢wdm｣[39m: Hash: b632b4d8ab586452950d
+Version: webpack 4.41.2
+Time: 6667ms
+Built at: 12/07/2019 6:15:02 AM
+                                 Asset       Size  Chunks             Chunk Names
+  0614c27197fc3ce572e161840d23b2af.png  293 bytes          [emitted]  
+  148a6749baa5f658a45183ddb5ee159f.eot   15.3 KiB          [emitted]  
+  177cc92d2e8027712a8c1724abd272cd.ttf     27 KiB          [emitted]  
+  27ef0b062b2e221df16f3bbd97c2dca8.svg   53.9 KiB          [emitted]  
+  2d2afb2719a1ee903e576e7c457daf81.eot   38.8 KiB          [emitted]  
+  2e00b2635b51ba336b4b67a5d0bc03c7.svg   54.3 KiB          [emitted]  
+ 521d17bc9f3526c690e8ada6eee55bec.woff   17.9 KiB          [emitted]  
+  567f57385ea3dde2c9aec797d07850d2.gif   12.8 KiB          [emitted]  
+60c866748ff15f5b347fdba64596b1b1.woff2   14.2 KiB          [emitted]  
+ 623e3205570002af47fc2b88f9335d19.woff     18 KiB          [emitted]  
+ 66ee0deb739ca71f0ecdc39d7c1b22cb.woff   38.7 KiB          [emitted]  
+  76b56857ebbae3a5a689f213feb11af0.eot   15.2 KiB          [emitted]  
+  7aab4c13671282c90669eb6a10357e41.svg   54.9 KiB          [emitted]  
+  7e08cc656863d52bcb5cd34805ac605b.ttf   27.5 KiB          [emitted]  
+  8732a6660b528fadfaeb35bcf568875f.gif   9.21 KiB          [emitted]  
+  9dce7f01715340861bdb57318e2f3fdc.eot   14.7 KiB          [emitted]  
+ bf2d0783515b7d75c35bde69e01b3135.woff   17.3 KiB          [emitted]  
+  c045b73d86803686f4cd1cc3f9ceba59.ttf   25.9 KiB          [emitted]  
+  c7a33805ffda0d32bd2a9904c8b02750.png   10.1 KiB          [emitted]  
+cffb686d7d2f4682df8342bd4d276e09.woff2   13.7 KiB          [emitted]  
+d08c09f2f169f4a6edbcf8b8d1636cb4.woff2   14.4 KiB          [emitted]  
+  d59e6dc2616c53ce8e77b161e094cca8.png  118 bytes          [emitted]  
+  df0140f8e79ecfeffaf85220aaecd7c4.ttf   38.6 KiB          [emitted]  
+  e5e0e94474d5fd92e7e800a8865d297c.svg    160 KiB          [emitted]  
+                            index.html  189 bytes          [emitted]  
+                              index.js   3.06 MiB    main  [emitted]  main
+Entrypoint main = index.js
+[0] multi (webpack)-dev-server/client?http://0.0.0.0:3000 (webpack)/hot/dev-server.js ./src/index.js 52 bytes {main} [built]
+[./node_modules/react-dom/index.js] 1.33 KiB {main} [built]
+[./node_modules/react-redux/es/index.js] 776 bytes {main} [built]
+[./node_modules/react/index.js] 190 bytes {main} [built]
+[./node_modules/redux/es/redux.js] 23.5 KiB {main} [built]
+[./node_modules/strip-ansi/index.js] 161 bytes {main} [built]
+[./node_modules/webpack-dev-server/client/index.js?http://0.0.0.0:3000] (webpack)-dev-server/client?http://0.0.0.0:3000 4.29 KiB {main} [built]
+[./node_modules/webpack-dev-server/client/overlay.js] (webpack)-dev-server/client/overlay.js 3.51 KiB {main} [built]
+[./node_modules/webpack-dev-server/client/socket.js] (webpack)-dev-server/client/socket.js 1.53 KiB {main} [built]
+[./node_modules/webpack-dev-server/client/utils/createSocketUrl.js] (webpack)-dev-server/client/utils/createSocketUrl.js 2.89 KiB {main} [built]
+[./node_modules/webpack-dev-server/client/utils/log.js] (webpack)-dev-server/client/utils/log.js 964 bytes {main} [built]
+[./node_modules/webpack-dev-server/client/utils/reloadApp.js] (webpack)-dev-server/client/utils/reloadApp.js 1.59 KiB {main} [built]
+[./node_modules/webpack-dev-server/client/utils/sendMessage.js] (webpack)-dev-server/client/utils/sendMessage.js 402 bytes {main} [built]
+[./node_modules/webpack/hot/dev-server.js] (webpack)/hot/dev-server.js 1.59 KiB {main} [built]
+[./src/index.js] 397 bytes {main} [built]
+    + 371 hidden modules
+Child html-webpack-plugin for "index.html":
+     1 asset
+    Entrypoint undefined = index.html
+    [./node_modules/html-webpack-plugin/lib/loader.js!./src/index.html] 168 bytes {0} [built]
+[34mℹ[39m [90m｢wdm｣[39m: Compiled successfully.
+
+> auto-cip-ui@0.0.1 start /matsci/CIP-Front-End
+> webpack-dev-server --mode development
+
+[34mℹ[39m [90m｢wds｣[39m: Project is running at http://0.0.0.0:3000/
+[34mℹ[39m [90m｢wds｣[39m: webpack output is served from /
+[34mℹ[39m [90m｢wds｣[39m: Content not from webpack is served from ./src
+[34mℹ[39m [90m｢wdm｣[39m: wait until bundle finished: /
+[34mℹ[39m [90m｢wdm｣[39m: Hash: d7c4bb8070e5010c4bde
+Version: webpack 4.41.2
+Time: 6655ms
+Built at: 12/07/2019 6:48:32 AM
+                                 Asset       Size  Chunks             Chunk Names
+  0614c27197fc3ce572e161840d23b2af.png  293 bytes          [emitted]  
+  148a6749baa5f658a45183ddb5ee159f.eot   15.3 KiB          [emitted]  
+  177cc92d2e8027712a8c1724abd272cd.ttf     27 KiB          [emitted]  
+  27ef0b062b2e221df16f3bbd97c2dca8.svg   53.9 KiB          [emitted]  
+  2d2afb2719a1ee903e576e7c457daf81.eot   38.8 KiB          [emitted]  
+  2e00b2635b51ba336b4b67a5d0bc03c7.svg   54.3 KiB          [emitted]  
+ 521d17bc9f3526c690e8ada6eee55bec.woff   17.9 KiB          [emitted]  
+  567f57385ea3dde2c9aec797d07850d2.gif   12.8 KiB          [emitted]  
+60c866748ff15f5b347fdba64596b1b1.woff2   14.2 KiB          [emitted]  
+ 623e3205570002af47fc2b88f9335d19.woff     18 KiB          [emitted]  
+ 66ee0deb739ca71f0ecdc39d7c1b22cb.woff   38.7 KiB          [emitted]  
+  76b56857ebbae3a5a689f213feb11af0.eot   15.2 KiB          [emitted]  
+  7aab4c13671282c90669eb6a10357e41.svg   54.9 KiB          [emitted]  
+  7e08cc656863d52bcb5cd34805ac605b.ttf   27.5 KiB          [emitted]  
+  8732a6660b528fadfaeb35bcf568875f.gif   9.21 KiB          [emitted]  
+  9dce7f01715340861bdb57318e2f3fdc.eot   14.7 KiB          [emitted]  
+ bf2d0783515b7d75c35bde69e01b3135.woff   17.3 KiB          [emitted]  
+  c045b73d86803686f4cd1cc3f9ceba59.ttf   25.9 KiB          [emitted]  
+  c7a33805ffda0d32bd2a9904c8b02750.png   10.1 KiB          [emitted]  
+cffb686d7d2f4682df8342bd4d276e09.woff2   13.7 KiB          [emitted]  
+d08c09f2f169f4a6edbcf8b8d1636cb4.woff2   14.4 KiB          [emitted]  
+  d59e6dc2616c53ce8e77b161e094cca8.png  118 bytes          [emitted]  
+  df0140f8e79ecfeffaf85220aaecd7c4.ttf   38.6 KiB          [emitted]  
+  e5e0e94474d5fd92e7e800a8865d297c.svg    160 KiB          [emitted]  
+                            index.html  189 bytes          [emitted]  
+                              index.js   3.06 MiB    main  [emitted]  main
+Entrypoint main = index.js
+[0] multi (webpack)-dev-server/client?http://0.0.0.0:3000 (webpack)/hot/dev-server.js ./src/index.js 52 bytes {main} [built]
+[./node_modules/react-dom/index.js] 1.33 KiB {main} [built]
+[./node_modules/react-redux/es/index.js] 776 bytes {main} [built]
+[./node_modules/react/index.js] 190 bytes {main} [built]
+[./node_modules/redux/es/redux.js] 23.5 KiB {main} [built]
+[./node_modules/strip-ansi/index.js] 161 bytes {main} [built]
+[./node_modules/webpack-dev-server/client/index.js?http://0.0.0.0:3000] (webpack)-dev-server/client?http://0.0.0.0:3000 4.29 KiB {main} [built]
+[./node_modules/webpack-dev-server/client/overlay.js] (webpack)-dev-server/client/overlay.js 3.51 KiB {main} [built]
+[./node_modules/webpack-dev-server/client/socket.js] (webpack)-dev-server/client/socket.js 1.53 KiB {main} [built]
+[./node_modules/webpack-dev-server/client/utils/createSocketUrl.js] (webpack)-dev-server/client/utils/createSocketUrl.js 2.89 KiB {main} [built]
+[./node_modules/webpack-dev-server/client/utils/log.js] (webpack)-dev-server/client/utils/log.js 964 bytes {main} [built]
+[./node_modules/webpack-dev-server/client/utils/reloadApp.js] (webpack)-dev-server/client/utils/reloadApp.js 1.59 KiB {main} [built]
+[./node_modules/webpack-dev-server/client/utils/sendMessage.js] (webpack)-dev-server/client/utils/sendMessage.js 402 bytes {main} [built]
+[./node_modules/webpack/hot/dev-server.js] (webpack)/hot/dev-server.js 1.59 KiB {main} [built]
+[./src/index.js] 397 bytes {main} [built]
+    + 371 hidden modules
+Child html-webpack-plugin for "index.html":
+     1 asset
+    Entrypoint undefined = index.html
+    [./node_modules/html-webpack-plugin/lib/loader.js!./src/index.html] 168 bytes {0} [built]
+[34mℹ[39m [90m｢wdm｣[39m: Compiled successfully.
+
+> auto-cip-ui@0.0.1 start /matsci/CIP-Front-End
+> webpack-dev-server --mode development
+
+[34mℹ[39m [90m｢wds｣[39m: Project is running at http://0.0.0.0:3000/
+[34mℹ[39m [90m｢wds｣[39m: webpack output is served from /
+[34mℹ[39m [90m｢wds｣[39m: Content not from webpack is served from ./src
+[34mℹ[39m [90m｢wdm｣[39m: wait until bundle finished: /
+[34mℹ[39m [90m｢wdm｣[39m: Hash: a44a53e294c4dddf684b
+Version: webpack 4.41.2
+Time: 6329ms
+Built at: 12/07/2019 8:48:35 AM
+                                 Asset       Size  Chunks             Chunk Names
+  0614c27197fc3ce572e161840d23b2af.png  293 bytes          [emitted]  
+  148a6749baa5f658a45183ddb5ee159f.eot   15.3 KiB          [emitted]  
+  177cc92d2e8027712a8c1724abd272cd.ttf     27 KiB          [emitted]  
+  27ef0b062b2e221df16f3bbd97c2dca8.svg   53.9 KiB          [emitted]  
+  2d2afb2719a1ee903e576e7c457daf81.eot   38.8 KiB          [emitted]  
+  2e00b2635b51ba336b4b67a5d0bc03c7.svg   54.3 KiB          [emitted]  
+ 521d17bc9f3526c690e8ada6eee55bec.woff   17.9 KiB          [emitted]  
+  567f57385ea3dde2c9aec797d07850d2.gif   12.8 KiB          [emitted]  
+60c866748ff15f5b347fdba64596b1b1.woff2   14.2 KiB          [emitted]  
+ 623e3205570002af47fc2b88f9335d19.woff     18 KiB          [emitted]  
+ 66ee0deb739ca71f0ecdc39d7c1b22cb.woff   38.7 KiB          [emitted]  
+  76b56857ebbae3a5a689f213feb11af0.eot   15.2 KiB          [emitted]  
+  7aab4c13671282c90669eb6a10357e41.svg   54.9 KiB          [emitted]  
+  7e08cc656863d52bcb5cd34805ac605b.ttf   27.5 KiB          [emitted]  
+  8732a6660b528fadfaeb35bcf568875f.gif   9.21 KiB          [emitted]  
+  9dce7f01715340861bdb57318e2f3fdc.eot   14.7 KiB          [emitted]  
+ bf2d0783515b7d75c35bde69e01b3135.woff   17.3 KiB          [emitted]  
+  c045b73d86803686f4cd1cc3f9ceba59.ttf   25.9 KiB          [emitted]  
+  c7a33805ffda0d32bd2a9904c8b02750.png   10.1 KiB          [emitted]  
+cffb686d7d2f4682df8342bd4d276e09.woff2   13.7 KiB          [emitted]  
+d08c09f2f169f4a6edbcf8b8d1636cb4.woff2   14.4 KiB          [emitted]  
+  d59e6dc2616c53ce8e77b161e094cca8.png  118 bytes          [emitted]  
+  df0140f8e79ecfeffaf85220aaecd7c4.ttf   38.6 KiB          [emitted]  
+  e5e0e94474d5fd92e7e800a8865d297c.svg    160 KiB          [emitted]  
+                            index.html  189 bytes          [emitted]  
+                              index.js   3.07 MiB    main  [emitted]  main
+Entrypoint main = index.js
+[0] multi (webpack)-dev-server/client?http://0.0.0.0:3000 (webpack)/hot/dev-server.js ./src/index.js 52 bytes {main} [built]
+[./node_modules/react-dom/index.js] 1.33 KiB {main} [built]
+[./node_modules/react-redux/es/index.js] 776 bytes {main} [built]
+[./node_modules/react/index.js] 190 bytes {main} [built]
+[./node_modules/redux/es/redux.js] 23.5 KiB {main} [built]
+[./node_modules/strip-ansi/index.js] 161 bytes {main} [built]
+[./node_modules/webpack-dev-server/client/index.js?http://0.0.0.0:3000] (webpack)-dev-server/client?http://0.0.0.0:3000 4.29 KiB {main} [built]
+[./node_modules/webpack-dev-server/client/overlay.js] (webpack)-dev-server/client/overlay.js 3.51 KiB {main} [built]
+[./node_modules/webpack-dev-server/client/socket.js] (webpack)-dev-server/client/socket.js 1.53 KiB {main} [built]
+[./node_modules/webpack-dev-server/client/utils/createSocketUrl.js] (webpack)-dev-server/client/utils/createSocketUrl.js 2.89 KiB {main} [built]
+[./node_modules/webpack-dev-server/client/utils/log.js] (webpack)-dev-server/client/utils/log.js 964 bytes {main} [built]
+[./node_modules/webpack-dev-server/client/utils/reloadApp.js] (webpack)-dev-server/client/utils/reloadApp.js 1.59 KiB {main} [built]
+[./node_modules/webpack-dev-server/client/utils/sendMessage.js] (webpack)-dev-server/client/utils/sendMessage.js 402 bytes {main} [built]
+[./node_modules/webpack/hot/dev-server.js] (webpack)/hot/dev-server.js 1.59 KiB {main} [built]
+[./src/index.js] 397 bytes {main} [built]
+    + 373 hidden modules
+Child html-webpack-plugin for "index.html":
+     1 asset
+    Entrypoint undefined = index.html
+    [./node_modules/html-webpack-plugin/lib/loader.js!./src/index.html] 168 bytes {0} [built]
+[34mℹ[39m [90m｢wdm｣[39m: Compiled successfully.
+[34mℹ[39m [90m｢wdm｣[39m: Compiling...
+[34mℹ[39m [90m｢wdm｣[39m: Hash: 4a3b91160d512eb88275
+Version: webpack 4.41.2
+Time: 718ms
+Built at: 12/07/2019 4:12:24 PM
+                                  Asset       Size  Chunks                               Chunk Names
+   a44a53e294c4dddf684b.hot-update.json   46 bytes          [emitted] [immutable] [hmr]  
+                             index.html  189 bytes          [emitted]                    
+                               index.js   3.08 MiB    main  [emitted]                    main
+main.a44a53e294c4dddf684b.hot-update.js   50.2 KiB    main  [emitted] [immutable] [hmr]  main
+ + 24 hidden assets
+Entrypoint main = index.js main.a44a53e294c4dddf684b.hot-update.js
+[./node_modules/css-loader/dist/cjs.js!./src/components/Pages/ProjectScreens/index.css] 4.33 KiB {main} [built]
+[./node_modules/primereact/components/progressbar/ProgressBar.js] 6.66 KiB {main} [built]
+[./node_modules/primereact/progressbar.js] 80 bytes {main} [built]
+[./src/App.js] 1.6 KiB {main} [built]
+[./src/components/Pages/ProjectScreens/Details.js] 8.89 KiB {main} [built]
+[./src/components/Table/TableComponent.js] 8.95 KiB {main} [built]
+    + 384 hidden modules
+Child html-webpack-plugin for "index.html":
+     1 asset
+    Entrypoint undefined = index.html
+       1 module
+[34mℹ[39m [90m｢wdm｣[39m: Compiled successfully.
