@@ -34,11 +34,19 @@ class OutputKeyValueTable extends React.Component {
             documentId: props.documentArray[props.screenNumber - 1] || '',
             keyValueData: [],
             keyValueColList: [
-                { field: 'workDescription', header: 'Work Description' },
-                { field: 'referenceStandardValue', header: 'Reference Standard Value' },
-                { field: 'technicalSpecificationValue', header: 'Technical Specification Value' },
-                { field: 'acceptanceCriteriaValue', header: 'Acceptance Criteria Value' }
-            ]
+                { field: 'AcceptanceCriteria', header: 'Acceptance Criteria' },
+                { field: 'Documents', header: 'Documents' },
+                { field: 'ReferenceStandard', header: 'Reference Standard' },
+                { field: 'Section', header: 'Section' },
+                { field: 'Subsection', header: 'Sub Section' },
+                { field: 'TPI', header: 'TPI' },
+                { field: 'TestingFrequency', header: 'Testing Frequency' },
+                { field: 'WTL', header: 'WTL' },
+                { field: 'WorkDescription', header: 'Work Description' },
+            ],
+            actions: [
+                { label: 'Delete selected rows', value: 'deleteRow'}
+			]
         }
         this.onRefresh = this.onRefresh.bind(this);
     }
@@ -52,7 +60,7 @@ class OutputKeyValueTable extends React.Component {
             }
         );
         data = data.data;
-        this.setState({ keyValueData: data });
+        this.setState({ keyValueData: data.data });
         this.setState({ isLoading: false })
 
     }
@@ -62,10 +70,15 @@ class OutputKeyValueTable extends React.Component {
     onRefresh() {
         this.getTableData();
     }
-    onSave() {
-        console.log('recommendations screen save ....');
-        history.push(this.props.redirectTo);
-
+    async onSave() {
+        const saveEditedValue = await Axios.post(
+            `${backendUrl}/dashboard/update_ITP_value`,
+            {
+                docID: this.props.documentId,
+                values: this.state.keyValueData
+            }
+        )
+        console.log('data saved', saveEditedValue);
     }
     onDelete() {
         console.log('recommendations screen delete ....');
@@ -99,6 +112,7 @@ class OutputKeyValueTable extends React.Component {
                     dataList={this.state.keyValueData}
                     rowClassName={this.rowClassName}
                     onRefresh={this.onRefresh}
+                    actionsLabel={this.state.actions}
                     editable={true}
                 />
             </div>

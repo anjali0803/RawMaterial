@@ -6,6 +6,8 @@ import { setDocumentArray, setProjectId, setProjectCustomer, setProjectTitle, se
 import { connect } from 'react-redux';
 import { createHashHistory } from 'history';
 import Axios from 'axios';
+import { backendUrl } from '../../constant';
+
 const history = createHashHistory();
 
 
@@ -34,13 +36,12 @@ class ProjectAssignedByMe extends React.Component {
   }
   async getTableData() {
     this.setState({ isLoading: true });
-    let res = await Axios.get('http://5dbdaeb405a6f30014bcaee3.mockapi.io/projects');
-    let data = res.data;
-    data = data.filter((element, index) => {
-      if (element['createdBy'] == 'user1') {
-        return element;
-      }
-    })
+    let res = await Axios.get(`${backendUrl}/dashboard/myproject`, {
+        params: {
+            username: this.props.userName
+        }
+    });
+    let data = res.data.data;
     this.setState({ tableData: data });
     this.setState({ isLoading: false });
   }
@@ -68,12 +69,12 @@ class ProjectAssignedByMe extends React.Component {
     return this.state.isLoading === false ? (
       <div>
         <ProjectsTable
-          colList={this.props.projectTableColList.filter(element => {
+          colList={this.state.tableColList.filter(element => {
             if (element.field != "CreatedBy") {
               return element;
             }
           })}
-          dataList={this.props.projectList.filter(element => {
+          dataList={this.state.tableData.filter(element => {
             if (element["CreatedBy"] == this.props.userName) return element;
           })}
 

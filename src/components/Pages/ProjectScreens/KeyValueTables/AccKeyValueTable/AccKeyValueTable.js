@@ -37,10 +37,7 @@ class AccKeyValueTable extends React.Component {
 				{ field: 'WorkDescription', header: 'Work Description' },
                 { field: 'TestingFrequency', header: 'Testing Ferquency' },
 				{ field: 'AcceptanceCriteria', header: 'Acceptance Criteria' }
-            ],
-            actions: [
-				{ label: "Send selected to ITP", value: 1 }
-			]
+            ]
         }
         this.onRefresh = this.onRefresh.bind(this);
     }
@@ -63,10 +60,15 @@ class AccKeyValueTable extends React.Component {
     onRefresh() {
         this.getKeyValueTable();
     }
-    onSave() {
-        console.log('recommendations screen save ....');
-        history.push(this.props.redirectTo);
-
+    async onSave() {
+        const saveEditedValue = await Axios.post(
+            `${backendUrl}/dashboard/update_acceptance_value`,
+            {
+                docID: this.props.documentId,
+                values: this.state.keyValueData
+            }
+        )
+        console.log('data saved', saveEditedValue);
     }
     onDelete() {
         console.log('recommendations screen delete ....');
@@ -79,6 +81,22 @@ class AccKeyValueTable extends React.Component {
             'table-on-red': (parseInt(rowData['technicalSpecificationValue']) < 5)
         };
 
+    }
+
+    async handleClickAllSelected(action, data) {
+		// if (action) {
+		// let sendAcceptanceRes = await axios.post(
+		// 	`${backendUrl}/dashboard/send_acceptance_from_rec`,
+		// 	{
+        //         projectID: this.props.projectId,
+        //         fileType: this.props.documentFiletype,
+        //         recValues: data
+		// 	}
+		// );
+		// } else {
+        //     console.log('actions taken')
+		//     // this.deleteRowAction();
+		// }
     }
     
     render() {
@@ -100,6 +118,8 @@ class AccKeyValueTable extends React.Component {
                     colList={this.state.keyValueColList}
                     dataList={this.state.keyValueData}
                     rowClassName={this.rowClassName}
+                    actionsLabel={this.state.actions}
+                    handleClickAllSelected={this.handleClickAllSelected}
                     onRefresh={this.onRefresh}
                     editable={true}
                 />

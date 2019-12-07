@@ -4,7 +4,7 @@ import "primeicons/primeicons.css";
 import "primereact/resources/themes/nova-light/theme.css";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
-import {InputText} from 'primereact/inputtext';
+import {InputTextarea} from 'primereact/inputtextarea';
 import { Dropdown } from "primereact/dropdown";
 import { Button } from "primereact/button";
 import { Dialog } from 'primereact/dialog';
@@ -62,7 +62,7 @@ export default class TableComponent extends React.Component {
     return this.inputTextEditor(props, props.field);
   }
   inputTextEditor( props, field ) {
-    return <InputText type="text" value={props.rowData[field]} onBlur={(e) => console.log(props.rowData[field])} onChange={(e) => this.onEditorValueChange(e.target.value, props)} />;
+    return <InputTextarea value={props.rowData[field]} onBlur={(e) => console.log(props.rowData[field])} onChange={(e) => this.onEditorValueChange(e.target.value, props)}  rows={3} cols={5}/>;
   }
   onEditorValueChange(value, props) {
     let tempDummyObj = [...props.value];
@@ -147,7 +147,7 @@ export default class TableComponent extends React.Component {
     
     const dialogModal = this.renderDialogModal(colList);
 
-    const footer = (
+    const footer = this.props.editable && (
       <div className="p-clearfix" style={{width:'100%'}}>
         <Dropdown
           options={actions}
@@ -159,7 +159,6 @@ export default class TableComponent extends React.Component {
       </div>
     );
     const dialogFooter = <div className="ui-dialog-buttonpane p-clearfix">
-      <Button label="Delete" icon="pi pi-times" onClick={this.delete}/>
       <Button label="Save" icon="pi pi-check" onClick={this.save}/>
     </div>;
     return (

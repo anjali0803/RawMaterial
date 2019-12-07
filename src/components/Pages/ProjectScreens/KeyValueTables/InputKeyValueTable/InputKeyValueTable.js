@@ -41,7 +41,8 @@ class InputKeyValueTable extends React.Component {
             ],
             actions: [
                 { label: "Send selected to Recommendation", value: 1 },
-				{ label: "Send selected to Acceptance", value: 0 }
+                { label: "Send selected to Acceptance", value: 0 },
+                { label: 'Delete selected rows', value: 'deleteRow'}
 			]
         }
         this.onRefresh = this.onRefresh.bind(this);
@@ -67,10 +68,15 @@ class InputKeyValueTable extends React.Component {
     onRefresh() {
         this.getKeyValueData();
     }
-    onSave() {
-        console.log('recommendations screen save ....');
-        history.push(this.props.redirectTo);
-
+    async onSave() {
+        const saveEditedValue = await axios.post(
+            `${backendUrl}/dashboard/update_ikv_values`,
+            {
+                docID: this.props.documentId,
+                values: this.state.keyValueData
+            }
+        )
+        console.log('data saved', saveEditedValue);
     }
     onDelete() {
         console.log('recommendations screen delete ....');
@@ -86,7 +92,7 @@ class InputKeyValueTable extends React.Component {
 
     async handleClickAllSelected(action, data) {
         if (action) {
-            let sendAcceptanceRes = await axios.post(
+            let sendRecommendationRes = await axios.post(
                 `${backendUrl}/dashboard/send_rec_from_ikv`,
                 {
                     projectID: this.props.projectId,

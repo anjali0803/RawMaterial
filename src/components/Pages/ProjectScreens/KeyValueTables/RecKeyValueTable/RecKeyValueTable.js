@@ -69,10 +69,15 @@ class RecKeyValueTable extends React.Component {
     onRefresh() {
         this.getKeyValueTable();
     }
-    onSave() {
-        console.log('recommendations screen save ....');
-        history.push(this.props.redirectTo);
-
+    async onSave() {
+        const saveEditedValue = await axios.post(
+            `${backendUrl}/dashboard/update_recommendation_value`,
+            {
+                docID: this.props.documentId,
+                values: this.state.keyValueData
+            }
+        )
+        console.log('data saved', saveEditedValue);
     }
     onDelete() {
         console.log('recommendations screen delete ....');
