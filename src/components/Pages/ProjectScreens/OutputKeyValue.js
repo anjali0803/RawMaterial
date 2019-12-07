@@ -59,12 +59,10 @@ class OutputKeyValue extends React.Component {
     async handleClickAllSelected(action, data) {
 			if (action) {
 				let sendAcceptanceRes = await axios.post(
-				`${backendUrl}/dashboard/send_acceptance_from_ikv`,
-				{
-					projectID: this.props.projectId,
-					fileType: this.props.documentArray[0].FileType,
-					ikvValues: data
-				}
+                    `${backendUrl}/dashboard/docx_download`,
+                    {
+                        DocID: data[0]['DocId']
+                    }
 				);
 			} else {
 					//TODO reject recommendation call 
@@ -93,7 +91,15 @@ class OutputKeyValue extends React.Component {
             <div>
                 <ButtonHeader saveEnabled={this.props.saveEnabled} deleteEnabled={this.props.deleteEnabled} className="progbar-button-header" onSave={() => this.onSave()} onDelete={() => this.onDelete()} />
 
-                <TableComponent colList={this.state.tableColList} dataList={this.state.tableData} onDocumentIdClick={this.onDocIdClick} onRefresh={this.onRefresh} handleClickAllSelected={this.handleClickAllSelected} actionsLabel={this.state.actions} editable={false}/>
+                <TableComponent
+                    colList={this.state.tableColList}
+                    dataList={this.state.tableData}
+                    onDocumentIdClick={this.onDocIdClick}
+                    onRefresh={this.onRefresh}
+                    handleClickAllSelected={this.handleClickAllSelected}
+                    actionsLabel={this.state.actions}
+                    editable={false}
+                    footer={true}/>
             </div>
         ) : (
 

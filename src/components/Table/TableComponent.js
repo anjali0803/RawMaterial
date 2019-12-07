@@ -5,6 +5,7 @@ import "primereact/resources/themes/nova-light/theme.css";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import {InputTextarea} from 'primereact/inputtextarea';
+import {InputText} from 'primereact/inputtext';
 import { Dropdown } from "primereact/dropdown";
 import { Button } from "primereact/button";
 import { Dialog } from 'primereact/dialog';
@@ -147,7 +148,7 @@ export default class TableComponent extends React.Component {
     
     const dialogModal = this.renderDialogModal(colList);
 
-    const footer = this.props.editable && (
+    const footer = (this.props.editable || this.props.footer) && (
       <div className="p-clearfix" style={{width:'100%'}}>
         <Dropdown
           options={actions}
@@ -155,7 +156,7 @@ export default class TableComponent extends React.Component {
           placeholder="Select Action"
           disabled={selected.length == 0}
         />
-        <Button style={{float:'right'}} label="Add" icon="pi pi-plus" onClick={this.addNew}/>
+        {!this.props.footer ? <Button style={{float:'right'}} label="Add" icon="pi pi-plus" onClick={this.addNew}/> : ''}
       </div>
     );
     const dialogFooter = <div className="ui-dialog-buttonpane p-clearfix">
