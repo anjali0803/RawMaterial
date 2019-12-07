@@ -4,8 +4,9 @@ import 'primeicons/primeicons.css';
 import 'primereact/resources/themes/nova-light/theme.css';
 import FileUpload from '../../FileUpload/FileUpload';
 import { InputText } from 'primereact/inputtext';
-import { Dropdown } from 'primereact/dropdown'
-import { createHashHistory } from 'history'
+import { Dropdown } from 'primereact/dropdown';
+import {ProgressBar} from 'primereact/progressbar';
+import { createHashHistory } from 'history';
 import './index.css';
 import { setProjectId, setProjectTitle, setProjectType, setProjectCustomer, setCurrentURL } from '../../../actions/dataActions'
 import { connect } from 'react-redux';
@@ -31,7 +32,10 @@ class Details extends React.Component {
             file1: '',
             file2: '',
             file3: '',
-            file4: ''
+            file4: '',
+            isLoading: false,
+            isLoadingProgress: 0,
+            isLoadingTexts: ''
         }
         this.handleInputCustomer = this.handleInputCustomer.bind(this);
         this.handleInputType = this.handleInputType.bind(this);
@@ -43,6 +47,7 @@ class Details extends React.Component {
         this.handleInputTitle = this.handleInputTitle.bind(this);
         this.onSave = this.onSave.bind(this);
         this.onDelete = this.onDelete.bind(this);
+        this.displayValueTemplate = this.displayValueTemplate.bind(this);
     }
 
     uploadHandler() {
@@ -91,14 +96,43 @@ class Details extends React.Component {
     }
 
     async onSave() {
+        this.setState({
+            isLoading: true
+        })
+        this.setState({
+            isLoadingTexts: 'Uploading documents...'
+        })
+        this.interval = setInterval(() => {
+            let val = this.state.isLoadingProgress;
+            val += Math.floor(Math.random() * 10) + 5;
+
+            this.setState({
+                isLoadingProgress: val
+            });
+        }, 3000);
         const { title, customer, type } = this.state;
         const { file1, file2, file3, file4 } = this.state;
 
         const file1Res = await this.upLoadFiletoS3(file1);
+        this.setState({
+            isLoadingProgress: this.state.isLoadingProgress + 12
+        });
         const file2Res = await this.upLoadFiletoS3(file2);
+        this.setState({
+            isLoadingTexts: 'Extracting documets...',
+            isLoadingProgress: this.state.isLoadingProgress + 12
+        });
+        
         const file3Res = await this.upLoadFiletoS3(file3);
+        this.setState({
+            isLoadingProgress: this.state.isLoadingProgress + 12,
+            isLoadingTexts: 'Preparing insights...'
+        });
         const file4Res = await this.upLoadFiletoS3(file4);
-
+        this.setState({
+            isLoadingProgress: this.state.isLoadingProgress + 12,
+            isLoadingTexts: 'Creating project...'
+        });
         const createProjectRes = await axios.post(
             `${backendUrl}/dashboard/create_project`,
             {
@@ -118,6 +152,18 @@ class Details extends React.Component {
         this.props.setProjectCustomer(customer);
         this.props.setProjectTitle(title);
         this.props.setProjectType(type)
+        // while( this.state.isLoadingProgress < 100){
+        //     setInterval(() => {
+        //         this.setState({
+        //             isLoadingProgress: this.state.isLoadingProgress + 15
+        //         });
+        //     }, 6000);
+        // }
+        
+        this.setState({
+            isLoadingProgress: 100,
+            isLoadingTexts: 'Finalizing...'
+        });
         history.push('/Inquiry/create-new-projects/input-key-value')
 
     }
@@ -125,10 +171,17 @@ class Details extends React.Component {
         console.log('Data deleted');
     }
 
+    displayValueTemplate(value) {
+        return (
+            <React.Fragment>
+                {this.state.isLoadingTexts}
+            </React.Fragment>
+        );
+    }
 
     render() {
-        return (
-            <div>
+        return ( !this.state.isLoading ?
+            (<div>
                 <form onSubmit={obj => this.onSave(obj)}>
                 <ButtonHeader type="button" saveEnabled={this.props.saveEnabled} deleteEnabled={this.props.deleteEnabled} className="details-button-header" onSave={() => this.onSave()} onDelete={() => this.onDelete()} />
                 <div className="details-container">
@@ -206,10 +259,10 @@ class Details extends React.Component {
 
                 </div>
                 </form>
-            </div >
-
-
-
+        </div >) : 
+            (<div>
+                <ProgressBar value={this.state.isLoadingProgress} displayValueTemplate={this.displayValueTemplate}></ProgressBar>
+            </div>)
         )
     }
 }

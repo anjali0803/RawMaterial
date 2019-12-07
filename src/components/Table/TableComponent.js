@@ -195,6 +195,7 @@ export default class TableComponent extends React.Component {
                 id={`table-${index}`}
                 {...columnProps}
                 body={this.documentIdTemplate}
+                style={{width:'250px'}}
               />
             }
             else{
@@ -208,6 +209,7 @@ export default class TableComponent extends React.Component {
                 <Column
                   field={el.field}
                   {...columnProps}
+                  style={{width:'250px'}}
                 />
               );
             }

@@ -222,3 +222,7 @@
 .progress-steps .progress-step.progress-current:after {
 	border-left: 17px solid #23468c;	
 }
+
+.loading-bar{
+	margin-top: 200px;
+}
