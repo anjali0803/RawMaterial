@@ -39,7 +39,7 @@ class MenuComponent extends React.Component {
                         label: "Create new projects",
                         icon: "pi pi-fw pi-plus",
                         command: event => {
-                            window.location.hash = "/inquiry/create-new-projects/details";
+                            window.location.hash = "/inquiry/create-new-projects/new";
                         }
                     },
                     {

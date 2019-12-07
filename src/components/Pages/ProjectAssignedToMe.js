@@ -49,13 +49,12 @@ class ProjectAssignedToMe extends React.Component {
     }
     onProjectIdClick(rowData) {
         //refresh the document array and project id
-        const { Type, Title, Customer, ProjectID } = rowData;
+        const { ProjectType, Title, Client, ProjectID } = rowData;
         //sconsole.log({ Type, Title, Customer, ProjectID })
         this.props.setProjectId(ProjectID);
-        this.props.setProjectCustomer(Customer);
-        this.props.setProjectType(Type);
+        this.props.setProjectCustomer(Client);
+        this.props.setProjectType(ProjectType);
         this.props.setProjectTitle(Title)
-        this.props.setDocumentArray([]);
         history.push('/Inquiry/create-new-projects/details');
 
     }

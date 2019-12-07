@@ -49,7 +49,7 @@ class FileUpload extends React.Component {
             }
         })
 
-        this.setState({fileName: FileList.length+" files chosen"})
+        this.setState({fileName: FileList[0].toString()})
         this.props.onFileSelect(e.target.files[0]);
     }
     render() {
@@ -58,8 +58,8 @@ class FileUpload extends React.Component {
             <div className={this.state.classString}>
                 <div className="file-select">
                     <div className="file-select-button" id="fileName">Choose File</div>
-                    <div className="file-select-name" id="noFile">{this.state.fileName}</div>
-                    <input type="file" name="chooseFile" id="chooseFile" multiple="multiple" disabled={this.props.disabled} onChange={(e) => this.onChange(e)} /> 
+                    <div className="file-select-name" id="noFile">{this.state.fileName.length > 50 ? (this.state.fileName.substring(0,20)+ '.....' + this.state.fileName.substring(this.state.fileName.length - 20, this.state.fileName.length)) : this.state.fileName}</div>
+                    <input type="file" name="chooseFile" id="chooseFile" disabled={this.props.disabled} onChange={(e) => this.onChange(e)} /> 
                 </div>
                 {/* <span className="clear-icon"><Button icon="pi pi-replay"></Button></span>  */}
             </div>

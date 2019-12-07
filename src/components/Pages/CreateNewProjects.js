@@ -57,6 +57,11 @@ export default class CreateNewProjects extends React.Component {
                 />
             },
             {
+                path: '/Inquiry/create-new-projects/new', component: () => <Details
+                    steps={this.state.steps} readOnly={false} saveEnabled={true} deleteEnabled={true} newProject={true}
+                />
+            },
+            {
                 path: '/Inquiry/create-new-projects/input-key-value/second', component: () => <InputKeyValueTable
                     saveEnabled={true} deleteEnabled={true}
                     steps={this.state.steps}

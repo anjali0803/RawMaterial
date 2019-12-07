@@ -21,22 +21,23 @@ class Details extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            projectId: props.projectId || '',
-            title: props.projectTitle || '',
-            type: props.projectType || '',
-            customer: props.projectCustomer || '',
+            projectId: this.props.newProject ? '' : (props.projectId || ''),
+            title: this.props.newProject ? '' : (props.projectTitle || ''),
+            type: this.props.newProject ? '' : (props.projectType || ''),
+            customer: this.props.newProject ? '' : (props.projectCustomer || ''),
             projectTypes: [
                 { label: 'HFW', value: 'HFW' },
                 { label: 'SAWH', value: 'SAWH' },
             ],
-            file1: '',
-            file2: '',
-            file3: '',
-            file4: '',
+            file1: this.props.newProject ? '' : (props.file1 || ''),
+            file2: this.props.newProject ? '' : (props.file3 || ''),
+            file3: this.props.newProject ? '' : (props.file4 || ''),
+            file4: this.props.newProject ? '' : (props.file5 || ''),
             isLoading: false,
             isLoadingProgress: 0,
             isLoadingTexts: ''
         }
+    
         this.handleInputCustomer = this.handleInputCustomer.bind(this);
         this.handleInputType = this.handleInputType.bind(this);
         this.saveFile1 = this.saveFile1.bind(this);
@@ -165,7 +166,6 @@ class Details extends React.Component {
             isLoadingTexts: 'Finalizing...'
         });
         history.push('/Inquiry/create-new-projects/input-key-value')
-
     }
     onDelete() {
         console.log('Data deleted');
