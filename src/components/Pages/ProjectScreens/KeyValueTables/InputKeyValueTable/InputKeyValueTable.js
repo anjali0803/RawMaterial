@@ -40,9 +40,8 @@ class InputKeyValueTable extends React.Component {
                 { field: 'AcceptanceCriteria', header: 'Acceptance Criteria Value' }
             ],
             actions: [
-                { label: "Send selected to Recommendation", value: 1 },
-                { label: "Send selected to Acceptance", value: 0 },
-                { label: 'Delete selected rows', value: 'deleteRow'}
+                { label: "Recommendation", value: 1 },
+                { label: "Acceptance", value: 0 },
 			]
         }
         this.onRefresh = this.onRefresh.bind(this);

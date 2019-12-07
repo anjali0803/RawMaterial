@@ -45,7 +45,6 @@ class OutputKeyValueTable extends React.Component {
                 { field: 'WorkDescription', header: 'Work Description' },
             ],
             actions: [
-                { label: 'Delete selected rows', value: 'deleteRow'}
 			]
         }
         this.onRefresh = this.onRefresh.bind(this);

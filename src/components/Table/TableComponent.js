@@ -51,11 +51,7 @@ export default class TableComponent extends React.Component {
   }
   handleClickAllSelected(action) {
     const data = this.state.selected;
-    if(action === 'deleteRow'){
-      this.delete(data);
-    }else{
-      this.props.handleClickAllSelected(action, data);
-    }
+    this.props.handleClickAllSelected(action, data);
     // this.getUserList();
   }
   cellEditor(props){
@@ -118,10 +114,11 @@ export default class TableComponent extends React.Component {
     if(this.state.newItem)
         items.push(this.state.item);
 
-    this.setState({tableData:items, selectedItem:null, item: null, displayDialog:false, newItem: false});
+    this.setState({tableData:items, selected:[], item: null, displayDialog:false, newItem: false});
   }
 
-  delete(data){
+  delete(){
+    const data = this.state.selected;
     let tableData = this.props.dataList;
     for(let i=0; i< data.length; i++){
       for(let j=0;j<this.props.dataList.length;j++){
@@ -133,7 +130,7 @@ export default class TableComponent extends React.Component {
     }
     this.setState({
       tableData: tableData,
-      selectedItem: null,
+      selected: [],
       item: null,
       displayDialog: false,
       newItem: false
@@ -156,7 +153,8 @@ export default class TableComponent extends React.Component {
           placeholder="Select Action"
           disabled={selected.length == 0}
         />
-        {!this.props.footer ? <Button style={{float:'right'}} label="Add" icon="pi pi-plus" onClick={this.addNew}/> : ''}
+        {!this.props.footer ? <Button style={{float:'right', margin: '5px'}} label="Delete" icon="pi pi-times" onClick={this.delete}/> : ''}
+        {!this.props.footer ? <Button style={{float:'right', margin: '5px'}} label="Add" icon="pi pi-plus" onClick={this.addNew}/> : ''}
       </div>
     );
     const dialogFooter = <div className="ui-dialog-buttonpane p-clearfix">

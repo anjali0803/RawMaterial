@@ -84,19 +84,7 @@ class AccKeyValueTable extends React.Component {
     }
 
     async handleClickAllSelected(action, data) {
-		// if (action) {
-		// let sendAcceptanceRes = await axios.post(
-		// 	`${backendUrl}/dashboard/send_acceptance_from_rec`,
-		// 	{
-        //         projectID: this.props.projectId,
-        //         fileType: this.props.documentFiletype,
-        //         recValues: data
-		// 	}
-		// );
-		// } else {
-        //     console.log('actions taken')
-		//     // this.deleteRowAction();
-		// }
+		
     }
     
     render() {

@@ -46,9 +46,6 @@ class OutputDocValueTable extends React.Component {
                 { field: 'referenceStandardValue', header: 'Reference Standard Value' },
                 { field: 'technicalSpecificationValue', header: 'Technical Specification Value' },
                 { field: 'acceptanceCriteriaValue', header: 'Acceptance Criteria Value' }
-
-
-
             ]
         }
         this.onRefresh = this.onRefresh.bind(this);
