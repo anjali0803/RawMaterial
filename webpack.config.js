@@ -15,7 +15,8 @@ module.exports = {
     contentBase: "./src",
     hot: true,
     inline: true,
-    port: 8080
+    host:"0.0.0.0",	  
+    port: 3000
   },
   plugins: [
     new HtmlWebpackPlugin({
