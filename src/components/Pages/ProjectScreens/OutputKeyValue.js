@@ -58,42 +58,30 @@ class OutputKeyValue extends React.Component {
     }
     
     async handleClickAllSelected(action, data) {
-			if (action) {
-                data.forEach(async element => {
-                    let sendAcceptanceRes = await axios.post(
-                        `${backendUrl}/dashboard/docx_download`,
-                        {
-                            DocId: element['DocID']
-                        }
-                    );
-                    // let tempUrl = window.URL.createObjectURL(sendAcceptanceRes.data.data);
-                    let link = document.createElement('a');
-                    link.href = sendAcceptanceRes.data.data;
-                    link.download = true;
-                    
-                    link.click();
-                        // Firefox, necessary to delay revoking the ObjectUR
-                });
-			} else {
-                data.forEach(async element => {
-                    let sendAcceptanceRes = await axios.post(
-                        `${backendUrl}/dashboard/pdf_download`,
-                        {
-                            DocId: element['DocID']
-                        }
-                    );
-                    // let tempUrl = window.URL.createObjectURL(sendAcceptanceRes.data.data);
-                    let link = document.createElement('a');
-                    link.href = sendAcceptanceRes.data.data;
-                    link.download = true;
-                    setTimeout(function(){
-                        link.click();
-                        // Firefox, necessary to delay revoking the ObjectURL
-                    }, 10);
-                });
-			}
-			// this.getUserList();
-		}
+        if (action) {
+            data.forEach(async element => {
+                let sendAcceptanceRes = await axios.post(
+                    `${backendUrl}/dashboard/docx_download`,
+                    {
+                        DocId: element['DocID'],
+                        ProjectID: this.props.projectId,
+                        FileType: element['FileType'],
+                        IsITP: true
+                    }
+                );
+            });
+        } else {
+            data.forEach(async element => {
+                let sendAcceptanceRes = await axios.post(
+                    `${backendUrl}/dashboard/pdf_download`,
+                    {
+                        DocId: element['DocID']
+                    }
+                );
+            });
+        }
+        // this.getUserList();
+    }
 
     onDocIdClick(rowData) {
         this.props.setDocumentId(rowData['DocID']);

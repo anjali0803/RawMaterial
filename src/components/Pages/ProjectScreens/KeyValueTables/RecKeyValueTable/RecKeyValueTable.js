@@ -44,7 +44,7 @@ class RecKeyValueTable extends React.Component {
 				{ field: 'AcceptanceCriteria', header: 'Acceptance Criteria' }
 			],
             actions: [
-                { label: "Accept", value: 1 },
+                { label: "Accept", value: 1 }
 			]
         }
 
@@ -102,8 +102,7 @@ class RecKeyValueTable extends React.Component {
 			}
 		);
 		} else {
-            console.log('actions taken')
-		    // this.deleteRowAction();
+            //something
 		}
     }
     

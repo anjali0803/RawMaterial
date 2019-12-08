@@ -37,7 +37,8 @@ class Recommendations extends React.Component {
 				{ field: 'value', header: 'Value' }
 			],
 			actions: [
-				{ label: "Send selected to Acceptance", value: 1 }
+				{ label: "Send selected to Acceptance", value: 1 },
+				{ label: "Generate DOCX", value: 0 }				
 			]
 		}
 		this.onDocIdClick = this.onDocIdClick.bind(this);
@@ -66,8 +67,17 @@ class Recommendations extends React.Component {
 			}
 		);
 		} else {
-		//TODO reject recommendation call 
-		console.log(data, " is Rejected");
+			data.forEach(async element => {
+                let createDocResponse = await axios.post(
+                    `${backendUrl}/dashboard/docx_download`,
+                    {
+                        DocId: element['DocID'],
+                        ProjectID: this.props.projectId,
+                        FileType: element['FileType'],
+                        IsITP: false
+                    }
+                );
+            });
 		}
 		// this.getUserList();
 	}
@@ -93,7 +103,7 @@ class Recommendations extends React.Component {
 		return (
 			<div>
 				<ButtonHeader saveEnabled={this.props.saveEnabled} deleteEnabled={this.props.deleteEnabled} className="progbar-button-header" onSave={() => this.onSave()} onDelete={() => this.onDelete()} />
-				<TableComponent colList={this.state.tableColList} dataList={this.state.tableData} onDocumentIdClick={this.onDocIdClick} handleClickAllSelected={this.handleClickAllSelected} actionsLabel={this.state.actions} editable={false}/>
+				<TableComponent colList={this.state.tableColList} dataList={this.state.tableData} onDocumentIdClick={this.onDocIdClick} handleClickAllSelected={this.handleClickAllSelected} actionsLabel={this.state.actions} editable={false} footer={true}/>
 			</div>
 			)
 		}
