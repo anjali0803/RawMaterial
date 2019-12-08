@@ -153,14 +153,7 @@ class Details extends React.Component {
         this.props.setProjectCustomer(customer);
         this.props.setProjectTitle(title);
         this.props.setProjectType(type)
-        // while( this.state.isLoadingProgress < 100){
-        //     setInterval(() => {
-        //         this.setState({
-        //             isLoadingProgress: this.state.isLoadingProgress + 15
-        //         });
-        //     }, 6000);
-        // }
-        
+      
         this.setState({
             isLoadingProgress: 100,
             isLoadingTexts: 'Finalizing...'
