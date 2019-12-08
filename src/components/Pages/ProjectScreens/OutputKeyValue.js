@@ -36,7 +36,8 @@ class OutputKeyValue extends React.Component {
                 { field: 'value', header: 'Value' }
             ],
 						actions: [
-							{ label: "kuchh to hoga click karne pe", value: 1 }
+                            { label: "Generate Docx", value: 1 },
+                            { label: "Generate PDF", value: 0 }
 						]
         }
         this.onSave = this.onSave.bind(this);
@@ -58,17 +59,40 @@ class OutputKeyValue extends React.Component {
     
     async handleClickAllSelected(action, data) {
 			if (action) {
-				let sendAcceptanceRes = await axios.post(
-                    `${backendUrl}/dashboard/docx_download`,
-                    {
-                        DocID: data[0]['DocId']
-                    }
-				);
+                data.forEach(async element => {
+                    let sendAcceptanceRes = await axios.post(
+                        `${backendUrl}/dashboard/docx_download`,
+                        {
+                            DocId: element['DocID']
+                        }
+                    );
+                    // let tempUrl = window.URL.createObjectURL(sendAcceptanceRes.data.data);
+                    let link = document.createElement('a');
+                    link.href = sendAcceptanceRes.data.data;
+                    link.download = true;
+                    
+                    link.click();
+                        // Firefox, necessary to delay revoking the ObjectUR
+                });
 			} else {
-					//TODO reject recommendation call 
-					console.log(data, " is Rejected");
+                data.forEach(async element => {
+                    let sendAcceptanceRes = await axios.post(
+                        `${backendUrl}/dashboard/pdf_download`,
+                        {
+                            DocId: element['DocID']
+                        }
+                    );
+                    // let tempUrl = window.URL.createObjectURL(sendAcceptanceRes.data.data);
+                    let link = document.createElement('a');
+                    link.href = sendAcceptanceRes.data.data;
+                    link.download = true;
+                    setTimeout(function(){
+                        link.click();
+                        // Firefox, necessary to delay revoking the ObjectURL
+                    }, 10);
+                });
 			}
-			this.getUserList();
+			// this.getUserList();
 		}
 
     onDocIdClick(rowData) {
