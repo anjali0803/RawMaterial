@@ -50,15 +50,14 @@ class ProjectAssignedByMe extends React.Component {
 
   }
   onProjectIdClick(rowData) {
-    //refresh the document array and project id
-    const { Type, Title, Customer, ProjectID } = rowData;
-    //sconsole.log({ Type, Title, Customer, ProjectID })
-    this.props.setProjectId(ProjectID);
-    this.props.setProjectCustomer(Customer);
-    this.props.setProjectType(Type);
-    this.props.setProjectTitle(Title)
-    this.props.setDocumentArray([]);
-    history.push('/Inquiry/create-new-projects/details');
+
+     const { ProjectType, Title, Client, ProjectID } = rowData;
+     //sconsole.log({ Type, Title, Customer, ProjectID })
+     this.props.setProjectId(ProjectID);
+     this.props.setProjectCustomer(Client);
+     this.props.setProjectType(ProjectType);
+     this.props.setProjectTitle(Title)
+     history.push('/Inquiry/create-new-projects/details');
 
   }
   onRefresh() {
@@ -105,7 +104,7 @@ const mapStateToProps = state => ({
 });
 const mapDispatchToProps = dispatch => ({
   setProjectId: (projectId) => dispatch(setProjectId(projectId)),
-  setProjectType: (projectTitle) => dispatch(setProjectTitle(projectTitle)),
+  setProjectType: (projectType) => dispatch(setProjectType(projectType)),
   setProjectCustomer: (projectCustomer) => dispatch(setProjectCustomer(projectCustomer)),
   setProjectTitle: (projectTitle) => dispatch(setProjectTitle(projectTitle)),
   setDocumentArray: (documentArray) => dispatch(setDocumentArray(documentArray))

@@ -105,7 +105,7 @@ const mapStateToProps = state => ({
 });
 const mapDispatchToProps = dispatch => ({
     setProjectId: (projectId) => dispatch(setProjectId(projectId)),
-    setProjectType: (projectTitle) => dispatch(setProjectTitle(projectTitle)),
+    setProjectType: (projectType) => dispatch(setProjectType(projectType)),
     setProjectCustomer: (projectCustomer) => dispatch(setProjectCustomer(projectCustomer)),
     setProjectTitle: (projectTitle) => dispatch(setProjectTitle(projectTitle)),
     setDocumentArray: (documentArray) => dispatch(setDocumentArray(documentArray))

@@ -20,6 +20,12 @@ class Details extends React.Component {
 
     constructor(props) {
         super(props)
+        if(this.props.newProject){
+            this.props.setProjectId('');
+            this.props.setProjectCustomer('');
+            this.props.setProjectTitle('');
+            this.props.setProjectType('');
+        }
         this.state = {
             projectId: this.props.newProject ? '' : (props.projectId || ''),
             title: this.props.newProject ? '' : (props.projectTitle || ''),
@@ -134,7 +140,7 @@ class Details extends React.Component {
                 isLoadingProgress: val
             });
         }, 2000);
-        
+
         const { title, customer, type } = this.state;
         const { file1, file2, file3, file4 } = this.state;
 
@@ -189,7 +195,7 @@ class Details extends React.Component {
                         <div className="details-project-id-container">
                             <div className="details-input-label">Project Id</div>
                             <InputText id="projectId"
-                                value={this.props.projectId}
+                                value={this.state.projectId}
                                 readOnly={true}
                                 disabled={true}
                             />
