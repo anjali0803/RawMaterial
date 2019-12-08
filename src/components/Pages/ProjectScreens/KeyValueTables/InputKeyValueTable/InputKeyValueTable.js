@@ -5,7 +5,9 @@ import ButtonHeader from '../../../../ButtonHeader/ButtonHeader';
 import { createHashHistory } from 'history'
 import { connect } from "react-redux";
 import TableComponent from '../../../../Table/TableComponent';
+import CostSheetTableComponent from '../../../../Table/CostSheetTableComponent';
 import axios from 'axios';
+import {InputText} from 'primereact/inputtext';
 import { ProgressSpinner } from 'primereact/progressspinner';
 import { backendUrl } from '../../../../../constant';
 const history = createHashHistory();
@@ -31,9 +33,21 @@ class InputKeyValueTable extends React.Component {
         this.state = {
             isLoading: false,
             documentId: props.documentId,
+            grainSize: '',
+            holdTime: '',
+            hoopStress: '',
+            reverseBendTest: '',
+            RtRm: '',
+            SMTS: '',
+            tolerance: '',
+            weight: '',
             keyValueData: [
             ],
             keyValueColumnList: [],
+            tableColList: [
+                { field: 'fieldname', header: 'Field Name' },
+                { field: 'value', header: 'Value' }
+            ],
             keyValueColList: [
                 { field: 'WorkDescription', header: 'Work Description' },
                 { field: 'ClientSpecNumber', header: 'Client Spec Number' },
@@ -73,7 +87,8 @@ class InputKeyValueTable extends React.Component {
 			]
         }
         this.onRefresh = this.onRefresh.bind(this);
-		this.handleClickAllSelected = this.handleClickAllSelected.bind(this);
+        this.handleClickAllSelected = this.handleClickAllSelected.bind(this);
+        this.renderSingleValueEditableTable = this.renderSingleValueEditableTable.bind(this);
 		// // this.onDocIdClick = this.onDocIdClick.bind(this);
     }
     async getKeyValueData() {
@@ -88,7 +103,8 @@ class InputKeyValueTable extends React.Component {
                 }
             );
             this.setState({
-                keyValueColumnList: this.state.keyvalueCostSheetColList
+                keyValueColumnList: this.state.keyvalueCostSheetColList,
+                actions: []
             });
         }else{
             data = await axios.get(
@@ -104,6 +120,27 @@ class InputKeyValueTable extends React.Component {
         }
         data = data.data.data;
         this.setState({ keyValueData: data });
+
+
+        const  tableData  = await axios.get(
+            `${backendUrl}/dashboard/get_ikv_doc`,{
+                params:{
+                    projectID : this.props.projectId
+                }
+            }
+        )
+        let newTableData = tableData.data.data.cost_sheet[0];
+        this.setState({
+            grainSize: newTableData.GrainSize,
+            holdTime: newTableData.HoldTime,
+            hoopStress: newTableData.HoopStress,
+            reverseBendTest: newTableData.ReverseBendTest,
+            RtRm: newTableData.RtRm,
+            SMTS: newTableData.SMTS,
+            tolerance: newTableData.Tolerance,
+            weight: newTableData.Weight,
+        })
+
         this.setState({ isLoading: false })
     }
     componentDidMount() {
@@ -157,8 +194,58 @@ class InputKeyValueTable extends React.Component {
         // this.getUserList();
     }
 
-    render() {
+    renderSingleValueEditableTable() {
+      const tableData = [
+        {
+            fieldname: 'Grain Size',
+            value: this.state.grainSize,
+        },
+        {
+            fieldname: 'Hold Time',
+            value: this.state.holdTime,
+        },
+        {
+            fieldname: 'Hoop Stress',
+            value: this.state.hoopStress,
+        },
+        {
+            fieldname: 'Reverse Bend Test',
+            value: this.state.reverseBendTest,
+        },
+        {
+            fieldname: 'Rtrm',
+            value: this.state.RtRm,
+        },
+        {
+            fieldname: 'SMTS',
+            value: this.state.SMTS,
+        },
+        {
+            fieldname: "Tolerance",
+            value: this.state.tolerance,
+        },
+        {
+            fieldname: 'Weight',
+            value: this.state.weight,
+        }
+      ];
 
+      return (
+        <CostSheetTableComponent
+            colList={this.state.tableColList}
+            dataList={tableData}
+            editable={true}
+            footer={true}
+        />
+      )
+
+    }
+
+    render() {
+        let view = <div></div>;
+        if(this.props.documentFiletype === 'cost_sheet') {
+            view = this.renderSingleValueEditableTable();
+        }
         return !this.state.isLoading ? (
             <div>
                 <ButtonHeader
@@ -181,6 +268,7 @@ class InputKeyValueTable extends React.Component {
                     handleClickAllSelected={this.handleClickAllSelected}
                     editable={true}
                 />
+                {view}
             </div>
         ) : (
                 <div className="spinner-container">

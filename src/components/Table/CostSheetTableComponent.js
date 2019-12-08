@@ -59,7 +59,7 @@ export default class TableComponent extends React.Component {
     return this.inputTextEditor(props, props.field);
   }
   inputTextEditor( props, field ) {
-    return <InputTextarea value={props.rowData[field]} onBlur={(e) => console.log(props.rowData[field])} onChange={(e) => this.onEditorValueChange(e.target.value, props)}  rows={3} cols={5}/>;
+    return <InputText value={props.rowData[field]} onBlur={(e) => console.log(props.rowData[field])} onChange={(e) => this.onEditorValueChange(e.target.value, props)}  rows={3} cols={5}/>;
   }
   onEditorValueChange(value, props) {
     let tempDummyObj = [...props.value];
@@ -164,26 +164,15 @@ export default class TableComponent extends React.Component {
       <div>
         <DataTable
           value={this.state.tableData || dataList}
-          footer={footer}
-          paginator={true}
-          paginatorPosition={"top"}
-          rows={10}
-          selection={this.state.selected}
-          onSelectionChange={e => this.setState({ selected: e.value })}
           editable={true}
           rowClassName={this.props.rowClassName ? (rowData) => this.props.rowClassName(rowData) : () => { }}
         >
-          <Column selectionMode="multiple" style={{ width: '3em' }} />
-          <Column header={<i onClick={this.props.onRefresh} className="pi pi-refresh"></i>} style={{ width: '3em' }} />
           {colList.map((el, index) => {
             const field = el.field;
             const header = el.header;
             let columnProps = {
               id : el.header,
               header: el.header,
-              filter: true,
-              sortable: true,
-              filterMatchMode:'startsWith',
             }
             //console.log(header.toLowerCase().replace(/ /g, ''))
 
