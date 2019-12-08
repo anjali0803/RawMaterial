@@ -136,9 +136,11 @@ class Details extends React.Component {
                     isLoadingTexts: 'Finalizing...'
                 });
             }
-            this.setState({
-                isLoadingProgress: val
-            });
+            if(val < 100){
+                this.setState({
+                    isLoadingProgress: val
+                });
+            }
         }, 2000);
 
         const { title, customer, type } = this.state;

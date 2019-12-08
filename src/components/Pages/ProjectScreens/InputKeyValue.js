@@ -51,7 +51,8 @@ class InputKeyValue extends React.Component {
                 }
             }
         )
-        this.setState({ tableData: tableData.data.data });
+        let newTableData = tableData.data.data.ikv.concat(tableData.data.data.cost_sheet)
+        this.setState({ tableData: newTableData });
         this.setState({ isLoading: false })
     }
     onDocIdClick(rowData) {
