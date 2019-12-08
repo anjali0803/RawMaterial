@@ -73,13 +73,7 @@ class InputKeyValue extends React.Component {
     onDelete() {
         console.log('Input-key-value Delete..');
     }
-    // async getTabledata() {
-    //     this.setState({ isLoading: true })
-    //     let data = await Axios.get('http://5dbdaeb405a6f30014bcaee3.mockapi.io/documents');
-    //     data = data.data;
-    //     this.setState({ tableData: data });
-    //     this.setState({ isLoading: false })
-    // }
+    
     onRefresh() {
         this.getTabledata();
     }

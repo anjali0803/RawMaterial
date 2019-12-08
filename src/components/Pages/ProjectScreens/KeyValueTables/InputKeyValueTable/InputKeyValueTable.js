@@ -33,11 +33,39 @@ class InputKeyValueTable extends React.Component {
             documentId: props.documentId,
             keyValueData: [
             ],
+            keyValueColumnList: [],
             keyValueColList: [
                 { field: 'WorkDescription', header: 'Work Description' },
                 { field: 'ClientSpecNumber', header: 'Client Spec Number' },
                 { field: 'TestingFrequency', header: 'Testing Frequency' },
                 { field: 'AcceptanceCriteria', header: 'Acceptance Criteria Value' }
+            ],
+            keyvalueCostSheetColList: [
+                { field: 'Applicable Main standard', header: 'Applicable Main standard' },
+                { field: 'Bare / Coated External/Coated (Ext+Intl)', header: 'Bare / Coated External/Coated (Ext+Intl)' },
+                { field: '"Basic Steel Price considered "', header: 'Basic Steel Price considered' },
+                { field: 'Cbm Ratio', header: 'Cbm Ratio' },
+                { field: 'Duties & C&F Charges', header: 'Duties & C&F Charges' },
+                { field: 'Each Pipe Length', header: 'Each Pipe Length' },
+                { field: 'Grade', header: 'Grade' },
+                { field: 'Inwards Transportation for plates/coils', header: 'Inwards Transportation for plates/coils' },
+                { field: 'Item', header: 'Item' },
+                { field: 'Kg/Meter', header: 'Kg/Meter' },
+                { field: 'OD', header: 'OD' },
+                { field: 'Pipe Type', header: 'Pipe Type' },
+                { field: 'Product Service Level (PSL-1/2)', header: 'Product Service Level (PSL-1/2)' },
+                { field: 'Quantity', header: 'Quantity' },
+                { field: 'Quantity (Joints)', header: 'Quantity (Joints)' },
+                { field: 'Quantity (MT)', header: 'Quantity (MT)' },
+                { field: 'Quantity (Square meters)', header: 'Quantity (Square meters)' },
+                { field: 'RM Waste', header: 'RM Waste' },
+                { field: 'Service (Onshore/Offshore)', header: 'Service (Onshore/Offshore)' },
+                { field: 'Steel Source / Options', header: 'Steel Source / Options' },
+                { field: 'Total Cbm', header: 'Total Cbm' },
+                { field: 'Wall thickness', header: 'Wall thickness' },
+                { field: 'Wastage after Considering Salvage', header: 'Wastage after Considering Salvage' },
+                { field: 'Weight Per Pipe', header: 'Weight Per Pipe' },
+                { field: 'Welspun Plant Location', header: 'Welspun Plant Location' }
             ],
             actions: [
                 { label: "Recommendation", value: 1 },
@@ -49,14 +77,31 @@ class InputKeyValueTable extends React.Component {
 		// // this.onDocIdClick = this.onDocIdClick.bind(this);
     }
     async getKeyValueData() {
+        let data;
         this.setState({ isLoading: true })
-        let data = await axios.get(
-            `${backendUrl}/dashboard/get_ikv_doc_docid`,{
-                params:{
-                    docID : this.state.documentId
+        if(this.props.documentFiletype === 'cost_sheet'){
+            data = await axios.get(
+                `${backendUrl}/dashboard/get_costsheet_doc_docid`,{
+                    params:{
+                        docID : this.state.documentId
+                    }
                 }
-            }
-        );
+            );
+            this.setState({
+                keyValueColumnList: this.state.keyvalueCostSheetColList
+            });
+        }else{
+            data = await axios.get(
+                `${backendUrl}/dashboard/get_ikv_doc_docid`,{
+                    params:{
+                        docID : this.state.documentId
+                    }
+                }
+            );
+            this.setState({
+                keyValueColumnList: this.state.keyValueColList
+            });
+        }
         data = data.data.data;
         this.setState({ keyValueData: data });
         this.setState({ isLoading: false })
@@ -128,7 +173,7 @@ class InputKeyValueTable extends React.Component {
                     projectId={this.props.projectId}
                 />
                 <TableComponent
-                    colList={this.state.keyValueColList}
+                    colList={this.state.keyValueColumnList}
                     dataList={this.state.keyValueData}
                     rowClassName={this.rowClassName}
                     onRefresh={this.onRefresh}
