@@ -53,13 +53,25 @@ class FileUpload extends React.Component {
         this.props.onFileSelect(e.target.files[0]);
     }
     render() {
-
+        let docUploadProps = {
+            type: "file",
+            name: "chooseFile",
+            id: "chooseFile",
+            disabled: this.props.disabled,
+            onChange: (e) => this.onChange(e)
+        }
+        if(this.props.docxOnly){
+            docUploadProps = {
+                ...docUploadProps,
+                accept: ".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+            }
+        }
         return (
             <div className={this.state.classString}>
                 <div className="file-select">
                     <div className="file-select-button" id="fileName">Choose File</div>
                     <div className="file-select-name" id="noFile">{this.state.fileName.length > 50 ? (this.state.fileName.substring(0,20)+ '.....' + this.state.fileName.substring(this.state.fileName.length - 20, this.state.fileName.length)) : this.state.fileName}</div>
-                    <input type="file" name="chooseFile" id="chooseFile" disabled={this.props.disabled} onChange={(e) => this.onChange(e)} /> 
+                    <input {...docUploadProps}/> 
                 </div>
                 {/* <span className="clear-icon"><Button icon="pi pi-replay"></Button></span>  */}
             </div>

@@ -240,6 +240,7 @@ class Details extends React.Component {
                         className="cost-sheet-upload"
                         onFileSelect={this.saveFile1}
                         disabled={this.props.readOnly} 
+                        docxOnly={true}
                         />
 
                     <div className="upload-label" >PIPE</div>
