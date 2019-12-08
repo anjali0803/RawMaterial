@@ -39,7 +39,7 @@ export default class CreateNewProjects extends React.Component {
                 'Recommendations',
                 'Acceptance',
                 'Output Key Value',
-                'Output Document'
+                'Documents'
             ]
         }
     }
@@ -115,19 +115,19 @@ export default class CreateNewProjects extends React.Component {
                 path: '/Inquiry/create-new-projects/output-key-value/second', component: () => <OutputKeyValueTable
 
                     steps={this.state.steps}
-                    redirectTo='/Inquiry/create-new-projects/output-document'
+                    redirectTo='/Inquiry/create-new-projects/documents'
                     saveEnabled={true} deleteEnabled={true}
                     screenNumber={4}
                 />
             },
 
             {
-                path: '/Inquiry/create-new-projects/output-document', component: () => <OutputDocument
+                path: '/Inquiry/create-new-projects/documents', component: () => <OutputDocument
                     steps={this.state.steps}
                     saveEnabled={true} deleteEnabled={true} />
             },
             {
-                path: '/Inquiry/create-new-projects/output-document/second', component: () => <OutputDocValueTable
+                path: '/Inquiry/create-new-projects/documents/second', component: () => <OutputDocValueTable
                     steps={this.state.steps}
                     redirectTo='/'
                     saveEnabled={true} deleteEnabled={true}
