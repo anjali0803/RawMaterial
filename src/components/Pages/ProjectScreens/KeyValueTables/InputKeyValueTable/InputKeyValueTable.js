@@ -54,6 +54,7 @@ class InputKeyValueTable extends React.Component {
                 { field: 'TestingFrequency', header: 'Testing Frequency' },
                 { field: 'AcceptanceCriteria', header: 'Acceptance Criteria Value' }
             ],
+            keyvalueCostSheetValueList: [],
             keyvalueCostSheetColList: [
                 { field: 'Applicable Main standard', header: 'Applicable Main standard' },
                 { field: 'Bare / Coated External/Coated (Ext+Intl)', header: 'Bare / Coated External/Coated (Ext+Intl)' },
@@ -102,9 +103,66 @@ class InputKeyValueTable extends React.Component {
                     }
                 }
             );
+            const  tableData  = await axios.get(
+                `${backendUrl}/dashboard/get_ikv_doc`,{
+                    params:{
+                        projectID : this.props.projectId
+                    }
+                }
+            )
+            let newTableData = tableData.data.data.cost_sheet[0];
+            this.setState({
+                grainSize: newTableData.GrainSize,
+                holdTime: newTableData.HoldTime,
+                hoopStress: newTableData.HoopStress,
+                reverseBendTest: newTableData.ReverseBendTest,
+                RtRm: newTableData.RtRm,
+                SMTS: newTableData.SMTS,
+                tolerance: newTableData.Tolerance,
+                weight: newTableData.Weight,
+                pipeLength: newTableData.PipeLength
+            })
             this.setState({
                 keyValueColumnList: this.state.keyvalueCostSheetColList,
-                actions: []
+                actions: [],
+                keyvalueCostSheetValueList: [
+                    {
+                        fieldname: 'Grain Size',
+                        value: newTableData.GrainSize,
+                    },
+                    {
+                        fieldname: 'Hold Time',
+                        value: newTableData.HoldTime,
+                    },
+                    {
+                        fieldname: 'Hoop Stress',
+                        value: newTableData.HoopStress,
+                    },
+                    {
+                        fieldname: 'Reverse Bend Test',
+                        value: newTableData.ReverseBendTest,
+                    },
+                    {
+                        fieldname: 'Rtrm',
+                        value: newTableData.RtRm,
+                    },
+                    {
+                        fieldname: 'SMTS',
+                        value: newTableData.SMTS,
+                    },
+                    {
+                        fieldname: "Tolerance",
+                        value: newTableData.Tolerance,
+                    },
+                    {
+                        fieldname: 'Weight',
+                        value: newTableData.Weight,
+                    },
+                    {
+                        fieldname: 'Pipe length',
+                        value: newTableData.PipeLength,
+                    }
+                  ]
             });
         }else{
             data = await axios.get(
@@ -121,26 +179,6 @@ class InputKeyValueTable extends React.Component {
         data = data.data.data;
         this.setState({ keyValueData: data });
 
-
-        const  tableData  = await axios.get(
-            `${backendUrl}/dashboard/get_ikv_doc`,{
-                params:{
-                    projectID : this.props.projectId
-                }
-            }
-        )
-        let newTableData = tableData.data.data.cost_sheet[0];
-        this.setState({
-            grainSize: newTableData.GrainSize,
-            holdTime: newTableData.HoldTime,
-            hoopStress: newTableData.HoopStress,
-            reverseBendTest: newTableData.ReverseBendTest,
-            RtRm: newTableData.RtRm,
-            SMTS: newTableData.SMTS,
-            tolerance: newTableData.Tolerance,
-            weight: newTableData.Weight,
-        })
-
         this.setState({ isLoading: false })
     }
     componentDidMount() {
@@ -150,13 +188,35 @@ class InputKeyValueTable extends React.Component {
         this.getKeyValueData();
     }
     async onSave() {
-        const saveEditedValue = await axios.post(
-            `${backendUrl}/dashboard/update_ikv_values`,
-            {
-                docID: this.props.documentId,
-                values: this.state.keyValueData
-            }
-        )
+        let saveEditedValue;
+        if(this.props.documentFiletype === 'cost_sheet'){
+            saveEditedValue = await axios.post(
+                `${backendUrl}/dashboard/update_costsheet_value`,
+                {
+                    docID: this.props.documentId,
+                    values: this.state.keyValueData,
+                    docData: {
+                        GrainSize: this.state.keyvalueCostSheetValueList[0].value,
+                        HoldTime: this.state.keyvalueCostSheetValueList[1].value,
+                        HoopStress: this.state.keyvalueCostSheetValueList[2].value,
+                        ReverseBendTest: this.state.keyvalueCostSheetValueList[3].value,
+                        RtRm: this.state.keyvalueCostSheetValueList[4].value,
+                        SMTS: this.state.keyvalueCostSheetValueList[5].value,
+                        Tolerance: this.state.keyvalueCostSheetValueList[6].value,
+                        Weight: this.state.keyvalueCostSheetValueList[7].value,
+                        PipeLength: this.state.keyvalueCostSheetValueList[8].value
+                    }
+                }
+            )
+        }else{
+            saveEditedValue = await axios.post(
+                `${backendUrl}/dashboard/update_ikv_values`,
+                {
+                    docID: this.props.documentId,
+                    values: this.state.keyValueData
+                }
+            )
+        }
         console.log('data saved', saveEditedValue);
     }
     onDelete() {
@@ -195,45 +255,47 @@ class InputKeyValueTable extends React.Component {
     }
 
     renderSingleValueEditableTable() {
-      const tableData = [
-        {
-            fieldname: 'Grain Size',
-            value: this.state.grainSize,
-        },
-        {
-            fieldname: 'Hold Time',
-            value: this.state.holdTime,
-        },
-        {
-            fieldname: 'Hoop Stress',
-            value: this.state.hoopStress,
-        },
-        {
-            fieldname: 'Reverse Bend Test',
-            value: this.state.reverseBendTest,
-        },
-        {
-            fieldname: 'Rtrm',
-            value: this.state.RtRm,
-        },
-        {
-            fieldname: 'SMTS',
-            value: this.state.SMTS,
-        },
-        {
-            fieldname: "Tolerance",
-            value: this.state.tolerance,
-        },
-        {
-            fieldname: 'Weight',
-            value: this.state.weight,
-        }
-      ];
-
+    //   const tableData = [
+    //     {
+    //         fieldname: 'Grain Size',
+    //         value: this.state.grainSize,
+    //     },
+    //     {
+    //         fieldname: 'Hold Time',
+    //         value: this.state.holdTime,
+    //     },
+    //     {
+    //         fieldname: 'Hoop Stress',
+    //         value: this.state.hoopStress,
+    //     },
+    //     {
+    //         fieldname: 'Reverse Bend Test',
+    //         value: this.state.reverseBendTest,
+    //     },
+    //     {
+    //         fieldname: 'Rtrm',
+    //         value: this.state.RtRm,
+    //     },
+    //     {
+    //         fieldname: 'SMTS',
+    //         value: this.state.SMTS,
+    //     },
+    //     {
+    //         fieldname: "Tolerance",
+    //         value: this.state.tolerance,
+    //     },
+    //     {
+    //         fieldname: 'Weight',
+    //         value: this.state.weight,
+    //     }
+    //   ];
+    //   this.setState({
+    //     keyvalueCostSheetValueList: tableData
+    //   })
       return (
         <CostSheetTableComponent
             colList={this.state.tableColList}
-            dataList={tableData}
+            dataList={this.state.keyvalueCostSheetValueList}
             editable={true}
             footer={true}
         />
