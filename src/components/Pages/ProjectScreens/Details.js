@@ -99,41 +99,50 @@ class Details extends React.Component {
     async onSave() {
         this.setState({
             isLoading: true
-        })
-        this.setState({
-            isLoadingTexts: 'Uploading documents...'
-        })
+        });
+
         this.interval = setInterval(() => {
             let val = this.state.isLoadingProgress;
-            val += Math.floor(Math.random() * 10) + 5;
-
+            val += Math.floor(Math.random() * 10) + 2;
+            
+            if(val < 20){
+                this.setState({
+                    isLoadingTexts: 'Uploading documents...'
+                });
+            }
+            if(val > 20 && val < 40) {
+                this.setState({
+                    isLoadingTexts: 'Extracting information...'
+                });
+            }
+            if(val > 50 && val < 60) {
+                this.setState({
+                    isLoadingTexts: 'Preparing insights...'
+                });
+            }
+            if(val > 60 && val < 90) {
+                this.setState({
+                    isLoadingTexts: 'Creating project...'
+                });
+            }
+            if( val > 90){
+                this.setState({
+                    isLoadingTexts: 'Finalizing...'
+                });
+            }
             this.setState({
                 isLoadingProgress: val
             });
-        }, 3000);
+        }, 2000);
+        
         const { title, customer, type } = this.state;
         const { file1, file2, file3, file4 } = this.state;
 
         const file1Res = await this.upLoadFiletoS3(file1);
-        this.setState({
-            isLoadingProgress: this.state.isLoadingProgress + 12
-        });
         const file2Res = await this.upLoadFiletoS3(file2);
-        this.setState({
-            isLoadingTexts: 'Extracting documets...',
-            isLoadingProgress: this.state.isLoadingProgress + 12
-        });
-        
         const file3Res = await this.upLoadFiletoS3(file3);
-        this.setState({
-            isLoadingProgress: this.state.isLoadingProgress + 12,
-            isLoadingTexts: 'Preparing insights...'
-        });
         const file4Res = await this.upLoadFiletoS3(file4);
-        this.setState({
-            isLoadingProgress: this.state.isLoadingProgress + 12,
-            isLoadingTexts: 'Creating project...'
-        });
+        
         const createProjectRes = await axios.post(
             `${backendUrl}/dashboard/create_project`,
             {
@@ -153,11 +162,9 @@ class Details extends React.Component {
         this.props.setProjectCustomer(customer);
         this.props.setProjectTitle(title);
         this.props.setProjectType(type)
-      
         this.setState({
-            isLoadingProgress: 100,
-            isLoadingTexts: 'Finalizing...'
-        });
+            isLoading: false
+        })
         history.push('/Inquiry/create-new-projects/input-key-value')
     }
     onDelete() {
@@ -254,7 +261,7 @@ class Details extends React.Component {
                 </form>
         </div >) : 
             (<div>
-                <ProgressBar value={this.state.isLoadingProgress} displayValueTemplate={this.displayValueTemplate}></ProgressBar>
+                <ProgressBar className="loading-bar" value={this.state.isLoadingProgress} displayValueTemplate={this.displayValueTemplate}></ProgressBar>
             </div>)
         )
     }
