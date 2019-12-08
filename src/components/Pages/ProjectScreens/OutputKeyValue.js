@@ -111,7 +111,9 @@ class OutputKeyValue extends React.Component {
                     handleClickAllSelected={this.handleClickAllSelected}
                     actionsLabel={this.state.actions}
                     editable={false}
-                    footer={true}/>
+                    footer={true}
+                    tabulate={true}
+                />
             </div>
         ) : (
 

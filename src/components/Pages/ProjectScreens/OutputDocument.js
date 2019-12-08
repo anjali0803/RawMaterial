@@ -58,6 +58,28 @@ class OutputDocument extends React.Component {
                 downloadLink: <a href={data[0].ClientSpecOuterrCoating}>Download</a>
             }
         ];
+        if(data[0].CommentSheetCoating){
+            obj.push({
+                fileType: 'Comment Sheet Coating',
+                downloadLink: <a href={data[0].CommentSheetCoating}>Download</a>  
+            })
+        }
+        if(data[0].CommentSheetPipe){
+            obj.push({
+                fileType: 'Comment Sheet Pipe',
+                downloadLink: <a href={data[0].CommentSheetPipe}>Download</a>  
+            })
+        }if(data[0].ITPCoating){
+            obj.push({
+                fileType: 'ITP Coating',
+                downloadLink: <a href={data[0].ITPCoating}>Download</a>  
+            })
+        }if(data[0].ITPPipe){
+            obj.push({
+                fileType: 'ITP Pipe',
+                downloadLink: <a href={data[0].ITPPipe}>Download</a>  
+            })
+        }
         this.setState({ tableData: obj });
         this.setState({ isLoading: false })
     }

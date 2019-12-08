@@ -12,6 +12,8 @@ import { Dialog } from 'primereact/dialog';
 import isEqual from 'lodash.isequal';
 import "./index.css";
 import { throws } from "assert";
+import Axios from "axios";
+import { backendUrl } from "../../constant";
 
 export default class TableComponent extends React.Component {
   constructor(props) {
@@ -44,6 +46,7 @@ export default class TableComponent extends React.Component {
     this.updateProperty = this.updateProperty.bind(this);
     this.save = this.save.bind(this);
     this.delete = this.delete.bind(this);
+    this.tabulate = this.tabulate.bind(this);
   }
 
   documentIdTemplate(rowData) {
@@ -137,6 +140,18 @@ export default class TableComponent extends React.Component {
     });
   }
 
+  async tabulate(){
+    this.state.selected.forEach(async element => {
+      let tabulateRes = await Axios.post(
+        `${backendUrl}/dashboard/tabulate`,
+        {
+          docID: element['DocID'],
+          fileType: element['FileType']
+        }
+      )
+    })
+  }
+
   render() {
     const colList = this.props.colList;
     const selected = this.state.selected;
@@ -155,6 +170,7 @@ export default class TableComponent extends React.Component {
         />
         {!this.props.footer ? <Button style={{float:'right', margin: '5px'}} label="Delete" icon="pi pi-times" onClick={this.delete}/> : ''}
         {!this.props.footer ? <Button style={{float:'right', margin: '5px'}} label="Add" icon="pi pi-plus" onClick={this.addNew}/> : ''}
+        {this.props.tabulate ? <Button style={{float:'right', margin: '5px'}} label="Tabulate" icon="pi pi-plus" onClick={this.tabulate}/> : ''}
       </div>
     );
     const dialogFooter = <div className="ui-dialog-buttonpane p-clearfix">
