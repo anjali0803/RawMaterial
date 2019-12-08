@@ -39,7 +39,7 @@ export default class CreateNewProjects extends React.Component {
                 'Recommendations',
                 'Acceptance',
                 'Output Key Value',
-                'Output Document'
+                'Document'
             ]
         }
     }
