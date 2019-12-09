@@ -37,7 +37,7 @@ class MenuComponent extends React.Component {
                 items: [
                     {
                         label: "Dashboard",
-                        icon: "",
+                        icon: "pi pi-fw pi-home",
                         command: event => {
                             window.location.hash = "/";
                         }
