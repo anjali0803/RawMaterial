@@ -22,7 +22,7 @@ export class ProjectsTable extends React.Component {
   }
   projectIdTemplate(rowData) {
 
-    return <a onClick={() => this.props.onProjectIdClick(rowData)} >{rowData['ProjectID']}</a>
+    return <a onClick={() => this.props.onProjectIdClick(rowData)} style={{cursor: 'pointer'}}>{rowData['ProjectID']}</a>
   }
   async handleClickAllSelected(action) {
     let data = this.state.selected;
@@ -73,6 +73,9 @@ export class ProjectsTable extends React.Component {
           paginator={true}
           paginatorPosition={"top"}
           rows={10}
+          scrollable={true}
+          autoLayout={true}
+          resizableColumns={true}
           selection={this.state.selected}
           onSelectionChange={e => this.setState({ selected: e.value })}
         >
@@ -93,6 +96,7 @@ export class ProjectsTable extends React.Component {
                 sortable={true}
                 filterMatchMode="startsWith"
                 body={this.projectIdTemplate}
+                style={{width:'200px'}}
               />
             }
             else
@@ -103,7 +107,7 @@ export class ProjectsTable extends React.Component {
                   filter={true}
                   sortable={true}
                   filterMatchMode="startsWith"
-
+                  style={{width:'200px'}}
                 />
               );
           })}
