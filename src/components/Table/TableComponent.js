@@ -50,7 +50,7 @@ export default class TableComponent extends React.Component {
   }
 
   documentIdTemplate(rowData) {
-    return <a onClick={() => this.props.onDocumentIdClick(rowData)} >{rowData['DocID']}</a>
+    return <a onClick={() => this.props.onDocumentIdClick(rowData)} style={{cursor: 'pointer'}}>{rowData['DocID']}</a>
   }
   handleClickAllSelected(action) {
     const data = this.state.selected;
@@ -184,9 +184,12 @@ export default class TableComponent extends React.Component {
           paginator={true}
           paginatorPosition={"top"}
           rows={10}
+          scrollable={true}
           selection={this.state.selected}
           onSelectionChange={e => this.setState({ selected: e.value })}
           editable={true}
+          autoLayout={true}
+          resizableColumns={true}
           rowClassName={this.props.rowClassName ? (rowData) => this.props.rowClassName(rowData) : () => { }}
         >
           <Column selectionMode="multiple" style={{ width: '3em' }} />
@@ -209,7 +212,7 @@ export default class TableComponent extends React.Component {
                 id={`table-${index}`}
                 {...columnProps}
                 body={this.documentIdTemplate}
-                style={{width:'250px'}}
+                style={{width:'200px'}}
               />
             }
             else{
@@ -223,7 +226,7 @@ export default class TableComponent extends React.Component {
                 <Column
                   field={el.field}
                   {...columnProps}
-                  style={{width:'250px'}}
+                  style={{width:'200px'}}
                 />
               );
             }

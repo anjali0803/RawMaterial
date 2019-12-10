@@ -13,21 +13,18 @@
 }
 .document-id-container{
     text-align: center;
-    margin: 5px;
-    width:600px;
+    width:50%;
     height : 100%;
     float:left;
     border-right: 2px solid white;
+    margin-right: 20px;
 }
 
 .project-id-container{
     text-align: center;
-    margin : 5px;
-    width: 500px;
-
+    width: 45%;
     height:100%;
-   float: left;
-    
+    float: right;
 }
 
 .clearfix::after {
