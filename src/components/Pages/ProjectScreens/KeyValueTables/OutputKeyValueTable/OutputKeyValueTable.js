@@ -34,15 +34,15 @@ class OutputKeyValueTable extends React.Component {
             documentId: props.documentArray[props.screenNumber - 1] || '',
             keyValueData: [],
             keyValueColList: [
+                { field: 'WorkDescription', header: 'Work Description' },
+                { field: 'ReferenceStandard', header: 'Reference Standard' },
+                { field: 'TestingFrequency', header: 'Testing Frequency' },
                 { field: 'AcceptanceCriteria', header: 'Acceptance Criteria' },
                 { field: 'Documents', header: 'Documents' },
-                { field: 'ReferenceStandard', header: 'Reference Standard' },
-                { field: 'Section', header: 'Section' },
-                { field: 'Subsection', header: 'Sub Section' },
+                // { field: 'Section', header: 'Section' },
+                // { field: 'Subsection', header: 'Sub Section' },
                 { field: 'TPI', header: 'TPI' },
-                { field: 'TestingFrequency', header: 'Testing Frequency' },
                 { field: 'WTL', header: 'WTL' },
-                { field: 'WorkDescription', header: 'Work Description' },
             ],
             actions: [
 			]

@@ -16,7 +16,6 @@ const pageMapIndex = [
     'acceptance',
     'output-key-value',
     'output-document'
-
 ]
 class RecKeyValueTable extends React.Component {
     constructor(props) {
@@ -35,13 +34,13 @@ class RecKeyValueTable extends React.Component {
             keyValueData: [
             ],
             keyValueColList: [
-				{ field: 'ClientSpecNumber', header: 'Client Spec Number' },
-                { field: 'CostImpact', header: 'Cost Impact' },
-				{ field: 'WorkDescription', header: 'Work Description' },
-                { field: 'TestingFrequencyProposal', header: 'Testing Ferquency Proposal' },
+                { field: 'WorkDescription', header: 'Work Description' },
+                { field: 'ClientSpecNumber', header: 'Client Spec Number' },
                 { field: 'TestingFrequency', header: 'Testing Ferquency' },
-				{ field: 'AcceptanceCriteriaProposal', header: 'Acceptance Criteria Proposal' },
-				{ field: 'AcceptanceCriteria', header: 'Acceptance Criteria' }
+                { field: 'AcceptanceCriteria', header: 'Acceptance Criteria' },
+                { field: 'TestingFrequencyProposal', header: 'Testing Ferquency Proposal' },
+                { field: 'AcceptanceCriteriaProposal', header: 'Acceptance Criteria Proposal' },
+                { field: 'CostImpact', header: 'Cost Impact' }
 			],
             actions: [
                 { label: "Accept", value: 1 }

@@ -33,8 +33,8 @@ class AccKeyValueTable extends React.Component {
             documentId: props.documentArray[props.screenNumber - 1] || '',
             keyValueData: [],
             keyValueColList: [
-				{ field: 'ClientSpecNumber', header: 'Client Spec Number' },
-				{ field: 'WorkDescription', header: 'Work Description' },
+                { field: 'WorkDescription', header: 'Work Description' },
+                { field: 'ClientSpecNumber', header: 'Client Spec Number' },
                 { field: 'TestingFrequency', header: 'Testing Ferquency' },
 				{ field: 'AcceptanceCriteria', header: 'Acceptance Criteria' }
             ]
