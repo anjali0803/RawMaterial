@@ -32,16 +32,18 @@ class MenuComponent extends React.Component {
     render() {
         const items = [
             {
+                label: "Dashboard",
+                icon: "pi pi-fw pi-home",
+                items:[],
+                command: event => {
+                    window.location.hash = "/";
+                }
+            },
+            {
                 label: "Inquiry",
                 icon: "pi pi-fw pi-question",
                 items: [
-                    {
-                        label: "Dashboard",
-                        icon: "",
-                        command: event => {
-                            window.location.hash = "/";
-                        }
-                    },
+                    
                     {
                         label: "Create new projects",
                         icon: "pi pi-fw pi-plus",
