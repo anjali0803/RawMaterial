@@ -33,7 +33,7 @@ class Details extends React.Component {
             customer: this.props.newProject ? '' : (props.projectCustomer || ''),
             projectTypes: [
                 { label: 'HFW', value: 'HFW' },
-                { label: 'SAWH', value: 'SAWH' },
+                { label: 'HSAW', value: 'HSAW' },
             ],
             file1: this.props.newProject ? '' : (props.file1 || ''),
             file2: this.props.newProject ? '' : (props.file3 || ''),
