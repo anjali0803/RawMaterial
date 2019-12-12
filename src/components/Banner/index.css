@@ -2,7 +2,7 @@
     
     background-image:linear-gradient(
       to right top,
-      #1341ad,#052c86
+      #6779a5,#052c86
     );
 
     background-size: cover;
@@ -10,7 +10,7 @@
 
     /* add width  and height to top level, provided by props */
     width: 100vw;
-    height: 110px;
+    height: 160px;
     align-content: center;
     
     
