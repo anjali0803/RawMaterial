@@ -9,6 +9,7 @@
     "@coreui/react": "^2.5.1",
     "axios": "^0.19.0",
     "bootstrap": "^4.4.1",
+    "chance": "^1.1.4",
     "chart.js": "^2.9.3",
     "classnames": "^2.2.6",
     "core-js": "^3.5.0",

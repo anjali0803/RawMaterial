@@ -154,7 +154,7 @@
 	min-width: 181px;
 	float: left;
 	position: relative;
-	background-color: #547bc4;
+	background-color: #b721ff;
 	-webkit-user-select: none;
 	/* -moz-user-select: none; */
 	-ms-user-select: none;
@@ -172,8 +172,8 @@
 	width: 0;
 	height: 0;
 	border-top: 19px solid transparent;
-	border-bottom: 17px solid transparent;
-	border-left: 17px solid #547bc4;	
+	border-bottom: 21px solid transparent;
+	border-left: 17px solid #b721ff;	
 	z-index: 2;
   transition: border-color 0.2s ease;
 }
@@ -216,11 +216,11 @@
 
 .progress-steps .progress-step.progress-current {
 	color: #fff;
-	background-color: #23468c;
+	background-color: #770cab;
 }
 
 .progress-steps .progress-step.progress-current:after {
-	border-left: 17px solid #23468c;	
+	border-left: 17px solid #770cab;	
 }
 
 .loading-bar{

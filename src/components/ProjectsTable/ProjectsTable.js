@@ -12,6 +12,9 @@ import axios from "axios";
 import { backendUrl } from '../../constant';
 import ReactTable from "react-table";
 import { Col, Row } from 'reactstrap';
+import checkboxHOC from "react-table/lib/hoc/selectTable";
+
+const ReactTableWrapper = checkboxHOC(ReactTable);
 
 export class ProjectsTable extends React.Component {
   constructor() {
@@ -21,8 +24,12 @@ export class ProjectsTable extends React.Component {
       isLoading: false,
     };
     this.handleClickAllSelected = this.handleClickAllSelected.bind(this);
+    this.toggleSelection = this.toggleSelection.bind(this);
+    this.toggleAll = this.toggleAll.bind(this);
+    this.isSelected = this.isSelected.bind(this);
   }
   
+
   async handleClickAllSelected(action) {
     let data = this.state.selected;
         
@@ -47,11 +54,46 @@ export class ProjectsTable extends React.Component {
     }
   }
 
-  render() {
-    const colList = this.props.colList;
-    const selected = this.state.selected;
-    var dataList = this.props.dataList;
+  toggleSelection(key, shift, row) {
+    let selected = [...this.state.selected];
+    const keyIndex = selected.indexOf(key.replace('select-',''));
+    if (keyIndex >= 0) {
+      selected = [
+        ...selected.slice(0, keyIndex),
+        ...selected.slice(keyIndex + 1)
+      ];
+    } else {
+      selected.push(key.replace('select-',''));
+    }
+    this.setState({ selected });
+  };
 
+  toggleAll() {
+    const selectAll = this.state.selectAll ? false : true;
+    const selected = [];
+    if (selectAll) {
+      // we need to get at the internals of ReactTable
+      const wrappedInstance = this.checkboxTable.getWrappedInstance();
+      // the 'sortedData' property contains the currently accessible records based on the filter and sort
+      const currentRecords = wrappedInstance.getResolvedState().sortedData;
+      // we just push all the IDs onto the selected array
+      currentRecords.forEach(item => {
+        selected.push(item._original._id);
+      });
+    }
+    this.setState({ selectAll, selected });
+  };
+
+  isSelected(key) {
+    return this.state.selected.includes(key);
+  };
+
+
+  render() {
+    const { colList, dataList } = this.props;
+    const { toggleSelection, toggleAll, isSelected } = this;
+    const { data, columns, selectAll, selected } = this.state;
+   
     const actions = [
       { label: "Send to recommendation", value: 1 },
       { label: "Send to acceptance", value: 0 }
@@ -65,27 +107,42 @@ export class ProjectsTable extends React.Component {
       />
     );
     
+    const checkboxProps = {
+      selectAll,
+      isSelected,
+      toggleSelection,
+      toggleAll,
+      selectType: "checkbox",
+    };
+
+
     return (
         <Col xs={12} className="tableContainer">
-          <ReactTable
+          {footer}
+          <ReactTableWrapper
+            ref={r => (this.checkboxTable = r)} 
             columns={colList.map((col) => Object.assign(
               {},
               { Header: col.header, accessor: col.field, width: col.width, ...col}
             ))}
-            data={dataList}
-            pageSize={dataList && dataList.length > 0 ? 8 : 0}
+            data={dataList.map(item => {
+              // using chancejs to generate guid
+              // shortid is probably better but seems to have performance issues
+              // on codesandbox.io
+              const _id = item.id;
+              return {
+                _id,
+                ...item
+              };
+            })}
             getTrProps={(state, record) => {
               return {
                 onClick: () => this.props.onProjectIdClick(record.original),
               }
             }}
-            showPageJump={false}
-            resizable={false}
-            showPageSizeOptions={false}
-            previousText={"Back"}
-            pageText={""}
+            pageSize={dataList && dataList.length > 0 ? 8 : 0}
+            {...checkboxProps}
           />
-          
         </Col>
     );
   }
