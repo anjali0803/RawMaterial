@@ -20,13 +20,9 @@ export class ProjectsTable extends React.Component {
       selected: [],
       isLoading: false,
     };
-    this.projectIdTemplate = this.projectIdTemplate.bind(this);
     this.handleClickAllSelected = this.handleClickAllSelected.bind(this);
   }
-  projectIdTemplate(rowData) {
-
-    return <a onClick={() => this.props.onProjectIdClick(rowData)} style={{cursor: 'pointer'}}>{rowData['ProjectID']}</a>
-  }
+  
   async handleClickAllSelected(action) {
     let data = this.state.selected;
         
@@ -53,7 +49,6 @@ export class ProjectsTable extends React.Component {
 
   render() {
     const colList = this.props.colList;
-    console.log('colList', colList);
     const selected = this.state.selected;
     var dataList = this.props.dataList;
 
@@ -69,22 +64,28 @@ export class ProjectsTable extends React.Component {
         disabled={selected.length == 0}
       />
     );
-    console.log('dsfvvds',dataList);
+    
     return (
         <Col xs={12} className="tableContainer">
           <ReactTable
             columns={colList.map((col) => Object.assign(
               {},
               { Header: col.header, accessor: col.field, width: col.width, ...col}
-          ))}
+            ))}
             data={dataList}
             pageSize={dataList && dataList.length > 0 ? 8 : 0}
+            getTrProps={(state, record) => {
+              return {
+                onClick: () => this.props.onProjectIdClick(record.original),
+              }
+            }}
             showPageJump={false}
             resizable={false}
             showPageSizeOptions={false}
             previousText={"Back"}
             pageText={""}
           />
+          
         </Col>
     );
   }
