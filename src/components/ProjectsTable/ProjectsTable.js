@@ -53,6 +53,7 @@ export class ProjectsTable extends React.Component {
 
   render() {
     const colList = this.props.colList;
+    console.log('colList', colList);
     const selected = this.state.selected;
     var dataList = this.props.dataList;
 
@@ -72,14 +73,10 @@ export class ProjectsTable extends React.Component {
     return (
         <Col xs={12} className="tableContainer">
           <ReactTable
-            columns={[
-              { Header: "id", accessor: "id"}, 
-              { Header: "Title", accessor: "Title"},
-              { Header: "Customer", accessor: "Client"},
-              { Header: "Type", accessor: "ProjectType"},
-              { Header: "Assigned Date", accessor: "AssignedOn"},
-              { Header: "Status", accessor: "ProjectStatus"},
-              { Header: "Created By", accessor: "CreatedBy"}]}
+            columns={colList.map((col) => Object.assign(
+              {},
+              { Header: col.header, accessor: col.field, width: col.width, ...col}
+          ))}
             data={dataList}
             pageSize={dataList && dataList.length > 0 ? 8 : 0}
             showPageJump={false}
