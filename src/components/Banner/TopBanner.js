@@ -20,7 +20,7 @@ class TopBanner extends React.Component {
     }
     render() {
         return (
-            <div className="banner">
+            this.props.userLogin ? <div className="banner">
                 <div className="banner-heading-primary">
                     AutoCIP
                 {this.props.userLogin ? <div className="sign-out-icon" onClick={() => this.logout()}>
@@ -31,7 +31,7 @@ class TopBanner extends React.Component {
                     &copy; by
                 <a href="https://www.matsci.ai/" target="_blank" className="copyright-link"> MatSci AI</a>
                 </div>
-            </div>
+            </div> : null
         );
     }
 }

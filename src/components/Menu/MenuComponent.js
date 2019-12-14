@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component, Suspense } from 'react';
 import Axios from "axios";
 import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
@@ -8,6 +8,21 @@ import { connect } from "react-redux";
 import { setDataList, setColList } from "../../actions/dataActions";
 import "./index.css";
 import { backendUrl } from "../../constant";
+import * as router from 'react-router-dom';
+
+import {
+    AppAside,
+    AppFooter,
+    AppHeader,
+    AppSidebar,
+    AppSidebarFooter,
+    AppSidebarForm,
+    AppSidebarHeader,
+    AppSidebarMinimizer,
+    AppBreadcrumb2 as AppBreadcrumb,
+    AppSidebarNav2 as AppSidebarNav,
+  } from '@coreui/react';
+
 
 class MenuComponent extends React.Component {
     async componentDidMount() {
@@ -32,102 +47,77 @@ class MenuComponent extends React.Component {
     render() {
         const items = [
             {
-                label: "Dashboard",
+                name: "Dashboard",
                 icon: "pi pi-fw pi-home",
-                items:[],
-                command: event => {
-                    window.location.hash = "/";
-                }
+                url: '/'
             },
             {
-                label: "Inquiry",
+                name: "Inquiry",
                 icon: "pi pi-fw pi-question",
-                items: [
+                children: [
                     
                     {
-                        label: "Create new projects",
+                        name: "Create new projects",
                         icon: "pi pi-fw pi-plus",
-                        command: event => {
-                            window.location.hash = "/inquiry/create-new-projects/new";
-                        }
+                        url: '/inquiry/create-new-projects/new'
                     },
                     {
-                        label: "Projects assigned to me",
+                        name: "Projects assigned to me",
                         icon: "pi pi-fw pi-align-left",
-                        command: event => {
-                            window.location.hash = "/inquiry/projects-assigned-to-me";
-                        }
+                        url: "/inquiry/projects-assigned-to-me"
                     },
                     {
-                        label: "Projects assigned by me",
+                        name: "Projects assigned by me",
                         icon: "pi pi-fw pi-align-right",
-                        command: event => {
-                            window.location.hash = "/inquiry/projects-assigned-by-me";
-                        }
+                        url: "/inquiry/projects-assigned-by-me"
                     },
                     {
-                        label: "All ongoing projects",
+                        name: "All ongoing projects",
                         icon: "pi pi-fw pi-clone",
-                        command: event => {
-                            window.location.hash = "/inquiry/all-ongoing-projects";
-                        }
+                        url: "/inquiry/all-ongoing-projects"
                     },
                     {
-                        label: "Closed projects",
+                        name: "Closed projects",
                         icon: "pi pi-fw pi-copy",
-                        command: event => {
-                            window.location.hash = "/inquiry/closed-projects";
-                        }
+                        url: "/inquiry/closed-projects"
                     },
                     {
-                        label: "Archive projects",
+                        name: "Archive projects",
                         icon: "pi pi-fw pi-envelope",
-                        command: event => {
-                            window.location.hash = "/inquiry/archieve-projects";
-                        }
+                        url: "/inquiry/archieve-projects"
                     }
                 ]
             },
             {
-                label: "Report",
+                name: "Report",
                 icon: "pi pi-fw pi-file-excel",
-                items: [
+                children: [
                     {
-                        label: "Generate new reports",
+                        name: "Generate new reports",
                         icon: "pi pi-fw pi-plus",
-                        command: event => {
-                            window.location.hash = "/report/generate-new-reports";
-                        }
+                        url: "/report/generate-new-reports"
                     },
                     {
-                        label: "past reports",
+                        name: "past reports",
                         icon: "pi pi-fw pi-minus",
-                        command: event => {
-                            window.location.hash = "/report/past-reports";
-                        }
+                        url: "/report/past-reports"
                     }
                 ]
             },
             {
-                label: "Support",
+                name: "Support",
                 icon: "pi  pi-info",
-                command: event => {
-                    window.location.hash = "/support";
-                },
-                items: [
+                url: "/support",
+                children: [
                     {
-                        label: "Create new Incident",
+                        name: "Create new Incident",
                         icon: "pi pi-eye",
-                        command: event => {
-                            window.location.hash = "/support/create-new-incident";
-                        }
+                        url: "/support/create-new-incident"
                     },
                     {
-                        label: "Open Incidents",
+                        name: "Open Incidents",
                         icon: "pi pi-circle-off",
-                        command: event => {
-                            window.location.hash = "/support/open-incidents";
-                        }
+                        url: "/support/open-incidents"
                     }
                 ]
             }
@@ -156,7 +146,15 @@ class MenuComponent extends React.Component {
             })
             : null;
 
-        return <PanelMenu model={items} />;
+        return <AppSidebar fixed display="lg">
+          <AppSidebarHeader />
+          <AppSidebarForm />
+          <Suspense>
+          <AppSidebarNav navConfig={{items: items}} {...this.props} router={router}/>
+          </Suspense>
+          <AppSidebarFooter />
+          <AppSidebarMinimizer />
+        </AppSidebar>;
     }
 }
 
@@ -169,7 +167,8 @@ const mapDispatchToProps = dispatch => ({
     setColList: colList => dispatch(setColList(colList)),
 });
 
-export default connect(
+
+export default router.withRouter(connect(
     mapStateToProps,
     mapDispatchToProps
-)(MenuComponent);
+)(MenuComponent));

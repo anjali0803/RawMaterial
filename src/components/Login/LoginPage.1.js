@@ -12,16 +12,13 @@ import {
   setUserList
 } from "../../actions/loginActions";
 import { InputText } from "primereact/inputtext";
+import { Button } from "primereact/button";
 import "./index.css";
 import { createHashHistory } from "history";
 import axios from "axios";
 import { connect } from "react-redux";
-import { FormGroup, Grid, Button, Label, Card, CardBody, CardGroup, Col, Container, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row } from "reactstrap";
-import { Link } from 'react-router-dom';
 import { backendUrl } from '../../constant';
-import Helmet from 'react-helmet';
 // axios.defaults.withCredentials = true;
-
 
 const history = createHashHistory();
 
@@ -85,7 +82,7 @@ class LoginPage extends React.Component {
 
     if (loginResponse) {
       if (loginResponse.data.code === 0) {
-        await this.props.setUserLogin(true);
+        await this.props.setUserLogin(true);        
         await this.props.setUserName(loginResponse.data.username);
         await this.props.setUserRole(loginResponse.data.is_superuser ? 'admin' : '');
 
@@ -94,7 +91,7 @@ class LoginPage extends React.Component {
         localStorage.setItem("role", loginResponse.data.is_superuser ? 'admin' : '');
         history.push(referer);
       }
-      if (loginResponse.data.code === 2) {
+      if(loginResponse.data.code === 2) {
         this.messages.show({
           closable: false,
           severity: "error",
@@ -102,7 +99,7 @@ class LoginPage extends React.Component {
           // detail: "Order submitted"
         });
       }
-      if (loginResponse.data.code === 1) {
+      if(loginResponse.data.code === 1) {
         this.messages.show({
           closable: false,
           severity: "warn",
@@ -111,63 +108,69 @@ class LoginPage extends React.Component {
         });
       }
     }
-  }
+}
 
   render() {
     return (
-      <div>
-        <Helmet
-          title={"AutoCIP"}
-          meta={[
-            { name: 'description', content: '' },
-          ]}
-        />
-        <Row>
-          <div className="limiter">
-            <div className="container-login100">
-              <div className="wrap-login100">
-                  <span className="login100-form-title p-b-48">
-                    <i className="zmdi zmdi-font"></i>
+      <div className="main-container">
+        <div className="login-page">
+          <div className="login-container">
+            <div className="p-grid p-fluid">
+              <div className="p-col-12 p-md-4">
+                <div className="p-inputgroup">
+                  <span className="p-inputgroup-addon">
+                    <i className="pi pi-user"></i>
                   </span>
-
-                  <div className="wrap-input100 validate-input">
-                    <input className="input100 has-val" type="text" name="username" onChange={this.handleInputChange} value={this.state.username}/>
-                    <span className="focus-input100" data-placeholder="Username"></span>
-                  </div>
-
-                  <div className="wrap-input100 validate-input">
-                    <span className="btn-show-pass">
-                      <i className="zmdi zmdi-eye"></i>
-                    </span>
-                    <input className="input100 has-val" type="password" name="password" onChange={this.handleInputChange} value={this.state.password} />
-                    <span className="focus-input100" data-placeholder="Password"></span>
-                  </div>
-
-                  <div className="container-login100-form-btn">
-                    <div className="wrap-login100-form-btn">
-                      <div className="login100-form-bgbtn"></div>
-                      <button className="login100-form-btn" onClick={this.handleSignIn}>
-                        Login
-							        </button>
-                    </div>
-                  </div>
-
-                  <div className="text-center p-t-115">
-                    <span className="txt1">
-                      Don’t have an account?&nbsp;
-						        </span>
-                    <Link class="txt2" to='/sign-up'>Sign Up</Link>
-                  </div>
-
-                  <div className="text-center p-t-115">
-                    <Link class="txt2" to='/forgot-password'>Forgot Password</Link>
-                  </div>
+                  <InputText
+                    placeholder="Username"
+                    name="username"
+                    type="text"
+                    onChange={this.handleInputChange}
+                    value={this.state.username}
+                  />
+                </div>
+              </div>
+              <br />
+              <div className="p-col-12 p-md-4">
+                <div className="p-inputgroup">
+                  <span className="p-inputgroup-addon">
+                    <i className="pi pi-key"></i>
+                  </span>
+                  <InputText
+                    placeholder="Password"
+                    name="password"
+                    type="password"
+                    onChange={this.handleInputChange}
+                    value={this.state.password}
+                  />
+                </div>
               </div>
             </div>
+            <br />
+            <div className="sign-in-container">
+              <Button label="Sign In" onClick={this.handleSignIn} />
+            </div>
+            <br />
+            <div className="sign-up-container">
+              <div
+                className="sign-up-text"
+                onClick={() => history.push("/sign-up")}
+              >
+                Sign Up
+              </div>
+              <div
+                className="forgot-pass-text"
+                onClick={() => history.push("/forgot-password")}
+              >
+                Forgot Password
+              </div>
+            </div>
+            <br/>
+            <Messages ref={el => (this.messages = el)}></Messages>
           </div>
-        </Row>
-
-      </div>);
+        </div>
+      </div>
+    );
   }
 }
 

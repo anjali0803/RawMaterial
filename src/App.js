@@ -11,6 +11,10 @@ import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 import { connect } from "react-redux";
 import { HashRouter, Route, Switch } from "react-router-dom";
 import { setUserLogin, setUserName, setUserRole } from "./actions/loginActions";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'flag-icon-css/css/flag-icon.min.css';
+import 'font-awesome/css/font-awesome.min.css';
+import 'simple-line-icons/css/simple-line-icons.css';
 
 class App extends React.Component {
 
