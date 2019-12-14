@@ -6,6 +6,7 @@ import {
   setUserRole
 } from "../../actions/loginActions";
 import { connect } from "react-redux";
+import { AppAsideToggler, AppNavbarBrand, AppSidebarToggler } from '@coreui/react';
 import './index.css'
 
 class TopBanner extends React.Component {
@@ -21,7 +22,9 @@ class TopBanner extends React.Component {
     render() {
         return (
             this.props.userLogin ? <div className="banner">
+                <AppSidebarToggler className="d-lg-none toggler" display="md" mobile />
                 <div className="banner-heading-primary">
+                
                     AutoCIP
                 {this.props.userLogin ? <div className="sign-out-icon" onClick={() => this.logout()}>
                     <i className="pi pi-sign-out" style={{"fontSize": 40}}></i>

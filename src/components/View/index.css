@@ -1,13 +1,12 @@
 .view-container {
     float: right;
     /* text-align: center; */
-    margin-left: 200px;
+    margin-left: 230px;
     margin-top: 75px;
     /* width: 100%; */
 
     overflow-x: auto;
     overflow-y: auto;
-    width: 87%;
     position: absolute;
     top: 0;
     left: 0;
@@ -28,4 +27,11 @@ body {
 }
 .sidebar {
     margin-top: 75px;
+}
+
+
+@media (max-width: 991.98px){
+    .view-container {
+        margin-left: 0px !important;
+    }
 }

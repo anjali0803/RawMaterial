@@ -21,7 +21,7 @@ import {
     AppSidebarMinimizer,
     AppBreadcrumb2 as AppBreadcrumb,
     AppSidebarNav2 as AppSidebarNav,
-  } from '@coreui/react';
+} from '@coreui/react';
 
 
 class MenuComponent extends React.Component {
@@ -55,7 +55,7 @@ class MenuComponent extends React.Component {
                 name: "Inquiry",
                 icon: "pi pi-fw pi-question",
                 children: [
-                    
+
                     {
                         name: "Create new projects",
                         icon: "pi pi-fw pi-plus",
@@ -143,13 +143,13 @@ class MenuComponent extends React.Component {
             : null;
 
         return <AppSidebar fixed display="lg">
-          <AppSidebarHeader />
-          <AppSidebarForm />
-          <Suspense>
-          <AppSidebarNav navConfig={{items: items}} {...this.props} router={router}/>
-          </Suspense>
-          <AppSidebarFooter />
-          <AppSidebarMinimizer />
+            <AppSidebarHeader />
+            <AppSidebarForm />
+            <Suspense>
+                <AppSidebarNav navConfig={{ items: items }} {...this.props} router={router} />
+            </Suspense>
+            <AppSidebarFooter />
+            <AppSidebarMinimizer />
         </AppSidebar>;
     }
 }

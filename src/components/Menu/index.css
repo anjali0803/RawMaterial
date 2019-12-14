@@ -31,3 +31,19 @@
     /* background-color: blue; */
     
 }
+
+
+
+.sidebar, .sidebar .sidebar-nav, .sidebar .nav {
+    width: 230px !important;
+}
+
+
+
+@media (max-width: 991.98px){
+
+    html:not([dir=rtl]) .sidebar {
+        margin-left: -230px ;
+    }
+}
+
