@@ -226,3 +226,73 @@ border: 1px solid rgb(13, 100, 199);
 	top: 0px;
 	left: 3px;
 }
+
+
+.reactTableSizepicker {
+    float: left;
+    text-align: left;
+    cursor: pointer;
+    width: 50%;
+}
+
+.reactTableSizepickerSelectfield {
+    margin: 0 5px;
+    width: 75px;
+}
+
+
+.reactTableSearch {
+    text-align: right;
+    float: right;
+    width: 50%;
+}
+
+.reactTableSearchLabel {
+    display: block;
+    margin-top: 0 !important;
+}
+
+.reactTableSearchInput {
+    cursor: pointer;
+    margin-left: 10px;
+    max-width: 200px !important;
+}
+
+.ReactFilter {
+    background: white;
+    border-top-right-radius: 8px;
+    display: inline-flex;
+    width:100%;
+    padding: 0px !important;
+}
+
+
+.reactTableSearch input, .reactTableSearch input:focus {
+    cursor: pointer;
+    margin-left: 10px;
+    max-width: 200px!important;
+    width: 100%;
+    border: 2px solid #c8c8c8 !important;
+    border-radius: 2px;
+    margin-top: .5em;
+    line-height: 2em;
+    text-indent: 5px;
+    position: relative;
+}
+
+.dropdownAction {
+    padding-top: 7px;
+    padding-left: 9px;
+    width: 220px;
+
+}
+
+.dropdownAction .p-dropdown{
+    border: 2px solid #a6a6a6 !important;
+    outline: none !important;
+}
+
+.dropdownAction .p-dropdown:focus {
+    outline: none !important;
+}
+
