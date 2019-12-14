@@ -49,7 +49,7 @@ class MenuComponent extends React.Component {
             {
                 name: "Dashboard",
                 icon: "pi pi-fw pi-home",
-                url: '/'
+                url: '/dashboard'
             },
             {
                 name: "Inquiry",

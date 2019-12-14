@@ -1,0 +1,10 @@
+.chart { /* stylelint-disable */
+  margin-top: 1.5em;
+}
+
+
+.pieTitle {
+  text-align: center;
+  height: 2em;
+  margin: 0.5em;
+} 

@@ -15,10 +15,12 @@ import GenerateNewProjects from "../Pages/GenerateNewProjects";
 import PastReports from "../Pages/PastReports";
 import CreateNewIncident from "../Pages/CreateNewIncident";
 import OpenIncidents from "../Pages/OpenIncidents";
+import Dashboard from "../Pages/Dashboard";
 
 class ViewComponent extends React.Component {
   render() {
     var routes = [
+      { path: '/dashboard', component: Dashboard },
       { path: '/inquiry/create-new-projects', component: CreateNewProjects },
       { path: '/inquiry/projects-assigned-to-me', component: ProjectAssignedToMe },
       { path: '/inquiry/projects-assigned-by-me', component: ProjectAssignedByMe },

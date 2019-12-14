@@ -6,9 +6,12 @@ import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Dropdown } from "primereact/dropdown";
 import "./index.css";
+import "./react-table.css";
 import { connect } from "react-redux";
 import axios from "axios";
 import { backendUrl } from '../../constant';
+import ReactTable from "react-table";
+import { Col, Row } from 'reactstrap';
 
 export class ProjectsTable extends React.Component {
   constructor() {
@@ -65,54 +68,27 @@ export class ProjectsTable extends React.Component {
         disabled={selected.length == 0}
       />
     );
+    console.log('dsfvvds',dataList);
     return (
-      <div>
-        <DataTable
-          value={dataList}
-          footer={footer}
-          paginator={true}
-          paginatorPosition={"top"}
-          rows={10}
-          scrollable={true}
-          autoLayout={true}
-          resizableColumns={true}
-          selection={this.state.selected}
-          onSelectionChange={e => this.setState({ selected: e.value })}
-        >
-          <Column selectionMode="multiple" style={{ width: '3em' }} />
-          <Column header={<i onClick={this.props.onRefresh} className="pi pi-refresh"></i>} style={{ width: '3em' }} />
-          {colList.map((el, index) => {
-            const field = el.field;
-            const header = el.header;
-
-            //console.log(header.toLowerCase().replace(/ /g, ''))
-
-            if (header.toLowerCase().replace(/ /g, '') == 'projectid') {
-              //console.log(el);
-              return <Column
-                id={`table-${index}`}
-                header={el.header}
-                filter={true}
-                sortable={true}
-                filterMatchMode="startsWith"
-                body={this.projectIdTemplate}
-                style={{width:'200px'}}
-              />
-            }
-            else
-              return (
-                <Column
-                  field={el.field}
-                  header={el.header}
-                  filter={true}
-                  sortable={true}
-                  filterMatchMode="startsWith"
-                  style={{width:'200px'}}
-                />
-              );
-          })}
-        </DataTable>
-      </div>
+        <Col xs={12} className="tableContainer">
+          <ReactTable
+            columns={[
+              { Header: "id", accessor: "id"}, 
+              { Header: "Title", accessor: "Title"},
+              { Header: "Customer", accessor: "Client"},
+              { Header: "Type", accessor: "ProjectType"},
+              { Header: "Assigned Date", accessor: "AssignedOn"},
+              { Header: "Status", accessor: "ProjectStatus"},
+              { Header: "Created By", accessor: "CreatedBy"}]}
+            data={dataList}
+            pageSize={dataList && dataList.length > 0 ? 8 : 0}
+            showPageJump={false}
+            resizable={false}
+            showPageSizeOptions={false}
+            previousText={"Back"}
+            pageText={""}
+          />
+        </Col>
     );
   }
 }

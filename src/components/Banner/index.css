@@ -1,22 +1,24 @@
 .banner{
-    
-    background-image:linear-gradient(
-      to right top,
-      #6779a5,#052c86
-    );
+    background: #6a7dfe;
+    background: -webkit-linear-gradient(left, #6f0c9ed6, #b721ff);
+    background: -webkit-linear-gradient(left, #6f0c9ed6, #b721ff);
+    background: -webkit-linear-gradient(left, #6f0c9ed6, #b721ff);
+    background: -webkit-linear-gradient(left, #6f0c9ed6, #b721ff);
+    background: -webkit-linear-gradient(left, #6f0c9ed6, #b721ff);
 
     background-size: cover;
     background-position: top;
 
     /* add width  and height to top level, provided by props */
     width: 100vw;
-    height: 160px;
+    height: 75px;
     align-content: center;
-    
-    
+    position: fixed;
+    z-index: 9999999;
+    box-shadow: 1px -2px 12px rgba(0, 0, 0, 0.5);
 }
 .banner-heading-primary{
-    font-size: 60px;
+    font-size: 30px;
     text-align: center;
     padding-top: 10px;
     letter-spacing: 1.5px;

@@ -21,6 +21,8 @@ import { createHashHistory } from "history";
 import axios from "axios";
 import { connect } from "react-redux";
 import { backendUrl } from '../../constant';
+import { Link } from 'react-router-dom';
+import { Row } from 'reactstrap';
 const history = createHashHistory();
 
 class SignUpPage extends React.Component {
@@ -161,114 +163,62 @@ class SignUpPage extends React.Component {
     // const validDepartment = this.state.department !== ""
     let validation = this.submitted ? this.validator.validate(this.state) : this.state.validation;
     return (
-      <div className="main-container">
-        <div className="sign-up-page">
-          <div className="sign-up-container">
-            <div className="p-grid p-fluid">
-              <div className="p-col-12 p-md-4">
-                <div className="p-inputgroup">
-                  <span className="p-inputgroup-addon">
-                    <i className="pi pi-user"></i>
-                  </span>
-                  <InputText
-                    placeholder="Username"
-                    name="username"
-                    type="text"
-                    onChange={this.handleInputChange}
-                    value={this.state.username}
-                  />
-                </div>
+      <Row>
+        <div className="limiter">
+            <div className="container-login100">
+              <div className="wrap-login100">
+                
+                  <div className="wrap-input100 validate-input">
+                    <input className="input100 has-val" type="text" name="username" onChange={this.handleInputChange} value={this.state.username}/>
+                    <span className="focus-input100" data-placeholder="Username"></span>
+                  </div>
+
+                  <div className="wrap-input100 validate-input">
+                    <input className="input100 has-val" type="text" name="name" onChange={this.handleInputChange} value={this.state.name}/>
+                    <span className="focus-input100" data-placeholder="Name"></span>
+                  </div>
+
+
+                  <div className="wrap-input100 validate-input">
+                    <input className="input100 has-val" type="password" name="password" onChange={this.handleInputChange} value={this.state.password} />
+                    <span className="focus-input100" data-placeholder="Password"></span>
+                  </div>
+
+                 <div className="wrap-input100 validate-input">
+                    <input className="input100 has-val" type="password" name="confirmPassword" onChange={this.handleInputChange} value={this.state.confirmPassword} />
+                    <span className="focus-input100" data-placeholder="Confirm Password"></span>
+                  </div>
+
+                  <div className="wrap-input100 validate-input">
+                    <input className="input100 has-val" type="email" name="email" onChange={this.handleInputChange} value={this.state.email}/>
+                    <span className="focus-input100" data-placeholder="Email"></span>
+                  </div>
+
+
+                  <div className="wrap-input100 validate-input">
+                    <input className="input100 has-val" type="text" name="department" onChange={this.handleInputChange} value={this.state.department}/>
+                    <span className="focus-input100" data-placeholder="Department"></span>
+                  </div>
+
+                  <div className="container-login100-form-btn">
+                    <div className="wrap-login100-form-btn">
+                      <div className="login100-form-bgbtn"></div>
+                      <button className="login100-form-btn" onClick={this.handleSignUp}>
+                        Sign Up
+							        </button>
+                    </div>
+                  </div>
+
+                  <div className="text-center p-t-115">
+                    <span className="txt1">
+                      Already have an account?&nbsp;
+						        </span>
+                    <Link class="txt2" to='/login'>Login</Link>
+                  </div>
               </div>
-              <br />
-              <div className="p-col-12 p-md-4">
-                <div className="p-inputgroup">
-                  <span className="p-inputgroup-addon">
-                    <i className="pi pi-user"></i>
-                  </span>
-                  <InputText
-                    placeholder="Name"
-                    name="name"
-                    type="text"
-                    onChange={this.handleInputChange}
-                    value={this.state.name}
-                  />
-                </div>
-              </div>
-              <br />
-              <div className="p-col-12 p-md-4">
-                <div className="p-inputgroup">
-                  <span className="p-inputgroup-addon">
-                    <i className="pi pi-key"></i>
-                  </span>
-                  <InputText
-                    placeholder="Password"
-                    name="password"
-                    type="password"
-                    onChange={this.handleInputChange}
-                    value={this.state.password}
-                  />
-                </div>
-              </div>
-              <br />
-              <div className="p-col-12 p-md-4">
-                <div className="p-inputgroup">
-                  <span className="p-inputgroup-addon">
-                    <i className="pi pi-lock"></i>
-                  </span>
-                  <InputText
-                    placeholder="Confirm Password"
-                    name="confirmPassword"
-                    type="password"
-                    onChange={this.handleInputChange}
-                    value={this.state.confirmPassword}
-                  />
-                  <Messages
-                    severity="error"
-                    text="Password didn't match"
-                  ></Messages>
-                </div>
-              </div>
-              <br />
-              <div className="p-col-12 p-md-4">
-                <div className="p-inputgroup">
-                  <span className="p-inputgroup-addon">
-                    <i className="pi pi-envelope"></i>
-                  </span>
-                  <InputText
-                    placeholder="E-mail"
-                    name="email"
-                    type="email"
-                    onChange={this.handleInputChange}
-                    value={this.state.email}
-                  />
-                </div>
-              </div>
-              <br />
-              <div className="p-col-12 p-md-4">
-                <div className="p-inputgroup">
-                  <span className="p-inputgroup-addon">
-                    <i className="pi pi-home"></i>
-                  </span>
-                  <InputText
-                    placeholder="Department"
-                    name="department"
-                    type="text"
-                    onChange={this.handleInputChange}
-                    value={this.state.department}
-                  />
-                </div>
-              </div>
-            <br />
             </div>
-            <br />
-            <div className="sign-up-button-container">
-              <Button label="Sign Up" onClick={this.handleSignUp} />
-            </div>
-            {/* <br />
-            <Messages ref={el => (this.messages = el)}></Messages> */}
           </div>
-          </div>
-        </div>
+      </Row>  
     );
   };
 }

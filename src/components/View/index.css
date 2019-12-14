@@ -1,5 +1,31 @@
 .view-container {
-    width: 80%;
     float: right;
     /* text-align: center; */
+    margin-left: 200px;
+    margin-top: 75px;
+    /* width: 100%; */
+
+    overflow-x: auto;
+    overflow-y: auto;
+    width: 87%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+    padding-top: 30px;
+    padding-bottom: 25px;
+    padding-left: 25px;
+    padding-right: 25px;
+    background: #E7E7E8;
+}
+body {
+    overflow: hidden;
+}
+.sidebar {
+    margin-top: 75px;
 }

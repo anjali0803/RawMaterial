@@ -27,10 +27,10 @@ class TopBanner extends React.Component {
                     <i className="pi pi-sign-out" style={{"fontSize": 40}}></i>
                 </div> : null}
                 </div>
-                <div className="copyright">
+                {/*<div className="copyright">
                     &copy; by
                 <a href="https://www.matsci.ai/" target="_blank" className="copyright-link"> MatSci AI</a>
-                </div>
+            <   /div>*/}
             </div> : null
         );
     }

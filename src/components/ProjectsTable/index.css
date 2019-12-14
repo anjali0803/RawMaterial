@@ -45,3 +45,154 @@ border: 1px solid rgb(13, 100, 199);
 .p-datatable-footer {
     text-align: left !important;
 }
+
+
+.ReactTable .rt-tbody .rt-td {
+    color: gray;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    font-weight: 400;
+}
+
+.rt-td {
+  overflow:inherit !important;
+}
+
+.ReactTable {
+  border: none !important;
+  display: block !important;
+  font-family: "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+.ReactTable .rt-thead.-header {
+  box-shadow: none !important;
+}
+
+.ReactTable .rt-tbody .rt-td {
+  border-right:none !important;
+  font-weight: normal !important;
+  color: #404041;
+  align-items: baseline !important;
+  word-break: break-all;
+  padding:10px !important;
+}
+
+.ReactTable .rt-tbody .rt-tr-group {
+  border-top: 1px solid #ddd !important;
+  border-bottom: none !important;
+  cursor:pointer;
+}
+ 
+.ReactTable .rt-tbody .rt-tr-group .rt-tr:hover {
+  background-color: #F5F5F5 !important;
+}
+
+.ReactTable .pagination-bottom {
+  text-align:right;
+}
+
+.ReactTable .-pagination .-btn {
+    background: none !important;
+  }
+
+  .ReactTable .-pagination .-btn:not([disabled]):hover {
+    background: none !important;
+    color: #404041 !important;
+  }
+  
+.ReactTable .rt-noData { 
+  background: none !important;
+  text-align: left;
+  padding: 0 20px;
+  opacity: 0.75;
+  color: #404041;
+  left: 7%;
+  font-family: 'Lato', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+ }
+ 
+
+.ReactTable .rt-thead .rt-th {
+  border-right:none !important;
+  font-weight: bold !important;
+  text-align: left !important;
+  font-size: 14px;
+  line-height: 1.78571;
+  border-top: 0;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  hyphens: auto;
+  display: inline-block;
+  white-space: initial;
+  padding:10px !important;
+}
+
+
+
+.ReactTable .rt-td {
+    white-space: normal !important; 
+  }
+  
+  
+    .ReactTable .-pagination .-previous, .ReactTable .-pagination .-next {
+      flex:inherit !important;
+      font-weight:400px !important;
+    }
+  
+    .ReactTable .-pagination .-center {
+      flex:inherit !important;
+    }
+  
+    .ReactTable .-pagination {
+      justify-content: flex-end !important;
+      box-shadow: none !important;
+      border-top:none !important;
+    }
+  
+    .ReactTable .-pagination .-btn {
+      background: none !important;
+    }
+  
+    .ReactTable .-pagination .-btn:not([disabled]):hover {
+      color: rgba(0,0,0,0.6);
+    }
+  
+  
+    .ReactTable .-pagination .-pageInfo .-currentPage {
+      font-size: 1.35rem;
+      box-sizing: border-box;
+      display: inline-block;
+      color: #ccc;
+      height: 3rem;
+      width: 3rem;
+      line-height: 3rem;
+      text-align: center;
+      border-radius: 100%;
+      transition: 0.25s all;
+      background: #818284;
+      color: #fff;
+      margin-right: 4px;
+    }
+  
+    .ReactTable .-pagination .-pageInfo .-currentPage:hover {
+      background: #b721ff;
+      color: #fff;
+    }
+
+    
+    .tableContainer {
+        padding: 25px;
+        background: #ffff;
+        border-radius: 10px;
+    }
+
+    .sidebar .nav-link {
+        text-transform: capitalize;
+    }
+
+.sidebar .nav-link:hover {
+    background: #b721ff !important;
+}
