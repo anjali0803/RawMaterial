@@ -61,7 +61,7 @@
       font-family: "Open Sans", "Helvetica Neue", sans-serif;
       font-size: 14px;
       line-height: 1.7;
-      color: #666666;
+      color: #0A1359;
       margin: 0px;
       transition: all 0.4s;
       -webkit-transition: all 0.4s;
@@ -75,11 +75,11 @@
   
   a:hover {
       text-decoration: none;
-    color: #6a7dfe;
-    color: -webkit-linear-gradient(left, #21d4fd, #b721ff);
-    color: -o-linear-gradient(left, #21d4fd, #b721ff);
-    color: -moz-linear-gradient(left, #21d4fd, #b721ff);
-    color: linear-gradient(left, #21d4fd, #b721ff);
+    color: #3a47a7;
+    color: -webkit-linear-gradient(left, #3a47a7, #0A1359);
+    color: -o-linear-gradient(left, #3a47a7, #0A1359);
+    color: -moz-linear-gradient(left, #3a47a7, #0A1359);
+    color: linear-gradient(left, #3a47a7, #0A1359);
   }
   
   /*---------------------------------------------*/
@@ -244,7 +244,7 @@
   .input100 {
     font-family: "Open Sans", "Helvetica Neue", sans-serif;
     font-size: 15px;
-    color: #555555;
+    color: #0A1359;
     line-height: 1.2;
   
     display: block;
@@ -325,7 +325,7 @@
   /*---------------------------------------------*/
   .btn-show-pass {
     font-size: 15px;
-    color: #999999;
+    color: #0A1359;
   
     display: -webkit-box;
     display: -webkit-flex;
@@ -346,7 +346,7 @@
   }
   
   .btn-show-pass:hover {
-    color: #6a7dfe;
+    color: #3a47a7;
     color: -webkit-linear-gradient(left,  #3a47a7, #0A1359);
     color: -o-linear-gradient(left,  #3a47a7, #0A1359);
     color: -moz-linear-gradient(left,  #3a47a7, #0A1359);
@@ -354,7 +354,7 @@
   }
   
   .btn-show-pass.active {
-    color: #6a7dfe;
+    color: #3a47a7;
     color: -webkit-linear-gradient(left,  #3a47a7, #0A1359);
     color: -o-linear-gradient(left,  #3a47a7, #0A1359);
     color: -moz-linear-gradient(left,  #3a47a7, #0A1359);

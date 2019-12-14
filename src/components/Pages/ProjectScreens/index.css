@@ -216,11 +216,11 @@
 
 .progress-steps .progress-step.progress-current {
 	color: #fff;
-	background-color: #770cab;
+	background-color: #0A1359;
 }
 
 .progress-steps .progress-step.progress-current:after {
-	border-left: 17px solid #770cab;	
+	border-left: 17px solid #0A1359;	
 }
 
 .loading-bar{

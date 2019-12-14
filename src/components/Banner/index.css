@@ -46,3 +46,7 @@
       margin-top: 10px;
       margin-right: 20px;
   }
+
+  .sidebar .nav-link.active .nav-icon {
+    color: #fff !important;
+  }

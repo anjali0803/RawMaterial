@@ -125,22 +125,18 @@ class MenuComponent extends React.Component {
 
         this.props.userRole == "admin"
             ? items.unshift({
-                label: "Admin",
+                name: "Admin",
                 icon: "pi pi-user",
-                items: [
+                children: [
                     {
-                        label: "Pending Requests",
+                        name: "Pending Requests",
                         icon: "pi pi-key",
-                        command: event => {
-                            window.location.hash = "/admin/pending-requests";
-                        }
+                        url: "/admin/pending-requests"
                     },
                     {
-                        label: "All Users",
+                        name: "All Users",
                         icon: "pi pi-fw pi-users",
-                        command: event => {
-                            window.location.hash = "/admin/all-users";
-                        }
+                        url: "/admin/all-users"
                     }
                 ]
             })
