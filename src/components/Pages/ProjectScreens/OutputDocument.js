@@ -55,26 +55,26 @@ class OutputDocument extends React.Component {
             },
             { 
                 fileType: 'Client Spec Outer Coating',
-                downloadLink: <a href={data[0].ClientSpecOuterrCoating}>Download</a>
+                downloadLink: <a href={data[0].ClientSpecOuterCoating}>Download</a>
             }
         ];
-        if(data[0].CommentSheetCoating){
+        if(data[0].CommentSheetCoating !== "Not Available Yet"){
             obj.push({
                 fileType: 'Comment Sheet Coating',
                 downloadLink: <a href={data[0].CommentSheetCoating}>Download</a>  
             })
         }
-        if(data[0].CommentSheetPipe){
+        if(data[0].CommentSheetPipe !== "Not Available Yet"){
             obj.push({
                 fileType: 'Comment Sheet Pipe',
                 downloadLink: <a href={data[0].CommentSheetPipe}>Download</a>  
             })
-        }if(data[0].ITPCoating){
+        }if(data[0].ITPCoating !== "Not Available Yet"){
             obj.push({
                 fileType: 'ITP Coating',
                 downloadLink: <a href={data[0].ITPCoating}>Download</a>  
             })
-        }if(data[0].ITPPipe){
+        }if(data[0].ITPPipe !== "Not Available Yet"){
             obj.push({
                 fileType: 'ITP Pipe',
                 downloadLink: <a href={data[0].ITPPipe}>Download</a>  

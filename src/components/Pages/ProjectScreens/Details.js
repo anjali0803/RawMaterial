@@ -6,6 +6,7 @@ import FileUpload from '../../FileUpload/FileUpload';
 import { InputText } from 'primereact/inputtext';
 import { Dropdown } from 'primereact/dropdown';
 import {ProgressBar} from 'primereact/progressbar';
+import {AutoComplete} from 'primereact/autocomplete';
 import { createHashHistory } from 'history';
 import './index.css';
 import { setProjectId, setProjectTitle, setProjectType, setProjectCustomer, setCurrentURL } from '../../../actions/dataActions'
@@ -41,7 +42,16 @@ class Details extends React.Component {
             file4: this.props.newProject ? '' : (props.file5 || ''),
             isLoading: false,
             isLoadingProgress: 0,
-            isLoadingTexts: ''
+            isLoadingTexts: '',
+            filteredCustomers: [],
+            customerSuggestion: [
+                'Energy',
+                'Console',
+                'Enemy',
+                'Something',
+                'Rogue',
+                'Delta'
+            ]
         }
     
         this.handleInputCustomer = this.handleInputCustomer.bind(this);
@@ -55,16 +65,14 @@ class Details extends React.Component {
         this.onSave = this.onSave.bind(this);
         this.onDelete = this.onDelete.bind(this);
         this.displayValueTemplate = this.displayValueTemplate.bind(this);
+        this.filterCountryMultiple = this.filterCountryMultiple.bind(this);
     }
 
     uploadHandler() {
         console.log('upload handled');
     }
     handleInputCustomer(e) {
-
         this.setState({ customer: e.target.value })
-
-
     }
     saveFile1(e){
         this.setState({ file1: e });
@@ -187,6 +195,17 @@ class Details extends React.Component {
         );
     }
 
+    filterCountryMultiple(event) {
+        setTimeout(() => {
+            let results = this.state.customerSuggestion.filter((customer) => {
+                return customer.toLowerCase().startsWith(event.query.toLowerCase());
+            });
+
+            this.setState({ filteredCustomers: results });
+        }, 250);
+    }
+
+    
     render() {
         return ( !this.state.isLoading ?
             (<div>
@@ -217,13 +236,12 @@ class Details extends React.Component {
                         {/* <span style={{ marginLeft: '.5em' }}>Title</span> */}
                         <div className="details-customer-container">
                             <div className="details-input-label">Customer</div>
-                            <InputText id="customer"
-                                value={this.state.customer}
-                                onChange={this.handleInputCustomer}
-                                readOnly={this.props.readOnly} />
                             {/* <span style={{ marginLeft: '.5em' }}>Customer</span> */}
-
+                            <AutoComplete id="customer" value={this.state.customer} suggestions={this.state.filteredCustomers} completeMethod={this.filterCountryMultiple} field="customer"
+                                size={30} minLength={1} onChange={this.handleInputCustomer} readOnly={this.props.readOnly}/>
                         </div>
+
+                        
                         <br></br>
 
                         <div className="details-type-container">
