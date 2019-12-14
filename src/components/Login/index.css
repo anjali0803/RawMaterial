@@ -157,15 +157,20 @@
   .txt1 {
     font-family: "Open Sans", "Helvetica Neue", sans-serif;
     font-size: 13px;
-    color: #666666;
+    color: #0A1359;
     line-height: 1.5;
   }
   
   .txt2 {
     font-family: "Open Sans", "Helvetica Neue", sans-serif;
     font-size: 13px;
-    color: #333333;
+    color: #3a47a7;
     line-height: 1.5;
+    font-weight: bold;
+  }
+
+  .txt2:hover {
+      color:#0A1359
   }
   
   /*//////////////////////////////////////////////////////////////////
@@ -275,16 +280,16 @@
     transition: all 0.4s;
   
     background: #6a7dfe;
-    background: -webkit-linear-gradient(left, #21d4fd, #b721ff);
-    background: -o-linear-gradient(left, #21d4fd, #b721ff);
-    background: -moz-linear-gradient(left, #21d4fd, #b721ff);
-    background: linear-gradient(left, #21d4fd, #b721ff);
+    background: -webkit-linear-gradient(left,  #3a47a7, #0A1359);
+    background: -o-linear-gradient(left,  #3a47a7, #0A1359);
+    background: -moz-linear-gradient(left,  #3a47a7, rgb(10, 19, 89));
+    background: linear-gradient(left,  #3a47a7, #0A1359);
   }
   
   .focus-input100::after {
     font-family: "Open Sans", "Helvetica Neue", sans-serif;
     font-size: 15px;
-    color: #999999;
+    color: #0A1359;
     line-height: 1.2;
   
     content: attr(data-placeholder);
@@ -342,18 +347,18 @@
   
   .btn-show-pass:hover {
     color: #6a7dfe;
-    color: -webkit-linear-gradient(left, #21d4fd, #b721ff);
-    color: -o-linear-gradient(left, #21d4fd, #b721ff);
-    color: -moz-linear-gradient(left, #21d4fd, #b721ff);
-    color: linear-gradient(left, #21d4fd, #b721ff);
+    color: -webkit-linear-gradient(left,  #3a47a7, #0A1359);
+    color: -o-linear-gradient(left,  #3a47a7, #0A1359);
+    color: -moz-linear-gradient(left,  #3a47a7, #0A1359);
+    color: linear-gradient(left,  #3a47a7, #0A1359);
   }
   
   .btn-show-pass.active {
     color: #6a7dfe;
-    color: -webkit-linear-gradient(left, #21d4fd, #b721ff);
-    color: -o-linear-gradient(left, #21d4fd, #b721ff);
-    color: -moz-linear-gradient(left, #21d4fd, #b721ff);
-    color: linear-gradient(left, #21d4fd, #b721ff);
+    color: -webkit-linear-gradient(left,  #3a47a7, #0A1359);
+    color: -o-linear-gradient(left,  #3a47a7, #0A1359);
+    color: -moz-linear-gradient(left,  #3a47a7, #0A1359);
+    color: linear-gradient(left,  #3a47a7, #0A1359);
   }
   
   
@@ -387,10 +392,10 @@
     width: 300%;
     height: 100%;
     background: #a64bf4;
-    background: -webkit-linear-gradient(right, #21d4fd, #b721ff, #21d4fd, #b721ff);
-    background: -o-linear-gradient(right, #21d4fd, #b721ff, #21d4fd, #b721ff);
-    background: -moz-linear-gradient(right, #21d4fd, #b721ff, #21d4fd, #b721ff);
-    background: linear-gradient(right, #21d4fd, #b721ff, #21d4fd, #b721ff);
+    background: -webkit-linear-gradient(right,  #3a47a7, #0A1359,  #3a47a7, #0A1359);
+    background: -o-linear-gradient(right,  #3a47a7, #0A1359,  #3a47a7, #0A1359);
+    background: -moz-linear-gradient(right,  #3a47a7, #0A1359,  #3a47a7, #0A1359);
+    background: linear-gradient(right,  #3a47a7, #0A1359,  #3a47a7, #0A1359);
     top: 0;
     left: -100%;
   

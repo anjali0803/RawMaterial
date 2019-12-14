@@ -154,7 +154,7 @@
 	min-width: 181px;
 	float: left;
 	position: relative;
-	background-color: #b721ff;
+	background-color: #3a47a7;
 	-webkit-user-select: none;
 	/* -moz-user-select: none; */
 	-ms-user-select: none;
@@ -173,7 +173,7 @@
 	height: 0;
 	border-top: 19px solid transparent;
 	border-bottom: 21px solid transparent;
-	border-left: 17px solid #b721ff;	
+	border-left: 17px solid #3a47a7;	
 	z-index: 2;
   transition: border-color 0.2s ease;
 }

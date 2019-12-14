@@ -178,7 +178,7 @@ border: 1px solid rgb(13, 100, 199);
     }
   
     .ReactTable .-pagination .-pageInfo .-currentPage:hover {
-      background: #b721ff;
+      background: #3a47a7;
       color: #fff;
     }
 
@@ -194,7 +194,7 @@ border: 1px solid rgb(13, 100, 199);
     }
 
 .sidebar .nav-link:hover {
-    background: #b721ff !important;
+    background: #3a47a7 !important;
 }
 
 
@@ -202,7 +202,7 @@ border: 1px solid rgb(13, 100, 199);
 .ReactTable .rt-tbody .rt-td input, .ReactTable .rt-thead .rt-th input {
     -webkit-appearance: none;
 	background-color: transparent;
-	border: 1px solid #b721ff;
+	border: 1px solid #3a47a7;
 	box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05);
 	padding: 9px;
 	border-radius: 3px;
@@ -213,8 +213,8 @@ border: 1px solid rgb(13, 100, 199);
 
 
 .ReactTable .rt-tbody .rt-td input:checked, .ReactTable .rt-thead .rt-th input:checked {
-	background-color: #b721ff;
-	border: 1px solid #b721ff;
+	background-color: #3a47a7;
+	border: 1px solid #3a47a7;
 	color: #ffff;
 }
 

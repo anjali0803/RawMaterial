@@ -1,10 +1,9 @@
 .banner{
-    background: #6a7dfe;
-    background: -webkit-linear-gradient(left, #6f0c9ed6, #b721ff);
-    background: -webkit-linear-gradient(left, #6f0c9ed6, #b721ff);
-    background: -webkit-linear-gradient(left, #6f0c9ed6, #b721ff);
-    background: -webkit-linear-gradient(left, #6f0c9ed6, #b721ff);
-    background: -webkit-linear-gradient(left, #6f0c9ed6, #b721ff);
+    background: -webkit-linear-gradient(left, #3a47a7, #0A1359);
+    background: -webkit-linear-gradient(left, #3a47a7, #0A1359);
+    background: -webkit-linear-gradient(left, #3a47a7, #0A1359);
+    background: -webkit-linear-gradient(left, #3a47a7, #0A1359);
+    background: -webkit-linear-gradient(left, #3a47a7, #0A1359);
 
     background-size: cover;
     background-position: top;
