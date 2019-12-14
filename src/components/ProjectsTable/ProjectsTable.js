@@ -72,11 +72,8 @@ export class ProjectsTable extends React.Component {
     const selectAll = this.state.selectAll ? false : true;
     const selected = [];
     if (selectAll) {
-      // we need to get at the internals of ReactTable
       const wrappedInstance = this.checkboxTable.getWrappedInstance();
-      // the 'sortedData' property contains the currently accessible records based on the filter and sort
       const currentRecords = wrappedInstance.getResolvedState().sortedData;
-      // we just push all the IDs onto the selected array
       currentRecords.forEach(item => {
         selected.push(item._original._id);
       });
@@ -126,9 +123,6 @@ export class ProjectsTable extends React.Component {
               { Header: col.header, accessor: col.field, width: col.width, ...col}
             ))}
             data={dataList.map(item => {
-              // using chancejs to generate guid
-              // shortid is probably better but seems to have performance issues
-              // on codesandbox.io
               const _id = item.id;
               return {
                 _id,
@@ -141,6 +135,11 @@ export class ProjectsTable extends React.Component {
               }
             }}
             pageSize={dataList && dataList.length > 0 ? 8 : 0}
+            showPageJump={false}
+            resizable={false}
+            showPageSizeOptions={false}
+            previousText={"Back"}
+            pageText={""}
             {...checkboxProps}
           />
         </Col>

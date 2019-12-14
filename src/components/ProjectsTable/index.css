@@ -196,3 +196,33 @@ border: 1px solid rgb(13, 100, 199);
 .sidebar .nav-link:hover {
     background: #b721ff !important;
 }
+
+
+
+.ReactTable .rt-tbody .rt-td input, .ReactTable .rt-thead .rt-th input {
+    -webkit-appearance: none;
+	background-color: transparent;
+	border: 1px solid #b721ff;
+	box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05);
+	padding: 9px;
+	border-radius: 3px;
+	display: inline-block;
+	position: relative;
+}
+
+
+
+.ReactTable .rt-tbody .rt-td input:checked, .ReactTable .rt-thead .rt-th input:checked {
+	background-color: #b721ff;
+	border: 1px solid #b721ff;
+	color: #ffff;
+}
+
+
+.ReactTable .rt-tbody .rt-td input:checked:after, .ReactTable .rt-thead .rt-th input:checked:after {
+	content: '\2714';
+	font-size: 14px;
+	position: absolute;
+	top: 0px;
+	left: 3px;
+}
