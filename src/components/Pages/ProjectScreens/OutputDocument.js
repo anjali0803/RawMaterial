@@ -55,7 +55,7 @@ class OutputDocument extends React.Component {
             },
             { 
                 fileType: 'Client Spec Outer Coating',
-                downloadLink: <a href={data[0].ClientSpecOuterrCoating}>Download</a>
+                downloadLink: <a href={data[0].ClientSpecOuterCoating}>Download</a>
             }
         ];
         if(data[0].CommentSheetCoating !== "Not Available Yet"){
