@@ -6,7 +6,6 @@ import FileUpload from '../../FileUpload/FileUpload';
 import { InputText } from 'primereact/inputtext';
 import { Dropdown } from 'primereact/dropdown';
 import {ProgressBar} from 'primereact/progressbar';
-import {AutoComplete} from 'primereact/autocomplete';
 import { createHashHistory } from 'history';
 import './index.css';
 import { setProjectId, setProjectTitle, setProjectType, setProjectCustomer, setCurrentURL } from '../../../actions/dataActions'
@@ -14,7 +13,7 @@ import { connect } from 'react-redux';
 import ButtonHeader from '../../ButtonHeader/ButtonHeader'
 import axios from 'axios';
 import { backendUrl } from '../../../constant';
-
+import Autocomplete from 'react-autocomplete';
 const history = createHashHistory();
 
 class Details extends React.Component {
@@ -45,16 +44,16 @@ class Details extends React.Component {
             isLoadingTexts: '',
             filteredCustomers: [],
             customerSuggestion: [
-                'Energy',
-                'Console',
-                'Enemy',
-                'Something',
-                'Rogue',
-                'Delta'
+                'Energy Transfer',
+                'Plain America',
+                'Broadwalk',
+                'Williams',
+                'Corpus'
             ]
         }
     
         this.handleInputCustomer = this.handleInputCustomer.bind(this);
+
         this.handleInputType = this.handleInputType.bind(this);
         this.saveFile1 = this.saveFile1.bind(this);
         this.saveFile2 = this.saveFile2.bind(this);
@@ -66,14 +65,17 @@ class Details extends React.Component {
         this.onDelete = this.onDelete.bind(this);
         this.displayValueTemplate = this.displayValueTemplate.bind(this);
         this.filterCountryMultiple = this.filterCountryMultiple.bind(this);
+        this.renderSuggestion = this.renderSuggestion.bind(this);
     }
 
     uploadHandler() {
         console.log('upload handled');
     }
     handleInputCustomer(e) {
+        this.filterCountryMultiple(e.target);
         this.setState({ customer: e.target.value })
     }
+
     saveFile1(e){
         this.setState({ file1: e });
     }
@@ -198,14 +200,19 @@ class Details extends React.Component {
     filterCountryMultiple(event) {
         setTimeout(() => {
             let results = this.state.customerSuggestion.filter((customer) => {
-                return customer.toLowerCase().startsWith(event.query.toLowerCase());
+                return customer.toLowerCase().startsWith(event.value.toLowerCase());
             });
 
             this.setState({ filteredCustomers: results });
         }, 250);
     }
 
-    
+    renderSuggestion(suggestion){
+        return (<div>
+          {suggestion}
+        </div>)
+    };
+
     render() {
         return ( !this.state.isLoading ?
             (<div>
@@ -237,8 +244,54 @@ class Details extends React.Component {
                         <div className="details-customer-container">
                             <div className="details-input-label">Customer</div>
                             {/* <span style={{ marginLeft: '.5em' }}>Customer</span> */}
-                            <AutoComplete id="customer" value={this.state.customer} suggestions={this.state.filteredCustomers} completeMethod={this.filterCountryMultiple} field="customer"
-                                size={30} minLength={1} onChange={this.handleInputCustomer} readOnly={this.props.readOnly}/>
+                            {/* <c id="customer" value={this.state.customer} suggestions={this.state.filteredCustomers} completeMethod={this.filterCountryMultiple} field="customer"
+                                size={30} minLength={1} onChange={this.handleInputCustomer} readOnly={this.props.readOnly}/> */}
+                        
+                        <Autocomplete
+                            className="auto-complete"
+                            getItemValue={(item) => item}
+                            items={this.state.filteredCustomers}
+                            id="customer"
+                            renderItem={(item, isHighlighted) =>
+                                <div style={{ background: isHighlighted ? 'lightgray' : 'white', zIndex: 10000}}>
+                                    {item}
+                                </div>
+                            }
+                            value={this.state.customer}
+                            onChange={this.handleInputCustomer}
+                            onSelect={(val) => {this.setState({
+                                customer: val,
+                                filteredCustomers: []
+                            })}}
+                            wrapperStyle={
+                                {
+                                    fontSize: '14px',
+                                    color: '#333333',
+                                    background: '#ffffff',
+                                    padding: '0.429em',
+                                    border: '1px solid #a6a6a6',
+                                    transition: 'border-color 0.2s, box-shadow 0.2s',
+                                    appearance: 'none',
+                                    borderRadius: '3px',
+                                }
+                            }
+                            menuStyle={
+                                {
+                                    zIndex: 1000,
+                                    borderRadius: '3px',
+                                    boxShadow: '0 2px 12px rgba(0, 0, 0, 0.1)',
+                                    background: 'rgba(255, 255, 255, 0.9)',
+                                    paddingLeft: '3px',
+                                    paddingBottom: '3px',
+                                    position: 'fixed',
+                                    overflow: 'auto',
+                                    maxHeight: '50%',
+                                    fontSize: '14px',
+                                    fontFamily: "Open Sans",
+                                    textDecoration: 'none'
+                                }
+                            }
+                            />
                         </div>
 
                         

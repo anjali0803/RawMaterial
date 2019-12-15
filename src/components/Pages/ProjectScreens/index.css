@@ -226,3 +226,21 @@
 .loading-bar{
 	margin-top: 200px;
 }
+
+.auto-complete {
+	font-size: 14px;
+    color: #333333;
+    background: #ffffff;
+    padding: 0.429em;
+    border: 1px solid #a6a6a6;
+    -moz-transition: border-color 0.2s, box-shadow 0.2s;
+    -o-transition: border-color 0.2s, box-shadow 0.2s;
+    -webkit-transition: border-color 0.2s, box-shadow 0.2s;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+}

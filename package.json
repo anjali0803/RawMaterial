@@ -22,6 +22,7 @@
     "primeicons": "^2.0.0",
     "primereact": "^3.3.2",
     "react": "^16.11.0",
+    "react-autocomplete": "^1.8.1",
     "react-dom": "^16.11.0",
     "react-helmet": "^5.2.1",
     "react-redux": "^7.1.1",
