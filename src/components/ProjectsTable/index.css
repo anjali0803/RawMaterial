@@ -12,7 +12,7 @@ body .p-datatable .p-datatable-tbody > tr > td {
     background: none;
     border: none;
     padding: 13px;
-    font-family: 'Courier New', Courier, monospace;
+    font-family: Rubik;
     color : black;  
 }
 
@@ -24,6 +24,14 @@ body .p-datatable .p-datatable-thead > tr > th {
     color:#333333;
     background-color:#f4f4f4;
     text-align: center;
+}
+
+.ReactTable .rt-thead.-filters input, .ReactTable .rt-thead.-filters select {
+    max-width: 200px!important;
+    width: 100%;
+    border: 2px solid #c8c8c8 !important;
+    border-radius: 3px;
+    text-indent: 5px;
 }
 
 /* body .p-inputtext{
@@ -62,7 +70,7 @@ border: 1px solid rgb(13, 100, 199);
 .ReactTable {
   border: none !important;
   display: block !important;
-  font-family: "Open Sans", "Helvetica Neue", sans-serif;
+  font-family: Rubik;
 }
 
 .ReactTable .rt-thead.-header {
@@ -73,7 +81,6 @@ border: 1px solid rgb(13, 100, 199);
   border-right:none !important;
   font-weight: normal !important;
   color: #404041;
-  align-items: baseline !important;
   word-break: break-all;
   padding:10px !important;
 }
@@ -84,9 +91,6 @@ border: 1px solid rgb(13, 100, 199);
   cursor:pointer;
 }
  
-.ReactTable .rt-tbody .rt-tr-group .rt-tr:hover {
-  background-color: #F5F5F5 !important;
-}
 
 .ReactTable .pagination-bottom {
   text-align:right;
@@ -108,7 +112,7 @@ border: 1px solid rgb(13, 100, 199);
   opacity: 0.75;
   color: #404041;
   left: 7%;
-  font-family: 'Lato', sans-serif;
+  font-family: Rubik;
   font-size: 14px;
   font-weight: 400;
  }
@@ -296,3 +300,24 @@ border: 1px solid rgb(13, 100, 199);
     outline: none !important;
 }
 
+
+.ReactTable .rt-tbody .rt-td {
+    font-size: 0.875rem;
+    text-transform: capitalize;
+    padding: 0.75rem !important;
+    display: grid;
+}
+
+.ReactTable .-pagination .-btn {
+    font-weight: bold !important;
+}
+
+.ReactTable .rt-tr-group:nth-child(odd) {
+    background: #EEEEEE !important;
+  }
+
+  .ReactTable .badge-warning, .ReactTable .badge-success{
+    padding: 0.45em .4em;
+    font-size: 85%;
+    width: 50%;
+  }

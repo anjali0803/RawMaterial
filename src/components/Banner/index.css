@@ -15,6 +15,8 @@
     position: fixed;
     z-index: 9999999;
     box-shadow: 1px -2px 12px rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: space-between;
 }
 .banner-heading-primary{
     font-size: 30px;
@@ -22,6 +24,7 @@
     padding-top: 10px;
     letter-spacing: 1.5px;
     color:white;
+    margin-left: 30px;
 }
 
 .copyright {
@@ -30,6 +33,7 @@
     font-size: 12px;
     margin-top: 0;
     text-align: center;
+    margin-left: 10px;
   }
 
   .copyright-link{
@@ -42,9 +46,15 @@
   }
 
   .sign-out-icon {
-      float: right;
-      margin-top: 10px;
-      margin-right: 20px;
+    float: right;
+    margin-top: 10px;
+    margin-right: 20px;
+    font-size: 30px;
+    text-align: center;
+    padding-top: 10px;
+    letter-spacing: 1.5px;
+    color:white;
+    cursor: pointer;
   }
 
   .sidebar .nav-link.active .nav-icon {
@@ -54,8 +64,4 @@
   .navbar-toggler-icon {
     background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='%2373818f' stroke-width='2.25' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E") !important;
     height: 60px !important;
-  }
-
-  .toggler {
-      float: left;
   }

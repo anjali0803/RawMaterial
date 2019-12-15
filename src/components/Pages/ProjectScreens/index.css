@@ -33,7 +33,7 @@
 	
 	display: table-cell;
 	
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-family: Rubik;
     font-weight: lighter;
     font-size:14px;
 }
@@ -107,7 +107,7 @@
 	margin : 10px;
 	margin-left: 0px;;
     padding: 5px;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-family: Rubik;
 } 
 .pipe-upload{
     margin-bottom: 10px;
@@ -126,7 +126,7 @@
 }
 
 .progress-container {
-	font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+	font-family: Rubik;
 	width: 100%;
 	margin-top: 10px;
 	margin-left : 9px;
