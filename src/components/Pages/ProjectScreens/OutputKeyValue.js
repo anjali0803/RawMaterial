@@ -113,6 +113,7 @@ class OutputKeyValue extends React.Component {
                     editable={false}
                     footer={true}
                     tabulate={true}
+                    projectID={this.props.projectId}
                 />
             </div>
         ) : (
