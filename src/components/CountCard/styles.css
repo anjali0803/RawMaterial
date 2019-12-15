@@ -1,0 +1,88 @@
+
+  
+  .rowRecords { /* 6.5 release */
+    padding:8px;
+    padding-left:15px;
+    padding-right:15px;
+}
+
+.rowRecords .records:nth-child(even) { /* 6.5 release */
+     text-align: right;
+}
+
+.padd25 {
+    padding: 25px;
+}
+
+
+.records { /* 6.5 release */
+    padding: 0px;
+    font-size: 16px;
+    font-family: Rubik;
+    text-transform: capitalize;
+}
+
+
+.path {
+    color: inherit;
+  }
+
+  .boxAnalytic { /* stylelint-disable */
+    font-size: 14px;
+  }
+
+
+  @media (min-width: 1152px) {
+
+    .boxAnalytic:nth-child(even) {
+        padding-right: 0;
+        padding-left: 0;
+      }
+
+      .boxAnalytic { /* 6.5 release */
+        width: 20%;
+        padding-right: 15px;
+      padding-left: 15px;
+      font-size: 13px;
+    }
+    
+  }
+
+  
+  .cardRow { /* 6.5 release */
+    padding: 0px;
+    margin: 0px;
+    overflow: auto;
+    background: white;
+    position: relative;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    /* padding: 25px; */
+    background: #fff;
+    border-radius: 7px;
+    padding-bottom: 10px;
+    position: relative;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: row;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0,0,0,.125);
+ }
+
+ 
+  
+ .paddzero { /* 6.5 release */
+    padding-left:0px;
+    padding-right:0px;
+}
+
+
+.title {	/* 6.5 release */
+    min-height: 45px;
+    text-align:center;
+    font-weight:bold;
+}

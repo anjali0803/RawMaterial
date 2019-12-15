@@ -213,7 +213,7 @@ class SignUpPage extends React.Component {
                     <span className="txt1">
                       Already have an account?&nbsp;
 						        </span>
-                    <Link class="txt2" to='/login'>Login</Link>
+                    <Link className="txt2" to='/login'>Login</Link>
                   </div>
               </div>
             </div>

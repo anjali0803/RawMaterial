@@ -319,5 +319,5 @@ border: 1px solid rgb(13, 100, 199);
   .ReactTable .badge-warning, .ReactTable .badge-success{
     padding: 0.45em .4em;
     font-size: 85%;
-    width: 50%;
+    width: 80px;
   }
