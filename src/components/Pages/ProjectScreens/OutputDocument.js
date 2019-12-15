@@ -5,7 +5,7 @@ import { setDocumentArray } from "../../../actions/dataActions";
 import './index.css';
 import TableComponent from '../../Table/TableComponent';
 import ButtonHeader from '../../ButtonHeader/ButtonHeader';
-import { ProgressSpinner } from 'primereact/progressspinner';
+import LoadingScreen from '../LoadingScreen/loadingScreen';
 import Axios from 'axios';
 import { backendUrl } from '../../../../src/constant';
 const history = createHashHistory();
@@ -112,13 +112,7 @@ class OutputDocument extends React.Component {
                 <TableComponent colList={this.state.tableColList} dataList={this.state.tableData} onDocumentIdClick={this.onDocIdClick} onRefresh={this.onRefresh} />
             </div>
         ) : (
-                <div className="spinner-container">
-                    <ProgressSpinner
-                        style={{ width: "40%", height: "40%" }}
-                        strokeWidth="1"
-                        animationDuration="1s"
-                    ></ProgressSpinner>
-                </div>
+               <LoadingScreen />
             )
     }
 }

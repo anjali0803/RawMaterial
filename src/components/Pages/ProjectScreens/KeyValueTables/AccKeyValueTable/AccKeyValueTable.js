@@ -6,8 +6,8 @@ import { createHashHistory } from 'history'
 import { connect } from "react-redux";
 import TableComponent from '../../../../Table/TableComponent';
 import Axios from 'axios';
-import { ProgressSpinner } from 'primereact/progressspinner';
 import { backendUrl } from '../../../../../constant';
+import LoadingScreen from '../../../LoadingScreen/loadingScreen';
 const history = createHashHistory();
 const pageMapIndex = [
     'input-key-value',
@@ -113,13 +113,7 @@ class AccKeyValueTable extends React.Component {
                 />
             </div>
         ) : (
-                <div className="spinner-container">
-                    <ProgressSpinner
-                        style={{ width: "40%", height: "40%" }}
-                        strokeWidth="1"
-                        animationDuration="1s"
-                    ></ProgressSpinner>
-                </div>
+                <LoadingScreen />
             )
     }
 }

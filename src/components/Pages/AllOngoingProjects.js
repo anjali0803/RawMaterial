@@ -1,6 +1,6 @@
 import React from 'react';
 import ProjectsTable from '../ProjectsTable/ProjectsTable';
-import { ProgressSpinner } from 'primereact/progressspinner'
+import LoadingScreen from './LoadingScreen/loadingScreen';
 import './index.css';
 import { setDocumentArray, setProjectId, setProjectCustomer, setProjectTitle, setProjectType } from '../../actions/dataActions'
 import { connect } from 'react-redux';
@@ -35,7 +35,7 @@ class AllOngoingProjects extends React.Component {
     }
     async getTableData() {
         this.setState({ isLoading: true });
-        let res = await Axios.get(`${backendUrl}/dashboard/all_project`);
+        let res = await Axios.get(`${backendUrl}/dashboard/all_projectd`);
         let data = res.data;
         // data = data.filter((element, index) => {
 
@@ -78,13 +78,7 @@ class AllOngoingProjects extends React.Component {
                 />
             </div>
         ) : (
-                <div className="spinner-container">
-                    <ProgressSpinner
-                        style={{ width: "40%", height: "40%" }}
-                        strokeWidth="1"
-                        animationDuration="1s"
-                    ></ProgressSpinner>
-                </div>
+                <LoadingScreen />
             );
     }
 }

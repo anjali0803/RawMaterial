@@ -7,7 +7,7 @@ import './index.css';
 import { setDocumentId, setDocumentType } from '../../../actions/dataActions';
 import { backendUrl } from '../../../constant';
 import axios from 'axios';
-import { ProgressSpinner } from 'primereact/progressspinner';
+import LoadingScreen from '../LoadingScreen/loadingScreen';
 
 const history = createHashHistory();
 
@@ -95,13 +95,7 @@ class Acceptance extends React.Component {
                 <TableComponent colList={this.state.tableColList} dataList={this.state.tableData} onDocumentIdClick={this.onDocIdClick} handleClickAllSelected={this.handleClickAllSelected} actionsLabel={this.state.actions} editable={false}/>
             </div>
         ) : (
-                <div className="spinner-container">
-                    <ProgressSpinner
-                        style={{ width: "40%", height: "40%" }}
-                        strokeWidth="1"
-                        animationDuration="1s"
-                    ></ProgressSpinner>
-                </div>
+                <LoadingScreen />
             )
     }
 }

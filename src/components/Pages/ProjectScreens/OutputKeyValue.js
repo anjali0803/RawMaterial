@@ -7,7 +7,7 @@ import TableComponent from '../../Table/TableComponent';
 import ButtonHeader from '../../ButtonHeader/ButtonHeader';
 import { backendUrl } from '../../../constant';
 import axios from 'axios';
-import { ProgressSpinner } from 'primereact/progressspinner';
+import LoadingScreen from './../LoadingScreen/loadingScreen';
 
 const history = createHashHistory();
 class OutputKeyValue extends React.Component {
@@ -117,14 +117,7 @@ class OutputKeyValue extends React.Component {
                 />
             </div>
         ) : (
-
-                <div className="spinner-container">
-                    <ProgressSpinner
-                        style={{ width: "40%", height: "40%" }}
-                        strokeWidth="1"
-                        animationDuration="1s"
-                    ></ProgressSpinner>
-                </div>
+                <LoadingScreen />
             )
     }
 }
