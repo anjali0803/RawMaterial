@@ -3,7 +3,6 @@ import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from "primereact/button";
 import { Dropdown } from "primereact/dropdown";
-import { ProgressSpinner } from "primereact/progressspinner";
 import {
   setUserList
 } from "../../actions/loginActions";
@@ -11,6 +10,7 @@ import "./index.css";
 import axios from "axios";
 import { connect } from "react-redux";
 import { backendUrl } from '../../constant';
+import LoadingScreen from "./LoadingScreen/loadingScreen";
 
 class PendingRequests extends React.Component {
   constructor() {
@@ -161,13 +161,7 @@ class PendingRequests extends React.Component {
         </DataTable>
       </div>
     ) : (
-      <div className="spinner-container">
-        <ProgressSpinner
-          style={{ width: "40%", height: "40%"}}
-          strokeWidth="1"
-          animationDuration="1s"
-        ></ProgressSpinner>
-      </div>
+      <LoadingScreen />
     );
   }
 }

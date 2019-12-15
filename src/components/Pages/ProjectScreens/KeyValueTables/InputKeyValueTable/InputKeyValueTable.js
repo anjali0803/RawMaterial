@@ -8,8 +8,8 @@ import TableComponent from '../../../../Table/TableComponent';
 import CostSheetTableComponent from '../../../../Table/CostSheetTableComponent';
 import axios from 'axios';
 import {InputText} from 'primereact/inputtext';
-import { ProgressSpinner } from 'primereact/progressspinner';
 import { backendUrl } from '../../../../../constant';
+import LoadingScreen from '../../../LoadingScreen/loadingScreen';
 const history = createHashHistory();
 const pageMapIndex = [
     'input-key-value',
@@ -339,13 +339,7 @@ class InputKeyValueTable extends React.Component {
                 {view}
             </div>
         ) : (
-                <div className="spinner-container">
-                    <ProgressSpinner
-                        style={{ width: "40%", height: "40%" }}
-                        strokeWidth="1"
-                        animationDuration="1s"
-                    ></ProgressSpinner>
-                </div>
+                <LoadingScreen />
             )
     }
 }

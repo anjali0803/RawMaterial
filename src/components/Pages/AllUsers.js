@@ -3,11 +3,11 @@ import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from "primereact/button";
 import { Dropdown } from "primereact/dropdown";
-import { ProgressSpinner } from "primereact/progressspinner";
 import "./index.css";
 import axios from "axios";
 import { setUserList } from "../../actions/loginActions";
 import { connect } from "react-redux";
+import LoadingScreen from "./LoadingScreen/loadingScreen";
 
 class AllUsers extends React.Component {
   constructor(props) {
@@ -119,13 +119,7 @@ class AllUsers extends React.Component {
         </DataTable>
       </div>
     ) : (
-      <div className="spinner-container">
-        <ProgressSpinner
-          style={{ width: "40%", height: "40%"}}
-          strokeWidth="1"
-          animationDuration="1s"
-        ></ProgressSpinner>
-      </div>
+      <LoadingScreen />
     );
   }
 }

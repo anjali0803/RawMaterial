@@ -5,9 +5,9 @@ import ButtonHeader from '../../ButtonHeader/ButtonHeader';
 import { setDocumentArray, setDocumentId, setDocumentType } from "../../../actions/dataActions"
 import { connect } from 'react-redux'
 import './index.css';
-import { ProgressSpinner } from 'primereact/progressspinner';
 import axios from 'axios';
 import { backendUrl } from '../../../constant';
+import LoadingScreen from '../LoadingScreen/loadingScreen';
 
 const history = createHashHistory();
 class InputKeyValue extends React.Component {
@@ -87,13 +87,7 @@ class InputKeyValue extends React.Component {
             </div>
 
         ) : (
-                <div className="spinner-container">
-                    <ProgressSpinner
-                        style={{ width: "40%", height: "40%" }}
-                        strokeWidth="1"
-                        animationDuration="1s"
-                    ></ProgressSpinner>
-                </div>
+                <LoadingScreen />
             )
     }
 }

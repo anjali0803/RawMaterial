@@ -1,12 +1,12 @@
 import React from 'react';
 import ProjectsTable from '../ProjectsTable/ProjectsTable';
-import { ProgressSpinner } from 'primereact/progressspinner'
 import './index.css';
 import { setDocumentArray, setProjectId, setProjectCustomer, setProjectTitle, setProjectType } from '../../actions/dataActions'
 import { connect } from 'react-redux';
 import { createHashHistory } from 'history';
 import Axios from 'axios';
 import { backendUrl } from '../../constant';
+import LoadingScreen from './LoadingScreen/loadingScreen';
 const history = createHashHistory();
 
 
@@ -83,13 +83,7 @@ class ProjectAssignedToMe extends React.Component {
                 />
             </div>
         ) : (
-                <div className="spinner-container">
-                    <ProgressSpinner
-                        style={{ width: "40%", height: "40%" }}
-                        strokeWidth="1"
-                        animationDuration="1s"
-                    ></ProgressSpinner>
-                </div>
+                <LoadingScreen />
             );
     }
 }
