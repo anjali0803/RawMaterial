@@ -11,7 +11,7 @@ import { connect } from "react-redux";
 import axios from "axios";
 import { backendUrl } from '../../constant';
 import ReactTable from "react-table";
-import { Col, Row } from 'reactstrap';
+import { Col, Row, Badge } from 'reactstrap';
 import checkboxHOC from "react-table/lib/hoc/selectTable";
 import ReactTableFilters from './filters';
 
@@ -88,8 +88,6 @@ export class ProjectsTable extends React.Component {
     return this.state.selected.includes(key);
   };
 
-
-
   handleFilter(val) {
     this.setState({ searchText: val })
   }
@@ -138,15 +136,18 @@ export class ProjectsTable extends React.Component {
         </Col>
         <ReactTableWrapper
           ref={r => (this.checkboxTable = r)}
+          filterable
           columns={colList.map((col) => Object.assign(
             {},
-            { Header: col.header, accessor: col.field, width: col.width, ...col }
-          ))}
+            { Header: col.header, accessor: col.field, width: col.width, filterMethod: (filter, row) => row[filter.id].toLowerCase().includes(filter.value),  ...col }))}
+          defaultFilterMethod={(filter, row) =>String(row[filter.id]) === filter.value}     
           data={this.filterRows(dataList, colList, searchText).map(item => {
             const _id = item.id;
+            const { ProjectStatus = '' } = item;
             return {
               _id,
-              ...item
+              ...item,
+              ProjectStatus:<Badge color={ProjectStatus === 'InProgress' ? 'warning': 'success'}>{ProjectStatus}</Badge>,
             };
           })}
           getTrProps={(state, record) => {

@@ -21,21 +21,20 @@ class TopBanner extends React.Component {
     }
     render() {
         return (
-            this.props.userLogin ? <div className="banner">
-                <AppSidebarToggler className="d-lg-none toggler" display="md" mobile />
+            <div className="banner">
+                <AppSidebarToggler className="d-lg-none" display="md" mobile />
                 <div className="banner-heading-primary">
-                
-                    AutoCIP
+                    Customer Inquiry Process
                     <span className="copyright">
                     &copy; by
                     <a href="https://www.matsci.ai/" target="_blank" className="copyright-link"> MatSci AI</a>
                     </span>
+                </div>
                 {this.props.userLogin ? <div className="sign-out-icon" onClick={() => this.logout()}>
                     <i className="pi pi-sign-out" style={{"fontSize": 40}}></i>
                 </div> : null}
-                </div>
                 
-            </div> : null
+            </div>
         );
     }
 }

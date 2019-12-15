@@ -53,12 +53,12 @@
   
   body, html {
       height: 100%;
-      font-family: "Open Sans", "Helvetica Neue", sans-serif;
+      font-family: Rubik;
   }
   
   /*---------------------------------------------*/
   a {
-      font-family: "Open Sans", "Helvetica Neue", sans-serif;
+      font-family: Rubik;
       font-size: 14px;
       line-height: 1.7;
       color: #0A1359;
@@ -88,7 +88,7 @@
   }
   
   p {
-      font-family: "Open Sans", "Helvetica Neue", sans-serif;
+      font-family: Rubik;
       font-size: 14px;
       line-height: 1.7;
       color: #666666;
@@ -155,14 +155,14 @@
   /*//////////////////////////////////////////////////////////////////
   [ Utility ]*/
   .txt1 {
-    font-family: "Open Sans", "Helvetica Neue", sans-serif;
+    font-family: Rubik;
     font-size: 13px;
     color: #0A1359;
     line-height: 1.5;
   }
   
   .txt2 {
-    font-family: "Open Sans", "Helvetica Neue", sans-serif;
+    font-family: Rubik;
     font-size: 13px;
     color: #3a47a7;
     line-height: 1.5;
@@ -221,7 +221,7 @@
   
   .login100-form-title {
     display: block;
-    font-family: "Open Sans", "Helvetica Neue", sans-serif;
+    font-family: Rubik;
     font-size: 30px;
     color: #333333;
     line-height: 1.2;
@@ -242,7 +242,7 @@
   }
   
   .input100 {
-    font-family: "Open Sans", "Helvetica Neue", sans-serif;
+    font-family: Rubik;
     font-size: 15px;
     color: #0A1359;
     line-height: 1.2;
@@ -287,7 +287,7 @@
   }
   
   .focus-input100::after {
-    font-family: "Open Sans", "Helvetica Neue", sans-serif;
+    font-family: Rubik;
     font-size: 15px;
     color: #0A1359;
     line-height: 1.2;
@@ -406,7 +406,7 @@
   }
   
   .login100-form-btn {
-    font-family: "Open Sans", "Helvetica Neue", sans-serif;
+    font-family: Rubik;
     font-size: 15px;
     color: #fff;
     line-height: 1.2;
@@ -464,7 +464,7 @@
     right: 0px;
     pointer-events: none;
   
-    font-family: "Open Sans", "Helvetica Neue", sans-serif;
+    font-family: Rubik;
     color: #c80000;
     font-size: 13px;
     line-height: 1.4;
@@ -481,7 +481,7 @@
   
   .alert-validate::after {
     content: "\f06a";
-    font-family: FontAwesome;
+    font-family: Rubik;
     font-size: 16px;
     color: #c80000;
   
