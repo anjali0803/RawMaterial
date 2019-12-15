@@ -120,7 +120,7 @@ export class ProjectsTable extends React.Component {
       { label: "Send to recommendation", value: 1 },
       { label: "Send to acceptance", value: 0 }
     ];
- 
+
     return (
       <Col xs={12} className="tableContainer">
         <Col className="ReactFilter">
@@ -139,15 +139,16 @@ export class ProjectsTable extends React.Component {
           filterable
           columns={colList.map((col) => Object.assign(
             {},
-            { Header: col.header, accessor: col.field, width: col.width, filterMethod: (filter, row) => row[filter.id].toLowerCase().includes(filter.value),  ...col }))}
+            { Header: col.header, accessor: col.field, width: col.width, filterMethod: (filter, row) => row[filter.id].toLowerCase().includes(filter.value.toLowerCase()),  ...col }))}
           defaultFilterMethod={(filter, row) =>String(row[filter.id]) === filter.value}     
           data={this.filterRows(dataList, colList, searchText).map(item => {
-            const _id = item.id;
-            const { ProjectStatus = '' } = item;
+            const _id = item.ProjectID;
+            const { ProjectStatus = '', Status = '' } = item;
             return {
               _id,
               ...item,
-              ProjectStatus:<Badge color={ProjectStatus === 'InProgress' ? 'warning': 'success'}>{ProjectStatus}</Badge>,
+              Status:<Badge color={['closed','completed'].includes(Status.toLowerCase()) ? 'success': 'warning'}>{Status}</Badge>,
+              ProjectStatus:<Badge color={['closed','completed'].includes(ProjectStatus.toLowerCase()) ? 'success': 'warning'}>{ProjectStatus}</Badge>,
             };
           })}
           getTrProps={(state, record) => {
@@ -164,52 +165,6 @@ export class ProjectsTable extends React.Component {
           {...this}
           selectAll={selectAll}
         />
-        {/*}
-        <DataTable
-          value={dataList}
-          footer={footer}
-          paginator={true}
-          paginatorPosition={"top"}
-          rows={10}
-          scrollable={true}
-          autoLayout={true}
-          resizableColumns={true}
-          selection={this.state.selected}
-          onSelectionChange={e => this.setState({ selected: e.value })}
-        >
-          <Column selectionMode="multiple" style={{ width: '3em' }} />
-          <Column header={<i onClick={this.props.onRefresh} className="pi pi-refresh"></i>} style={{ width: '3em' }} />
-          {colList.map((el, index) => {
-            const field = el.field;
-            const header = el.header;
-
-            //console.log(header.toLowerCase().replace(/ /g, ''))
-
-            if (header.toLowerCase().replace(/ /g, '') == 'projectid') {
-              //console.log(el);
-              return <Column
-                id={`table-${index}`}
-                header={el.header}
-                filter={true}
-                sortable={true}
-                filterMatchMode="startsWith"
-                body={this.projectIdTemplate}
-                style={{width:'200px'}}
-              />
-            }
-            else
-              return (
-                <Column
-                  field={el.field}
-                  header={el.header}
-                  filter={true}
-                  sortable={true}
-                  filterMatchMode="startsWith"
-                  style={{width:'200px'}}
-                />
-              );
-          })}
-        </DataTable>*/}
       </Col>
     );
   }

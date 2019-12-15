@@ -22,7 +22,7 @@ class Charts extends React.Component { // eslint-disable-line react/prefer-state
         }
         return acc;
       }, 0) / 10) : 1;
-
+      
     const chartOptions = {
       'bar' :
         {
@@ -33,7 +33,7 @@ class Charts extends React.Component { // eslint-disable-line react/prefer-state
             yAxes: [{
               ticks: {
                 min: 0,
-                stepSize,
+                max:1,
               },
             }],
           },

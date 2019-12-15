@@ -156,11 +156,11 @@ class LoginPage extends React.Component {
                     <span className="txt1">
                       Don’t have an account?&nbsp;
 						        </span>
-                    <Link class="txt2" to='/sign-up'>Sign Up</Link>
+                    <Link className="txt2" to='/sign-up'>Sign Up</Link>
                   </div>
 
                   <div className="text-center p-t-115">
-                    <Link class="txt2" to='/forgot-password'>Forgot Password</Link>
+                    <Link className="txt2" to='/forgot-password'>Forgot Password</Link>
                   </div>
               </div>
             </div>

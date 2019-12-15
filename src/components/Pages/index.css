@@ -37,3 +37,37 @@ tr.p-highlight {
         stroke: #1a54b3;
     }
 } */
+
+
+.pieRow {
+    padding: 25px;
+    background: #fff;
+    border-radius: 7px;
+    padding-bottom: 60px;
+    position: relative;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: row;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0,0,0,.125);
+}
+
+.pieCol {
+    padding-left: 25px !important;
+    padding-right: 25px !important;
+}
+
+.card {
+    margin-left: -7px !important;
+    margin-right: -7px !important;
+    margin-top: 25px;
+    border-radius: 7px !important;
+}
+
+.barTitle {
+    padding-bottom: 25px;
+}
