@@ -146,7 +146,8 @@ export default class TableComponent extends React.Component {
         `${backendUrl}/dashboard/tabulate`,
         {
           docID: element['DocID'],
-          fileType: element['FileType']
+          fileType: element['FileType'],
+          projectID: this.props.projectID
         }
       )
     })
