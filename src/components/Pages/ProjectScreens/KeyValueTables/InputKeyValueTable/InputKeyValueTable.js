@@ -183,8 +183,22 @@ class InputKeyValueTable extends React.Component {
             });
         }
         data = data.data.data;
-        this.setState({ keyValueData: data });
+        
+        if(this.props.documentFiletype === 'cost_sheet'){
+            let newData = [];
+            data.forEach(element => {
+                let newElement = {
+                    ...element
+                };
+                newElement['OD'] = newElement['OD'][0];
+                newElement['Wall thickness'] = newElement['Wall thickness'][1];
+                newData.push(newElement);
+            });
 
+            this.setState({ keyValueData: newData });
+        }else {
+            this.setState({ keyValueData: data });
+        }
         this.setState({ isLoading: false })
     }
     componentDidMount() {
@@ -261,43 +275,6 @@ class InputKeyValueTable extends React.Component {
     }
 
     renderSingleValueEditableTable() {
-    //   const tableData = [
-    //     {
-    //         fieldname: 'Grain Size',
-    //         value: this.state.grainSize,
-    //     },
-    //     {
-    //         fieldname: 'Hold Time',
-    //         value: this.state.holdTime,
-    //     },
-    //     {
-    //         fieldname: 'Hoop Stress',
-    //         value: this.state.hoopStress,
-    //     },
-    //     {
-    //         fieldname: 'Reverse Bend Test',
-    //         value: this.state.reverseBendTest,
-    //     },
-    //     {
-    //         fieldname: 'Rtrm',
-    //         value: this.state.RtRm,
-    //     },
-    //     {
-    //         fieldname: 'SMTS',
-    //         value: this.state.SMTS,
-    //     },
-    //     {
-    //         fieldname: "Tolerance",
-    //         value: this.state.tolerance,
-    //     },
-    //     {
-    //         fieldname: 'Weight',
-    //         value: this.state.weight,
-    //     }
-    //   ];
-    //   this.setState({
-    //     keyvalueCostSheetValueList: tableData
-    //   })
       return (
         <CostSheetTableComponent
             colList={this.state.tableColList}
