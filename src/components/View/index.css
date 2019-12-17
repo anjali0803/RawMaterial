@@ -2,7 +2,7 @@
     float: right;
     /* text-align: center; */
     margin-left: 230px;
-    margin-top: 75px;
+    margin-top: 85px;
     /* width: 100%; */
 
     overflow-x: auto;
@@ -25,9 +25,7 @@
 body {
     overflow: hidden;
 }
-.sidebar {
-    margin-top: 75px;
-}
+
 
 
 @media (max-width: 991.98px){
