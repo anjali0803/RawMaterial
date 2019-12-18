@@ -71,3 +71,13 @@ tr.p-highlight {
 .barTitle {
     padding-bottom: 25px;
 }
+
+.subscreens {
+    padding: 25px;
+    background: #ffff;
+    border-radius: 10px;
+}
+
+.progress-container {
+    margin-bottom: 10px;
+}

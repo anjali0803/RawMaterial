@@ -14,6 +14,7 @@ import ButtonHeader from '../../ButtonHeader/ButtonHeader'
 import axios from 'axios';
 import { backendUrl } from '../../../constant';
 import Autocomplete from 'react-autocomplete';
+import { Input } from 'reactstrap';
 const history = createHashHistory();
 
 class Details extends React.Component {
@@ -222,7 +223,7 @@ class Details extends React.Component {
                     <div className="details-form-container">
                         <div className="details-project-id-container">
                             <div className="details-input-label">Project Id</div>
-                            <InputText id="projectId"
+                            <Input id="projectId"
                                 value={this.state.projectId}
                                 readOnly={true}
                                 disabled={true}
@@ -231,7 +232,7 @@ class Details extends React.Component {
                         <br></br>
                         <div className="details-title-container">
                             <div className="details-input-label">Title</div>
-                            <InputText id="title"
+                            <Input id="title"
                                 value={this.state.title}
                                 onChange={this.handleInputTitle}
                                 readOnly={this.props.readOnly}
@@ -302,7 +303,7 @@ class Details extends React.Component {
                             <Dropdown id="type" value={this.state.type}
                                 options={this.state.projectTypes}
                                 onChange={this.handleInputType}
-                            />
+                            />                      
                         </div>
                         <br></br>
 

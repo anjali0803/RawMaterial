@@ -45,3 +45,9 @@ border: 1px solid rgb(13, 100, 199);
 .p-datatable-footer {
     text-align: left !important;
 }
+
+
+.ReactTableHeader {
+    display: flex;
+    justify-content: space-between;
+}

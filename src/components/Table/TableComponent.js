@@ -14,6 +14,11 @@ import "./index.css";
 import { throws } from "assert";
 import Axios from "axios";
 import { backendUrl } from "../../constant";
+import { Col, Row, Badge } from 'reactstrap';
+import ReactTable from "react-table";
+import checkboxHOC from "react-table/lib/hoc/selectTable";
+
+const ReactTableWrapper = checkboxHOC(ReactTable);
 
 export default class TableComponent extends React.Component {
   constructor(props) {
@@ -47,6 +52,10 @@ export default class TableComponent extends React.Component {
     this.save = this.save.bind(this);
     this.delete = this.delete.bind(this);
     this.tabulate = this.tabulate.bind(this);
+    this.toggleSelection = this.toggleSelection.bind(this);
+    this.toggleAll = this.toggleAll.bind(this);
+    this.isSelected = this.isSelected.bind(this);
+    
   }
 
   documentIdTemplate(rowData) {
@@ -140,7 +149,7 @@ export default class TableComponent extends React.Component {
     });
   }
 
-  async tabulate(){
+  async tabulate(){ 
     this.state.selected.forEach(async element => {
       let tabulateRes = await Axios.post(
         `${backendUrl}/dashboard/tabulate`,
@@ -153,33 +162,135 @@ export default class TableComponent extends React.Component {
     })
   }
 
+  toggleSelection(key, shift, row) {
+    let selected = [...this.state.selected];
+    const keyIndex = selected.indexOf(key.replace('select-', ''));
+    if (keyIndex >= 0) {
+      selected = [
+        ...selected.slice(0, keyIndex),
+        ...selected.slice(keyIndex + 1)
+      ];
+    } else {
+      selected.push(key.replace('select-', ''));
+    }
+    this.setState({ selected });
+  };
+
+  toggleAll() {
+    const selectAll = this.state.selectAll ? false : true;
+    const selected = [];
+    if (selectAll) {
+      const wrappedInstance = this.checkboxTable.getWrappedInstance();
+      const currentRecords = wrappedInstance.getResolvedState().sortedData;
+      currentRecords.forEach(item => {
+        selected.push(item._original._id);
+      });
+    }
+    this.setState({ selectAll, selected });
+  };
+
+  isSelected(key) {
+    return this.state.selected.includes(key);
+  };
+
+
+  filterRows(rows, columns, searchQuery = '') {
+    const filteredRows = [];
+    if (searchQuery === null || searchQuery === '') {
+      return rows;
+    }
+    rows.forEach(row => {
+      columns.some(column => {
+        if (row[column.field] !== undefined && row[column.field] !== null) {
+          const rowValue = String(row[column.field]).toLowerCase();
+          if (rowValue.length >= searchQuery.length && rowValue.indexOf(searchQuery.toLowerCase()) >= 0) {
+            filteredRows.push(row);
+            return true;
+          }
+        }
+        return false;
+      });
+    });
+    return filteredRows;
+  }
+
   render() {
-    const colList = this.props.colList;
-    const selected = this.state.selected;
-    var dataList = this.props.dataList;
+    console.log('props', this.props);
+    console.log('state', this.state);
+    let { colList, dataList } = this.props;
+    const { selected, selectAll } = this.state;
     const actions = this.props.actionsLabel;
     
     const dialogModal = this.renderDialogModal(colList);
 
     const footer = (this.props.editable || this.props.footer) && (
-      <div className="p-clearfix" style={{width:'100%'}}>
+      <div className="p-clearfix tableFooter" style={{width:'100%'}}>
         <Dropdown
           options={actions}
           onChange={e => this.handleClickAllSelected(e.value)}
           placeholder="Select Action"
           disabled={selected.length == 0}
         />
-        {!this.props.footer ? <Button style={{float:'right', margin: '5px'}} label="Delete" icon="pi pi-times" onClick={this.delete}/> : ''}
         {!this.props.footer ? <Button style={{float:'right', margin: '5px'}} label="Add" icon="pi pi-plus" onClick={this.addNew}/> : ''}
+        {!this.props.footer ? <Button style={{float:'right', margin: '5px'}} label="Delete" icon="pi pi-times" onClick={this.delete}/> : ''}
         {this.props.tabulate ? <Button style={{float:'right', margin: '5px'}} label="Tabulate" icon="pi pi-plus" onClick={this.tabulate}/> : ''}
       </div>
     );
     const dialogFooter = <div className="ui-dialog-buttonpane p-clearfix">
       <Button label="Save" icon="pi pi-check" onClick={this.save}/>
     </div>;
+    dataList = this.state.tableData || dataList || [];
+    console.log('dataList', dataList);
     return (
-      <div>
-        <DataTable
+      <Col xs={12} className="tableContainer">
+        {this.props.editable || this.props.footer ? <Col className="ReactTableHeader">
+          <div className="dropdownAction">
+            <Dropdown
+              options={actions}
+              onChange={e => this.handleClickAllSelected(e.value)}
+              placeholder="Select Action"
+              disabled={selected.length == 0}
+            />
+          </div>
+          <div>
+            {!this.props.footer ? <Button style={{float:'right', margin: '5px'}} label="Delete" icon="pi pi-times" onClick={this.delete}/> : ''}
+            {!this.props.footer ? <Button style={{float:'right', margin: '5px'}} label="Add" icon="pi pi-plus" onClick={this.addNew}/> : ''}
+            {this.props.tabulate ? <Button style={{float:'right', margin: '5px'}} label="Tabulate" icon="pi pi-plus" onClick={this.tabulate}/> : ''}
+          </div>
+        </Col> : null }
+        <ReactTableWrapper
+          ref={r => (this.checkboxTable = r)}
+          filterable
+          columns={colList.map((col) => Object.assign(
+            {},
+            { Header: col.header, accessor: col.field, width: col.width, filterMethod: (filter, row) => row[filter.id].toLowerCase().includes(filter.value.toLowerCase()),  ...col }))}
+          defaultFilterMethod={(filter, row) =>String(row[filter.id]) === filter.value}     
+          data={dataList && dataList.length > 0 && dataList != 'null' ? dataList.map((item, index) => {
+            const _id = item.id || item.ProjectID || index.toString();
+            console.log('_id', _id);
+            const { ProjectStatus = '', Status = '' } = item;
+            return {
+              _id,
+              ...item,
+              Status:<Badge color={['closed','completed'].includes(Status.toLowerCase()) ? 'success': 'warning'}>{Status}</Badge>,
+              ProjectStatus:<Badge color={['closed','completed'].includes(ProjectStatus.toLowerCase()) ? 'success': 'warning'}>{ProjectStatus}</Badge>,
+            };
+          }) : []}
+          getTrProps={(state, record) => {
+            return {
+              onClick: () => this.props.onDocumentIdClick(record.original),
+            }
+          }}
+          pageSize={dataList && dataList.length > 0 ? 8 : 0}
+          showPageJump={false}
+          resizable={false}
+          showPageSizeOptions={false}
+          previousText={"Back"}
+          pageText={""}
+          {...this}
+          selectAll={selectAll}
+        />
+        {/*<DataTable
           value={this.state.tableData || dataList}
           footer={footer}
           paginator={true}
@@ -232,7 +343,7 @@ export default class TableComponent extends React.Component {
               );
             }
           })}
-        </DataTable>
+        </DataTable>*/}
         <Dialog visible={this.state.displayDialog} width="300px" header="New Item Details" modal={true} footer={dialogFooter} onHide={() => this.setState({displayDialog: false})}>
           {
               this.state.newItem && 
@@ -242,7 +353,7 @@ export default class TableComponent extends React.Component {
               </div>
           }
         </Dialog>
-      </div>
+      </Col>
     );
   }
 }
