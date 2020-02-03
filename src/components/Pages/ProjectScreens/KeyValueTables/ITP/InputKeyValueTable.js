@@ -19,7 +19,7 @@ const pageMapIndex = [
     'output-document'
 
 ]
-class InputKeyValueTable extends React.Component {
+class ITP extends React.Component {
     constructor(props) {
         super(props);
         // if (props.projectId === '')
@@ -447,4 +447,4 @@ const mapStateToProps = state => ({
     documentArray: state.documentArray,
     documentFiletype: state.documentFiletype
 })
-export default connect(mapStateToProps)(InputKeyValueTable);
+export default connect(mapStateToProps)(ITP);

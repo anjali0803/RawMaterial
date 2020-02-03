@@ -14,9 +14,9 @@ class InputKeyValue extends React.Component {
     constructor(props) {
         super(props);
         //console.log("here", this.props)
-        if (this.props.projectId === '') {
-            history.push('/Inquiry/create-new-projects/details')
-        }
+        // if (this.props.projectId === '') {
+        //     history.push('/Inquiry/create-new-projects/details')
+        // }
         this.onSave = this.onSave.bind(this);
         this.onDelete = this.onDelete.bind(this);
         this.state = {
@@ -81,8 +81,10 @@ class InputKeyValue extends React.Component {
 
         return !this.state.isLoading ? (
 
-            <div>
-                <ButtonHeader saveEnabled={this.props.saveEnabled} deleteEnabled={this.props.deleteEnabled} className="progbar-button-header" onSave={() => this.onSave()} onDelete={() => this.onDelete()} />
+            <div className="container-fluid">
+                <div className="row justify-content-end">
+                    <ButtonHeader saveEnabled={this.props.saveEnabled} deleteEnabled={this.props.deleteEnabled} className="progbar-button-header" onSave={() => this.onSave()} onDelete={() => this.onDelete()} />
+                </div>
                 <TableComponent colList={this.state.tableColList} dataList={this.state.tableData} onDocumentIdClick={this.onDocIdClick} onRefresh={this.onRefresh} editable={false} />
             </div>
 

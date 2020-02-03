@@ -17,7 +17,7 @@ import { backendUrl } from "../../constant";
 import { Col, Row, Badge } from 'reactstrap';
 import ReactTable from "react-table";
 import checkboxHOC from "react-table/lib/hoc/selectTable";
-
+// import { isEqual } from 'lodash-es';
 const ReactTableWrapper = checkboxHOC(ReactTable);
 
 export default class TableComponent extends React.Component {
@@ -35,6 +35,8 @@ export default class TableComponent extends React.Component {
       selected: [],
       isLoading: false,
       displayDialog: false,
+      displayWorkDescriptionForm: false,
+      workItemDescription: '',
       newItem: false,
       item: {
         ...temp,
@@ -55,7 +57,10 @@ export default class TableComponent extends React.Component {
     this.toggleSelection = this.toggleSelection.bind(this);
     this.toggleAll = this.toggleAll.bind(this);
     this.isSelected = this.isSelected.bind(this);
-    
+    this.actionTemplate = this.actionTemplate.bind(this);
+    this.renderWorkDescriptionModal = this.renderWorkDescriptionModal.bind(this);
+    this.updateWorkDescription = this.updateWorkDescription.bind(this);
+    this.saveWorkDescription = this.saveWorkDescription.bind(this);
   }
 
   documentIdTemplate(rowData) {
@@ -213,7 +218,63 @@ export default class TableComponent extends React.Component {
     });
     return filteredRows;
   }
+  renderWorkDescriptionModal(){
+    return (
+      <>
+          <div className="p-col-4" style={{padding:'.75em'}}><label> Work Description</label></div>
+          <div className="p-col-8" style={{padding:'.5em'}}>
+              <InputText id="workDescription" onChange={(e) => {this.updateWorkDescription(e.target.value)}} value={this.state.workItemDescription}/>
+          </div>
+      </>
+    )
+  }
+  updateWorkDescription(value){
+    this.setState({
+      workItemDescription: value
+    })
+  }
 
+  saveWorkDescription(){
+    this.setState({
+      displayWorkDescriptionForm: false
+    })
+  }
+  actionTemplate(props){
+    const deleteRow = s => {
+      console.log(props);
+      const newTableData =(this.state.tableData || this.props.dataList).filter(row => {
+        if(!isEqual(row, props)){
+          return row;
+        }
+      });
+      this.setState({
+        tableData: newTableData
+      })
+    }
+
+    const acceptRow = x => {
+      this.setState({
+        displayWorkDescriptionForm : true
+      })
+      const s = (this.state.tableData || this.props.dataList).indexOf(x)
+      console.log(s);
+      return this.state.tableData.indexOf(x);
+    }
+
+    return (
+      <>
+        <i class="material-icons" onClick={deleteRow}>
+          delete_outline
+        </i>
+        { this.props.acceptButton ? <i class="material-icons" onClick={acceptRow}>
+          check
+        </i> : ''}
+        {this.props.rejectButton ? <i class="material-icons">
+          close
+        </i> : ''}
+      </>
+    );
+  }
   render() {
     console.log('props', this.props);
     console.log('state', this.state);
@@ -222,28 +283,33 @@ export default class TableComponent extends React.Component {
     const actions = this.props.actionsLabel;
     
     const dialogModal = this.renderDialogModal(colList);
-
+    const workDescriptionModal = this.renderWorkDescriptionModal();
     const footer = (this.props.editable || this.props.footer) && (
       <div className="p-clearfix tableFooter" style={{width:'100%'}}>
-        <Dropdown
+        {/* <Dropdown
           options={actions}
           onChange={e => this.handleClickAllSelected(e.value)}
           placeholder="Select Action"
           disabled={selected.length == 0}
-        />
+        /> */}
         {!this.props.footer ? <Button style={{float:'right', margin: '5px'}} label="Add" icon="pi pi-plus" onClick={this.addNew}/> : ''}
-        {!this.props.footer ? <Button style={{float:'right', margin: '5px'}} label="Delete" icon="pi pi-times" onClick={this.delete}/> : ''}
+        {/* {!this.props.footer ? <Button style={{float:'right', margin: '5px'}} label="Delete" icon="pi pi-times" onClick={this.delete}/> : ''} */}
         {this.props.tabulate ? <Button style={{float:'right', margin: '5px'}} label="Tabulate" icon="pi pi-plus" onClick={this.tabulate}/> : ''}
       </div>
     );
     const dialogFooter = <div className="ui-dialog-buttonpane p-clearfix">
       <Button label="Save" icon="pi pi-check" onClick={this.save}/>
     </div>;
-    dataList = this.state.tableData || dataList || [];
+
+    const workDescriptionFormFooter = <div className="ui-dialog-buttonpane p-clearfix">
+      <Button label="Save" icon="pi pi-check" onClick={this.saveWorkDescription}/>
+    </div>;
+
+    dataList = dataList || this.state.tableData || [];
     console.log('dataList', dataList);
     return (
-      <Col xs={12} className="tableContainer">
-        {this.props.editable || this.props.footer ? <Col className="ReactTableHeader">
+      <div xs={12} className="tableContainer">
+        {/* {this.props.editable || this.props.footer ? <Col className="ReactTableHeader">
           <div className="dropdownAction">
             <Dropdown
               options={actions}
@@ -257,8 +323,8 @@ export default class TableComponent extends React.Component {
             {!this.props.footer ? <Button style={{float:'right', margin: '5px'}} label="Add" icon="pi pi-plus" onClick={this.addNew}/> : ''}
             {this.props.tabulate ? <Button style={{float:'right', margin: '5px'}} label="Tabulate" icon="pi pi-plus" onClick={this.tabulate}/> : ''}
           </div>
-        </Col> : null }
-        <ReactTableWrapper
+        </Col> : null } */}
+        {/* <ReactTableWrapper
           ref={r => (this.checkboxTable = r)}
           filterable
           columns={colList.map((col) => Object.assign(
@@ -289,23 +355,21 @@ export default class TableComponent extends React.Component {
           pageText={""}
           {...this}
           selectAll={selectAll}
-        />
-        {/*<DataTable
-          value={this.state.tableData || dataList}
+        />*/}
+        <DataTable
+          value={dataList || this.state.tableData}
           footer={footer}
           paginator={true}
-          paginatorPosition={"top"}
+          paginatorPosition={"bottom"}
+
           rows={10}
           scrollable={true}
-          selection={this.state.selected}
-          onSelectionChange={e => this.setState({ selected: e.value })}
           editable={true}
           autoLayout={true}
           resizableColumns={true}
           rowClassName={this.props.rowClassName ? (rowData) => this.props.rowClassName(rowData) : () => { }}
         >
-          <Column selectionMode="multiple" style={{ width: '3em' }} />
-          <Column header={<i onClick={this.props.onRefresh} className="pi pi-refresh"></i>} style={{ width: '3em' }} />
+          <Column body={this.actionTemplate} style={{textAlign:'center', width: '4em'}}/>
           {colList.map((el, index) => {
             const field = el.field;
             const header = el.header;
@@ -343,7 +407,7 @@ export default class TableComponent extends React.Component {
               );
             }
           })}
-        </DataTable>*/}
+        </DataTable>
         <Dialog visible={this.state.displayDialog} width="300px" header="New Item Details" modal={true} footer={dialogFooter} onHide={() => this.setState({displayDialog: false})}>
           {
               this.state.newItem && 
@@ -353,7 +417,14 @@ export default class TableComponent extends React.Component {
               </div>
           }
         </Dialog>
-      </Col>
+        <Dialog visible={this.state.displayWorkDescriptionForm} width="600px" header="Work Description" modal={true} footer={workDescriptionFormFooter} onHide={() => this.setState({displayWorkDescriptionForm: false})}>
+          {
+              <div className="p-grid p-fluid">
+                {workDescriptionModal}
+              </div>
+          }
+        </Dialog>
+      </div>
     );
   }
 }

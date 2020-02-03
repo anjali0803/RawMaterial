@@ -117,74 +117,75 @@ class Details extends React.Component {
         this.setState({
             isLoading: true
         });
-
-        this.interval = setInterval(() => {
-            let val = this.state.isLoadingProgress;
-            val += Math.floor(Math.random() * 10) + 2;
-            
-            if(val < 20){
-                this.setState({
-                    isLoadingTexts: 'Uploading documents...'
-                });
-            }
-            if(val > 20 && val < 40) {
-                this.setState({
-                    isLoadingTexts: 'Extracting information...'
-                });
-            }
-            if(val > 50 && val < 60) {
-                this.setState({
-                    isLoadingTexts: 'Preparing insights...'
-                });
-            }
-            if(val > 60 && val < 90) {
-                this.setState({
-                    isLoadingTexts: 'Creating project...'
-                });
-            }
-            if( val > 90){
-                this.setState({
-                    isLoadingTexts: 'Finalizing...'
-                });
-            }
-            if(val < 100){
-                this.setState({
-                    isLoadingProgress: val
-                });
-            }
-        }, 2000);
-
-        const { title, customer, type } = this.state;
-        const { file1, file2, file3, file4 } = this.state;
-
-        const file1Res = await this.upLoadFiletoS3(file1);
-        const file2Res = await this.upLoadFiletoS3(file2);
-        const file3Res = await this.upLoadFiletoS3(file3);
-        const file4Res = await this.upLoadFiletoS3(file4);
+        // Commented due to api is not available
         
-        const createProjectRes = await axios.post(
-            `${backendUrl}/dashboard/create_project`,
-            {
-                title: title,
-                client: customer,
-                project_type: type,
-                cost_sheet: file1Res.data.data,
-                specs_pipe: file2Res.data.data,
-                inner_coating: file3Res.data.data,
-                outer_coating: file4Res.data.data,
-                assignedTo: this.props.userName,
-                createdBy: this.props.userName,
-            }
-        )
-        const projectId = createProjectRes.data.data.ProjectID;
-        this.props.setProjectId(projectId);
-        this.props.setProjectCustomer(customer);
-        this.props.setProjectTitle(title);
-        this.props.setProjectType(type)
+        // this.interval = setInterval(() => {
+        //     let val = this.state.isLoadingProgress;
+        //     val += Math.floor(Math.random() * 10) + 2;
+            
+        //     if(val < 20){
+        //         this.setState({
+        //             isLoadingTexts: 'Uploading documents...'
+        //         });
+        //     }
+        //     if(val > 20 && val < 40) {
+        //         this.setState({
+        //             isLoadingTexts: 'Extracting information...'
+        //         });
+        //     }
+        //     if(val > 50 && val < 60) {
+        //         this.setState({
+        //             isLoadingTexts: 'Preparing insights...'
+        //         });
+        //     }
+        //     if(val > 60 && val < 90) {
+        //         this.setState({
+        //             isLoadingTexts: 'Creating project...'
+        //         });
+        //     }
+        //     if( val > 90){
+        //         this.setState({
+        //             isLoadingTexts: 'Finalizing...'
+        //         });
+        //     }
+        //     if(val < 100){
+        //         this.setState({
+        //             isLoadingProgress: val
+        //         });
+        //     }
+        // }, 2000);
+
+        // const { title, customer, type } = this.state;
+        // const { file1, file2, file3, file4 } = this.state;
+
+        // const file1Res = await this.upLoadFiletoS3(file1);
+        // const file2Res = await this.upLoadFiletoS3(file2);
+        // const file3Res = await this.upLoadFiletoS3(file3);
+        // const file4Res = await this.upLoadFiletoS3(file4);
+        
+        // const createProjectRes = await axios.post(
+        //     `${backendUrl}/dashboard/create_project`,
+        //     {
+        //         title: title,
+        //         client: customer,
+        //         project_type: type,
+        //         cost_sheet: file1Res.data.data,
+        //         specs_pipe: file2Res.data.data,
+        //         inner_coating: file3Res.data.data,
+        //         outer_coating: file4Res.data.data,
+        //         assignedTo: this.props.userName,
+        //         createdBy: this.props.userName,
+        //     }
+        // )
+        // const projectId = createProjectRes.data.data.ProjectID;
+        // this.props.setProjectId(projectId);
+        // this.props.setProjectCustomer(customer);
+        // this.props.setProjectTitle(title);
+        // this.props.setProjectType(type)
         this.setState({
             isLoading: false
         })
-        history.push('/Inquiry/create-new-projects/input-key-value')
+        history.push('/Inquiry/create-new-projects/input-key-value/second')
     }
     onDelete() {
         console.log('Data deleted');
@@ -216,131 +217,121 @@ class Details extends React.Component {
 
     render() {
         return ( !this.state.isLoading ?
-            (<div>
+            (
+            <div className="container-fliud">
                 <form onSubmit={obj => this.onSave(obj)}>
-                <ButtonHeader type="button" saveEnabled={this.props.saveEnabled} deleteEnabled={this.props.deleteEnabled} className="details-button-header" onSave={() => this.onSave()} onDelete={() => this.onDelete()} />
-                <div className="details-container">
-                    <div className="details-form-container">
-                        <div className="details-project-id-container">
-                            <div className="details-input-label">Project Id</div>
+                <div className="row justify-content-center">
+                    <div className="col-6 justify-content-center divider">
+                        <div className="form-group">
+                            <div className="upload-label-2">Project Id</div>
                             <Input id="projectId"
                                 value={this.state.projectId}
                                 readOnly={true}
                                 disabled={true}
                             />
                         </div>
-                        <br></br>
-                        <div className="details-title-container">
-                            <div className="details-input-label">Title</div>
+                        <div className="form-group">
+                            <div className="upload-label-2">Title</div>
                             <Input id="title"
                                 value={this.state.title}
                                 onChange={this.handleInputTitle}
                                 readOnly={this.props.readOnly}
                             />
                         </div>
-
-                        <br></br>
-
-                        {/* <span style={{ marginLeft: '.5em' }}>Title</span> */}
-                        <div className="details-customer-container">
-                            <div className="details-input-label">Customer</div>
-                            {/* <span style={{ marginLeft: '.5em' }}>Customer</span> */}
-                            {/* <c id="customer" value={this.state.customer} suggestions={this.state.filteredCustomers} completeMethod={this.filterCountryMultiple} field="customer"
-                                size={30} minLength={1} onChange={this.handleInputCustomer} readOnly={this.props.readOnly}/> */}
-                        
-                        <Autocomplete
-                            className="auto-complete"
-                            getItemValue={(item) => item}
-                            items={this.state.filteredCustomers}
-                            id="customer"
-                            renderItem={(item, isHighlighted) =>
-                                <div style={{ background: isHighlighted ? 'lightgray' : 'white', zIndex: 10000}}>
-                                    {item}
-                                </div>
-                            }
-                            value={this.state.customer}
-                            onChange={this.handleInputCustomer}
-                            onSelect={(val) => {this.setState({
-                                customer: val,
-                                filteredCustomers: []
-                            })}}
-                            wrapperStyle={
-                                {
-                                    fontSize: '14px',
-                                    color: '#333333',
-                                    background: '#ffffff',
-                                    padding: '0.429em',
-                                    border: '1px solid #a6a6a6',
-                                    transition: 'border-color 0.2s, box-shadow 0.2s',
-                                    appearance: 'none',
-                                    borderRadius: '3px',
+                        <div className="form-group">
+                            <div className="upload-label-2">Customer</div>
+                            <Autocomplete
+                                className="auto-complete"
+                                getItemValue={(item) => item}
+                                items={this.state.filteredCustomers}
+                                id="customer"
+                                renderItem={(item, isHighlighted) =>
+                                    <div style={{ background: isHighlighted ? 'lightgray' : 'white', zIndex: 10000}}>
+                                        {item}
+                                    </div>
                                 }
-                            }
-                            menuStyle={
-                                {
-                                    zIndex: 1000,
-                                    borderRadius: '3px',
-                                    boxShadow: '0 2px 12px rgba(0, 0, 0, 0.1)',
-                                    background: 'rgba(255, 255, 255, 0.9)',
-                                    paddingLeft: '3px',
-                                    paddingBottom: '3px',
-                                    position: 'fixed',
-                                    overflow: 'auto',
-                                    maxHeight: '50%',
-                                    fontSize: '14px',
-                                    fontFamily: "Open Sans",
-                                    textDecoration: 'none'
+                                value={this.state.customer}
+                                onChange={this.handleInputCustomer}
+                                onSelect={(val) => {this.setState({
+                                    customer: val,
+                                    filteredCustomers: []
+                                })}}
+                                wrapperStyle={
+                                    {
+                                        fontSize: '14px',
+                                        color: '#333333',
+                                        height: '47px',
+                                        width: '250px',
+                                        background: '#ffffff',
+                                        padding: '0.429em',
+                                        border: '1px solid #ced4da',
+                                        transition: 'border-color 0.2s, box-shadow 0.2s',
+                                        appearance: 'none',
+                                        borderRadius: '4px',
+                                    }
                                 }
-                            }
-                            />
+                                menuStyle={
+                                    {
+                                        zIndex: 1000,
+                                        borderRadius: '3px',
+                                        boxShadow: '0 2px 12px rgba(0, 0, 0, 0.1)',
+                                        background: 'rgba(255, 255, 255, 0.9)',
+                                        paddingLeft: '3px',
+                                        paddingBottom: '3px',
+                                        position: 'fixed',
+                                        overflow: 'auto',
+                                        maxHeight: '50%',
+                                        fontSize: '14px',
+                                        fontFamily: "Open Sans",
+                                        textDecoration: 'none'
+                                    }
+                                }
+                                />
                         </div>
-
-                        
-                        <br></br>
-
-                        <div className="details-type-container">
-                            <div className="details-input-label">Type</div>
+                        <div className="form-group">
+                            <div className="upload-label-2">Type</div>
                             <Dropdown id="type" value={this.state.type}
                                 options={this.state.projectTypes}
                                 onChange={this.handleInputType}
-                            />                      
+                            />               
                         </div>
-                        <br></br>
-
                     </div>
+                    <div className="col-6">
+                        <div className="upload-label" >Cost Sheet</div>
+                        <FileUpload
+                            className="cost-sheet-upload"
+                            onFileSelect={this.saveFile1}
+                            disabled={this.props.readOnly} 
+                            docxOnly={true}
+                            />
 
-                    <div className="upload-label" >Cost Sheet</div>
-                    <FileUpload
-                        className="cost-sheet-upload"
-                        onFileSelect={this.saveFile1}
-                        disabled={this.props.readOnly} 
-                        docxOnly={true}
+                        <div className="upload-label" >PIPE</div>
+                        <FileUpload
+                            className="pipe-upload"
+                            onFileSelect={this.saveFile2}
+                            disabled={this.props.readOnly}
                         />
 
-                    <div className="upload-label" >PIPE</div>
-                    <FileUpload
-                        className="pipe-upload"
-                        onFileSelect={this.saveFile2}
-                        disabled={this.props.readOnly}
-                    />
-
-                    <div className="upload-label" >INNER-COATING</div>
-                    <FileUpload
-                        className="inner-coating-upload"
-                        disabled={this.props.readOnly}
-                        onFileSelect={this.saveFile3}
-                    />
-                    <div className="upload-label" >OUTER-COATING</div>
-                    <FileUpload
-                        className="outer-coating-upload"
-                        disabled={this.props.readOnly}
-                        onFileSelect={this.saveFile4}
-                    />
-
-
+                        <div className="upload-label" >INNER-COATING</div>
+                        <FileUpload
+                            className="inner-coating-upload"
+                            disabled={this.props.readOnly}
+                            onFileSelect={this.saveFile3}
+                        />
+                        <div className="upload-label" >OUTER-COATING</div>
+                        <FileUpload
+                            className="outer-coating-upload"
+                            disabled={this.props.readOnly}
+                            onFileSelect={this.saveFile4}
+                        />
+                    </div>
+                    <hr />
+                    <hr />
+                    <ButtonHeader type="button" saveEnabled={this.props.saveEnabled} deleteEnabled={this.props.deleteEnabled} className="details-button-header" onSave={() => this.onSave()} onDelete={() => this.onDelete()} />
                 </div>
                 </form>
-        </div >) : 
+            </div>
+) : 
             (<div>
                 <ProgressBar className="loading-bar" value={this.state.isLoadingProgress} displayValueTemplate={this.displayValueTemplate}></ProgressBar>
             </div>)

@@ -13,6 +13,8 @@ import './index.css';
 import { createHashHistory } from "history";
 import ProgressBar from './ProjectScreens/ProgressBar';
 import InputKeyValueTable from './ProjectScreens/KeyValueTables/InputKeyValueTable/InputKeyValueTable';
+import ITP from './ProjectScreens/KeyValueTables/ITP/InputKeyValueTable';
+import CommentSheet from './ProjectScreens/KeyValueTables/CommentSheet/InputKeyValueTable';
 import RecKeyValueTable from './ProjectScreens/KeyValueTables/RecKeyValueTable/RecKeyValueTable';
 import AccKeyValueTable from './ProjectScreens/KeyValueTables/AccKeyValueTable/AccKeyValueTable';
 import OutputKeyValueTable from './ProjectScreens/KeyValueTables/OutputKeyValueTable/OutputKeyValueTable';
@@ -35,10 +37,9 @@ export default class CreateNewProjects extends React.Component {
             customer: '',
             steps: [
                 'Details',
-                'Input Key Value',
-                'Recommendations',
-                'Acceptance',
-                'Output Key Value',
+                'Calculations',
+                'Comment Sheet',
+                'ITP',
                 'Documents'
             ]
         }
@@ -76,7 +77,7 @@ export default class CreateNewProjects extends React.Component {
                     saveEnabled={true} deleteEnabled={true} />
             },
             {
-                path: '/Inquiry/create-new-projects/recommendations', component: () => <Recommendations
+                path: '/Inquiry/create-new-projects/itp', component: () => <ITP
                     saveEnabled={true} deleteEnabled={true}
                     steps={this.state.steps} />
             },
@@ -90,7 +91,7 @@ export default class CreateNewProjects extends React.Component {
                 />
             },
             {
-                path: '/Inquiry/create-new-projects/acceptance', component: () => <Acceptance
+                path: '/Inquiry/create-new-projects/commentsheet', component: () => <CommentSheet
                     steps={this.state.steps}
                     saveEnabled={true}
                     deleteEnabled={false} />

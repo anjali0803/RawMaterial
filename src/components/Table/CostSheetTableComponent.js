@@ -9,6 +9,8 @@ import {InputText} from 'primereact/inputtext';
 import { Dropdown } from "primereact/dropdown";
 import { Button } from "primereact/button";
 import { Dialog } from 'primereact/dialog';
+import { Col, Row, Badge } from 'reactstrap';
+
 import isEqual from 'lodash.isequal';
 import "./index.css";
 import { throws } from "assert";
@@ -162,6 +164,7 @@ export default class TableComponent extends React.Component {
     </div>;
     return (
       <div>
+        <div xs={12} className="tableContainer">
         <DataTable
           value={this.state.tableData || dataList}
           editable={true}
@@ -211,6 +214,7 @@ export default class TableComponent extends React.Component {
               </div>
           }
         </Dialog>
+        </div>
       </div>
     );
   }

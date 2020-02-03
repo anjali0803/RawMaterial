@@ -103,8 +103,20 @@
 
 .upload-label{
 	width: 100%;
-	border-top: 2px solid rgb(233, 233, 250);
+	/* border-top: 2px solid rgb(233, 233, 250); */
 	margin : 10px;
+	margin-left: 0px;;
+    padding: 5px;
+    font-family: Rubik;
+} 
+
+.divider{
+	border-right: 1px solid #ced4da;
+}
+.upload-label-2{
+	width: 100%;
+	/* border-top: 2px solid rgb(233, 233, 250); */
+	margin-top : 10px;
 	margin-left: 0px;;
     padding: 5px;
     font-family: Rubik;

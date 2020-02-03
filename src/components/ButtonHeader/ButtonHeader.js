@@ -7,16 +7,9 @@ import './index.css'
 class ButtonHeader extends React.Component {
     render() {
         return (
-            <div className="button-header">
-                {/* <div className="delete-container" >
-                    <Button className="delete-button" type="button" label="delete" icon="pi pi-times" onClick={this.props.onDelete} disabled={!this.props.deleteEnabled} />
-                </div> */}
                 <div >
-                    <Button className="save-button" type="button" label="save" icon="pi pi-check" onClick={this.props.onSave} disabled={!this.props.saveEnabled} />
+                    <button className="save-button btn-grad" type="button" label="Save" onClick={this.props.onSave} disabled={!this.props.saveEnabled}> Save </button>
                 </div>
-
-
-            </div>
         )
     }
 }

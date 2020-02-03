@@ -1,0 +1,27 @@
+.table-on-green{
+    background: rgb(57, 158, 102) !important;  
+}
+
+.table-on-red{
+    background: rgb(194, 78, 46) !important;  
+
+}
+
+.details-project-id-container{
+	display: table-row;
+}
+.details-input-label{
+	
+	display: table-cell;
+	
+    font-family: Rubik;
+    font-weight: lighter;
+    font-size:14px;
+}
+.fright{
+    float: right !important;
+}
+
+.pad-left{
+    padding-left: 2px;
+}

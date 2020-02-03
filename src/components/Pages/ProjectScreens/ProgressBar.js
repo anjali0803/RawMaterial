@@ -6,6 +6,14 @@ import { setProjectId, setProjectTitle, setProjectType, setProjectCustomer, setC
 import './index.css';
 const history = createHashHistory();
 
+const pageMapping = {
+    'calculations': 'input-key-value/second',
+    'details': 'details',
+    'comment-sheet': 'commentsheet',
+    'itp': 'itp',
+    'documents': 'documents'
+
+}
 class ProgressBar extends React.Component {
     constructor() {
         super()
@@ -14,7 +22,7 @@ class ProgressBar extends React.Component {
     onStepsClick(e, el) {
 
         let step = '' + el;
-        history.push(`/Inquiry/create-new-projects/${step.toLowerCase().replace(/ /g, '-')}`)
+        history.push(`/Inquiry/create-new-projects/${pageMapping[step.toLowerCase().replace(/ /g, '-')]}`)
 
     }
     render() {
@@ -26,9 +34,9 @@ class ProgressBar extends React.Component {
                         <div className="progress-steps clearfix ">
                             {this.props.steps.map((el, index) => {
                                 if (URL.search(el.toLowerCase().replace(/ /g, '-')) !== -1)
-                                    return < div key={`progress-step-${index}`} className="progress-step progress-current" ><span>{el}</span></div>
+                                    return < div key={`progress-step-${index}`} onClick={(e) => this.onStepsClick(e, el)} key={`progress-step-${index}`} className="progress-step progress-current" ><span>{el}</span></div>
                                 else
-                                    return <div key={`progress-step-${index}`} className="progress-step"><span>{el}</span></div>
+                                    return <div key={`progress-step-${index}`} onClick={(e) => this.onStepsClick(e, el)} key={`progress-step-${index}`} className="progress-step"><span>{el}</span></div>
                             })}
                         </div>
                     </div>
