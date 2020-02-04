@@ -305,8 +305,7 @@ export default class TableComponent extends React.Component {
       <Button label="Save" icon="pi pi-check" onClick={this.saveWorkDescription}/>
     </div>;
 
-    dataList = dataList || this.state.tableData || [];
-    console.log('dataList', dataList);
+    dataList = this.state.tableData || dataList || [];
     return (
       <div xs={12} className="tableContainer">
         {/* {this.props.editable || this.props.footer ? <Col className="ReactTableHeader">

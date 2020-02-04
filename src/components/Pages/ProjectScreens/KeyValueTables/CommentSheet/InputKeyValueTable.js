@@ -183,7 +183,7 @@ class CommentSheet extends React.Component {
 			});
 		} else {
 			const data = cloneDeep(this.state.coatingData[props.value.code]);
-			this.setState({ 
+			this.setState({
 				keyValueData: data,
 				selectedVerison: { name: `version ${props.value.code + 1}`, code: props.value.code},
 			});
@@ -223,14 +223,12 @@ class CommentSheet extends React.Component {
 	createNewVerison(doc){
 		if(this.state.doc === 'PIPE') {
 			let newPipeData = this.state.pipeData;
-			newPipeData[newPipeData.length] = this.state.keyValueData
 			newPipeData.push(this.state.keyValueData);
 			this.setState({
 				pipeData: newPipeData
 			})
 		} else {
 			let newCoatingData = this.state.coatingData;
-			newCoatingData[newPipeData.length] = this.state.keyValueData
 			newCoatingData.push(this.state.keyValueData);
 			this.setState({
 				coatingData: newCoatingData
