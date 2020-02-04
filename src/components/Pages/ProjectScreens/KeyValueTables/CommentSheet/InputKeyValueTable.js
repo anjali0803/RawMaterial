@@ -65,6 +65,7 @@ class CommentSheet extends React.Component {
 		this.setCoatingCommentSheet = this.setCoatingCommentSheet.bind(this);
 		this.createNewVerison = this.createNewVerison.bind(this);
 		this.renderSaveButton = this.renderSaveButton.bind(this);
+		this.editable = this.editable.bind(this);
 		// // this.onDocIdClick = this.onDocIdClick.bind(this);
 	}
 	async getKeyValueData() {
@@ -223,15 +224,23 @@ class CommentSheet extends React.Component {
 	createNewVerison(doc){
 		if(this.state.doc === 'PIPE') {
 			let newPipeData = this.state.pipeData;
+			newPipeData[this.state.pipeData.length] = this.state.keyValueData;
 			newPipeData.push(this.state.keyValueData);
+			const newVersionMenu = this.state.versionMenu;
+			newVersionMenu.push({ name: `version ${newVersionMenu.length + 1}`, code: newVersionMenu.length});
 			this.setState({
-				pipeData: newPipeData
+				pipeData: newPipeData,
+				versionMenu: newVersionMenu
 			})
 		} else {
 			let newCoatingData = this.state.coatingData;
+			newPipeData[this.state.newCoatingData.length] = this.state.keyValueData;
 			newCoatingData.push(this.state.keyValueData);
+			const newVersionMenu = this.state.versionMenu;
+			newVersionMenu.push({name: `version ${newVersionMenu.length + 1}`, code: newVersionMenu.length});
 			this.setState({
-				coatingData: newCoatingData
+				coatingData: newCoatingData,
+				versionMenu: newVersionMenu
 			})
 		}
 	}
@@ -279,6 +288,14 @@ class CommentSheet extends React.Component {
 		);
 	}
 
+	editable(){
+		if(this.state.doc === 'PIPE'){
+			this.state.selectedVerison === this.state.pipeData.length ? true : false;
+		} else {
+			this.state.selectedVerison === this.state.coatingData.length ? true : false;
+		}
+	}
+
 	render() {
 		let view = <div></div>;
 		// for stubbed data only
@@ -294,7 +311,7 @@ class CommentSheet extends React.Component {
 					onRefresh={this.onRefresh}
 					actionsLabel={this.state.actions}
 					handleClickAllSelected={this.handleClickAllSelected}
-					editable={true}
+					editable={this.editable}
 					acceptButton={true}
 					rejectButton={true}
 				/>

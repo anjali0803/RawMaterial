@@ -261,8 +261,7 @@ export default class TableComponent extends React.Component {
       return this.state.tableData.indexOf(x);
     }
 
-    return (
-      <>
+    return this.props.editable && (<>
         <i class="material-icons" onClick={deleteRow}>
           delete_outline
         </i>
@@ -272,8 +271,7 @@ export default class TableComponent extends React.Component {
         {this.props.rejectButton ? <i class="material-icons">
           close
         </i> : ''}
-      </>
-    );
+      </>);
   }
   render() {
     console.log('props', this.props);
@@ -305,7 +303,7 @@ export default class TableComponent extends React.Component {
       <Button label="Save" icon="pi pi-check" onClick={this.saveWorkDescription}/>
     </div>;
 
-    dataList = this.state.tableData || dataList || [];
+    dataList = dataList || [];
     return (
       <div xs={12} className="tableContainer">
         {/* {this.props.editable || this.props.footer ? <Col className="ReactTableHeader">
