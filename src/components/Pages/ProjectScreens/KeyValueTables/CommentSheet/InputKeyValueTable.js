@@ -44,6 +44,7 @@ class CommentSheet extends React.Component {
 			coatingData: [],
 			doc: 'PIPE',
 			selectedVerison: 0,
+			editable: false,
 			keyValueColumnList: [
 				{ field: 'AcceptanceCriteria', header: 'Acceptance Criteria' },
 				{ field: 'AcceptanceCriteriaProposal', header: 'Acceptance Criteria Proposal' },
@@ -87,7 +88,11 @@ class CommentSheet extends React.Component {
 			selectedVerison: { name: 'version 1', code: 0}
 		})
 		this.setState({ keyValueData: data });
-
+		if(this.state.pipeData.length === 1){
+			this.setState({
+				editable: true
+			})
+		}
 		this.setState({ isLoading: false });
 	}
 	componentDidMount() {
@@ -182,12 +187,30 @@ class CommentSheet extends React.Component {
 				keyValueData: data,
 				selectedVerison: { name: `version ${props.value.code + 1}`, code: props.value.code},
 			});
+			if(props.value.code === this.state.pipeData.length - 1){
+				this.setState({
+					editable: true
+				})
+			} else {
+				this.setState({
+					editable: false
+				})
+			}
 		} else {
 			const data = cloneDeep(this.state.coatingData[props.value.code]);
 			this.setState({
 				keyValueData: data,
 				selectedVerison: { name: `version ${props.value.code + 1}`, code: props.value.code},
 			});
+			if(props.value.code === this.state.coatingData.length - 1){
+				this.setState({
+					editable: true
+				})
+			}else{
+				this.setState({
+					editable: false
+				})
+			}
 		}
 	}
 
@@ -204,6 +227,15 @@ class CommentSheet extends React.Component {
 			selectedVerison: { name: 'version 1', code: 0},
 			doc: 'PIPE'
 		})
+		if(this.state.pipeData.length === 1){
+			this.setState({
+				editable: true
+			})
+		} else {
+			this.setState({
+				editable: false
+			})
+		}
 	}
 
 	setCoatingCommentSheet(){
@@ -218,13 +250,22 @@ class CommentSheet extends React.Component {
 			versionMenu: versionMenu,
 			selectedVerison: { name: 'version 1', code: 0},
 			doc: 'COATING'
-		})
+		});
+		if(this.state.coatingData.length === 1){
+			this.setState({
+				editable: true
+			})
+		} else {
+			this.setState({
+				editable: false
+			})
+		}
 	}
 
 	createNewVerison(doc){
 		if(this.state.doc === 'PIPE') {
 			let newPipeData = this.state.pipeData;
-			newPipeData[this.state.pipeData.length] = this.state.keyValueData;
+			newPipeData[this.state.pipeData.length - 1] = this.state.keyValueData;
 			newPipeData.push(this.state.keyValueData);
 			const newVersionMenu = this.state.versionMenu;
 			newVersionMenu.push({ name: `version ${newVersionMenu.length + 1}`, code: newVersionMenu.length});
@@ -234,7 +275,7 @@ class CommentSheet extends React.Component {
 			})
 		} else {
 			let newCoatingData = this.state.coatingData;
-			newPipeData[this.state.newCoatingData.length] = this.state.keyValueData;
+			newCoatingData[this.state.coatingData.length - 1] = this.state.keyValueData;
 			newCoatingData.push(this.state.keyValueData);
 			const newVersionMenu = this.state.versionMenu;
 			newVersionMenu.push({name: `version ${newVersionMenu.length + 1}`, code: newVersionMenu.length});
@@ -311,7 +352,7 @@ class CommentSheet extends React.Component {
 					onRefresh={this.onRefresh}
 					actionsLabel={this.state.actions}
 					handleClickAllSelected={this.handleClickAllSelected}
-					editable={this.editable}
+					editable={this.state.editable}
 					acceptButton={true}
 					rejectButton={true}
 				/>

@@ -361,7 +361,7 @@ export default class TableComponent extends React.Component {
 
           rows={10}
           scrollable={true}
-          editable={true}
+          editable={this.props.editable}
           autoLayout={true}
           resizableColumns={true}
           rowClassName={this.props.rowClassName ? (rowData) => this.props.rowClassName(rowData) : () => { }}
