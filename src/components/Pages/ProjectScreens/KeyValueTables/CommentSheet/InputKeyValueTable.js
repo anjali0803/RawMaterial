@@ -45,14 +45,14 @@ class CommentSheet extends React.Component {
 			doc: 'PIPE',
 			selectedVerison: 0,
 			keyValueColumnList: [
-				{ field: 'AcceptanceCriteria', header: 'Acceptance Criteria' },
-				{ field: 'AcceptanceCriteriaProposal', header: 'Acceptance Criteria Proposal' },
+				{ field: 'AcceptanceCriteria', header: 'Client Requirement' },
+				{ field: 'AcceptanceCriteriaProposal', header: 'Proposal' },
 				{ field: 'ClientSpecNumber', header: 'Client Spec Number' },
 				{ field: 'CostImpact', header: 'Cost Impact' },
-				{ field: 'TestingFrequency', header: 'Testing Frequency' },
-				{ field: 'TestingFrequencyProposal', header: 'Testing Frequency Proposal' },
+				// { field: 'TestingFrequency', header: 'Testing Frequency' },
+				// { field: 'TestingFrequencyProposal', header: 'Testing Frequency Proposal' },
 				{ field: 'Status', header: 'Status' },
-				{ field: 'WorkDescription', header: 'Work Description' },
+				// { field: 'WorkDescription', header: 'Work Description' },
 				{ field: 'Comment', header: 'Comment' }
 			]
 		}
