@@ -224,7 +224,7 @@ class CommentSheet extends React.Component {
 	createNewVerison(doc){
 		if(this.state.doc === 'PIPE') {
 			let newPipeData = this.state.pipeData;
-			newPipeData[this.state.pipeData.length] = this.state.keyValueData;
+			newPipeData[this.state.pipeData.length-1] = this.state.keyValueData;
 			newPipeData.push(this.state.keyValueData);
 			const newVersionMenu = this.state.versionMenu;
 			newVersionMenu.push({ name: `version ${newVersionMenu.length + 1}`, code: newVersionMenu.length});
@@ -234,7 +234,7 @@ class CommentSheet extends React.Component {
 			})
 		} else {
 			let newCoatingData = this.state.coatingData;
-			newPipeData[this.state.newCoatingData.length] = this.state.keyValueData;
+			newCoatingData[this.state.coatingData.length-1] = this.state.keyValueData;
 			newCoatingData.push(this.state.keyValueData);
 			const newVersionMenu = this.state.versionMenu;
 			newVersionMenu.push({name: `version ${newVersionMenu.length + 1}`, code: newVersionMenu.length});
@@ -289,10 +289,15 @@ class CommentSheet extends React.Component {
 	}
 
 	editable(){
+		// if(this.state.doc === 'PIPE'){
+		// 	this.state.selectedVerison === this.state.pipeData.length ? true : false;
+		// } else {
+		// 	this.state.selectedVerison === this.state.coatingData.length ? true : false;
+		// }
 		if(this.state.doc === 'PIPE'){
-			this.state.selectedVerison === this.state.pipeData.length ? true : false;
+			return this.state.pipeData.length === (this.state.selectedVerison.code + 1) ? true : false;
 		} else {
-			this.state.selectedVerison === this.state.coatingData.length ? true : false;
+			return this.state.coatingData.length === (this.state.selectedVerison.code + 1) ? true : false;
 		}
 	}
 
