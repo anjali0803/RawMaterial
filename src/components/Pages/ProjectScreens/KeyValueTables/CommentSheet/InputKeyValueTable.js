@@ -265,11 +265,7 @@ class CommentSheet extends React.Component {
 	createNewVerison(doc){
 		if(this.state.doc === 'PIPE') {
 			let newPipeData = this.state.pipeData;
-<<<<<<< HEAD
-			newPipeData[this.state.pipeData.length-1] = this.state.keyValueData;
-=======
 			newPipeData[this.state.pipeData.length - 1] = this.state.keyValueData;
->>>>>>> 9892ec7adeffcb8f18e6661a5a8619952248d708
 			newPipeData.push(this.state.keyValueData);
 			const newVersionMenu = this.state.versionMenu;
 			newVersionMenu.push({ name: `version ${newVersionMenu.length + 1}`, code: newVersionMenu.length});
@@ -279,11 +275,7 @@ class CommentSheet extends React.Component {
 			})
 		} else {
 			let newCoatingData = this.state.coatingData;
-<<<<<<< HEAD
-			newCoatingData[this.state.coatingData.length-1] = this.state.keyValueData;
-=======
 			newCoatingData[this.state.coatingData.length - 1] = this.state.keyValueData;
->>>>>>> 9892ec7adeffcb8f18e6661a5a8619952248d708
 			newCoatingData.push(this.state.keyValueData);
 			const newVersionMenu = this.state.versionMenu;
 			newVersionMenu.push({name: `version ${newVersionMenu.length + 1}`, code: newVersionMenu.length});

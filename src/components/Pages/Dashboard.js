@@ -114,8 +114,8 @@ return <Container fluid={true}>
             <Col xs={12}>
                 <Row>
                     <CountCard title={"Created Projects"} glyph={"icon-fontello-cart"} items={created} />
-                    <CountCard title={"Ongoing Projects"} glyph={"icon-fontello-money"} items={ongoing} />
-                    <CountCard title={"Closed Projects"} glyph={"icon-fontello-users-2"} items={closed} />
+                    <CountCard title={"In Progress Projects"} glyph={"icon-fontello-money"} items={ongoing} />
+                    <CountCard title={"Completed Projects"} glyph={"icon-fontello-users-2"} items={closed} />
                 </Row>
             </Col>
             <Col xs={12}>
@@ -166,7 +166,7 @@ return <Container fluid={true}>
                     </Col>
                 </Row>
             </Col>
-            <Col xs={12}>
+            {/* <Col xs={12}>
                 <Card>
                     <CardBody>
                         <Row>
@@ -196,6 +196,6 @@ return <Container fluid={true}>
                         </Row>
                     </CardFooter>
                 </Card>
-            </Col>
+            </Col> */}
         </Container>
 }

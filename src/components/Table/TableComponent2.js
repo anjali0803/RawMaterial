@@ -35,6 +35,7 @@ export default class TableComponent extends React.Component {
       selected: [],
       isLoading: false,
       displayDialog: false,
+      expandedRows: null,
       displayWorkDescriptionForm: false,
       workItemDescription: '',
       newItem: false,
@@ -61,6 +62,7 @@ export default class TableComponent extends React.Component {
     this.renderWorkDescriptionModal = this.renderWorkDescriptionModal.bind(this);
     this.updateWorkDescription = this.updateWorkDescription.bind(this);
     this.saveWorkDescription = this.saveWorkDescription.bind(this);
+    this.displayAcceptanceForm = this.displayAcceptanceForm.bind(this);
   }
 
   documentIdTemplate(rowData) {
@@ -72,7 +74,6 @@ export default class TableComponent extends React.Component {
     // this.getUserList();
   }
   cellEditor(props){
-    // console.log(props);
     return this.inputTextEditor(props, props.field);
   }
   inputTextEditor( props, field ) {
@@ -113,16 +114,9 @@ export default class TableComponent extends React.Component {
   }
 
   renderDialogModal(colList){
-    const modal = colList.map(column => {
-      return ( this.state.newItem && 
-        <>
-          <div className="p-col-4" style={{padding:'.75em'}}><label>{column['header']}</label></div>
-          <div className="p-col-8" style={{padding:'.5em'}}>
-              <InputText id={column['field']} onChange={(e) => {this.updateProperty(`${column['field']}`, e.target.value)}} value={this.state.item[column['field']]}/>
-          </div>
-        </>
-      )
-    });
+    const modal = (
+      <h1>Somrhting</h1>
+    )
     return modal;
   }
 
@@ -221,10 +215,7 @@ export default class TableComponent extends React.Component {
   renderWorkDescriptionModal(){
     return (
       <>
-          <div className="p-col-4" style={{padding:'.75em'}}><label> Work Description</label></div>
-          <div className="p-col-8" style={{padding:'.5em'}}>
-              <InputText id="workDescription" onChange={(e) => {this.updateWorkDescription(e.target.value)}} value={this.state.workItemDescription}/>
-          </div>
+         <h1>Somethign</h1>
       </>
     )
   }
@@ -238,6 +229,14 @@ export default class TableComponent extends React.Component {
     this.setState({
       displayWorkDescriptionForm: false
     })
+  }
+
+  displayAcceptanceForm(e){
+
+    this.setState({
+      displayWorkDescriptionForm: true
+    });
+    e.stopPropogation();
   }
   actionTemplate(props){
     const deleteRow = s => {
@@ -274,24 +273,15 @@ export default class TableComponent extends React.Component {
       </>);
   }
   render() {
-    console.log('props', this.props);
-    console.log('state', this.state);
     let { colList, dataList } = this.props;
     const { selected, selectAll } = this.state;
     const actions = this.props.actionsLabel;
-    
+    const acceptanceColumn = ['acceptancecriteriaapi', 'acceptancecriteriaextracted', 'acceptancecriteriatable']
     const dialogModal = this.renderDialogModal(colList);
     const workDescriptionModal = this.renderWorkDescriptionModal();
     const footer = (this.props.editable || this.props.footer) && (
       <div className="p-clearfix tableFooter" style={{width:'100%'}}>
-        {/* <Dropdown
-          options={actions}
-          onChange={e => this.handleClickAllSelected(e.value)}
-          placeholder="Select Action"
-          disabled={selected.length == 0}
-        /> */}
         {!this.props.footer ? <Button style={{float:'right', margin: '5px'}} label="Add" icon="pi pi-plus" onClick={this.addNew}/> : ''}
-        {/* {!this.props.footer ? <Button style={{float:'right', margin: '5px'}} label="Delete" icon="pi pi-times" onClick={this.delete}/> : ''} */}
         {this.props.tabulate ? <Button style={{float:'right', margin: '5px'}} label="Tabulate" icon="pi pi-plus" onClick={this.tabulate}/> : ''}
       </div>
     );
@@ -306,59 +296,11 @@ export default class TableComponent extends React.Component {
     dataList = dataList || [];
     return (
       <div xs={12} className="tableContainer">
-        {/* {this.props.editable || this.props.footer ? <Col className="ReactTableHeader">
-          <div className="dropdownAction">
-            <Dropdown
-              options={actions}
-              onChange={e => this.handleClickAllSelected(e.value)}
-              placeholder="Select Action"
-              disabled={selected.length == 0}
-            />
-          </div>
-          <div>
-            {!this.props.footer ? <Button style={{float:'right', margin: '5px'}} label="Delete" icon="pi pi-times" onClick={this.delete}/> : ''}
-            {!this.props.footer ? <Button style={{float:'right', margin: '5px'}} label="Add" icon="pi pi-plus" onClick={this.addNew}/> : ''}
-            {this.props.tabulate ? <Button style={{float:'right', margin: '5px'}} label="Tabulate" icon="pi pi-plus" onClick={this.tabulate}/> : ''}
-          </div>
-        </Col> : null } */}
-        {/* <ReactTableWrapper
-          ref={r => (this.checkboxTable = r)}
-          filterable
-          columns={colList.map((col) => Object.assign(
-            {},
-            { Header: col.header, accessor: col.field, width: col.width, filterMethod: (filter, row) => row[filter.id].toLowerCase().includes(filter.value.toLowerCase()),  ...col }))}
-          defaultFilterMethod={(filter, row) =>String(row[filter.id]) === filter.value}     
-          data={dataList && dataList.length > 0 && dataList != 'null' ? dataList.map((item, index) => {
-            const _id = item.id || item.ProjectID || index.toString();
-            console.log('_id', _id);
-            const { ProjectStatus = '', Status = '' } = item;
-            return {
-              _id,
-              ...item,
-              Status:<Badge color={['closed','completed'].includes(Status.toLowerCase()) ? 'success': 'warning'}>{Status}</Badge>,
-              ProjectStatus:<Badge color={['closed','completed'].includes(ProjectStatus.toLowerCase()) ? 'success': 'warning'}>{ProjectStatus}</Badge>,
-            };
-          }) : []}
-          getTrProps={(state, record) => {
-            return {
-              onClick: () => this.props.onDocumentIdClick(record.original),
-            }
-          }}
-          pageSize={dataList && dataList.length > 0 ? 8 : 0}
-          showPageJump={false}
-          resizable={false}
-          showPageSizeOptions={false}
-          previousText={"Back"}
-          pageText={""}
-          {...this}
-          selectAll={selectAll}
-        />*/}
         <DataTable
           value={dataList || this.state.tableData}
           footer={footer}
           paginator={true}
           paginatorPosition={"bottom"}
-
           rows={10}
           scrollable={true}
           editable={this.props.editable}
@@ -378,13 +320,13 @@ export default class TableComponent extends React.Component {
               filterMatchMode:'startsWith',
             }
             //console.log(header.toLowerCase().replace(/ /g, ''))
-
-            if (header.toLowerCase().replace(/ /g, '') == 'documentid') {
+            
+            if (acceptanceColumn.indexOf(header.toLowerCase().replace(/ /g, '')) >= 0) {
               //console.log(el);
               return <Column
-                id={`table-${index}`}
                 {...columnProps}
-                body={this.documentIdTemplate}
+                field={el.field}
+                editor={this.displayAcceptanceForm}
                 style={{width:'200px'}}
               />
             }
@@ -417,7 +359,7 @@ export default class TableComponent extends React.Component {
         <Dialog visible={this.state.displayWorkDescriptionForm} width="600px" header="Work Description" modal={true} footer={workDescriptionFormFooter} onHide={() => this.setState({displayWorkDescriptionForm: false})}>
           {
               <div className="p-grid p-fluid">
-                {workDescriptionModal}
+                {dialogModal}
               </div>
           }
         </Dialog>

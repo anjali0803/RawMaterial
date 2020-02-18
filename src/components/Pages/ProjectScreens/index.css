@@ -145,7 +145,8 @@
 }
 
 .progress-wrapper {
-	display: table-cell;
+	margin-left: 2%;
+	/* display: table-cell; */
     /* height: 400px; */
     
 	/* vertical-align: middle; */
@@ -156,7 +157,8 @@
 
 .progress-steps .progress-step {
 	
-	font-size: 14px;
+	font-size: 16px;
+	width: 19%;
 	text-align: center;
 	color: white;
 	cursor: pointer;
@@ -166,15 +168,15 @@
 	min-width: 181px;
 	float: left;
 	position: relative;
-	background-color: #3a47a7;
+	/* background-color: #3a47a7; */
 	-webkit-user-select: none;
 	/* -moz-user-select: none; */
 	-ms-user-select: none;
-	user-select: none; 
+	background-image: linear-gradient(to bottom, #3a47a7 0%, #202b7d 51%, #04273d 100%);
   transition: background-color 0.2s ease;
 }
 
-.progress-steps .progress-step:after,
+/* .progress-steps .progress-step:after,
 .progress-steps .progress-step:before {
 	
 	content: " ";
@@ -188,23 +190,7 @@
 	border-left: 17px solid #3a47a7;	
 	z-index: 2;
   transition: border-color 0.2s ease;
-}
-
-.progress-steps .progress-step:before {
-	right: auto;
-	left: 0;
-	border-left: 17px solid #fff;	
-	z-index: 0;
-}
-
-.progress-steps .progress-step:first-child:before {
-	border: none;
-}
-
-.progress-steps .progress-step:first-child {
-	border-top-left-radius: 4px;
-	border-bottom-left-radius: 4px;
-}
+} */
 
 .progress-steps .progress-step span {
 	position: relative;
@@ -228,7 +214,7 @@
 
 .progress-steps .progress-step.progress-current {
 	color: #fff;
-	background-color: #0A1359;
+	border: 1px solid #a6a6a6;
 }
 
 .progress-steps .progress-step.progress-current:after {

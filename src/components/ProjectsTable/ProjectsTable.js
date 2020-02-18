@@ -138,15 +138,18 @@ export class ProjectsTable extends React.Component {
           ref={r => (this.checkboxTable = r)}
           filterable
           columns={colList.map((col) => Object.assign(
-            {},
-            { Header: col.header, accessor: col.field, width: col.width, filterMethod: (filter, row) => row[filter.id].toLowerCase().includes(filter.value.toLowerCase()),  ...col }))}
+            { Header: col.header, accessor: col.field, filterMethod: (filter, row) => row[filter.id].toLowerCase().includes(filter.value.toLowerCase()),  ...col }))}
           defaultFilterMethod={(filter, row) =>String(row[filter.id]) === filter.value}     
           data={this.filterRows(dataList, colList, searchText).map(item => {
             const _id = item.ProjectID;
-            const { ProjectStatus = '', Status = '' } = item;
+            const { ProjectStatus = '', Status = '', Download = '' } = item;
             return {
               _id,
               ...item,
+              Download:
+              <i style={{ margin: 'auto'}} class="material-icons">
+              save_alt
+              </i>,
               Status:<Badge color={['closed','completed'].includes(Status.toLowerCase()) ? 'success': 'warning'}>{Status}</Badge>,
               ProjectStatus:<Badge color={['closed','completed'].includes(ProjectStatus.toLowerCase()) ? 'success': 'warning'}>{ProjectStatus}</Badge>,
             };
