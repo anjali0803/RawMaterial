@@ -113,9 +113,22 @@ function dashboardRender(countCard, created, ongoing, closed, hfw, hsaw, mapByQu
 return <Container fluid={true}>
             <Col xs={12}>
                 <Row>
-                    <CountCard title={"Created Projects"} glyph={"icon-fontello-cart"} items={created} />
-                    <CountCard title={"In Progress Projects"} glyph={"icon-fontello-money"} items={ongoing} />
-                    <CountCard title={"Completed Projects"} glyph={"icon-fontello-users-2"} items={closed} />
+                    <CountCard title={"Created Inquiry"} glyph={"icon-fontello-cart"} items={created} />
+                    <CountCard title={"Inquiry in Progress"} glyph={"icon-fontello-money"} items={ongoing} />
+                    <CountCard title={"Completed Inquiry"} glyph={"icon-fontello-users-2"} items={closed} />
+                </Row>
+            </Col>
+            <Col xs={12}>
+                <Row>
+                    <CountCard title={"Inquiry Recieved"} glyph={"icon-fontello-cart"} items={created} />
+                    <CountCard title={"Inquiry Submitted"} glyph={"icon-fontello-money"} items={ongoing} />
+                    <CountCard title={"Inquiry Closed"} glyph={"icon-fontello-money"} items={ongoing} />
+                    {/* <Col md={6}>
+                        <CountCard title={"Inquiry Recieved"} glyph={"icon-fontello-cart"} items={created} />
+                    </Col>
+                    <Col md={6}>
+                        <CountCard title={"Inquiry Submitted"} glyph={"icon-fontello-money"} items={ongoing} />
+                    </Col>    */}
                 </Row>
             </Col>
             <Col xs={12}>
@@ -166,6 +179,7 @@ return <Container fluid={true}>
                     </Col>
                 </Row>
             </Col>
+            
             {/* <Col xs={12}>
                 <Card>
                     <CardBody>
