@@ -46,14 +46,17 @@ class CommentSheet extends React.Component {
 			selectedVerison: 0,
 			editable: false,
 			keyValueColumnList: [
-				{ field: 'AcceptanceCriteria', header: 'Client Requirement' },
-				{ field: 'AcceptanceCriteriaProposal', header: 'Proposal' },
+				{ field: 'Comment', header: 'SR' },
 				{ field: 'ClientSpecNumber', header: 'Client Spec Number' },
+				{ field: 'AcceptanceCriteria', header: 'Client Requirements' },
+				{ field: 'AcceptanceCriteriaProposal', header: 'Proposal' },
 				{ field: 'CostImpact', header: 'Cost Impact' },
-				// { field: 'TestingFrequency', header: 'Testing Frequency' },
-				// { field: 'TestingFrequencyProposal', header: 'Testing Frequency Proposal' },
 				{ field: 'Status', header: 'Status' },
-				// { field: 'WorkDescription', header: 'Work Description' },
+				{ field: 'ClientReply', header: 'Client Reply' },
+				{ field: 'WelspunComments1', header: 'Welspun Comments 1' },
+				{ field: 'ClientReply1', header: 'Client Reply 1' },
+				{ field: 'WelspunComments2', header: 'Welspun Comments 2' },
+				//{ field: 'WorkDescription', header: 'Work Description' },
 				{ field: 'Comment', header: 'Comment' }
 			]
 		}

@@ -312,13 +312,13 @@ class Details extends React.Component {
                             disabled={this.props.readOnly}
                         />
 
-                        <div className="upload-label" >INNER-COATING</div>
+                        <div className="upload-label" >INTERNAL-COATING</div>
                         <FileUpload
                             className="inner-coating-upload"
                             disabled={this.props.readOnly}
                             onFileSelect={this.saveFile3}
                         />
-                        <div className="upload-label" >OUTER-COATING</div>
+                        <div className="upload-label" >EXTERNAL-COATING</div>
                         <FileUpload
                             className="outer-coating-upload"
                             disabled={this.props.readOnly}

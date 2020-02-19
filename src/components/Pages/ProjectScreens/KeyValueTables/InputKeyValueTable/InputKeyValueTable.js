@@ -106,10 +106,11 @@ class InputKeyValueTable extends React.Component {
             "DocID":"PROJ456CLIENT-CALC-SHEET",
             "HoopStress":"100%",
             "HoldTime":"10 seconds",
-            "Tolerance":"98.75",
+            "NegativeTolerance":"98.75",
+            "PositiveTolerance":"98.75",
             "PipeLength":"QRL",
             "Weight":"500",
-            "Peaking":"something",
+            "Peaking":"10",
             "SMTS":"10%",
             "RtRm":"0.9",
             "GrainSize":"8 or finer"
@@ -121,7 +122,7 @@ class InputKeyValueTable extends React.Component {
             reverseBendTest: newTableData.ReverseBendTest,
             RtRm: newTableData.RtRm,
             SMTS: newTableData.SMTS,
-            tolerance: newTableData.Tolerance,
+            negativeTolerance: newTableData.NegativeTolerance,
             weight: newTableData.Weight,
             pipeLength: newTableData.PipeLength
         })
@@ -142,11 +143,11 @@ class InputKeyValueTable extends React.Component {
                     value: newTableData.HoopStress,
                 },
                 {
-                    fieldname: 'Reverse Bend Test',
-                    value: newTableData.ReverseBendTest,
+                    fieldname: 'Peaking Factor',
+                    value: newTableData.Peaking,
                 },
                 {
-                    fieldname: 'Rtrm',
+                    fieldname: 'Yield Ratio',
                     value: newTableData.RtRm,
                 },
                 {
@@ -154,8 +155,12 @@ class InputKeyValueTable extends React.Component {
                     value: newTableData.SMTS,
                 },
                 {
-                    fieldname: "Tolerance",
-                    value: newTableData.Tolerance,
+                    fieldname: "Positive Tolerance",
+                    value: newTableData.PositiveTolerance,
+                },
+                {
+                    fieldname: "Negative Tolerance",
+                    value: newTableData.NegativeTolerance,
                 },
                 {
                     fieldname: 'Weight',
