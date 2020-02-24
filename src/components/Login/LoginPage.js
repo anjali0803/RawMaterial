@@ -18,7 +18,7 @@ import axios from "axios";
 import { connect } from "react-redux";
 import { FormGroup, Grid, Button, Label, Card, CardBody, CardGroup, Col, Container, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row } from "reactstrap";
 import { Link } from 'react-router-dom';
-import { backendUrl } from '../../constant';
+import { authenticationUrl } from '../../constant';
 import Helmet from 'react-helmet';
 // axios.defaults.withCredentials = true;
 
@@ -76,7 +76,7 @@ class LoginPage extends React.Component {
     const referer = this.props.location.state || "/";
 
     const loginResponse = await axios.post(
-      `${backendUrl}/auth/login`,
+      `${authenticationUrl}/api/login`,
       {
         username: username,
         password: password
@@ -84,6 +84,14 @@ class LoginPage extends React.Component {
     )
 
     if (loginResponse) {
+      await this.props.setUserLogin(true);
+      await this.props.setUserName(loginResponse.data.data.username);
+      await this.props.setUserRole(loginResponse.data.data.is_admin ? 'admin' : '');
+
+      localStorage.setItem("isAuthenticated", "true");
+      localStorage.setItem("username", loginResponse.data.data.username);
+      localStorage.setItem("role", loginResponse.data.data.is_admin ? 'admin' : '');
+      history.push(referer);
       if (loginResponse.data.code === 0) {
         await this.props.setUserLogin(true);
         await this.props.setUserName(loginResponse.data.username);

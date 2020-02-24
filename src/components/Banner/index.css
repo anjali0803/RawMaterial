@@ -12,6 +12,7 @@
     width: 100vw;
     height: 85px;
     align-content: center;
+    top: 0px;
     position: fixed;
     z-index: 9999999;
     box-shadow: 1px -2px 12px rgba(0, 0, 0, 0.5);

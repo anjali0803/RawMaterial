@@ -9,7 +9,7 @@ import {
 import "./index.css";
 import axios from "axios";
 import { connect } from "react-redux";
-import { backendUrl } from '../../constant';
+import { authenticationUrl } from '../../constant';
 import LoadingScreen from "./LoadingScreen/loadingScreen";
 
 class PendingRequests extends React.Component {
@@ -28,7 +28,7 @@ class PendingRequests extends React.Component {
   async getUserList() {
     this.setState({ isLoading: true });
     const userList = await axios.get(
-      `${backendUrl}/dashboard/users`
+      `${authenticationUrl}/api/alluser`
     );
     this.props.setUserList(userList.data);
     this.setState({ selected: [], isLoading: false })
@@ -43,16 +43,16 @@ class PendingRequests extends React.Component {
     userList.push(rowData.username);
     if (action) {
       await axios.post(
-        `${backendUrl}/dashboard/approve_user`,
+        `${authenticationUrl}/api/approveuser`,
         {
-          username_list: userList
+          username: rowData.username
         }
       );
     } else {
       await axios.post(
-        `${backendUrl}/dashboard/reject_user`,
+        `${authenticationUrl}api/removeuser`,
         {
-          username_list: userList
+          username: rowData.username
         }
       );
     }
@@ -66,14 +66,14 @@ class PendingRequests extends React.Component {
     });
     if (action) {
       await axios.post(
-        `${backendUrl}/dashboard/approve_user`,
+        `${authenticationUrl}/api/approveuser`,
         {
           username_list: userList
         }
       );
     } else {
       await axios.post(
-        `${backendUrl}/dashboard/reject_user`,
+        `${authenticationUrl}/api/removeuser`,
         {
           username_list: userList
         }

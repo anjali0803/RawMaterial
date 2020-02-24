@@ -20,7 +20,7 @@ import "./index.css";
 import { createHashHistory } from "history";
 import axios from "axios";
 import { connect } from "react-redux";
-import { backendUrl } from '../../constant';
+import { authenticationUrl } from '../../constant';
 import { Link } from 'react-router-dom';
 import { Row } from 'reactstrap';
 const history = createHashHistory();
@@ -118,21 +118,24 @@ class SignUpPage extends React.Component {
     const username = this.state.username;
     const name = this.state.name;
     const password = this.state.password;
-    const confirmPassword = this.state.confirmPassword;
+    const confirmPassword = this.state.password;
     const email = this.state.email;
     const department = this.state.department;
     const userData = {
       username: username,
       password: password,
-      confirmPassword: confirmPassword,
       email: email,
-      project: department,
     };
 
     if (this.state.password === this.state.confirmPassword) {
       const signUpRes = await axios.post(
-        `${backendUrl}/auth/register_user`,
-        userData
+        `${authenticationUrl}/api/adduser`,
+        userData,
+        {
+          headers: {
+            'Content-Type' : 'application/json'
+          }
+        }
       )
     // if (this.state.password === this.state.confirmpassword) {
     //   history.push("/login");
