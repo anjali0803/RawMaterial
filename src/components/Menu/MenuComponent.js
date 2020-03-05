@@ -10,19 +10,6 @@ import "./index.css";
 import { backendUrl } from "../../constant";
 import * as router from 'react-router-dom';
 
-import {
-    AppAside,
-    AppFooter,
-    AppHeader,
-    AppSidebar,
-    AppSidebarFooter,
-    AppSidebarForm,
-    AppSidebarHeader,
-    AppSidebarMinimizer,
-    AppBreadcrumb2 as AppBreadcrumb,
-    AppSidebarNav2 as AppSidebarNav,
-} from '@coreui/react';
-
 
 class MenuComponent extends React.Component {
     async componentDidMount() {
@@ -45,6 +32,51 @@ class MenuComponent extends React.Component {
         this.props.setColList(colList);
     }
     render() {
+				const toggleDropDownMenu = () => {
+					var dropdownEle = document.activeElement.className;
+					switch (dropdownEle) {
+						case "dropdown-btn dropdown-btn-0":
+							$(".dropdown-btn-0").toggleClass("active");
+							$(".dropdown-container-0").toggle();
+							break;
+						case "dropdown-btn dropdown-btn-0 active":
+							$(".dropdown-btn-0").toggleClass("active");
+							$(".dropdown-container-0").toggle();
+							break;
+
+						case "dropdown-btn dropdown-btn-1":
+							$(".dropdown-btn-1").toggleClass("active");
+							$(".dropdown-container-1").toggle();
+							break;
+						case "dropdown-btn dropdown-btn-1 active":
+							$(".dropdown-btn-1").toggleClass("active");
+							$(".dropdown-container-1").toggle();
+							break;
+
+						case "dropdown-btn dropdown-btn-2":
+							$(".dropdown-btn-2").toggleClass("active");
+							$(".dropdown-container-2").toggle();
+							break;
+
+						case "dropdown-btn dropdown-btn-2 active":
+							$(".dropdown-btn-2").toggleClass("active");
+							$(".dropdown-container-2").toggle();
+							break;
+						case "dropdown-btn dropdown-btn-3":
+							$(".dropdown-btn-3").toggleClass("active");
+							$(".dropdown-container-3").toggle();
+							break;
+						
+						case "dropdown-btn dropdown-btn-3 active":
+							$(".dropdown-btn-3").toggleClass("active");
+							$(".dropdown-container-3").toggle();
+							break;
+
+						default:
+							break;
+					}
+				};
+
         const items = [
             {
                 name: "Dashboard",
@@ -141,16 +173,56 @@ class MenuComponent extends React.Component {
                 ]
             })
             : null;
+				
+				const redirectToDashboard = () =>{
+					this.props.history.push('/dashboard');
+				};
 
-        return <AppSidebar fixed display="lg">
-            <AppSidebarHeader />
-            <AppSidebarForm />
-            <Suspense>
-                <AppSidebarNav navConfig={{ items: items }} {...this.props} router={router} />
-            </Suspense>
-            <AppSidebarFooter />
-            <AppSidebarMinimizer />
-        </AppSidebar>;
+        return (
+            <div className="sideBar">
+              <div className="navMenu">
+								{
+									(this.props.userRole == "admin") && (
+										<>
+											<button class="dropdown-btn dropdown-btn-0" onClick={toggleDropDownMenu}><i class="pi pi-user"></i>Admin
+													<i class="fa fa-caret-down"></i>
+											</button>
+											<div class="dropdown-container dropdown-container-0">
+													<a href="#/support/create-new-incident"><i class="pi pi-key"></i>Pending Requests</a>
+													<a href="#/support/open-incidents"><i class="pi pi-fw pi-users"></i>All Users</a>
+											</div>
+										</>
+									)
+								}
+								<button class="dropdown-btn" onClick={redirectToDashboard}><i class="pi pi-fw pi-home"></i> Dashboard</button>
+								<button class="dropdown-btn dropdown-btn-1" onClick={toggleDropDownMenu}><i class="pi pi-fw pi-question"></i>Inquiry
+                    <i class="fa fa-caret-down"></i>
+                </button>
+								<div class="dropdown-container dropdown-container-1">
+                    <a href="#/inquiry/create-new-projects/new"><i class="pi pi-fw pi-plus"></i>Create new projects</a>
+                    <a href="#/inquiry/projects-assigned-to-me"><i class="pi pi-fw pi-align-left"></i>Projects assigned to me</a>
+                    <a href="#/inquiry/projects-assigned-by-me"><i class="pi pi-fw pi-align-right"></i>Projects assigned by me</a>
+										<a href="#/inquiry/all-ongoing-projects"><i class="pi pi-fw pi-clone"></i>All ongoing projects</a>
+                    <a href="#/inquiry/closed-projects"><i class="pi pi-fw pi-copy"></i>Closed projects</a>
+                    <a href="#/inquiry/archieve-projects"><i class="pi pi-fw pi-envelope"></i>Archive projects</a>
+                </div>
+								<button class="dropdown-btn dropdown-btn-2" onClick={toggleDropDownMenu}><i class="pi pi-fw pi-file-excel"></i>Report
+                    <i class="fa fa-caret-down"></i>
+                </button>
+								<div class="dropdown-container dropdown-container-2">
+                    <a href="#/report/generate-new-reports"><i class="pi pi-fw pi-plus"></i>Generate new reports</a>
+                    <a href="#/report/past-reports"><i class="pi pi-fw pi-minus"></i>Past reports</a>
+                </div>
+                <button class="dropdown-btn dropdown-btn-3" onClick={toggleDropDownMenu}><i class="pi  pi-info"></i>Support
+                    <i class="fa fa-caret-down"></i>
+                </button>
+                <div class="dropdown-container dropdown-container-3">
+                    <a href="#/support/create-new-incident"><i class="pi pi-eye"></i>Create new Incident</a>
+                    <a href="#/support/open-incidents"><i class="pi pi-circle-off"></i>Open Incidents</a>
+                </div>
+							</div>
+            </div>
+        );
     }
 }
 
