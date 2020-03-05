@@ -34,46 +34,16 @@ class MenuComponent extends React.Component {
     render() {
 				const toggleDropDownMenu = () => {
 					var dropdownEle = document.activeElement.className;
-					switch (dropdownEle) {
-						case "dropdown-btn dropdown-btn-0":
-							$(".dropdown-btn-0").toggleClass("active");
-							$(".dropdown-container-0").toggle();
-							break;
-						case "dropdown-btn dropdown-btn-0 active":
-							$(".dropdown-btn-0").toggleClass("active");
-							$(".dropdown-container-0").toggle();
-							break;
-
-						case "dropdown-btn dropdown-btn-1":
-							$(".dropdown-btn-1").toggleClass("active");
-							$(".dropdown-container-1").toggle();
-							break;
-						case "dropdown-btn dropdown-btn-1 active":
-							$(".dropdown-btn-1").toggleClass("active");
-							$(".dropdown-container-1").toggle();
-							break;
-
-						case "dropdown-btn dropdown-btn-2":
-							$(".dropdown-btn-2").toggleClass("active");
-							$(".dropdown-container-2").toggle();
-							break;
-
-						case "dropdown-btn dropdown-btn-2 active":
-							$(".dropdown-btn-2").toggleClass("active");
-							$(".dropdown-container-2").toggle();
-							break;
-						case "dropdown-btn dropdown-btn-3":
-							$(".dropdown-btn-3").toggleClass("active");
-							$(".dropdown-container-3").toggle();
-							break;
-						
-						case "dropdown-btn dropdown-btn-3 active":
-							$(".dropdown-btn-3").toggleClass("active");
-							$(".dropdown-container-3").toggle();
-							break;
-
-						default:
-							break;
+					let collapsedDropDown = [];
+					$(".dashboard").removeClass("active");
+					for(let i = 0; i <= 3; i++){
+						if(dropdownEle.indexOf(i.toString()) < 0){
+							$(`.dropdown-container-${i}`).hide();
+							$(`.dropdown-btn-${i}`).removeClass("active");
+						} else {
+							$(`.dropdown-btn-${i}`).addClass("active");
+							$(`.dropdown-container-${i}`).toggle();
+						}
 					}
 				};
 
@@ -175,6 +145,12 @@ class MenuComponent extends React.Component {
             : null;
 				
 				const redirectToDashboard = () =>{
+					var activeElement = document.activeElement.className;
+					$(".dashboard").addClass("active");
+					for(let i = 0; i <= 3; i++){
+						$(`.dropdown-container-${i}`).hide();
+						$(`.dropdown-btn-${i}`).removeClass("active");
+					}
 					this.props.history.push('/dashboard');
 				};
 
@@ -194,7 +170,7 @@ class MenuComponent extends React.Component {
 										</>
 									)
 								}
-								<button class="dropdown-btn" onClick={redirectToDashboard}><i class="pi pi-fw pi-home"></i> Dashboard</button>
+								<button class="dropdown-btn dashboard" onClick={redirectToDashboard}><i class="pi pi-fw pi-home"></i> Dashboard</button>
 								<button class="dropdown-btn dropdown-btn-1" onClick={toggleDropDownMenu}><i class="pi pi-fw pi-question"></i>Inquiry
                     <i class="fa fa-caret-down"></i>
                 </button>
