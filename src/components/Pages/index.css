@@ -91,3 +91,10 @@ tr.p-highlight {
     font-style: bold;
     background-image: linear-gradient(to right, #314755 0%, #26a0da 51%, #314755 100%)
 }
+
+.videoPlayerBox{
+    height: 400px;
+    width: 90%;
+    margin: 5%;
+    border-radius: 10px;
+}
