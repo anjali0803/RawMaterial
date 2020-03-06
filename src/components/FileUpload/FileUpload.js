@@ -50,7 +50,14 @@ class FileUpload extends React.Component {
         })
 
         this.setState({fileName: FileList[0].toString()})
-        this.props.onFileSelect(e.target.files[0]);
+        if(this.props.multiple){
+            this.props.onFileSelect(e.target.files);
+            this.setState({
+                fileName: `${e.target.files.length} files choosen`
+            })
+        } else {
+            this.props.onFileSelect(e.target.files[0]);
+        }
     }
     render() {
         let docUploadProps = {
@@ -64,6 +71,12 @@ class FileUpload extends React.Component {
             docUploadProps = {
                 ...docUploadProps,
                 accept: ".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+            }
+        }
+        if(this.props.multiple){
+            docUploadProps = {
+                ...docUploadProps,
+                multiple: true
             }
         }
         return (

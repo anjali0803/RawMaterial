@@ -81,3 +81,13 @@ tr.p-highlight {
 .progress-container {
     margin-bottom: 10px;
 }
+
+.saveButton{
+    height: 50px;
+    width: 200px;
+    border-radius: 5px;
+    color: whitesmoke;
+    font-weight: 500;
+    font-style: bold;
+    background-image: linear-gradient(to right, #314755 0%, #26a0da 51%, #314755 100%)
+}
