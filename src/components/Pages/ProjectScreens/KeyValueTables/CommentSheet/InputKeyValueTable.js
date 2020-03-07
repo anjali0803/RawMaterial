@@ -218,6 +218,8 @@ class CommentSheet extends React.Component {
 	}
 
 	setPipeCommentSheet(){
+	$('.pipeButton').addClass('active');
+	$('.coatingButton').removeClass('active');
 		const data = cloneDeep(this.state.pipeData[0]);
 		this.setState({
 			keyValueData: data
@@ -242,6 +244,8 @@ class CommentSheet extends React.Component {
 	}
 
 	setCoatingCommentSheet(){
+		$('.coatingButton').addClass('active');
+		$('.pipeButton').removeClass('active');
 		const data = cloneDeep(this.state.coatingData[0]);
 		this.setState({
 			keyValueData: data
@@ -310,17 +314,17 @@ class CommentSheet extends React.Component {
 				<div className="col-4 justify-content-center">
 					<div className="row justify-content-center">
 						<div className="col-6">
-							<button type="button pad-left" onClick={this.setPipeCommentSheet} class="btn btn-info">Pipe</button>
-							<button type="button pad-left" onClick={this.setCoatingCommentSheet} class="btn btn-info">Coating</button>
+							<button type="button pad-left" onClick={this.setPipeCommentSheet} class="pipeButton active">Pipe</button>
+							<button type="button pad-left" onClick={this.setCoatingCommentSheet} class="coatingButton">Coating</button>
 						</div>
 					</div>
 				</div>
 				<div className="col-4">
 					<div className="row d-flex justify-content-end fright">
 						<div className="col-12">
-							{ this.renderSaveButton() ? <button type="button pad-left" class="btn btn-success">Save</button> : ''}
-							{ this.renderSaveButton() ? <button type="button pad-left" onClick={this.createNewVerison} class="btn btn-primary">Create New Ver.</button> : ''}
-							<button type="button pad-left" class="btn btn-dark">
+							{ this.renderSaveButton() ? <button type="button pad-left" class="actionBtn btn-success">Save</button> : ''}
+							{ this.renderSaveButton() ? <button type="button pad-left" onClick={this.createNewVerison} class="actionBtn btn-primary">Create New Ver.</button> : ''}
+							<button type="button pad-left" class="actionBtn btn-dark">
 								<i class="material-icons">
 									save
 								</i>
@@ -349,10 +353,10 @@ class CommentSheet extends React.Component {
 		let view = <div></div>;
 		// for stubbed data only
 		view = this.renderButtonMenu();
-
 		return !this.state.isLoading ? (
 			<div className="container-fluid">
 				{view}
+				<hr  style={{ marginTop: '10px', marginBottom: '0px'}}/>
 				<TableComponent
 					colList={this.state.keyValueColumnList}
 					dataList={this.state.keyValueData}

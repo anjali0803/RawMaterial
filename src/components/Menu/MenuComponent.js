@@ -90,7 +90,6 @@ class MenuComponent extends React.Component {
 					</button>
 					<div class="dropdown-container dropdown-container-2">
 						<a href="#/report/generate-new-reports"><i class="pi pi-fw pi-plus"></i>Generate new reports</a>
-						<a href="#/report/past-reports"><i class="pi pi-fw pi-minus"></i>Past reports</a>
 					</div>
 					<button class="dropdown-btn dropdown-btn-3" onClick={toggleDropDownMenu}><i class="pi  pi-info"></i>Support
                     <i class="fa fa-caret-down"></i>

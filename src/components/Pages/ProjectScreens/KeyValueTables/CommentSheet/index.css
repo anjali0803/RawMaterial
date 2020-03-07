@@ -25,3 +25,27 @@
 .pad-left{
     padding-left: 2px;
 }
+
+.pipeButton, .coatingButton{
+    margin-left: 5px;
+    margin-right: 5px;
+    color: whitesmoke;
+    background-color: cornflowerblue;
+    height: 50px;
+    width: 100px;
+}
+
+.active{
+    background-color: #202b7d;
+    box-shadow: 2px 1px 12px rgba(0, 0, 0, 0.7);
+}
+
+.actionBtn{
+    margin-left: 5px;
+    margin-right: 5px;
+    color: whitesmoke;
+    height: 50px;
+    padding-right: 10px;
+    padding-left: 10px;
+    border-radius: 5px;
+}

@@ -214,7 +214,8 @@
 
 .progress-steps .progress-step.progress-current {
 	color: #fff;
-	border: 1px solid #a6a6a6;
+	border-bottom: 4px solid #007eff;
+	box-shadow: 0 10px 6px -6px black;
 }
 
 .progress-steps .progress-step.progress-current:after {

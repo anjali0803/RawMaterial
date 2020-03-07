@@ -63,7 +63,7 @@ export default class CreateNewProjects extends React.Component {
                 />
             },
             {
-                path: '/Inquiry/create-new-projects/input-key-value/second', component: () => <InputKeyValueTable
+                path: '/Inquiry/create-new-projects/calculations', component: () => <InputKeyValueTable
                     saveEnabled={true} deleteEnabled={true}
                     steps={this.state.steps}
                     screenNumber={1}
@@ -91,7 +91,7 @@ export default class CreateNewProjects extends React.Component {
                 />
             },
             {
-                path: '/Inquiry/create-new-projects/commentsheet', component: () => <CommentSheet
+                path: '/Inquiry/create-new-projects/comment-sheet', component: () => <CommentSheet
                     steps={this.state.steps}
                     saveEnabled={true}
                     deleteEnabled={false} />
