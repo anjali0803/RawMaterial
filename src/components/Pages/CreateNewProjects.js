@@ -13,6 +13,7 @@ import './index.css';
 import { createHashHistory } from "history";
 import ProgressBar from './ProjectScreens/ProgressBar';
 import InputKeyValueTable from './ProjectScreens/KeyValueTables/InputKeyValueTable/InputKeyValueTable';
+import RMTS from './ProjectScreens/KeyValueTables/RMTS/InputKeyValueTable';
 import ITP from './ProjectScreens/KeyValueTables/ITP/InputKeyValueTable';
 import CommentSheet from './ProjectScreens/KeyValueTables/CommentSheet/InputKeyValueTable';
 import RecKeyValueTable from './ProjectScreens/KeyValueTables/RecKeyValueTable/RecKeyValueTable';
@@ -40,6 +41,7 @@ export default class CreateNewProjects extends React.Component {
                 'Calculations',
                 'Comment Sheet',
                 'ITP',
+                'RMTS',
                 'Documents'
             ]
         }
@@ -67,10 +69,15 @@ export default class CreateNewProjects extends React.Component {
                     saveEnabled={true} deleteEnabled={true}
                     steps={this.state.steps}
                     screenNumber={1}
-                    redirectTo='/Inquiry/create-new-projects/recommendations'
                 />
             },
-
+            {
+                path: '/Inquiry/create-new-projects/rmts', component: () => <RMTS
+                    saveEnabled={true} deleteEnabled={true}
+                    steps={this.state.steps}
+                    screenNumber={1}
+                />
+            },
             {
                 path: '/Inquiry/create-new-projects/input-key-value', component: () => <InputKeyValue
                     steps={this.state.steps}
@@ -82,27 +89,10 @@ export default class CreateNewProjects extends React.Component {
                     steps={this.state.steps} />
             },
             {
-                path: '/Inquiry/create-new-projects/recommendations/second', component: () => <RecKeyValueTable
-
-                    steps={this.state.steps}
-                    saveEnabled={true} deleteEnabled={true}
-                    redirectTo='/Inquiry/create-new-projects/acceptance'
-                    screenNumber={2}
-                />
-            },
-            {
                 path: '/Inquiry/create-new-projects/comment-sheet', component: () => <CommentSheet
                     steps={this.state.steps}
                     saveEnabled={true}
                     deleteEnabled={false} />
-            },
-            {
-                path: '/Inquiry/create-new-projects/acceptance/second', component: () => <AccKeyValueTable
-                    steps={this.state.steps}
-                    saveEnabled={true} deleteEnabled={true}
-                    redirectTo='/Inquiry/create-new-projects/output-key-value/'
-                    screenNumber={3}
-                />
             },
             {
                 path: '/Inquiry/create-new-projects/output-key-value', component: () => <OutputKeyValue

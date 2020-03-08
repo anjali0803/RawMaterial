@@ -141,7 +141,7 @@
 	font-family: Rubik;
 	width: 100%;
 	margin-top: 10px;
-	margin-left : 9px;
+	margin-left : 8px;
 }
 
 .progress-wrapper {
@@ -152,19 +152,15 @@
 	/* vertical-align: middle; */
 }
 
-
-
-
 .progress-steps .progress-step {
-	
 	font-size: 16px;
-	width: 19%;
+	width: 16%;
 	text-align: center;
 	color: white;
 	cursor: pointer;
-	margin: 0 3px;
+	margin: 0 2px;
 	
-	padding: 10px 10px 10px 30px;
+	padding: 10px 10px 10px 10px;
 	min-width: 181px;
 	float: left;
 	position: relative;
