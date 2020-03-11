@@ -46,7 +46,7 @@ class CommentSheet extends React.Component {
 			selectedVerison: 0,
 			editable: false,
 			keyValueColumnList: [
-				{ field: 'Sn', header: 'SR' },
+				{ field: 'sn', header: 'SR' },
 				{ field: 'ReferenceStandard', header: 'Client Spec Number' },
 				{ field: 'ClientRequirement', header: 'Client Requirements' },
 				{ field: 'Proposal', header: 'Proposal' },
