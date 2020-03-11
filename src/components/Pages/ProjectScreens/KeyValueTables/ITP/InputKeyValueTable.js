@@ -15,7 +15,7 @@ import { Dropdown } from 'primereact/dropdown';
 import { InputSwitch } from 'primereact/inputswitch';
 import { ToggleButton } from 'primereact/togglebutton';
 import { Button } from 'primereact/button';
-import { cloneDeep } from 'lodash-es';
+import { cloneDeep, get } from 'lodash-es';
 const history = createHashHistory();
 const pageMapIndex = [
 	'input-key-value',
@@ -27,8 +27,8 @@ const pageMapIndex = [
 class ITP extends React.Component {
 	constructor(props) {
 		super(props);
-		// if (props.projectId === '')
-		//     history.push('/Inquiry/create-new-projects/details')
+		if (props.projectId === '')
+		    history.push('/Inquiry/create-new-projects/details')
 
 		// if (props.documentArray[props.screenNumber - 1] === '')
 		//     history.push(`/Inquiry/create-new-projects/${pageMapIndex[props.screenNumber - 1]}`)
@@ -73,15 +73,22 @@ class ITP extends React.Component {
 		this.createNewVerison = this.createNewVerison.bind(this);
 		this.renderSaveButton = this.renderSaveButton.bind(this);
 		this.editable = this.editable.bind(this);
+		this.generateDoc = this.generateDoc.bind(this);
 		// // this.onDocIdClick = this.onDocIdClick.bind(this);
 	}
 	async getKeyValueData() {
-
-		let data;
 		this.setState({ isLoading: true });
 
-
-		// stubbed code
+		let data = await axios.get(
+			`${backendUrl}/dashboard/get_itp`,{
+                params:{
+                    ProjectID : this.props.projectId
+                }
+            }
+		);
+		const pipeData = get(data, 'data.data[0].Values.Pipe', []);
+		const coatingData = get(data, 'data.data[0].Values.Coating', []);
+		
 
 		data = cloneDeep(pipeData[0]);
 		const versionMenu = pipeData.map((data, index) => {
@@ -108,36 +115,35 @@ class ITP extends React.Component {
 		this.getKeyValueData();
 	}
 	async onSave() {
+		let bckpData;
 		let saveEditedValue;
-		if (this.props.documentFiletype === 'cost_sheet') {
+		if(this.state.doc === 'PIPE'){
+			bckpData = this.state.pipeData;
+			bckpData[bckpData.length - 1] = this.state.keyValueData;
 			saveEditedValue = await axios.post(
-				`${backendUrl}/dashboard/update_costsheet_value`,
+				`${backendUrl}/dashboard/update_itp`,
 				{
-					docID: this.props.documentId,
-					values: this.state.keyValueData,
-					docData: {
-						GrainSize: this.state.keyvalueCostSheetValueList[0].value,
-						HoldTime: this.state.keyvalueCostSheetValueList[1].value,
-						HoopStress: this.state.keyvalueCostSheetValueList[2].value,
-						ReverseBendTest: this.state.keyvalueCostSheetValueList[3].value,
-						RtRm: this.state.keyvalueCostSheetValueList[4].value,
-						SMTS: this.state.keyvalueCostSheetValueList[5].value,
-						Tolerance: this.state.keyvalueCostSheetValueList[6].value,
-						Weight: this.state.keyvalueCostSheetValueList[7].value,
-						PipeLength: this.state.keyvalueCostSheetValueList[8].value
-					}
+					ProjectID: this.props.projectId,
+					Values: {
+						Pipe: bckpData,
+						Coating: this.state.coatingData
+					},
 				}
 			)
-		} else {
+		}else{
+			bckpData = this.state.coatingData;
+			bckpData[bckpData.length - 1] = this.state.keyValueData;
 			saveEditedValue = await axios.post(
-				`${backendUrl}/dashboard/update_ikv_values`,
+				`${backendUrl}/dashboard/update_itp`,
 				{
-					docID: this.props.documentId,
-					values: this.state.keyValueData
+					ProjectID: this.props.projectId,
+					Values: {
+						Pipe: this.state.pipeData,
+						Coating: bckpData
+					},
 				}
 			)
 		}
-		console.log('data saved', saveEditedValue);
 	}
 	onDelete() {
 		console.log('recommendations screen delete ....');
@@ -320,7 +326,7 @@ class ITP extends React.Component {
 				</div>
 				<div className="col-4 justify-content-center">
 					<div className="row justify-content-center">
-						<div className="col-6">
+						<div className="col-12">
 							<button type="button pad-left" onClick={this.setPipeCommentSheet} class="pipeButton active">Pipe</button>
 							<button type="button pad-left" onClick={this.setCoatingCommentSheet} class="coatingButton">Coating</button>
 						</div>
@@ -329,9 +335,9 @@ class ITP extends React.Component {
 				<div className="col-4">
 					<div className="row d-flex justify-content-end fright">
 						<div className="col-12">
-							{ this.renderSaveButton() ? <button type="button pad-left" class="actionBtn btn-success">Save</button> : ''}
+							{ this.renderSaveButton() ? <button type="button pad-left" onClick={this.onSave} class="actionBtn btn-success">Save</button> : ''}
 							{ this.renderSaveButton() ? <button type="button pad-left" onClick={this.createNewVerison} class="actionBtn btn-primary">Create New Ver.</button> : ''}
-							<button type="button pad-left" class="actionBtn btn-dark">
+							<button type="button pad-left" class="actionBtn btn-dark" onClick={this.generateDoc}>
 								<i class="material-icons">
 									save
 								</i>
@@ -356,6 +362,18 @@ class ITP extends React.Component {
 		}
 	}
 
+	async generateDoc(){
+		
+		let generateDocRes = await axios.post(
+			`${backendUrl}/dashboard/itpdoc_download`,
+			{
+				itpjson: this.state.keyValueData,
+				file_type: this.state.doc,
+				version: this.state.selectedVerison.code,
+				project_id: this.props.projectId
+			}
+		)
+	}
 	render() {
 		let view = <div></div>;
 		// for stubbed data only

@@ -22,8 +22,8 @@ const pageMapIndex = [
 class InputKeyValueTable extends React.Component {
     constructor(props) {
         super(props);
-        // if (props.projectId === '')
-        //     history.push('/Inquiry/create-new-projects/details')
+        if (props.projectId === '')
+            history.push('/Inquiry/create-new-projects/details')
 
         // if (props.documentArray[props.screenNumber - 1] === '')
         //     history.push(`/Inquiry/create-new-projects/${pageMapIndex[props.screenNumber - 1]}`)
@@ -115,16 +115,26 @@ class InputKeyValueTable extends React.Component {
             "RtRm":"0.9",
             "GrainSize":"8 or finer"
         }
+        const data = await axios.get(
+            `${backendUrl}/dashboard/get_calculation_data`,{
+                params:{
+                    ProjectID : this.props.projectId
+                }
+            }
+        );
         this.setState({
-            grainSize: newTableData.GrainSize,
-            holdTime: newTableData.HoldTime,
-            hoopStress: newTableData.HoopStress,
-            reverseBendTest: newTableData.ReverseBendTest,
-            RtRm: newTableData.RtRm,
-            SMTS: newTableData.SMTS,
-            negativeTolerance: newTableData.NegativeTolerance,
-            weight: newTableData.Weight,
-            pipeLength: newTableData.PipeLength
+            keyValueColumnList: this.state.keyValueColList
+        });
+        this.setState({
+            grainSize: data.data.data[0].GrainSize,
+            holdTime: data.data.data[0].HoldTime,
+            hoopStress: data.data.data[0].HoopStress,
+            reverseBendTest: data.data.data[0].ReverseBendTest,
+            RtRm: data.data.data[0].RtRm,
+            SMTS: data.data.data[0].SMTS,
+            negativeTolerance: data.data.data[0].NegativeTolerance,
+            weight: data.data.data[0].Weight,
+            pipeLength: data.data.data[0].PipeLength
         })
         this.setState({
             keyValueColumnList: this.state.keyvalueCostSheetColList,
@@ -132,47 +142,47 @@ class InputKeyValueTable extends React.Component {
             keyvalueCostSheetValueList: [
                 {
                     fieldname: 'Grain Size',
-                    value: newTableData.GrainSize,
+                    value: data.data.data[0].GrainSize,
                 },
                 {
                     fieldname: 'Hold Time',
-                    value: newTableData.HoldTime,
+                    value: data.data.data[0].HoldTime,
                 },
                 {
                     fieldname: 'Hoop Stress',
-                    value: newTableData.HoopStress,
+                    value: data.data.data[0].HoopStress,
                 },
                 {
                     fieldname: 'Peaking Factor',
-                    value: newTableData.Peaking,
+                    value: data.data.data[0].Peaking,
                 },
                 {
                     fieldname: 'Yield Ratio',
-                    value: newTableData.RtRm,
+                    value: data.data.data[0].RtRm,
                 },
                 {
                     fieldname: 'SMTS',
-                    value: newTableData.SMTS,
+                    value: data.data.data[0].SMTS,
                 },
                 {
                     fieldname: "Positive Tolerance",
-                    value: newTableData.PositiveTolerance,
+                    value: data.data.data[0].PositiveTolerance,
                 },
                 {
                     fieldname: "Negative Tolerance",
-                    value: newTableData.NegativeTolerance,
+                    value: data.data.data[0].NegativeTolerance,
                 },
                 {
                     fieldname: 'Weight',
-                    value: newTableData.Weight,
+                    value: data.data.data[0].Weight,
                 },
                 {
                     fieldname: 'Pipe length',
-                    value: newTableData.PipeLength,
+                    value: data.data.data[0].PipeLength,
                 }
                 ]
         });
-        let data;
+
         this.setState({ isLoading: true })
         // if(this.props.documentFiletype === 'cost_sheet'){
         //     data = await axios.get(
@@ -189,17 +199,17 @@ class InputKeyValueTable extends React.Component {
         //             }
         //         }
         //     )
-        //     let newTableData = tableData.data.data.cost_sheet[0];
+        //     let data.data = tableData.data.data[0].cost_sheet[0];
         //     this.setState({
-        //         grainSize: newTableData.GrainSize,
-        //         holdTime: newTableData.HoldTime,
-        //         hoopStress: newTableData.HoopStress,
-        //         reverseBendTest: newTableData.ReverseBendTest,
-        //         RtRm: newTableData.RtRm,
-        //         SMTS: newTableData.SMTS,
-        //         tolerance: newTableData.Tolerance,
-        //         weight: newTableData.Weight,
-        //         pipeLength: newTableData.PipeLength
+        //         grainSize: data.data.GrainSize,
+        //         holdTime: data.data.HoldTime,
+        //         hoopStress: data.data.HoopStress,
+        //         reverseBendTest: data.data.ReverseBendTest,
+        //         RtRm: data.data.RtRm,
+        //         SMTS: data.data.SMTS,
+        //         tolerance: data.data.Tolerance,
+        //         weight: data.data.Weight,
+        //         pipeLength: data.data.PipeLength
         //     })
         //     this.setState({
         //         keyValueColumnList: this.state.keyvalueCostSheetColList,
@@ -207,19 +217,19 @@ class InputKeyValueTable extends React.Component {
         //         keyvalueCostSheetValueList: [
         //             {
         //                 fieldname: 'Grain Size',
-        //                 value: newTableData.GrainSize,
+        //                 value: data.data.GrainSize,
         //             },
         //             {
         //                 fieldname: 'Hold Time',
-        //                 value: newTableData.HoldTime,
+        //                 value: data.data.HoldTime,
         //             },
         //             {
         //                 fieldname: 'Hoop Stress',
-        //                 value: newTableData.HoopStress,
+        //                 value: data.data.HoopStress,
         //             },
         //             {
         //                 fieldname: 'Reverse Bend Test',
-        //                 value: newTableData.ReverseBendTest,
+        //                 value: data.data.ReverseBendTest,
         //             },
         //             {
         //                 fieldname: 'Rtrm',
@@ -256,43 +266,14 @@ class InputKeyValueTable extends React.Component {
         //     });
         // }
 
-        // data = data.data.data;
+        // data = data.data.data[0];
         
 
         // stubbed code
-
-        data = [
-            {
-                "OD":["20","508"],
-                "Wall thickness":["20","508"],  
-                "Each Pipe Length":["24"],
-                "Quantity":["69,202","2,27,040","10,375","2883"],
-                "Service":["ON-SWEET"],
-                "CoatedExternal":["FBE 14-16 mils"],
-                "Grade":["X740"]  
-            },
-            {
-                "OD":["30","508"],
-                "Wall thickness":["20","508"],  
-                "Each Pipe Length":["24"],
-                "Quantity":["69,202","2,27,040","10,375","2883"],
-                "Service":["ON-SWEET"],
-                "CoatedExternal":["FBE 14-16 mils"],
-                "Grade":["X720"]  
-            },
-            {
-                "OD":["40","508"],
-                "Wall thickness":["20","508"],  
-                "Each Pipe Length":["24"],
-                "Quantity":["69,202","2,27,040","10,375","2883"],
-                "Service":["ON-SWEET"],
-                "CoatedExternal":["FBE 14-16 mils"],
-                "Grade":["X370"]  
-            }
-        ];
+        const xdata = data.data.data[0].Values;
 
         let newData = [];
-        data.forEach(element => {
+        xdata.forEach(element => {
             let newElement = {
                 ...element
             };
@@ -328,36 +309,26 @@ class InputKeyValueTable extends React.Component {
     }
     async onSave() {
         let saveEditedValue;
-        if(this.props.documentFiletype === 'cost_sheet'){
-            saveEditedValue = await axios.post(
-                `${backendUrl}/dashboard/update_costsheet_value`,
-                {
-                    docID: this.props.documentId,
-                    values: this.state.keyValueData,
-                    docData: {
-                        GrainSize: this.state.keyvalueCostSheetValueList[0].value,
-                        HoldTime: this.state.keyvalueCostSheetValueList[1].value,
-                        HoopStress: this.state.keyvalueCostSheetValueList[2].value,
-                        ReverseBendTest: this.state.keyvalueCostSheetValueList[3].value,
-                        RtRm: this.state.keyvalueCostSheetValueList[4].value,
-                        SMTS: this.state.keyvalueCostSheetValueList[5].value,
-                        Tolerance: this.state.keyvalueCostSheetValueList[6].value,
-                        Weight: this.state.keyvalueCostSheetValueList[7].value,
-                        PipeLength: this.state.keyvalueCostSheetValueList[8].value
-                    }
+        saveEditedValue = await axios.post(
+            `${backendUrl}/dashboard/update_calculation_data`,
+            {
+                ProjectID: this.props.projectId,
+                docData: {
+                    Values: this.state.keyValueData,
+                    GrainSize: this.state.keyvalueCostSheetValueList[0].value,
+                    HoldTime: this.state.keyvalueCostSheetValueList[1].value,
+                    HoopStress: this.state.keyvalueCostSheetValueList[2].value,
+                    ReverseBendTest: this.state.keyvalueCostSheetValueList[3].value,
+                    RtRm: this.state.keyvalueCostSheetValueList[4].value,
+                    SMTS: this.state.keyvalueCostSheetValueList[5].value,
+                    Tolerance: this.state.keyvalueCostSheetValueList[6].value,
+                    Weight: this.state.keyvalueCostSheetValueList[7].value,
+                    PipeLength: this.state.keyvalueCostSheetValueList[8].value
                 }
-            )
-        }else{
-            saveEditedValue = await axios.post(
-                `${backendUrl}/dashboard/update_ikv_values`,
-                {
-                    docID: this.props.documentId,
-                    values: this.state.keyValueData
-                }
-            )
-        }
-        console.log('data saved', saveEditedValue);
+            }
+        );
     }
+
     onDelete() {
         console.log('recommendations screen delete ....');
     }

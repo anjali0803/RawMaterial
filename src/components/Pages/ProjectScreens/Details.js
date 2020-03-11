@@ -119,73 +119,73 @@ class Details extends React.Component {
         });
         // Commented due to api is not available
         
-        // this.interval = setInterval(() => {
-        //     let val = this.state.isLoadingProgress;
-        //     val += Math.floor(Math.random() * 10) + 2;
+        this.interval = setInterval(() => {
+            let val = this.state.isLoadingProgress;
+            val += Math.floor(Math.random() * 10) + 2;
             
-        //     if(val < 20){
-        //         this.setState({
-        //             isLoadingTexts: 'Uploading documents...'
-        //         });
-        //     }
-        //     if(val > 20 && val < 40) {
-        //         this.setState({
-        //             isLoadingTexts: 'Extracting information...'
-        //         });
-        //     }
-        //     if(val > 50 && val < 60) {
-        //         this.setState({
-        //             isLoadingTexts: 'Preparing insights...'
-        //         });
-        //     }
-        //     if(val > 60 && val < 90) {
-        //         this.setState({
-        //             isLoadingTexts: 'Creating project...'
-        //         });
-        //     }
-        //     if( val > 90){
-        //         this.setState({
-        //             isLoadingTexts: 'Finalizing...'
-        //         });
-        //     }
-        //     if(val < 100){
-        //         this.setState({
-        //             isLoadingProgress: val
-        //         });
-        //     }
-        // }, 2000);
+            if(val < 20){
+                this.setState({
+                    isLoadingTexts: 'Uploading documents...'
+                });
+            }
+            if(val > 20 && val < 40) {
+                this.setState({
+                    isLoadingTexts: 'Extracting information...'
+                });
+            }
+            if(val > 50 && val < 60) {
+                this.setState({
+                    isLoadingTexts: 'Preparing insights...'
+                });
+            }
+            if(val > 60 && val < 90) {
+                this.setState({
+                    isLoadingTexts: 'Creating project...'
+                });
+            }
+            if( val > 90){
+                this.setState({
+                    isLoadingTexts: 'Finalizing...'
+                });
+            }
+            if(val < 100){
+                this.setState({
+                    isLoadingProgress: val
+                });
+            }
+        }, 2000);
 
-        // const { title, customer, type } = this.state;
-        // const { file1, file2, file3, file4 } = this.state;
+        const { title, customer, type } = this.state;
+        const { file1, file2, file3, file4 } = this.state;
 
-        // const file1Res = await this.upLoadFiletoS3(file1);
-        // const file2Res = await this.upLoadFiletoS3(file2);
-        // const file3Res = await this.upLoadFiletoS3(file3);
-        // const file4Res = await this.upLoadFiletoS3(file4);
+        const file1Res = await this.upLoadFiletoS3(file1);
+        const file2Res = await this.upLoadFiletoS3(file2);
+        const file3Res = await this.upLoadFiletoS3(file3);
+        const file4Res = await this.upLoadFiletoS3(file4);
         
-        // const createProjectRes = await axios.post(
-        //     `${backendUrl}/dashboard/create_project`,
-        //     {
-        //         title: title,
-        //         client: customer,
-        //         project_type: type,
-        //         cost_sheet: file1Res.data.data,
-        //         specs_pipe: file2Res.data.data,
-        //         inner_coating: file3Res.data.data,
-        //         outer_coating: file4Res.data.data,
-        //         assignedTo: this.props.userName,
-        //         createdBy: this.props.userName,
-        //     }
-        // )
-        // const projectId = createProjectRes.data.data.ProjectID;
-        // this.props.setProjectId(projectId);
-        // this.props.setProjectCustomer(customer);
-        // this.props.setProjectTitle(title);
-        // this.props.setProjectType(type)
+        const createProjectRes = await axios.post(
+            `${backendUrl}/dashboard/create_project`,
+            {
+                title: title,
+                client: customer,
+                project_type: type,
+                cost_sheet: file1Res.data.data,
+                specs_pipe: file2Res.data.data,
+                inner_coating: file3Res.data.data,
+                outer_coating: file4Res.data.data,
+                assignedTo: this.props.userName,
+                createdBy: this.props.userName,
+            }
+        )
+        const projectId = createProjectRes.data.data.ProjectID;
+        this.props.setProjectId(projectId);
+        this.props.setProjectCustomer(customer);
+        this.props.setProjectTitle(title);
+        this.props.setProjectType(type)
         this.setState({
             isLoading: false
         })
-        history.push('/Inquiry/create-new-projects/input-key-value/second')
+        history.push('/Inquiry/create-new-projects/calculations');
     }
     onDelete() {
         console.log('Data deleted');

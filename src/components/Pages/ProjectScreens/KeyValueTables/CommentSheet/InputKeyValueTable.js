@@ -15,7 +15,7 @@ import { Dropdown } from 'primereact/dropdown';
 import { InputSwitch } from 'primereact/inputswitch';
 import { ToggleButton } from 'primereact/togglebutton';
 import { Button } from 'primereact/button';
-import { cloneDeep } from 'lodash-es';
+import { cloneDeep, get } from 'lodash-es';
 const history = createHashHistory();
 const pageMapIndex = [
 	'input-key-value',
@@ -27,8 +27,8 @@ const pageMapIndex = [
 class CommentSheet extends React.Component {
 	constructor(props) {
 		super(props);
-		// if (props.projectId === '')
-		//     history.push('/Inquiry/create-new-projects/details')
+		if (props.projectId === '')
+		    history.push('/Inquiry/create-new-projects/details')
 
 		// if (props.documentArray[props.screenNumber - 1] === '')
 		//     history.push(`/Inquiry/create-new-projects/${pageMapIndex[props.screenNumber - 1]}`)
@@ -46,10 +46,10 @@ class CommentSheet extends React.Component {
 			selectedVerison: 0,
 			editable: false,
 			keyValueColumnList: [
-				{ field: 'Comment', header: 'SR' },
-				{ field: 'ClientSpecNumber', header: 'Client Spec Number' },
-				{ field: 'AcceptanceCriteria', header: 'Client Requirements' },
-				{ field: 'AcceptanceCriteriaProposal', header: 'Proposal' },
+				{ field: 'Sn', header: 'SR' },
+				{ field: 'ReferenceStandard', header: 'Client Spec Number' },
+				{ field: 'ClientRequirement', header: 'Client Requirements' },
+				{ field: 'Proposal', header: 'Proposal' },
 				{ field: 'CostImpact', header: 'Cost Impact' },
 				{ field: 'Status', header: 'Status' },
 				{ field: 'ClientReply', header: 'Client Reply' },
@@ -70,16 +70,22 @@ class CommentSheet extends React.Component {
 		this.createNewVerison = this.createNewVerison.bind(this);
 		this.renderSaveButton = this.renderSaveButton.bind(this);
 		this.editable = this.editable.bind(this);
+		this.generateDoc = this.generateDoc.bind(this);
 		// // this.onDocIdClick = this.onDocIdClick.bind(this);
 	}
 	async getKeyValueData() {
 
-		let data;
 		this.setState({ isLoading: true });
 
-
-		// stubbed code
-
+		let data = await axios.get(
+			`${backendUrl}/dashboard/get_comment_sheet`,{
+                params:{
+                    ProjectID : this.props.projectId
+                }
+            }
+		);
+		const pipeData = get(data, 'data.data[0].Values.Pipe', []);
+		const coatingData = get(data, 'data.data[0].Values.Coating', []);
 		data = cloneDeep(pipeData[0]);
 		const versionMenu = pipeData.map((data, index) => {
 			return { name: `version ${index + 1}`, code: index }
@@ -105,36 +111,16 @@ class CommentSheet extends React.Component {
 		this.getKeyValueData();
 	}
 	async onSave() {
-		let saveEditedValue;
-		if (this.props.documentFiletype === 'cost_sheet') {
-			saveEditedValue = await axios.post(
-				`${backendUrl}/dashboard/update_costsheet_value`,
-				{
-					docID: this.props.documentId,
-					values: this.state.keyValueData,
-					docData: {
-						GrainSize: this.state.keyvalueCostSheetValueList[0].value,
-						HoldTime: this.state.keyvalueCostSheetValueList[1].value,
-						HoopStress: this.state.keyvalueCostSheetValueList[2].value,
-						ReverseBendTest: this.state.keyvalueCostSheetValueList[3].value,
-						RtRm: this.state.keyvalueCostSheetValueList[4].value,
-						SMTS: this.state.keyvalueCostSheetValueList[5].value,
-						Tolerance: this.state.keyvalueCostSheetValueList[6].value,
-						Weight: this.state.keyvalueCostSheetValueList[7].value,
-						PipeLength: this.state.keyvalueCostSheetValueList[8].value
-					}
-				}
-			)
-		} else {
-			saveEditedValue = await axios.post(
-				`${backendUrl}/dashboard/update_ikv_values`,
-				{
-					docID: this.props.documentId,
-					values: this.state.keyValueData
-				}
-			)
-		}
-		console.log('data saved', saveEditedValue);
+		let saveEditedValue = await axios.post(
+			`${backendUrl}/dashboard/update_comment_sheet`,
+			{
+				ProjectID: this.props.projectId,
+				Values: {
+					Pipe: this.state.pipeData,
+					Coating: this.state.coatingData
+				},
+			}
+		)
 	}
 	onDelete() {
 		console.log('recommendations screen delete ....');
@@ -313,7 +299,7 @@ class CommentSheet extends React.Component {
 				</div>
 				<div className="col-4 justify-content-center">
 					<div className="row justify-content-center">
-						<div className="col-6">
+						<div className="col-12">
 							<button type="button pad-left" onClick={this.setPipeCommentSheet} class="pipeButton active">Pipe</button>
 							<button type="button pad-left" onClick={this.setCoatingCommentSheet} class="coatingButton">Coating</button>
 						</div>
@@ -322,9 +308,9 @@ class CommentSheet extends React.Component {
 				<div className="col-4">
 					<div className="row d-flex justify-content-end fright">
 						<div className="col-12">
-							{ this.renderSaveButton() ? <button type="button pad-left" class="actionBtn btn-success">Save</button> : ''}
+							{ this.renderSaveButton() ? <button type="button pad-left" onClick={this.onSave} class="actionBtn btn-success">Save</button> : ''}
 							{ this.renderSaveButton() ? <button type="button pad-left" onClick={this.createNewVerison} class="actionBtn btn-primary">Create New Ver.</button> : ''}
-							<button type="button pad-left" class="actionBtn btn-dark">
+							<button type="button pad-left" onClick={this.generateDoc} class="actionBtn btn-dark">
 								<i class="material-icons">
 									save
 								</i>
@@ -347,6 +333,19 @@ class CommentSheet extends React.Component {
 		} else {
 			return this.state.coatingData.length === (this.state.selectedVerison.code + 1) ? true : false;
 		}
+	}
+
+	async generateDoc(){
+		
+		let generateDocRes = await axios.post(
+			`${backendUrl}/dashboard/commentsheetdoc_download`,
+			{
+				itpjson: this.state.keyValueData,
+				file_type: this.state.doc,
+				version: this.state.selectedVerison.code + 1,
+				project_id: this.props.projectId
+			}
+		)
 	}
 
 	render() {
