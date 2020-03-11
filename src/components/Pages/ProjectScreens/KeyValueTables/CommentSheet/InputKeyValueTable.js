@@ -56,6 +56,7 @@ class CommentSheet extends React.Component {
 				{ field: 'WelspunComments1', header: 'Welspun Comments 1' },
 				{ field: 'ClientReply1', header: 'Client Reply 1' },
 				{ field: 'WelspunComments2', header: 'Welspun Comments 2' },
+				{ field: 'Conclusion', header: 'Conclusion' },
 				//{ field: 'WorkDescription', header: 'Work Description' },
 				{ field: 'Comment', header: 'Comment' }
 			]
