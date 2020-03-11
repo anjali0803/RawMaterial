@@ -14,7 +14,8 @@ class AllUsers extends React.Component {
     super();
     this.state = {
       selected: [],
-      isLoading: false
+      isLoading: false,
+      userList: []
     };
 
     this.adminTemplate = this.adminTemplate.bind(this);
@@ -88,7 +89,7 @@ class AllUsers extends React.Component {
     ];
 
     let userList = [];
-    this.props.userList.forEach(element => {
+    this.state.userList.forEach(element => {
       userList.push({username:  element.user.username});
     });
 

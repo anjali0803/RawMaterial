@@ -17,7 +17,8 @@ class PendingRequests extends React.Component {
     super();
     this.state = {
       selected: [],
-      isLoading: false
+      isLoading: false,
+      userList: []
     };
 
     this.approveTemplate = this.approveTemplate.bind(this);
@@ -31,7 +32,7 @@ class PendingRequests extends React.Component {
       `${authenticationUrl}/api/alluser`
     );
     this.props.setUserList(userList.data);
-    this.setState({ selected: [], isLoading: false })
+    this.setState({ selected: [], isLoading: false, userList: userList.data.data })
   }
 
   componentDidMount() {
@@ -42,14 +43,14 @@ class PendingRequests extends React.Component {
     let userList = [];
     userList.push(rowData.username);
     if (action) {
-      await axios.post(
+      await axios.put(
         `${authenticationUrl}/api/approveuser`,
         {
           username: rowData.username
         }
       );
     } else {
-      await axios.post(
+      await axios.put(
         `${authenticationUrl}api/removeuser`,
         {
           username: rowData.username
@@ -59,25 +60,27 @@ class PendingRequests extends React.Component {
     this.getUserList();
   }
 
-  async handleClickAllSelected(action) {
-    let userList = [];
-    this.state.selected.forEach(user => {
-      userList.push(user.username);
-    });
+  handleClickAllSelected(action) {
     if (action) {
-      await axios.post(
-        `${authenticationUrl}/api/approveuser`,
-        {
-          username_list: userList
-        }
-      );
+      this.state.selected.forEach(async user => {
+        userList.push(user.username);
+        await axios.post(
+          `${authenticationUrl}/api/approveuser`,
+          {
+            username: user.username
+          }
+        );
+      });
     } else {
-      await axios.post(
-        `${authenticationUrl}/api/removeuser`,
-        {
-          username_list: userList
-        }
-      );
+      this.state.selected.forEach(async user => {
+        userList.push(user.username);
+        await axios.post(
+          `${authenticationUrl}/api/removeuser`,
+          {
+            username: user.username
+          }
+        );
+      });
     }
     this.getUserList();
   }
@@ -128,9 +131,9 @@ class PendingRequests extends React.Component {
       { body: this.rejectTemplate }
     ];
     let userList = [];
-    this.props.userList.forEach(element => {
-      if(!element.is_approved){
-        userList.push({username:  element.user.username});
+    this.state.userList.forEach(user => {
+      if(!user.is_approved){
+        userList.push({username:  user.username});
       }
     });
     

@@ -67,8 +67,8 @@ class MenuComponent extends React.Component {
 													<i class="fa fa-caret-down"></i>
 								</button>
 								<div class="dropdown-container dropdown-container-0">
-									<a href="#/support/create-new-incident"><i class="pi pi-key"></i>Pending Requests</a>
-									<a href="#/support/open-incidents"><i class="pi pi-fw pi-users"></i>All Users</a>
+									<a href="#/admin/pending-requests"><i class="pi pi-key"></i>Pending Requests</a>
+									<a href="#/admin/all-users"><i class="pi pi-fw pi-users"></i>All Users</a>
 								</div>
 							</>
 						)
