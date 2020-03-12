@@ -8,6 +8,7 @@ import ButtonHeader from '../../ButtonHeader/ButtonHeader';
 import LoadingScreen from '../LoadingScreen/loadingScreen';
 import Axios from 'axios';
 import { backendUrl } from '../../../../src/constant';
+import { padEnd } from 'lodash-es';
 const history = createHashHistory();
 
 
@@ -29,6 +30,7 @@ class OutputDocument extends React.Component {
         }
         this.onDocIdClick = this.onDocIdClick.bind(this);
         this.onRefresh = this.onRefresh.bind(this);
+        this.createDocumentVersionList = this.createDocumentVersionList.bind(this);
     }
     async getTableData() {
         this.setState({ isLoading: true })
@@ -42,42 +44,42 @@ class OutputDocument extends React.Component {
         const obj = [
             {
                 fileType: 'Cost Sheet',
-                downloadLink: <a href={data[0].CostSheet}>Download</a>
+                downloadLink: <a href={data[0].CostSheet} className="downloadButton">Download</a>
             },
             
             {
                 fileType: 'Client SpecPipe',
-                downloadLink: <a href={data[0].ClientSpecPipe}>Download</a>
+                downloadLink: <a href={data[0].ClientSpecPipe} className="downloadButton">Download</a>
             },
             { 
                 fileType: 'Client Spec Inner Coating',
-                downloadLink: <a href={data[0].ClientSpecInnerCoating}>Download</a>
+                downloadLink: <a href={data[0].ClientSpecInnerCoating} className="downloadButton">Download</a>
             },
             { 
                 fileType: 'Client Spec Outer Coating',
-                downloadLink: <a href={data[0].ClientSpecOuterCoating}>Download</a>
+                downloadLink: <a href={data[0].ClientSpecOuterCoating} className="downloadButton">Download</a>
             }
         ];
         if(data[0].CommentSheetCoating !== "Not Available Yet"){
             obj.push({
                 fileType: 'Comment Sheet Coating',
-                downloadLink: <a href={data[0].CommentSheetCoating}>Download</a>  
+                downloadLink: this.createDocumentVersionList(data[0].CommentSheetCoating) 
             })
         }
         if(data[0].CommentSheetPipe !== "Not Available Yet"){
             obj.push({
                 fileType: 'Comment Sheet Pipe',
-                downloadLink: <a href={data[0].CommentSheetPipe}>Download</a>  
+                downloadLink: this.createDocumentVersionList(data[0].CommentSheetPipe) 
             })
         }if(data[0].ITPCoating !== "Not Available Yet"){
             obj.push({
                 fileType: 'ITP Coating',
-                downloadLink: <a href={data[0].ITPCoating}>Download</a>  
+                downloadLink: this.createDocumentVersionList(data[0].ITPCoating) 
             })
         }if(data[0].ITPPipe !== "Not Available Yet"){
             obj.push({
                 fileType: 'ITP Pipe',
-                downloadLink: <a href={data[0].ITPPipe}>Download</a>  
+                downloadLink: this.createDocumentVersionList(data[0].ITPPipe)
             })
         }
         this.setState({ tableData: obj });
@@ -105,6 +107,17 @@ class OutputDocument extends React.Component {
         history.push("/");
     }
 
+    createDocumentVersionList(list){
+        const htmlDownloadList = list.map((doc, index) => {
+            if(doc.length > 0)
+            return (
+                <a role="button" href={doc} className="downloadButton">Ver. {index + 1} <i class="material-icons" style={{position: 'relative', top: '7px'}}>
+                save_alt
+                </i></a>
+            );
+        })
+        return htmlDownloadList;
+    }
     render() {
         return !this.state.isLoading ? (
             <div>

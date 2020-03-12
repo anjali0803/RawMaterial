@@ -45,11 +45,29 @@ class Details extends React.Component {
             isLoadingTexts: '',
             filteredCustomers: [],
             customerSuggestion: [
+                'Boardwalk',
+                'Corpac',
+                'Epic',
                 'Energy Transfer',
-                'Plain America',
-                'Broadwalk',
+                'Edgen',
+                'Enable Midstream',
+                'Enbridge',
+                'Grey Oak',
+                'Gulf Interstate',
+                'Iracore Pipe',
+                'KAPS',
+                'Kinder Morgan',
+                'MVP',
+                'Mainline Pipe',
+                'Oklahoma',
+                'Plains',
+                'TCPL',
                 'Williams',
-                'Corpus'
+                'Chinere Midship ',
+                'Enable',
+                'Ensite',
+                'EPCO',
+                'Eagle'
             ]
         }
     
@@ -246,7 +264,7 @@ class Details extends React.Component {
                                 items={this.state.filteredCustomers}
                                 id="customer"
                                 renderItem={(item, isHighlighted) =>
-                                    <div style={{ background: isHighlighted ? 'lightgray' : 'white', zIndex: 10000}}>
+                                    <div style={{ background: isHighlighted ? 'lightgray' : 'white', zIndex: 10000, paddingTop: '5px'}}>
                                         {item}
                                     </div>
                                 }
@@ -258,9 +276,9 @@ class Details extends React.Component {
                                 })}}
                                 wrapperStyle={
                                     {
-                                        fontSize: '14px',
+                                        fontSize: '15px',
                                         color: '#333333',
-                                        height: '47px',
+                                        height: '38px',
                                         width: '250px',
                                         background: '#ffffff',
                                         padding: '0.429em',
@@ -283,7 +301,8 @@ class Details extends React.Component {
                                         maxHeight: '50%',
                                         fontSize: '14px',
                                         fontFamily: "Open Sans",
-                                        textDecoration: 'none'
+                                        textDecoration: 'none',
+                                        minWidth: '240px'
                                     }
                                 }
                                 />
@@ -325,6 +344,7 @@ class Details extends React.Component {
                             onFileSelect={this.saveFile4}
                         />
                     </div>
+                    <hr />
                     <hr />
                     <hr />
                     <ButtonHeader type="button" saveEnabled={this.props.saveEnabled} deleteEnabled={this.props.deleteEnabled} className="details-button-header" onSave={() => this.onSave()} onDelete={() => this.onDelete()} />

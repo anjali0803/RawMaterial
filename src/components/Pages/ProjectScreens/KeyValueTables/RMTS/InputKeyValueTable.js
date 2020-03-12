@@ -28,8 +28,8 @@ const pageMapIndex = [
 class RMTS extends React.Component {
   constructor(props) {
     super(props);
-    // if (props.projectId === '')
-    //     history.push('/Inquiry/create-new-projects/details')
+    if (props.projectId === '')
+        history.push('/Inquiry/create-new-projects/details')
 
     // if (props.documentArray[props.screenNumber - 1] === '')
     //     history.push(`/Inquiry/create-new-projects/${pageMapIndex[props.screenNumber - 1]}`)
@@ -94,10 +94,16 @@ class RMTS extends React.Component {
     // stubbed code
 
     data = this.convertElementData(elementData);
-    let newData = [];
-    data.map(ele => {
-      newData.push([ele]);
-    })
+    // let newData = [];
+    
+    const keys = Object.keys(data);
+    const newData = keys.map( ele => {
+      return {
+        element: ele,
+        ...data[ele]
+      }
+    });
+
     const versionMenu = elementData.map((data, index) => {
       return { name: `version ${index + 1}`, code: index }
     })
