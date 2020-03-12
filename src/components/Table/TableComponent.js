@@ -41,6 +41,7 @@ export default class TableComponent extends React.Component {
       item: {
         ...temp,
       },
+      selectedCommentSheetRow: {}
     };
 
     this.documentIdTemplate = this.documentIdTemplate.bind(this);
@@ -102,9 +103,6 @@ export default class TableComponent extends React.Component {
     this.setState({
       tableData: this.props.dataList
     })
-    // this.setState({item: temp}, () =>{
-    //   console.log(this.state.item);
-    // });
 
     this.state.newItem = true;
     this.setState({
@@ -235,10 +233,34 @@ export default class TableComponent extends React.Component {
   }
 
   saveWorkDescription(){
+    Axios.post(
+      `${backendUrl}/dashboard/send_accepted_to_itp`,
+      {
+        ProjectID: this.props.projectId,
+        FileType: this.props.documentFiletype,
+        CommentSheetRow: this.state.selectedCommentSheetRow,
+        WorkDescription: this.state.workItemDescription
+      }
+    );
+    let newTableData = this.props.dataList;
+    let newRow = this.state.selectedCommentSheetRow;
+    newRow.WorkDescription = this.state.workItemDescription;
+    newRow.Status = 'Accepted';
+    newTableData = this.props.dataList.filter(row => {
+      if(!isEqual(row, this.state.selectedCommentSheetRow)){
+        return row;
+      }
+    });
+    newTableData.push(newRow);
     this.setState({
-      displayWorkDescriptionForm: false
+      displayWorkDescriptionForm: false,
+      workItemDescription: '',
+      selectedCommentSheetRow: {},
+      tableData: newTableData
     })
+    this.props.saveCommentSheet(newTableData);
   }
+
   actionTemplate(props){
     const deleteRow = s => {
       console.log(props);
@@ -254,11 +276,9 @@ export default class TableComponent extends React.Component {
 
     const acceptRow = x => {
       this.setState({
-        displayWorkDescriptionForm : true
+        displayWorkDescriptionForm : true,
+        selectedCommentSheetRow: props
       })
-      const s = (this.state.tableData || this.props.dataList).indexOf(x)
-      console.log(s);
-      return this.state.tableData.indexOf(x);
     }
 
     return this.props.editable && (<>

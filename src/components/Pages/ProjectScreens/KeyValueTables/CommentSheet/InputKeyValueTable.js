@@ -57,7 +57,7 @@ class CommentSheet extends React.Component {
 				{ field: 'ClientReply1', header: 'Client Reply 1' },
 				{ field: 'WelspunComments2', header: 'Welspun Comments 2' },
 				{ field: 'Conclusion', header: 'Conclusion' },
-				//{ field: 'WorkDescription', header: 'Work Description' },
+				{ field: 'WorkDescription', header: 'Work Description' },
 				{ field: 'Comment', header: 'Comment' }
 			]
 		}
@@ -111,17 +111,36 @@ class CommentSheet extends React.Component {
 	onRefresh() {
 		this.getKeyValueData();
 	}
-	async onSave() {
-		let saveEditedValue = await axios.post(
-			`${backendUrl}/dashboard/update_comment_sheet`,
-			{
-				ProjectID: this.props.projectId,
-				Values: {
-					Pipe: this.state.pipeData,
-					Coating: this.state.coatingData
-				},
-			}
-		)
+	async onSave(newTableData) {
+		let bckpData;
+		let saveEditedValue;
+		if(this.state.doc === 'PIPE'){
+			bckpData = this.state.pipeData;
+			bckpData[bckpData.length - 1] = this.state.keyValueData;
+			saveEditedValue = await axios.post(
+				`${backendUrl}/dashboard/update_comment_sheet`,
+				{
+					ProjectID: this.props.projectId,
+					Values: {
+						Pipe: bckpData,
+						Coating: this.state.coatingData
+					},
+				}
+			)
+		}else{
+			bckpData = this.state.coatingData;
+			bckpData[bckpData.length - 1] = this.state.keyValueData;
+			saveEditedValue = await axios.post(
+				`${backendUrl}/dashboard/update_comment_sheet`,
+				{
+					ProjectID: this.props.projectId,
+					Values: {
+						Pipe: this.state.pipeData,
+						Coating: bckpData
+					},
+				}
+			)
+		}
 	}
 	onDelete() {
 		console.log('recommendations screen delete ....');
@@ -358,8 +377,10 @@ class CommentSheet extends React.Component {
 				{view}
 				<hr  style={{ marginTop: '10px', marginBottom: '0px'}}/>
 				<TableComponent
+					projectId={this.props.projectId}
 					colList={this.state.keyValueColumnList}
 					dataList={this.state.keyValueData}
+					documentFiletype={this.state.doc}
 					rowClassName={this.rowClassName}
 					onRefresh={this.onRefresh}
 					actionsLabel={this.state.actions}
@@ -367,6 +388,7 @@ class CommentSheet extends React.Component {
 					editable={this.state.editable}
 					acceptButton={true}
 					rejectButton={true}
+					saveCommentSheet={this.onSave}
 				/>
 			</div>
 		) : (
