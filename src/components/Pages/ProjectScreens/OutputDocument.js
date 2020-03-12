@@ -82,6 +82,12 @@ class OutputDocument extends React.Component {
                 downloadLink: this.createDocumentVersionList(data[0].ITPPipe)
             })
         }
+        if(data[0].RMTS !== "Not Available Yet"){
+            obj.push({
+                fileType: 'RMTS',
+                downloadLink: ''
+            })
+        }
         this.setState({ tableData: obj });
         this.setState({ isLoading: false })
     }

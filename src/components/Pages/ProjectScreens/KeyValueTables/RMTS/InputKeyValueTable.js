@@ -1,29 +1,16 @@
 import React from 'react';
 import './index.css'
-import DocumentHeader from '../../../../DocumentHeader/DocumentHeader';
-import ButtonHeader from '../../../../ButtonHeader/ButtonHeader';
 import { createHashHistory } from 'history'
 import { connect } from "react-redux";
 import TableComponent from '../../../../Table/TableComponent2';
 import CostSheetTableComponent from '../../../../Table/CostSheetTableComponent';
 import axios from 'axios';
-import { InputText } from 'primereact/inputtext';
 import { backendUrl } from '../../../../../constant';
 import LoadingScreen from '../../../LoadingScreen/loadingScreen';
-import { elementData } from './stubData';
+import { elementData, table2Data } from './stubData';
 import { Dropdown } from 'primereact/dropdown';
-import { InputSwitch } from 'primereact/inputswitch';
-import { ToggleButton } from 'primereact/togglebutton';
-import { Button } from 'primereact/button';
 import { cloneDeep } from 'lodash-es';
 const history = createHashHistory();
-const pageMapIndex = [
-  'input-key-value',
-  'recommendations',
-  'acceptance',
-  'output-key-value',
-  'output-document'
-]
 
 class RMTS extends React.Component {
   constructor(props) {
@@ -52,7 +39,17 @@ class RMTS extends React.Component {
         { field: 'x60', header: 'x60' },
         { field: 'x65', header: 'x65' },
         { field: 'x70', header: 'x70' },
-      ]
+      ],
+      table2ColumnList: [
+        { field: 'property', header: 'Property' },
+        { field: 'testingFromRolling', header: 'Testing direction from Rolling' },
+        { field: 'testingTemprature', header: 'Test temp °C' },
+        { field: 'API5LX52M', header: 'API5LX52M PSL2' },
+        { field: 'API5LX60M', header: 'API5LX60M PSL2' },
+        { field: 'API5LX65M', header: 'API5LX65M PSL2' },
+        { field: 'API5LX70M', header: 'API5LX70M PSL2' }
+      ],
+      table2ValueData: []
     }
     this.onRefresh = this.onRefresh.bind(this);
     this.handleClickAllSelected = this.handleClickAllSelected.bind(this);
@@ -64,6 +61,8 @@ class RMTS extends React.Component {
     this.renderSaveButton = this.renderSaveButton.bind(this);
     this.editable = this.editable.bind(this);
     this.convertElementData = this.convertElementData.bind(this);
+    this.structureMechAndToughnessData = this.structureMechAndToughnessData.bind(this);
+    this.destructureMechAndToughnessData = this.destructureMechAndToughnessData.bind(this);
     // // this.onDocIdClick = this.onDocIdClick.bind(this);
   }
 
@@ -96,11 +95,11 @@ class RMTS extends React.Component {
     data = this.convertElementData(elementData);
     // let newData = [];
     
-    const keys = Object.keys(data);
+    const keys = Object.keys(elementData[0]);
     const newData = keys.map( ele => {
       return {
         element: ele,
-        ...data[ele]
+        ...elementData[0][ele]
       }
     });
 
@@ -112,7 +111,11 @@ class RMTS extends React.Component {
       elementData: elementData,
       selectedVerison: { name: 'version 1', code: 0 }
     })
-    this.setState({ keyValueData: newData[0] });
+    this.setState({ 
+      keyValueData: newData,
+      table2ValueData: this.structureMechAndToughnessData(table2Data)
+    });
+    const s = this.destructureMechAndToughnessData(this.structureMechAndToughnessData(table2Data));
     if (this.state.elementData.length === 1) {
       this.setState({
         editable: true
@@ -318,6 +321,210 @@ editable(){
   }
 }
 
+structureMechAndToughnessData(data){
+  const properties = [
+    "YS (0.5% EUL) MPa",
+    "UTS, MPa",
+    "Elogation at 2'' GL, %",
+    "Hardness, Hv10 kgf",
+    "Bend test",
+    "CVN energy, Joule",
+    "CVN shear area, %",
+    "DWTT shear area, %",
+    "DBTT (CVN & DWTT)"
+  ];
+  const testingFromRolling = [
+    "ysTestingDirection",
+    "ysTestingDirection",
+    "ysTestingDirection",
+    "ysTestingDirection",
+    "hardnessTestingDirection",
+    "bendTestDirection",
+    "cvnDirection",
+    "cvnShearDirection",
+    "dwttShearDirection",
+    "dbttDirection"
+  ];
+  const testingTemprature = [
+    "ysTestingTemp",
+    "ysTestingTemp",
+    "ysTestingTemp",
+    "ysTestingTemp",
+    "hardnessTestingTemp",
+    "bendTestTemp",
+    "cvnTemp",
+    "cvnShearTemp",
+    "dwttShearTemp",
+    "dbttDirection"
+  ];
+  const API5LX52M = [
+    "ys52",
+    "uts52",
+    "ysuts52",
+    "el52",
+    "hardnessTesting52",
+    "bendTest52",
+    "cvn52",
+    "cvnShear52",
+    "dwttShear52",
+    "dbtt52"
+  ];
+  const API5LX60M = [
+    "ys60",
+    "uts60",
+    "ysuts60",
+    "el60",
+    "hardnessTesting60",
+    "bendTest60",
+    "cvn60",
+    "cvnShear60",
+    "dwttShear60",
+    "dbtt60"
+  ];
+  const API5LX65M = [
+    "ys65",
+    "uts65",
+    "ysuts65",
+    "el65",
+    "hardnessTesting65",
+    "bendTest65",
+    "cvn65",
+    "cvnShear65",
+    "dwttShear65",
+    "dbtt65"
+  ];
+  const API5LX70M = [
+    "ys70",
+    "uts70",
+    "ysuts70",
+    "el70",
+    "hardnessTesting70",
+    "bendTest70",
+    "cvn70",
+    "cvnShear70",
+    "dwttShear70",
+    "dbtt70"
+  ]
+
+  const fields = [
+    "property",
+    "testingFromRolling",
+    "testingTemprature",
+    "API5LX52M",
+    "API5LX60M",
+    "API5LX65M",
+    "API5LX70M"
+  ]
+  let table = [];
+  for (let i = 0; i < 7; i++) {
+    table.push({
+      property: properties[i],
+      testingFromRolling: data[testingFromRolling[i]],
+      testingTemprature: data[testingTemprature[i]],
+      API5LX52M: data[API5LX52M[i]],
+      API5LX60M: data[API5LX60M[i]],
+      API5LX65M: data[API5LX65M[i]],
+      API5LX70M: data[API5LX70M[i]]
+    })
+  }
+
+  return table;
+}
+
+destructureMechAndToughnessData(data){
+  const testingFromRolling = [
+    "ysTestingDirection",
+    "ysTestingDirection",
+    "ysTestingDirection",
+    "ysTestingDirection",
+    "hardnessTestingDirection",
+    "bendTestDirection",
+    "cvnDirection",
+    "cvnShearDirection",
+    "dwttShearDirection",
+    "dbttDirection"
+  ];
+  const testingTemprature = [
+    "ysTestingTemp",
+    "ysTestingTemp",
+    "ysTestingTemp",
+    "ysTestingTemp",
+    "hardnessTestingTemp",
+    "bendTestTemp",
+    "cvnTemp",
+    "cvnShearTemp",
+    "dwttShearTemp",
+    "dbttDirection"
+  ];
+  const API5LX52M = [
+    "ys52",
+    "uts52",
+    "ysuts52",
+    "el52",
+    "hardnessTesting52",
+    "bendTest52",
+    "cvn52",
+    "cvnShear52",
+    "dwttShear52",
+    "dbtt52"
+  ];
+  const API5LX60M = [
+    "ys60",
+    "uts60",
+    "ysuts60",
+    "el60",
+    "hardnessTesting60",
+    "bendTest60",
+    "cvn60",
+    "cvnShear60",
+    "dwttShear60",
+    "dbtt60"
+  ];
+  const API5LX65M = [
+    "ys65",
+    "uts65",
+    "ysuts65",
+    "el65",
+    "hardnessTesting65",
+    "bendTest65",
+    "cvn65",
+    "cvnShear65",
+    "dwttShear65",
+    "dbtt65"
+  ];
+  const API5LX70M = [
+    "ys70",
+    "uts70",
+    "ysuts70",
+    "el70",
+    "hardnessTesting70",
+    "bendTest70",
+    "cvn70",
+    "cvnShear70",
+    "dwttShear70",
+    "dbtt70"
+  ];
+  const fields = [
+    "testingFromRolling",
+    "testingTemprature",
+    "API5LX52M",
+    "API5LX60M",
+    "API5LX65M",
+    "API5LX70M"
+  ];
+
+  let dData = data.map((row, i)=>{
+    return {
+        [testingFromRolling[i]]: row['testingFromRolling'],
+        [testingTemprature[i]]: row['testingTemprature'],
+        [API5LX52M[i]]: row['API5LX52M'],
+        [API5LX60M[i]]: row['API5LX60M'],
+        [API5LX65M[i]]: row['API5LX65M'],
+        [API5LX70M[i]]: row['API5LX70M']
+    };
+  });
+}
+
 render() {
   let view = <div></div>;
   // for stubbed data only
@@ -330,6 +537,18 @@ render() {
       <TableComponent
         colList={this.state.keyValueColumnList}
         dataList={this.state.keyValueData}
+        rowClassName={this.rowClassName}
+        onRefresh={this.onRefresh}
+        actionsLabel={this.state.actions}
+        handleClickAllSelected={this.handleClickAllSelected}
+        editable={this.state.editable}
+        acceptButton={false}
+        rejectButton={false}
+      />
+
+      <TableComponent
+        colList={this.state.table2ColumnList}
+        dataList={this.state.table2ValueData}
         rowClassName={this.rowClassName}
         onRefresh={this.onRefresh}
         actionsLabel={this.state.actions}
