@@ -1,15 +1,18 @@
 import React from 'react';
+import { connect } from "react-redux";
 import './index.css';
 import { Input, CustomInput } from 'reactstrap';
 import FileUpload from '../FileUpload/FileUpload';
+import { authenticationUrl } from '../../constant';
+import axios from "axios";
 
-export default class CreateNewIncident extends React.Component {
+export class CreateNewIncident extends React.Component {
 	constructor(props){
 		super(props);
 		this.state ={
 			issueType: '',
 			issue: '',
-			issueDespription: '',
+			issueDescription: '',
 			issueFiles: ''
 		};
 		this.onSave = this.onSave.bind(this);
@@ -27,7 +30,7 @@ export default class CreateNewIncident extends React.Component {
 
 	saveIssueDescription(e) {
 		this.setState({
-			issueDespription: e.target.value
+			issueDescription: e.target.value
 		})
 	}
 
@@ -43,8 +46,22 @@ export default class CreateNewIncident extends React.Component {
 		})
 	}
 
-	onSave(){
-		console.log(this.state);
+	async onSave(){
+		const sendMailRes = await axios.post(
+			`${authenticationUrl}/api/sendmail`,
+			{
+				username: this.props.username,
+				issue: this.state.issue,
+				issueType: this.state.issueType,
+				issueDescription: this.state.issueDescription
+			}
+		);
+		this.setState({
+			issueType: '',
+			issue: '',
+			issueDescription: '',
+			issueFiles: ''
+		});
 	}
 
 	render() {
@@ -57,7 +74,6 @@ export default class CreateNewIncident extends React.Component {
 						</h2>
 						<hr />
 						<hr />
-						<form onSubmit={obj => this.onSave(obj)}>
 							<div className="form-group">
 								<div className="upload-label-2">Issue Type</div>
 								<CustomInput type="select" id="exampleCustomSelect" name="customSelect" onChange={this.saveIssueType} placeholder="Please select issue type" required>
@@ -73,19 +89,26 @@ export default class CreateNewIncident extends React.Component {
 							</div>
 							<div className="form-group">
 								<div className="upload-label-2">Issue Description</div>
-								<Input type="textarea" onChange={this.saveIssueDescription} name="issueDespription" placeholder="Please enter your issue description" required/>
+								<Input type="textarea" onChange={this.saveIssueDescription} name="issueDescription" placeholder="Please enter your issue description" required/>
 							</div>
 							<FileUpload
 								onFileSelect={this.saveIssueFiles}
 								multiple
 							/>
 							<hr />
-
-							<button className="saveButton" type="submit">Submit</button>
-						</form>
+							<button className="saveButton"  onClick={this.onSave} type="submit">Submit</button>
 					</div>
 				</div>
 			</div>
 		)
 	}
 }
+
+const mapStateToProps = state => ({
+  username: state.userName
+});
+
+export default connect(
+  mapStateToProps,
+  null
+)(CreateNewIncident);

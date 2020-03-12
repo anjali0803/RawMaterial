@@ -8,6 +8,7 @@ import axios from "axios";
 import { setUserList } from "../../actions/loginActions";
 import { connect } from "react-redux";
 import LoadingScreen from "./LoadingScreen/loadingScreen";
+import { authenticationUrl } from '../../constant';
 
 class AllUsers extends React.Component {
   constructor(props) {
@@ -21,30 +22,69 @@ class AllUsers extends React.Component {
     this.adminTemplate = this.adminTemplate.bind(this);
     this.removeTemplate = this.removeTemplate.bind(this);
     this.handleClickAllSelected = this.handleClickAllSelected.bind(this);
+    this.getUserList = this.getUserList.bind(this);
   }
 
-  handleClick(rowData, action) {
+  componentDidMount() {
+    this.getUserList();
+  }
+
+  async getUserList() {
+    this.setState({ isLoading: true });
+    const userList = await axios.get(
+      `${authenticationUrl}/api/alluser`
+    );
+    this.props.setUserList(userList.data);
+    this.setState({ selected: [], isLoading: false, userList: userList.data.data })
+  }
+
+  async handleClick(rowData, action) {
+    let userList = [];
+    userList.push(rowData.username);
     if (action) {
-      console.log(rowData.username, " is made admin");
+      await axios.put(
+        `${authenticationUrl}/api/makeadmin`,
+        {
+          username: rowData.username
+        }
+      );
     } else {
-      console.log(rowData.username, " is removed from user");
+      await axios.put(
+        `${authenticationUrl}api/removeuser`,
+        {
+          username: rowData.username
+        }
+      );
     }
     this.getUserList();
   }
 
   handleClickAllSelected(action) {
-    const data = this.state.selected;
     if (action) {
-      console.log(data, " is made admin");
+      this.state.selected.forEach(async user => {
+        await axios.post(
+          `${authenticationUrl}/api/makeadmin`,
+          {
+            username: user.username
+          }
+        );
+      });
     } else {
-      console.log(data, " is removed from user");
+      this.state.selected.forEach(async user => {
+        await axios.post(
+          `${authenticationUrl}/api/removeuser`,
+          {
+            username: user.username
+          }
+        );
+      });
     }
     this.getUserList();
   }
 
   adminTemplate(rowData, column) {
     const enable =
-      this.state.selected.includes(rowData) && this.state.selected.length === 1;
+    (JSON.stringify(this.state.selected[0]) === JSON.stringify(rowData)) && this.state.selected.length === 1;
     return (
       <Button
         label="Admin"
@@ -56,7 +96,7 @@ class AllUsers extends React.Component {
 
   removeTemplate(rowData, column) {
     const enable =
-      this.state.selected.includes(rowData) && this.state.selected.length === 1;
+      (JSON.stringify(this.state.selected[0]) === JSON.stringify(rowData)) && this.state.selected.length === 1;
     return (
       <Button
         label="Remove"
@@ -89,8 +129,8 @@ class AllUsers extends React.Component {
     ];
 
     let userList = [];
-    this.state.userList.forEach(element => {
-      userList.push({username:  element.user.username});
+    this.state.userList.forEach(username => {
+      userList.push({username:  username.username});
     });
 
     return !this.state.isLoading ? (

@@ -20,7 +20,6 @@ import Dashboard from "../Pages/Dashboard";
 class ViewComponent extends React.Component {
   render() {
     var routes = [
-      { path: '/', component: Dashboard },
       { path: '/dashboard', component: Dashboard },
       { path: '/inquiry/create-new-projects', component: CreateNewProjects },
       { path: '/inquiry/projects-assigned-to-me', component: ProjectAssignedToMe },
