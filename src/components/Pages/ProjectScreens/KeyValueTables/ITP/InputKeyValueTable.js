@@ -117,6 +117,9 @@ class ITP extends React.Component {
   }
 
   async onSave () {
+    this.setState({
+      isLoading: true
+    })
     let bckpData
     let saveEditedValue
     if (this.state.doc === 'PIPE') {
@@ -146,6 +149,9 @@ class ITP extends React.Component {
 				}
       )
     }
+    this.setState({
+      isLoading: false
+    })
   }
 
   onDelete () {
@@ -368,6 +374,9 @@ class ITP extends React.Component {
   }
 
   async generateDoc () {
+    this.setState({
+      isLoading: true
+    })
     const generateDocRes = await axios.post(
 			`${backendUrl}/dashboard/itpdoc_download`,
 			{
@@ -377,6 +386,9 @@ class ITP extends React.Component {
 			  project_id: this.props.projectId
 			}
     )
+    this.setState({
+      isLoading: false
+    })
   }
 
   render () {

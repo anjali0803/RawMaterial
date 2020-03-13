@@ -114,6 +114,9 @@ class CommentSheet extends React.Component {
   }
 
   async onSave (newTableData) {
+    this.setState({
+      isLoading: true
+    })
     let bckpData
     let saveEditedValue
     if (this.state.doc === 'PIPE') {
@@ -143,6 +146,9 @@ class CommentSheet extends React.Component {
 				}
       )
     }
+    this.setState({
+      isLoading: false
+    })
   }
 
   onDelete () {
@@ -359,6 +365,9 @@ class CommentSheet extends React.Component {
   }
 
   async generateDoc () {
+    this.setState({
+      isLoading: true
+    })
     const generateDocRes = await axios.post(
 			`${backendUrl}/dashboard/commentsheetdoc_download`,
 			{
@@ -368,6 +377,9 @@ class CommentSheet extends React.Component {
 			  project_id: this.props.projectId
 			}
     )
+    this.setState({
+      isLoading: false
+    })
   }
 
   render () {

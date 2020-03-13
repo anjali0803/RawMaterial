@@ -14,9 +14,9 @@ const history = createHashHistory()
 class OutputDocument extends React.Component {
   constructor (props) {
     super(props)
-    // if (props.projectId === '') {
-    //     history.push('/Inquiry/create-new-projects/details')
-    // }
+    if (props.projectId === '') {
+        history.push('/Inquiry/create-new-projects/details')
+    }
     this.state = {
       isLoading: false,
       saveEnabled: true,

@@ -9,7 +9,7 @@ import { backendUrl } from '../../../../../constant'
 import LoadingScreen from '../../../LoadingScreen/loadingScreen'
 import { elementData, table2Data } from './stubData'
 import { Dropdown } from 'primereact/dropdown'
-import { cloneDeep } from 'lodash-es'
+import { cloneDeep, get } from 'lodash-es'
 const history = createHashHistory()
 
 class RMTS extends React.Component {
@@ -32,6 +32,7 @@ class RMTS extends React.Component {
       editable: false,
       elementData: [],
       keyValueData: [],
+      tableData: [],
       keyValueColumnList: [
         { field: 'element', header: 'Element' },
         { field: 'x52', header: 'x52' },
@@ -55,64 +56,43 @@ class RMTS extends React.Component {
     this.renderSingleValueEditableTable = this.renderSingleValueEditableTable.bind(this)
     this.renderButtonMenu = this.renderButtonMenu.bind(this)
     this.changeVerison = this.changeVerison.bind(this)
-    this.setPipeCommentSheet = this.setPipeCommentSheet.bind(this)
     this.createNewVerison = this.createNewVerison.bind(this)
     this.renderSaveButton = this.renderSaveButton.bind(this)
     this.editable = this.editable.bind(this)
-    this.convertElementData = this.convertElementData.bind(this)
     this.structureMechAndToughnessData = this.structureMechAndToughnessData.bind(this)
     this.destructureMechAndToughnessData = this.destructureMechAndToughnessData.bind(this)
+    this.deStructureElementData = this.deStructureElementData.bind(this)
+    this.structureElementData = this.structureElementData.bind(this)
+    this.generateDoc = this.generateDoc.bind(this)
     // // this.onDocIdClick = this.onDocIdClick.bind(this);
   }
 
-  convertElementData (data) {
-    const reducer = (total, value) => {
-      const temp = Object.keys(value).map(element => {
-        const obj = {
-          element: element,
-          ...value[element]
-        }
-        return obj
-      })
-      return [
-        ...total,
-        { ...temp }
-      ]
-    }
-    return data.reduce(reducer, [])
-  }
-
   async getKeyValueData () {
-    let data
     this.setState({ isLoading: true })
 
-    // stubbed code
+    let data = await axios.get(
+      `${backendUrl}/dashboard/get_rmts`, {
+			  params: {
+			    ProjectID: this.props.projectId
+			  }
+			}
+    )
+    
+    const tableData = get(data, 'data.data[0].Values', []);
 
-    data = this.convertElementData(elementData)
-    // let newData = [];
+    const newData = this.structureElementData(tableData[0].tableData)
 
-    const keys = Object.keys(elementData[0])
-    const newData = keys.map(ele => {
-      return {
-        element: ele,
-        ...elementData[0][ele]
-      }
-    })
-
-    const versionMenu = elementData.map((data, index) => {
+    const versionMenu = tableData.map((data, index) => {
       return { name: `version ${index + 1}`, code: index }
     })
     this.setState({
       versionMenu: versionMenu,
-      elementData: elementData,
-      selectedVerison: { name: 'version 1', code: 0 }
+      tableData: tableData,
+      selectedVerison: { name: 'version 1', code: 0 },
+      keyValueData: cloneDeep(newData),
+      table2ValueData: cloneDeep(this.structureMechAndToughnessData(tableData[0]))
     })
-    this.setState({
-      keyValueData: newData,
-      table2ValueData: this.structureMechAndToughnessData(table2Data)
-    })
-    const s = this.destructureMechAndToughnessData(this.structureMechAndToughnessData(table2Data))
-    if (this.state.elementData.length === 1) {
+    if (tableData.length === 1) {
       this.setState({
         editable: true
       })
@@ -129,36 +109,20 @@ class RMTS extends React.Component {
   }
 
   async onSave () {
+    this.setState({
+      isLoading: true
+    })
     let saveEditedValue
-    if (this.props.documentFiletype === 'cost_sheet') {
-      saveEditedValue = await axios.post(
-        `${backendUrl}/dashboard/update_costsheet_value`,
-        {
-          docID: this.props.documentId,
-          values: this.state.keyValueData,
-          docData: {
-            GrainSize: this.state.keyvalueCostSheetValueList[0].value,
-            HoldTime: this.state.keyvalueCostSheetValueList[1].value,
-            HoopStress: this.state.keyvalueCostSheetValueList[2].value,
-            ReverseBendTest: this.state.keyvalueCostSheetValueList[3].value,
-            RtRm: this.state.keyvalueCostSheetValueList[4].value,
-            SMTS: this.state.keyvalueCostSheetValueList[5].value,
-            Tolerance: this.state.keyvalueCostSheetValueList[6].value,
-            Weight: this.state.keyvalueCostSheetValueList[7].value,
-            PipeLength: this.state.keyvalueCostSheetValueList[8].value
-          }
-        }
-      )
-    } else {
-      saveEditedValue = await axios.post(
-        `${backendUrl}/dashboard/update_ikv_values`,
-        {
-          docID: this.props.documentId,
-          values: this.state.keyValueData
-        }
-      )
-    }
-    console.log('data saved', saveEditedValue)
+    saveEditedValue = await axios.post(
+      `${backendUrl}/dashboard/update_rmts`,
+      {
+        ProjectID: this.props.projectId,
+        Values: this.state.tableData
+      }
+    )
+    this.setState({
+      isLoading: false
+    })
   }
 
   onDelete () {
@@ -209,40 +173,15 @@ class RMTS extends React.Component {
   }
 
   changeVerison (props) {
-    const data = cloneDeep(this.state.elementData[props.value.code])
+    const data = cloneDeep(this.state.tableData[props.value.code])
     this.setState({
-      keyValueData: data,
+      keyValueData: this.structureElementData(data.tableData),
+      table2ValueData: this.structureMechAndToughnessData(data),
       selectedVerison: { name: `version ${props.value.code + 1}`, code: props.value.code }
     })
-    if (props.value.code === this.state.elementData.length - 1) {
+    if (props.value.code === this.state.tableData.length - 1) {
       this.setState({
-        editable: true
-      })
-    } else {
-      this.setState({
-        editable: false
-      })
-    }
-  }
-
-  setPipeCommentSheet () {
-    $('.pipeButton').addClass('active')
-    $('.coatingButton').removeClass('active')
-    const data = cloneDeep(this.state.elementData[0])
-    this.setState({
-      keyValueData: data
-    })
-    const versionMenu = this.state.elementData.map((data, index) => {
-      return { name: `version ${index + 1}`, code: index }
-    })
-    this.setState({
-      versionMenu: versionMenu,
-      selectedVerison: { name: 'version 1', code: 0 },
-      doc: 'PIPE'
-    })
-    if (this.state.elementData.length === 1) {
-      this.setState({
-        editable: true
+        editable: true 
       })
     } else {
       this.setState({
@@ -252,24 +191,26 @@ class RMTS extends React.Component {
   }
 
   createNewVerison (doc) {
-    if (this.state.doc === 'PIPE') {
-      const newPipeData = this.state.elementData
-      newPipeData[this.state.elementData.length - 1] = this.state.keyValueData
-      newPipeData.push(this.state.keyValueData)
-      const newVersionMenu = this.state.versionMenu
-      newVersionMenu.push({ name: `version ${newVersionMenu.length + 1}`, code: newVersionMenu.length })
-      this.setState({
-        elementData: newPipeData,
-        versionMenu: newVersionMenu
-      })
-    } else {
-      newCoatingData.push(this.state.keyValueData)
-      const newVersionMenu = this.state.versionMenu
-      newVersionMenu.push({ name: `version ${newVersionMenu.length + 1}`, code: newVersionMenu.length })
-      this.setState({
-        versionMenu: newVersionMenu
-      })
+    const newTableData = this.state.tableData
+    newTableData[this.state.tableData.length - 1] = {
+      ...this.destructureMechAndToughnessData(this.state.table2ValueData),
+      tableData: this.deStructureElementData(this.state.keyValueData)
     }
+    newTableData.push({
+      ...this.destructureMechAndToughnessData(this.state.table2ValueData),
+      tableData: this.deStructureElementData(this.state.keyValueData)
+    })
+
+    // newTableData[this.state.elementData.length - 1] = this.state.keyValueData
+    // newTable2Data[this.state.table2ValueData.length - 1] = this.state.table2ValueData
+    // newTableData.push(this.state.keyValueData)
+    // newTable2Data.push(this.state.table2ValueData)
+    const newVersionMenu = this.state.versionMenu
+    newVersionMenu.push({ name: `version ${newVersionMenu.length + 1}`, code: newVersionMenu.length })
+    this.setState({
+      tableData: newTableData,
+      versionMenu: newVersionMenu
+    })
   }
 
   showForm () {
@@ -279,10 +220,7 @@ class RMTS extends React.Component {
   }
 
   renderSaveButton () {
-    if (this.state.doc === 'PIPE') {
-      return this.state.elementData.length === (this.state.selectedVerison.code + 1)
-    } else {
-    }
+    return this.state.tableData.length === (this.state.selectedVerison.code + 1)
   }
 
   renderButtonMenu () {
@@ -298,9 +236,9 @@ class RMTS extends React.Component {
         <div className="col-6">
           <div className="row d-flex justify-content-end fright">
             <div className="col-12">
-              {this.renderSaveButton() ? <button type="button pad-left" className="actionBtn btn-success">Save</button> : ''}
+              {this.renderSaveButton() ? <button type="button pad-left" onClick={this.onSave} className="actionBtn btn-success">Save</button> : ''}
               {this.renderSaveButton() ? <button type="button pad-left" onClick={this.createNewVerison} className="actionBtn btn-primary">Create New Ver.</button> : ''}
-              <button type="button pad-left" className="actionBtn btn-dark">
+              <button type="button pad-left" className="actionBtn btn-dark" onClick={this.generateDoc}>
                 <i className="material-icons">
                 save
                 </i>
@@ -312,8 +250,50 @@ class RMTS extends React.Component {
     )
   }
 
+  async generateDoc () {
+    this.setState({
+      isLoading: true
+    })
+    const generateDocRes = await axios.post(
+			`${backendUrl}/dashboard/itpdoc_download`,
+			{
+        values: this.state.tableData[this.state.selectedVerison.code],
+			  version: this.state.selectedVerison.code,
+			  project_id: this.props.projectId
+			}
+    )
+    this.setState({
+      isLoading: false
+    })
+  }
+
   editable () {
     return this.state.elementData.length === (this.state.selectedVerison.code + 1)
+  }
+
+  structureElementData(data){
+    const keys = Object.keys(data)
+    const newData = keys.map(ele => {
+      return {
+        element: ele,
+        ...elementData[0][ele]
+      }
+    })
+    return newData
+  }
+
+  deStructureElementData(data){
+    let obj = {};
+
+    data.map(row => {
+      obj[row.element] = {
+        x52: row.x52,
+        x60: row.x60,
+        x65: row.x65,
+        x70: row.x70
+      }
+    })
+    return obj;
   }
 
   structureMechAndToughnessData (data) {

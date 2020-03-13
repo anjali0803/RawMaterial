@@ -309,6 +309,9 @@ class InputKeyValueTable extends React.Component {
   }
 
   async onSave () {
+    this.setState({
+      isLoading: true
+    })
     let saveEditedValue
     saveEditedValue = await axios.post(
             `${backendUrl}/dashboard/update_calculation_data`,
@@ -328,6 +331,9 @@ class InputKeyValueTable extends React.Component {
               }
             }
     )
+    this.setState({
+      isLoading: false
+    })
   }
 
   onDelete () {

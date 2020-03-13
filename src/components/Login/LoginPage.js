@@ -98,6 +98,11 @@ class LoginPage extends React.Component {
         await this.props.setUserLogin(true)
         await this.props.setUserName(loginResponse.data.data.username)
         await this.props.setUserRole(loginResponse.data.data.is_admin ? 'admin' : '')
+        
+        localStorage.setItem('isAuthenticated', 'true')
+        localStorage.setItem('username', loginResponse.data.data.username)
+        localStorage.setItem('role', loginResponse.data.data.is_admin ? 'admin' : '')
+
         history.push(referer)
       } else {
         this.setState({
