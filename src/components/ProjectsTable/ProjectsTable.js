@@ -122,17 +122,6 @@ export class ProjectsTable extends React.Component {
 
     return (
       <Col xs={12} className="tableContainer">
-        <Col className="ReactFilter">
-          <div className="dropdownAction">
-            <Dropdown
-              options={actions}
-              onChange={e => this.handleClickAllSelected(e.value)}
-              placeholder="Select Action"
-              disabled={selected.length == 0}
-            />
-          </div>
-          <ReactTableFilters filter={(val) => this.handleFilter(val)} {...this.props} />
-        </Col>
         <ReactTableWrapper
           ref={r => (this.checkboxTable = r)}
           filterable

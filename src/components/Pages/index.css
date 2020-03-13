@@ -98,3 +98,25 @@ tr.p-highlight {
     margin: 5%;
     border-radius: 10px;
 }
+
+.advanceOptions{
+    background-color: white;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    padding: 5px;
+}
+
+.filterBox{
+    border: 2px solid lightgray;
+    color: grey;
+    margin-left: 10px;
+    border-radius: 2px;
+    margin-right: 10px;
+}
+
+.advanceSearchHeading{
+    padding-left: 10px;
+    border-bottom: 1px solid gray;
+    width: 100%;
+    font-weight: 300;
+}

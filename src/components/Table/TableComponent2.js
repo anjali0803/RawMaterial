@@ -120,9 +120,16 @@ export default class TableComponent extends React.Component {
   }
 
   renderDialogModal (colList) {
-    const modal = (
-      <h1>Somrhting</h1>
-    )
+    const modal = colList.map((column, i) => {
+      return (this.state.newItem &&
+        <>
+          <div className="p-col-4" style={{ padding: '.75em' }}><label>{column.header}</label></div>
+          <div className="p-col-8" style={{ padding: '.5em' }}>
+            <InputText id={column.field} onChange={(e) => { this.updateProperty(`${column.field}`, e.target.value) }} value={this.state.item[column.field]}/>
+          </div>
+        </>
+      )
+    })
     return modal
   }
 
@@ -357,16 +364,9 @@ export default class TableComponent extends React.Component {
           {
             this.state.newItem &&
 
-              <div className="p-grid p-fluid">
+              <div className="p-grid p-fluid editFormModal overflow-auto">
                 {dialogModal}
               </div>
-          }
-        </Dialog>
-        <Dialog visible={this.state.displayWorkDescriptionForm} width="600px" header="Work Description" modal={true} footer={workDescriptionFormFooter} onHide={() => this.setState({ displayWorkDescriptionForm: false })}>
-          {
-            <div className="p-grid p-fluid">
-              {dialogModal}
-            </div>
           }
         </Dialog>
       </div>

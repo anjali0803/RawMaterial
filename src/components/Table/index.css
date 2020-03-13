@@ -51,3 +51,9 @@ border: 1px solid rgb(13, 100, 199);
     display: flex;
     justify-content: space-between;
 }
+
+.editFormModal {
+    width: 80vh;
+    height: 60vh;
+    padding: 10px;
+}

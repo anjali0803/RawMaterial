@@ -435,7 +435,7 @@ export default class TableComponent extends React.Component {
           {
             this.state.newItem &&
 
-              <div className="p-grid p-fluid">
+              <div className="p-grid p-fluid editFormModal overflow-auto">
                 {dialogModal}
               </div>
           }

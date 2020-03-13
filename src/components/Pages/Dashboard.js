@@ -110,13 +110,9 @@ var _0x4693 = ['\x5c+\x5c+\x20*(?:_0x(?:[a-f0-9]){4,6}|(?:\x5cb|\x5cd)[a-z0-9]{1
 
 function dashboardRender (countCard, created, ongoing, closed, hfw, hsaw, mapByQuantity, mapByCustomers, customers, records) {
   return <Container fluid={true}>
-    <Col xs={12}>
-      <Row>
-        <CountCard title={'Created Inquiry'} glyph={'icon-fontello-cart'} items={created} />
-        <CountCard title={'Inquiry in Progress'} glyph={'icon-fontello-money'} items={ongoing} />
-        <CountCard title={'Completed Inquiry'} glyph={'icon-fontello-users-2'} items={closed} />
-      </Row>
-    </Col>
+    {/* 
+    
+    */}
     <Col xs={12}>
       <Row>
         <CountCard title={'Inquiry Recieved'} glyph={'icon-fontello-cart'} items={created} />
@@ -130,7 +126,7 @@ function dashboardRender (countCard, created, ongoing, closed, hfw, hsaw, mapByQ
                     </Col>    */}
       </Row>
     </Col>
-    <Col xs={12}>
+    {/* <Col xs={12}>
       <Row>
         <Col md={6} className="pieCol">
           <Row className="pieRow">
@@ -177,7 +173,7 @@ function dashboardRender (countCard, created, ongoing, closed, hfw, hsaw, mapByQ
           </Row>
         </Col>
       </Row>
-    </Col>
+    </Col> */}
 
     {/* <Col xs={12}>
                 <Card>

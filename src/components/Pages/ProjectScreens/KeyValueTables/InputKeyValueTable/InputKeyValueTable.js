@@ -10,6 +10,7 @@ import axios from 'axios'
 import { InputText } from 'primereact/inputtext'
 import { backendUrl } from '../../../../../constant'
 import LoadingScreen from '../../../LoadingScreen/loadingScreen'
+import { cloneDeep } from 'lodash-es'
 const history = createHashHistory()
 const pageMapIndex = [
   'input-key-value',
@@ -42,6 +43,7 @@ class InputKeyValueTable extends React.Component {
       weight: '',
       keyValueData: [
       ],
+      backUpData: [],
       keyValueColumnList: [],
       tableColList: [
         { field: 'fieldname', header: 'Field Name' },
@@ -61,30 +63,6 @@ class InputKeyValueTable extends React.Component {
         { field: 'Each Pipe Length', header: 'Length (ft)' },
         { field: 'Quantity (MT)', header: 'Quantity (MT)' },
         { field: 'Bare / Coated External/Coated (Ext+Intl)', header: 'Coating' }
-
-        // { field: '"Basic Steel Price considered "', header: 'Basic Steel Price considered' },
-        // { field: 'Cbm Ratio', header: 'Cbm Ratio' },
-        // { field: 'Duties & C&F Charges', header: 'Duties & C&F Charges' },
-
-        // { field: 'Applicable Main standard', header: 'Applicable Main standard' },
-        // { field: 'Inwards Transportation for plates/coils', header: 'Inwards Transportation for plates/coils' },
-        // { field: 'Item', header: 'Item' },
-        // { field: 'Kg/Meter', header: 'Kg/Meter' },
-
-        // { field: 'Pipe Type', header: 'Pipe Type' },
-        // { field: 'Product Service Level (PSL-1/2)', header: 'Product Service Level (PSL-1/2)' },
-        // { field: 'Quantity', header: 'Quantity' },
-        // { field: 'Quantity (Joints)', header: 'Quantity (Joints)' },
-
-        // { field: 'Quantity (Square meters)', header: 'Quantity (Square meters)' },
-        // { field: 'RM Waste', header: 'RM Waste' },
-        // { field: 'Service (Onshore/Offshore)', header: 'Service (Onshore/Offshore)' },
-        // { field: 'Steel Source / Options', header: 'Steel Source / Options' },
-        // { field: 'Total Cbm', header: 'Total Cbm' },
-
-        // { field: 'Wastage after Considering Salvage', header: 'Wastage after Considering Salvage' },
-        // { field: 'Weight Per Pipe', header: 'Weight Per Pipe' },
-        // { field: 'Welspun Plant Location', header: 'Welspun Plant Location' }
       ],
       actions: [
         { label: 'Recommendation', value: 1 },
@@ -98,28 +76,12 @@ class InputKeyValueTable extends React.Component {
   }
 
   async getKeyValueData () {
-    const newTableData = {
-      ProjectID: 'PROJ456CLIENT',
-      ProjectType: 'HFW',
-      Client: 'Client',
-      DocID: 'PROJ456CLIENT-CALC-SHEET',
-      HoopStress: '100%',
-      HoldTime: '10 seconds',
-      NegativeTolerance: '98.75',
-      PositiveTolerance: '98.75',
-      PipeLength: 'QRL',
-      Weight: '500',
-      Peaking: '10',
-      SMTS: '10%',
-      RtRm: '0.9',
-      GrainSize: '8 or finer'
-    }
     const data = await axios.get(
-            `${backendUrl}/dashboard/get_calculation_data`, {
-              params: {
-                ProjectID: this.props.projectId
-              }
-            }
+      `${backendUrl}/dashboard/get_calculation_data`, {
+        params: {
+          ProjectID: this.props.projectId
+        }
+      }
     )
     this.setState({
       keyValueColumnList: this.state.keyValueColList
@@ -183,94 +145,10 @@ class InputKeyValueTable extends React.Component {
     })
 
     this.setState({ isLoading: true })
-    // if(this.props.documentFiletype === 'cost_sheet'){
-    //     data = await axios.get(
-    //         `${backendUrl}/dashboard/get_costsheet_doc_docid`,{
-    //             params:{
-    //                 docID : this.state.documentId
-    //             }
-    //         }
-    //     );
-    //     const  tableData  = await axios.get(
-    //         `${backendUrl}/dashboard/get_ikv_doc`,{
-    //             params:{
-    //                 projectID : this.props.projectId
-    //             }
-    //         }
-    //     )
-    //     let data.data = tableData.data.data[0].cost_sheet[0];
-    //     this.setState({
-    //         grainSize: data.data.GrainSize,
-    //         holdTime: data.data.HoldTime,
-    //         hoopStress: data.data.HoopStress,
-    //         reverseBendTest: data.data.ReverseBendTest,
-    //         RtRm: data.data.RtRm,
-    //         SMTS: data.data.SMTS,
-    //         tolerance: data.data.Tolerance,
-    //         weight: data.data.Weight,
-    //         pipeLength: data.data.PipeLength
-    //     })
-    //     this.setState({
-    //         keyValueColumnList: this.state.keyvalueCostSheetColList,
-    //         actions: [],
-    //         keyvalueCostSheetValueList: [
-    //             {
-    //                 fieldname: 'Grain Size',
-    //                 value: data.data.GrainSize,
-    //             },
-    //             {
-    //                 fieldname: 'Hold Time',
-    //                 value: data.data.HoldTime,
-    //             },
-    //             {
-    //                 fieldname: 'Hoop Stress',
-    //                 value: data.data.HoopStress,
-    //             },
-    //             {
-    //                 fieldname: 'Reverse Bend Test',
-    //                 value: data.data.ReverseBendTest,
-    //             },
-    //             {
-    //                 fieldname: 'Rtrm',
-    //                 value: newTableData.RtRm,
-    //             },
-    //             {
-    //                 fieldname: 'SMTS',
-    //                 value: newTableData.SMTS,
-    //             },
-    //             {
-    //                 fieldname: "Tolerance",
-    //                 value: newTableData.Tolerance,
-    //             },
-    //             {
-    //                 fieldname: 'Weight',
-    //                 value: newTableData.Weight,
-    //             },
-    //             {
-    //                 fieldname: 'Pipe length',
-    //                 value: newTableData.PipeLength,
-    //             }
-    //           ]
-    //     });
-    // }else{
-    //     data = await axios.get(
-    //         `${backendUrl}/dashboard/get_ikv_doc_docid`,{
-    //             params:{
-    //                 docID : this.state.documentId
-    //             }
-    //         }
-    //     );
-    //     this.setState({
-    //         keyValueColumnList: this.state.keyValueColList
-    //     });
-    // }
-
-    // data = data.data.data[0];
-
-    // stubbed code
     const xdata = data.data.data[0].Values
 
     const newData = []
+    let backUpData = []
     xdata.forEach(element => {
       const newElement = {
         ...element
@@ -278,25 +156,17 @@ class InputKeyValueTable extends React.Component {
       newElement.OD = newElement.OD[0]
       newElement['Wall thickness'] = newElement['Wall thickness'][1]
       newData.push(newElement)
+      backUpData.push({
+        'OD': element.OD[1],
+        'Wall thickness': element['Wall thickness'][0]
+      })
     })
 
-    this.setState({ keyValueData: newData })
+    this.setState({ 
+      keyValueData: newData,
+      backUpData: backUpData
+     })
 
-    // if(this.props.documentFiletype === 'cost_sheet'){
-    //     let newData = [];
-    //     data.forEach(element => {
-    //         let newElement = {
-    //             ...element
-    //         };
-    //         newElement['OD'] = newElement['OD'][0];
-    //         newElement['Wall thickness'] = newElement['Wall thickness'][1];
-    //         newData.push(newElement);
-    //     });
-
-    //     this.setState({ keyValueData: newData });
-    // }else {
-    //     this.setState({ keyValueData: data });
-    // }
     this.setState({ isLoading: false })
   }
 
@@ -312,13 +182,23 @@ class InputKeyValueTable extends React.Component {
     this.setState({
       isLoading: true
     })
+
+    let data = cloneDeep(this.state.keyValueData);
+    let nData = []
+    data.map((row, i) => {
+      const t = row;
+      t['OD'] = [ row['OD'], this.state.backUpData[i]['OD']];
+      t['Wall thickness'] = [ row['Wall thickness'], this.state.backUpData[i]['Wall thickness']];
+      nData.push(t);
+    })
+
     let saveEditedValue
     saveEditedValue = await axios.post(
             `${backendUrl}/dashboard/update_calculation_data`,
             {
               ProjectID: this.props.projectId,
               docData: {
-                Values: this.state.keyValueData,
+                Values: nData,
                 GrainSize: this.state.keyvalueCostSheetValueList[0].value,
                 HoldTime: this.state.keyvalueCostSheetValueList[1].value,
                 HoopStress: this.state.keyvalueCostSheetValueList[2].value,
