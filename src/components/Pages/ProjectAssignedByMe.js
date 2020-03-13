@@ -1,80 +1,79 @@
-import React from 'react';
-import ProjectsTable from '../ProjectsTable/ProjectsTable';
-import './index.css';
+import React from 'react'
+import ProjectsTable from '../ProjectsTable/ProjectsTable'
+import './index.css'
 import { setDocumentArray, setProjectId, setProjectCustomer, setProjectTitle, setProjectType } from '../../actions/dataActions'
-import { connect } from 'react-redux';
-import { createHashHistory } from 'history';
-import Axios from 'axios';
-import { backendUrl } from '../../constant';
-import LoadingScreen from './LoadingScreen/loadingScreen';
+import { connect } from 'react-redux'
+import { createHashHistory } from 'history'
+import Axios from 'axios'
+import { backendUrl } from '../../constant'
+import LoadingScreen from './LoadingScreen/loadingScreen'
 
-const history = createHashHistory();
-
-
-
+const history = createHashHistory()
 
 class ProjectAssignedByMe extends React.Component {
-  constructor() {
-    super();
+  constructor () {
+    super()
     this.state = {
       isLoading: true,
       tableData: [
       ],
       tableColList: [
-        { field: "ProjectID", header: "Project Id" },
-        { field: "Title", header: "Title" },
-        { field: "Client", header: "Customer" },
-        { field: "ProjectType", header: "Type" },
-        { field: "AssignedOn", header: "Assigned Date" },
-        { field: "ProjectStatus", header: "Status" },
-        { field: "CreatedBy", header: "Created By" }
+        { field: 'ProjectID', header: 'Project Id' },
+        { field: 'Title', header: 'Title' },
+        { field: 'Client', header: 'Customer' },
+        { field: 'ProjectType', header: 'Type' },
+        { field: 'AssignedOn', header: 'Assigned Date' },
+        { field: 'ProjectStatus', header: 'Status' },
+        { field: 'CreatedBy', header: 'Created By' }
       ]
     }
 
-    this.onProjectIdClick = this.onProjectIdClick.bind(this);
-    this.onRefresh = this.onRefresh.bind(this);
+    this.onProjectIdClick = this.onProjectIdClick.bind(this)
+    this.onRefresh = this.onRefresh.bind(this)
   }
-  async getTableData() {
-    this.setState({ isLoading: true });
-    let res = await Axios.get(`${backendUrl}/dashboard/myproject`, {
-        params: {
-            username: this.props.userName
-        }
-    });
-    let data = res.data.data;
-    this.setState({ tableData: data });
-    this.setState({ isLoading: false });
-  }
-  componentDidMount() {
-    this.getTableData();
 
+  async getTableData () {
+    this.setState({ isLoading: true })
+    const res = await Axios.get(`${backendUrl}/dashboard/myproject`, {
+      params: {
+        username: this.props.userName
+      }
+    })
+    const data = res.data.data
+    this.setState({ tableData: data })
+    this.setState({ isLoading: false })
   }
-  onProjectIdClick(rowData) {
 
-     const { ProjectType, Title, Client, ProjectID } = rowData;
-     //sconsole.log({ Type, Title, Customer, ProjectID })
-     this.props.setProjectId(ProjectID);
-     this.props.setProjectCustomer(Client);
-     this.props.setProjectType(ProjectType);
-     this.props.setProjectTitle(Title)
-     history.push('/Inquiry/create-new-projects/details');
+  componentDidMount () {
+    this.getTableData()
+  }
 
+  onProjectIdClick (rowData) {
+    const { ProjectType, Title, Client, ProjectID } = rowData
+    // sconsole.log({ Type, Title, Customer, ProjectID })
+    this.props.setProjectId(ProjectID)
+    this.props.setProjectCustomer(Client)
+    this.props.setProjectType(ProjectType)
+    this.props.setProjectTitle(Title)
+    history.push('/Inquiry/create-new-projects/details')
   }
-  onRefresh() {
-    this.getTableData();
+
+  onRefresh () {
+    this.getTableData()
   }
-  render() {
-    //console.log(typeof this.props.dataList)
+
+  render () {
+    // console.log(typeof this.props.dataList)
     return this.state.isLoading === false ? (
       <div>
         <ProjectsTable
           colList={this.state.tableColList.filter(element => {
-            if (element.field != "CreatedBy") {
-              return element;
+            if (element.field != 'CreatedBy') {
+              return element
             }
           })}
           dataList={this.state.tableData.filter(element => {
-            if (element["CreatedBy"] == this.props.userName) return element;
+            if (element.CreatedBy == this.props.userName) return element
           })}
 
           onProjectIdClick={this.onProjectIdClick}
@@ -82,8 +81,8 @@ class ProjectAssignedByMe extends React.Component {
         />
       </div>
     ) : (
-          <LoadingScreen />
-      );
+      <LoadingScreen />
+    )
   }
 }
 
@@ -94,8 +93,8 @@ const mapStateToProps = state => ({
   projectId: state.projectId,
   projectType: state.projectType,
   projectTitle: state.projectTitle,
-  projectCustomer: state.projectId,
-});
+  projectCustomer: state.projectId
+})
 const mapDispatchToProps = dispatch => ({
   setProjectId: (projectId) => dispatch(setProjectId(projectId)),
   setProjectType: (projectType) => dispatch(setProjectType(projectType)),
@@ -105,4 +104,4 @@ const mapDispatchToProps = dispatch => ({
 })
 export default connect(
   mapStateToProps, mapDispatchToProps
-)(ProjectAssignedByMe);
+)(ProjectAssignedByMe)

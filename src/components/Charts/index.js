@@ -2,59 +2,58 @@
 * Chart
 */
 
-import React from 'react';
-import Chart from 'chart.js';
+import React from 'react'
+import Chart from 'chart.js'
 
-import './styles.css';
+import './styles.css'
 
-function customLabel(e){
-  return {text: "$"};
+function customLabel (e) {
+  return { text: '$' }
 }
 class Charts extends React.Component { // eslint-disable-line react/prefer-stateless-function
-
-  componentDidMount() {
-    const { records, labels, title, type, labelCurrency="" } = this.props;
-    const ctx = this.chart.getContext('2d');
-    const chartColors = ["#E84423","#ECCB2F","#5D9A20","#710026","#8CBBF5","#A6CD19","#4A176A","#EA9223","#253E7C"];
+  componentDidMount () {
+    const { records, labels, title, type, labelCurrency = '' } = this.props
+    const ctx = this.chart.getContext('2d')
+    const chartColors = ['#E84423', '#ECCB2F', '#5D9A20', '#710026', '#8CBBF5', '#A6CD19', '#4A176A', '#EA9223', '#253E7C']
     const stepSize = records ? Math.ceil(records.reduce((acc, i) => {
-        if (!isNaN(i)) {
-          return acc > i ? acc : i;
-        }
-        return acc;
-      }, 0) / 10) : 1;
-      
+      if (!isNaN(i)) {
+        return acc > i ? acc : i
+      }
+      return acc
+    }, 0) / 10) : 1
+
     const chartOptions = {
-      'bar' :
+      bar:
         {
           legend: {
-            display: false,
+            display: false
           },
           scales: {
             yAxes: [{
               ticks: {
                 min: 0,
-                max:1,
-              },
-            }],
-          },
+                max: 1
+              }
+            }]
+          }
         },
-      'pie' : {},
-      'doughnut' : {
+      pie: {},
+      doughnut: {
         tooltips: {
           callbacks: {
-            label: function(tooltipItem, data) {
-              const label = data.labels[tooltipItem.index];
-              let value = data.datasets[0].data[tooltipItem.index] || 'Other';
-              value = (value < 1e-3) ? "" : value;
-              return value ? label + ': ' + labelCurrency + value : label;
+            label: function (tooltipItem, data) {
+              const label = data.labels[tooltipItem.index]
+              let value = data.datasets[0].data[tooltipItem.index] || 'Other'
+              value = (value < 1e-3) ? '' : value
+              return value ? label + ': ' + labelCurrency + value : label
             }
           }
         },
         legend: {
-          display: false,
-        },
+          display: false
+        }
       }
-    };
+    }
     const data = {
       labels,
       datasets: [
@@ -77,26 +76,25 @@ class Charts extends React.Component { // eslint-disable-line react/prefer-state
           pointRadius: 1,
           pointHitRadius: 10,
           data: records,
-          spanGaps: false,
-        },
-      ],
-    };
+          spanGaps: false
+        }
+      ]
+    }
 
     new Chart(ctx, {
       data,
       type,
-      options: chartOptions[type],
-    });
+      options: chartOptions[type]
+    })
   }
 
-
-  render() {
+  render () {
     return (
       <div className="chart">
-        <canvas ref={(c) => { this.chart = c; }} height="200" width="250"/>
+        <canvas ref={(c) => { this.chart = c }} height="200" width="250"/>
       </div>
-    );
+    )
   }
 }
 
-export default Charts;
+export default Charts
