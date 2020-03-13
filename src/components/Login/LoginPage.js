@@ -5,6 +5,8 @@ import { Messages } from 'primereact/messages'
 import 'primeicons/primeicons.css'
 import 'primereact/resources/themes/nova-light/theme.css'
 import { Redirect, Link } from 'react-router-dom'
+import LoadingScreen from '../Pages/LoadingScreen/loadingScreen'
+
 import {
   setUserLogin,
   setUserName,
@@ -32,7 +34,8 @@ class LoginPage extends React.Component {
       password: '',
       loggedIn: false,
       role: '',
-      errorMsg: ''
+      errorMsg: '',
+      isLoading: false
     }
 
     this.handleSignIn = this.handleSignIn.bind(this)
@@ -74,7 +77,9 @@ class LoginPage extends React.Component {
     const password = this.state.password
     const role = this.state.role
     const referer = this.props.location.state || '/'
-
+    this.setState({
+      isLoading: true
+    })
     const loginResponse = await axios.post(
       `${authenticationUrl}/api/login`,
       {
@@ -84,99 +89,83 @@ class LoginPage extends React.Component {
     )
 
     if (loginResponse) {
-      await this.props.setUserLogin(true)
-      await this.props.setUserName(loginResponse.data.data.username)
-      await this.props.setUserRole(loginResponse.data.data.is_admin ? 'admin' : '')
-
-      localStorage.setItem('isAuthenticated', 'true')
-      localStorage.setItem('username', loginResponse.data.data.username)
-      localStorage.setItem('role', loginResponse.data.data.is_admin ? 'admin' : '')
-      history.push(referer)
-      if (loginResponse.data.code === 0) {
-        await this.props.setUserLogin(true)
-        await this.props.setUserName(loginResponse.data.username)
-        await this.props.setUserRole(loginResponse.data.is_superuser ? 'admin' : '')
-
-        localStorage.setItem('isAuthenticated', 'true')
-        localStorage.setItem('username', loginResponse.data.username)
-        localStorage.setItem('role', loginResponse.data.is_superuser ? 'admin' : '')
-        history.push(referer)
-      }
-      if (loginResponse.data.code === 2) {
-        this.messages.show({
-          closable: false,
-          severity: 'error',
-          summary: 'Your username or password is incorrect!'
-          // detail: "Order submitted"
+      if (loginResponse.data.status) {
+        this.setState({
+          errorMsg: '*Your username or password is incorrect'
         })
       }
-      if (loginResponse.data.code === 1) {
-        this.messages.show({
-          closable: false,
-          severity: 'warn',
-          summary: "Your request hasn't been accepted by the admin"
-          // detail: "Order submitted"
+      if (loginResponse.data.data.is_approved) {
+        await this.props.setUserLogin(true)
+        await this.props.setUserName(loginResponse.data.data.username)
+        await this.props.setUserRole(loginResponse.data.data.is_admin ? 'admin' : '')
+        history.push(referer)
+      } else {
+        this.setState({
+          errorMsg: '*Your account is not approved by admin!'
         })
       }
     }
+    this.setState({
+      isLoading: false
+    })
   }
 
   render () {
     return (
-      <div>
-        <Helmet
-          title={'AutoCIP'}
-          meta={[
-            { name: 'description', content: '' }
-          ]}
-        />
-        <Row>
-          <div className="limiter">
-            <div className="container-login100">
-              <div className="wrap-login100">
-                <span className="login100-form-title p-b-48">
-                  <i className="zmdi zmdi-font"></i>
-                </span>
-
-                <div className="wrap-input100 validate-input">
-                  <input className="input100 has-val" type="text" name="username" onChange={this.handleInputChange} value={this.state.username} required/>
-                  <span className="focus-input100" data-placeholder="Username"></span>
-                </div>
-
-                <div className="wrap-input100 validate-input">
-                  <span className="btn-show-pass">
-                    <i className="zmdi zmdi-eye"></i>
+      this.state.isLoading
+        ? <div className="d-flex justify-content-center align-middle loadingScreen">
+          <div className="spinner-border" role="status">
+            <span className="sr-only">Loading...</span>
+          </div>
+        </div>
+        : <div>
+          <Helmet
+            title={'AutoCIP'}
+            meta={[
+              { name: 'description', content: '' }
+            ]}
+          />
+          <Row>
+            <div className="limiter">
+              <div className="container-login100">
+                <div className="wrap-login100">
+                  <span className="login100-form-title p-b-48">
+                    <i className="zmdi zmdi-font"></i>
                   </span>
-                  <input className="input100 has-val" type="password" name="password" onChange={this.handleInputChange} value={this.state.password} required/>
-                  <span className="focus-input100" data-placeholder="Password"></span>
-                </div>
-
-                { this.state.errorMsg ? <p className="">{this.state.errorMsg}</p> : ''}
-
-                <div className="container-login100-form-btn">
-                  <div className="wrap-login100-form-btn">
-                    <div className="login100-form-bgbtn"></div>
-                    <button className="login100-form-btn" onClick={this.handleSignIn}>
-                        Login
-							        </button>
+                  <div className="wrap-input100 validate-input">
+                    <input className="input100 has-val" type="text" name="username" onChange={this.handleInputChange} value={this.state.username} required/>
+                    <span className="focus-input100" data-placeholder="Username"></span>
                   </div>
-                </div>
-                <div className="text-center p-t-115">
-                  <span className="txt1">
+                  <div className="wrap-input100 validate-input">
+                    <span className="btn-show-pass">
+                      <i className="zmdi zmdi-eye"></i>
+                    </span>
+                    <input className="input100 has-val" type="password" name="password" onChange={this.handleInputChange} value={this.state.password} required/>
+                    <span className="focus-input100" data-placeholder="Password"></span>
+                  </div>
+                  { this.state.errorMsg ? <p className="text-danger">{this.state.errorMsg}</p> : ''}
+                  <div className="container-login100-form-btn">
+                    <div className="wrap-login100-form-btn">
+                      <div className="login100-form-bgbtn"></div>
+                      <button className="login100-form-btn" onClick={this.handleSignIn}>
+                        Login
+							      </button>
+                    </div>
+                  </div>
+                  <div className="text-center p-t-115">
+                    <span className="txt1">
                       Don’t have an account?&nbsp;
-						        </span>
-                  <Link className="txt2" to='/sign-up'>Sign Up</Link>
-                </div>
-
-                <div className="text-center p-t-115">
-                  <Link className="txt2" to='/forgot-password'>Forgot Password</Link>
+						      </span>
+                    <Link className="txt2" to='/sign-up'>Sign Up</Link>
+                  </div>
+                  <div className="text-center p-t-115">
+                    <Link className="txt2" to='/forgot-password'>Forgot Password</Link>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </Row>
-
-      </div>)
+          </Row>
+        </div>)
   }
 }
 

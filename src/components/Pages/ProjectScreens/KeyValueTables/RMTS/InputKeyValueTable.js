@@ -313,14 +313,7 @@ class RMTS extends React.Component {
   }
 
   editable () {
-  // if(this.state.doc === 'PIPE'){
-  // 	this.state.selectedVerison === this.state.elementData.length ? true : false;
-  // } else {
-  // }
-    if (this.state.doc === 'PIPE') {
-      return this.state.elementData.length === (this.state.selectedVerison.code + 1)
-    } else {
-    }
+    return this.state.elementData.length === (this.state.selectedVerison.code + 1)
   }
 
   structureMechAndToughnessData (data) {
@@ -514,17 +507,16 @@ class RMTS extends React.Component {
       'API5LX65M',
       'API5LX70M'
     ]
-
-    const dData = data.map((row, i) => {
-      return {
-        [testingFromRolling[i]]: row.testingFromRolling,
-        [testingTemprature[i]]: row.testingTemprature,
-        [API5LX52M[i]]: row.API5LX52M,
-        [API5LX60M[i]]: row.API5LX60M,
-        [API5LX65M[i]]: row.API5LX65M,
-        [API5LX70M[i]]: row.API5LX70M
-      }
+    const obj = {}
+    data.map((row, i) => {
+      obj[testingFromRolling[i]] = row.testingFromRolling
+      obj[testingTemprature[i]] = row.testingTemprature
+      obj[API5LX52M[i]] = row.API5LX52M
+      obj[API5LX60M[i]] = row.API5LX60M
+      obj[API5LX65M[i]] = row.API5LX65M
+      obj[API5LX70M[i]] = row.API5LX70M
     })
+    return obj
   }
 
   render () {
