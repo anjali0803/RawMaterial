@@ -288,9 +288,9 @@ export default class TableComponent extends React.Component {
     }
 
     return this.props.editable && (<>
-      <i className="material-icons" onClick={deleteRow}>
+      {/* <i className="material-icons" onClick={deleteRow}>
           delete_outline
-      </i>
+      </i> */}
       { this.props.acceptButton ? <i className="material-icons" onClick={acceptRow}>
           check
       </i> : ''}

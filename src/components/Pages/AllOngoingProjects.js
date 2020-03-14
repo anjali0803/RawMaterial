@@ -33,7 +33,7 @@ class AllOngoingProjects extends React.Component {
 
   async getTableData () {
     this.setState({ isLoading: true })
-    const res = await Axios.get(`${backendUrl}/dashboard/all_projectd`)
+    const res = await Axios.get(`${backendUrl}/dashboard/all_project`)
     const data = res.data
     // data = data.filter((element, index) => {
 

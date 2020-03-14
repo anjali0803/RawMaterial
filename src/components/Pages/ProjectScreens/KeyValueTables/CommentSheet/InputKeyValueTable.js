@@ -401,7 +401,7 @@ class CommentSheet extends React.Component {
           handleClickAllSelected={this.handleClickAllSelected}
           editable={this.state.editable}
           acceptButton={true}
-          rejectButton={false}
+          rejectButton={true}
           saveCommentSheet={this.onSave}
         />
       </div>
