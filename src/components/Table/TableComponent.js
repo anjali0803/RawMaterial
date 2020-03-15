@@ -16,6 +16,7 @@ import Axios from 'axios'
 import { backendUrl } from '../../constant'
 import { Col, Row, Badge } from 'reactstrap'
 import ReactTable from 'react-table'
+import Autocomplete from 'react-autocomplete'
 import checkboxHOC from 'react-table/lib/hoc/selectTable'
 // import { isEqual } from 'lodash-es';
 const ReactTableWrapper = checkboxHOC(ReactTable)
@@ -30,7 +31,6 @@ export default class TableComponent extends React.Component {
     this.setState({ item: temp }, () => {
       console.log(this.state.item)
     })
-
     this.state = {
       selected: [],
       isLoading: false,
@@ -41,7 +41,8 @@ export default class TableComponent extends React.Component {
       item: {
         ...temp
       },
-      selectedCommentSheetRow: {}
+      selectedCommentSheetRow: {},
+      wdOptions: []
     }
 
     this.documentIdTemplate = this.documentIdTemplate.bind(this)
@@ -62,6 +63,7 @@ export default class TableComponent extends React.Component {
     this.renderWorkDescriptionModal = this.renderWorkDescriptionModal.bind(this)
     this.updateWorkDescription = this.updateWorkDescription.bind(this)
     this.saveWorkDescription = this.saveWorkDescription.bind(this)
+    this.filterOptionsMultiple = this.filterOptionsMultiple.bind(this)
   }
 
   documentIdTemplate (rowData) {
@@ -221,12 +223,73 @@ export default class TableComponent extends React.Component {
     return filteredRows
   }
 
+  filterOptionsMultiple (value) {
+    setTimeout(() => {
+      const results = this.props.wdOptions.filter((wd) => {
+        return wd.toLowerCase().startsWith(value.toLowerCase())
+      })
+
+      this.setState({ wdOptions: results })
+    }, 250)
+  }
+
   renderWorkDescriptionModal () {
     return (
       <>
         <div className="p-col-4" style={{ padding: '.75em' }}><label> Work Description</label></div>
         <div className="p-col-8" style={{ padding: '.5em' }}>
-          <InputText id="workDescription" onChange={(e) => { this.updateWorkDescription(e.target.value) }} value={this.state.workItemDescription}/>
+        <Autocomplete
+                    className="auto-complete"
+                    getItemValue={(item) => item}
+                    items={this.state.wdOptions}
+                    id="workDescription"
+                    renderItem={(item, isHighlighted) =>
+                      <div style={{ background: isHighlighted ? 'lightgray' : 'white', zIndex: 10000, paddingTop: '5px' }}>
+                        {item}
+                      </div>
+                    }
+                    value={this.state.workItemDescription}
+                    onChange={(e) => { this.updateWorkDescription(e.target.value) }}
+                    onSelect={(val) => {
+                      this.setState({
+                        workItemDescription: val,
+                        workDescriptionOptions: []
+                      })
+                    }}
+                    wrapperStyle={
+                      {
+                        fontSize: '15px',
+                        color: '#333333',
+                        height: '38px',
+                        width: '250px',
+                        background: '#ffffff',
+                        padding: '0.429em',
+                        border: '1px solid #ced4da',
+                        transition: 'border-color 0.2s, box-shadow 0.2s',
+                        appearance: 'none',
+                        borderRadius: '4px'
+                      }
+                    }
+                    menuStyle={
+                      {
+                        top: '158px !important',
+                        left: '23px !important',
+                        zIndex: 1000,
+                        borderRadius: '3px',
+                        boxShadow: '0 2px 12px rgba(0, 0, 0, 0.1)',
+                        background: 'rgba(255, 255, 255, 0.9)',
+                        paddingLeft: '3px',
+                        paddingBottom: '3px',
+                        position: 'fixed',
+                        overflow: 'auto',
+                        maxHeight: '50%',
+                        fontSize: '14px',
+                        fontFamily: 'Open Sans',
+                        textDecoration: 'none',
+                        minWidth: '240px'
+                      }
+                    }
+                  />
         </div>
       </>
     )
@@ -236,6 +299,7 @@ export default class TableComponent extends React.Component {
     this.setState({
       workItemDescription: value
     })
+    this.filterOptionsMultiple(value)
   }
 
   saveWorkDescription () {

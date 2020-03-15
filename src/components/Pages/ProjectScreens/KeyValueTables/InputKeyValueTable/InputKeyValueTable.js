@@ -60,8 +60,9 @@ class InputKeyValueTable extends React.Component {
         { field: 'OD', header: 'OD(in)' },
         { field: 'Wall thickness', header: 'WT(in)' },
         { field: 'Grade', header: 'Grade' },
-        { field: 'Each Pipe Length', header: 'Length (ft)' },
+        { field: 'Each Pipe Length', header: 'Length (m)' },
         { field: 'Quantity (MT)', header: 'Quantity (MT)' },
+        { field: 'Quantity', header: 'Quantity (ft)' },
         { field: 'Bare / Coated External/Coated (Ext+Intl)', header: 'Coating' }
       ],
       actions: [
@@ -155,10 +156,13 @@ class InputKeyValueTable extends React.Component {
       }
       newElement.OD = newElement.OD[0]
       newElement['Wall thickness'] = newElement['Wall thickness'][1]
+      newElement['Quantity'] = Number(newElement['Quantity'][1]).toFixed(3)
+      newElement['Quantity (MT)'] = Number(newElement['Quantity (MT)'][0]).toFixed(3)
       newData.push(newElement)
       backUpData.push({
         'OD': element.OD[1],
-        'Wall thickness': element['Wall thickness'][0]
+        'Wall thickness': Number(element['Wall thickness'][0]).toFixed(3),
+        'Quantity': Number(element['Quantity'][0]).toFixed(3)
       })
     })
 
@@ -189,6 +193,7 @@ class InputKeyValueTable extends React.Component {
       const t = row;
       t['OD'] = [ row['OD'], this.state.backUpData[i]['OD']];
       t['Wall thickness'] = [ row['Wall thickness'], this.state.backUpData[i]['Wall thickness']];
+      t['Quantity'] = [ row['Quantity'], this.state.backUpData[i]['Quantity']];
       nData.push(t);
     })
 

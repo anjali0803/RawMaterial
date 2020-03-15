@@ -135,6 +135,7 @@ class OutputDocument extends React.Component {
       <div>
         {/* <ButtonHeader saveEnabled={this.state.saveEnabled} deleteEnabled={this.state.deleteEnabled} className="progbar-button-header" onSave={() => this.onSave()} onDelete={() => this.onDelete()} /> */}
         <TableComponent colList={this.state.tableColList} dataList={this.state.tableData} onDocumentIdClick={this.onDocIdClick} onRefresh={this.onRefresh} />
+        <button className="save-button btn-grad" type="button" label="Save" onClick={this.props.onSave}> Save </button>
       </div>
     ) : (
       <LoadingScreen />

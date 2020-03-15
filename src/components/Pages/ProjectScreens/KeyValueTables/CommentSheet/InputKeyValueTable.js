@@ -32,6 +32,24 @@ class CommentSheet extends React.Component {
     // if (props.documentArray[props.screenNumber - 1] === '')
     //     history.push(`/Inquiry/create-new-projects/${pageMapIndex[props.screenNumber - 1]}`)
 
+    this.pipeWDOptions = [
+      'bb',
+      'silence',
+      'mage',
+      'invoker',
+      'enchant',
+      'shaker'
+    ];
+    this.coatingWDOptions = [
+      'clionz',
+      'rikik',
+      'hunter',
+      'master',
+      'beast',
+      'naga',
+      'jugg'
+    ];
+
     this.onSave = this.onSave.bind(this)
     this.onDelete = this.onDelete.bind(this)
     this.state = {
@@ -44,6 +62,7 @@ class CommentSheet extends React.Component {
       doc: 'PIPE',
       selectedVerison: 0,
       editable: false,
+      wdOptions: [],
       keyValueColumnList: [
         { field: 'Sn', header: 'SR' },
         { field: 'ReferenceStandard', header: 'Client Spec Number' },
@@ -94,7 +113,8 @@ class CommentSheet extends React.Component {
       versionMenu: versionMenu,
       pipeData: pipeData,
       coatingData: coatingData,
-      selectedVerison: { name: 'version 1', code: 0 }
+      selectedVerison: { name: 'version 1', code: 0 },
+      wdOptions: this.pipeWDOptions
     })
     this.setState({ keyValueData: data })
     if (this.state.pipeData.length === 1) {
@@ -244,6 +264,7 @@ class CommentSheet extends React.Component {
     })
     this.setState({
       versionMenu: versionMenu,
+      wdOptions: this,pipeWDOptions,
       selectedVerison: { name: 'version 1', code: 0 },
       doc: 'PIPE'
     })
@@ -270,6 +291,7 @@ class CommentSheet extends React.Component {
     })
     this.setState({
       versionMenu: versionMenu,
+      wdOptions: this.coatingWDOptions,
       selectedVerison: { name: 'version 1', code: 0 },
       doc: 'COATING'
     })
@@ -403,6 +425,7 @@ class CommentSheet extends React.Component {
           acceptButton={true}
           rejectButton={true}
           saveCommentSheet={this.onSave}
+          wdOptions={this.state.wdOptions}
         />
       </div>
     ) : (
