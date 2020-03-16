@@ -25,9 +25,9 @@ export class FormatDocForm extends React.Component {
     const res = await axios.get(`${backendUrl}/dashboard/get_format_number`)
     const data = res.data
     this.setState({
-      itpFormat: data.data.itpFormat,
-      rmtsFormat: data.data.rmtsFormat,
-      csFormat: data.data.csFormat,
+      itpFormat: data.data[0].ITPFormat,
+      rmtsFormat: data.data[0].RMTSFormat,
+      csFormat: data.data[0].CSFormat,
       visible: false
     })
     this.setState({ isLoading: false })
@@ -56,7 +56,7 @@ export class FormatDocForm extends React.Component {
       visible: true
     })
     const formatRes = await axios.post(
-			`${authenticationUrl}/api/sendmail`,
+			`${backendUrl}/dashboard/update_format_number`,
 			{
 			  itp_format: this.state.itpFormat,
 			  rmts_format: this.state.rmtsFormat,
@@ -68,11 +68,6 @@ export class FormatDocForm extends React.Component {
         visible: false
       })
     }
-    this.setState({
-      itpFormat: '',
-      rmtsFormat: '',
-      csFormat: ''
-    })
   }
 
   render () {
@@ -85,18 +80,18 @@ export class FormatDocForm extends React.Component {
             <hr />
             <div className="form-group">
               <div className="upload-label-2">ITP Format Number</div>
-              <Input onChange={this.saveITPFormat} placeholder="Please enter issue ITP format" required/>
+              <Input value={this.state.itpFormat} onChange={this.saveITPFormat} placeholder="Please enter issue ITP format" required/>
             </div>
             <div className="form-group">
               <div className="upload-label-2">RMTS Format Number</div>
-              <Input onChange={this.saveRMTSFormat} placeholder="Please enter issue RMTS format" required/>
+              <Input value={this.state.rmtsFormat} onChange={this.saveRMTSFormat} placeholder="Please enter issue RMTS format" required/>
             </div>
             <div className="form-group">
               <div className="upload-label-2">Comment Sheet Format Number</div>
-              <Input onChange={this.saveCSFormat} placeholder="Please enter issue CS format" required/>
+              <Input value={this.state.csFormat} onChange={this.saveCSFormat} placeholder="Please enter issue CS format" required/>
             </div>
             <button className="saveButton" onClick={this.onSave} type="submit">Update Format</button>
-            <Dialog header="Please Wait..." visible={this.state.visible} style={{ width: '50vw' }} modal={true}>
+            <Dialog header="Please Wait..." visible={this.state.visible} style={{ width: '50vw' }} modal={true} onHide={() => {}}>
               Your response is getting submitted!!
             </Dialog>
           </div>

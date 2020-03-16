@@ -25,7 +25,7 @@
     padding-top: 10px;
     letter-spacing: 1.5px;
     color:white;
-    margin-left: 30px;
+    padding-top: 18px;
 }
 
 .copyright {
@@ -55,6 +55,7 @@
     padding-top: 10px;
     letter-spacing: 1.5px;
     color:white;
+    display: inherit;
     cursor: pointer;
   }
 
@@ -100,4 +101,19 @@
   background: -o-linear-gradient(left,  #3a47a7, #0A1359);
   background: -moz-linear-gradient(left,  #3a47a7, rgb(10, 19, 89));
   background: linear-gradient(left,  #3a47a7, #0A1359);
+}
+
+.logo {
+  padding-left: 20px;
+  width: 200px;
+  color: whitesmoke;
+  font-size: 2.5rem;
+  font-weight: 300;
+}
+
+.userProfileButton {
+  border-radius: 50%;
+  background-color: whitesmoke;
+  width: 50px;
+  height: 50px;
 }
