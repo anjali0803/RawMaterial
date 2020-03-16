@@ -69,6 +69,7 @@ class MenuComponent extends React.Component {
                 <div className="dropdown-container dropdown-container-0">
                   <a href="#/admin/pending-requests"><i className="pi pi-key"></i>Pending Requests</a>
                   <a href="#/admin/all-users"><i className="pi pi-fw pi-users"></i>All Users</a>
+                  <a href="#/admin/format-doc-form"><i className="pi pi-fw pi-users"></i>Format document form</a>
                 </div>
               </>
             )

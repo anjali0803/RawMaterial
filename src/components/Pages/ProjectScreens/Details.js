@@ -4,11 +4,12 @@ import 'primeicons/primeicons.css'
 import 'primereact/resources/themes/nova-light/theme.css'
 import FileUpload from '../../FileUpload/FileUpload'
 import { InputText } from 'primereact/inputtext'
+import { Calendar } from 'primereact/calendar'
 import { Dropdown } from 'primereact/dropdown'
 import { ProgressBar } from 'primereact/progressbar'
 import { createHashHistory } from 'history'
 import './index.css'
-import { setProjectId, setProjectTitle, setProjectType, setProjectCustomer, setCurrentURL } from '../../../actions/dataActions'
+import { setProjectId, setProjectTitle, setProjectType, setProjectCustomer, setCurrentURL, setDueDate } from '../../../actions/dataActions'
 import { connect } from 'react-redux'
 import ButtonHeader from '../../ButtonHeader/ButtonHeader'
 import axios from 'axios'
@@ -27,6 +28,17 @@ class Details extends React.Component {
       this.props.setProjectType('')
     }
     this.state = {
+      errorMsg: {
+        dueDate: '',
+        type: '',
+        customer: '',
+        title: '',
+        file1: '',
+        file2: '',
+        file3: '',
+        file4: ''
+      },
+      dueDate: this.props.newProject ? '' : (props.dueDate || ''),
       projectId: this.props.newProject ? '' : (props.projectId || ''),
       title: this.props.newProject ? '' : (props.projectTitle || ''),
       type: this.props.newProject ? '' : (props.projectType || ''),
@@ -84,6 +96,7 @@ class Details extends React.Component {
     this.displayValueTemplate = this.displayValueTemplate.bind(this)
     this.filterCountryMultiple = this.filterCountryMultiple.bind(this)
     this.renderSuggestion = this.renderSuggestion.bind(this)
+    this.vaildateForm = this.vaildateForm.bind(this)
   }
 
   uploadHandler () {
@@ -91,31 +104,136 @@ class Details extends React.Component {
   }
 
   handleInputCustomer (e) {
+    if (e.target.value.length) {
+      this.setState({
+        errorMsg: {
+          ...this.state.errorMsg,
+          customer: ''
+        }
+      })
+    } else {
+      this.setState({
+        errorMsg: {
+          ...this.state.errorMsg,
+          customer: '*It is required field.'
+        }
+      })
+    }
     this.filterCountryMultiple(e.target)
     this.setState({ customer: e.target.value })
   }
 
   saveFile1 (e) {
+    if (e) {
+      this.setState({
+        errorMsg: {
+          ...this.state.errorMsg,
+          file1: ''
+        }
+      })
+    } else {
+      this.setState({
+        errorMsg: {
+          ...this.state.errorMsg,
+          file1: '*It is required field.'
+        }
+      })
+    }
     this.setState({ file1: e })
   }
 
   saveFile2 (e) {
+    if (e) {
+      this.setState({
+        errorMsg: {
+          ...this.state.errorMsg,
+          file2: ''
+        }
+      })
+    } else {
+      this.setState({
+        errorMsg: {
+          ...this.state.errorMsg,
+          file2: '*It is required field.'
+        }
+      })
+    }
     this.setState({ file2: e })
   }
 
   saveFile3 (e) {
+    if (e) {
+      this.setState({
+        errorMsg: {
+          ...this.state.errorMsg,
+          file3: ''
+        }
+      })
+    } else {
+      this.setState({
+        errorMsg: {
+          ...this.state.errorMsg,
+          file3: '*It is required field.'
+        }
+      })
+    }
     this.setState({ file3: e })
   }
 
   saveFile4 (e) {
+    if (e) {
+      this.setState({
+        errorMsg: {
+          ...this.state.errorMsg,
+          file4: ''
+        }
+      })
+    } else {
+      this.setState({
+        errorMsg: {
+          ...this.state.errorMsg,
+          file4: '*It is required field.'
+        }
+      })
+    }
     this.setState({ file4: e })
   }
 
   handleInputType (e) {
+    if (e.value.length) {
+      this.setState({
+        errorMsg: {
+          ...this.state.errorMsg,
+          type: ''
+        }
+      })
+    } else {
+      this.setState({
+        errorMsg: {
+          ...this.state.errorMsg,
+          type: '*It is required field.'
+        }
+      })
+    }
     this.setState({ type: e.value })
   }
 
   handleInputTitle (e) {
+    if (e.target.value.length) {
+      this.setState({
+        errorMsg: {
+          ...this.state.errorMsg,
+          title: ''
+        }
+      })
+    } else {
+      this.setState({
+        errorMsg: {
+          ...this.state.errorMsg,
+          title: '*It is required field.'
+        }
+      })
+    }
     this.setState({ title: e.target.value })
   }
 
@@ -135,7 +253,28 @@ class Details extends React.Component {
     return fileRes
   }
 
+  vaildateForm () {
+    const fields = Object.keys(this.state.errorMsg)
+    let flag = false
+    let cErr = this.state.errorMsg
+    fields.map(field => {
+      if (this.state[field] === '') {
+        cErr[field] = '*it is required field'
+        flag = true
+      }
+    })
+
+    this.setState({
+      errorMsg: cErr
+    })
+    return flag
+  }
+
   async onSave () {
+    if (this.vaildateForm()) {
+      return
+    }
+
     this.setState({
       isLoading: true
     })
@@ -196,7 +335,8 @@ class Details extends React.Component {
               inner_coating: file3Res.data.data,
               outer_coating: file4Res.data.data,
               assignedTo: this.props.userName,
-              createdBy: this.props.userName
+              createdBy: this.props.userName,
+              due_date: this.state.dueDate
             }
     )
     const projectId = createProjectRes.data.data.ProjectID
@@ -204,6 +344,7 @@ class Details extends React.Component {
     this.props.setProjectCustomer(customer)
     this.props.setProjectTitle(title)
     this.props.setProjectType(type)
+    this.props.setDueDate(dueDate)
     this.setState({
       isLoading: false
     })
@@ -260,6 +401,7 @@ class Details extends React.Component {
                     onChange={this.handleInputTitle}
                     readOnly={this.props.readOnly}
                   />
+                  <p className="text-danger font-italic">{this.state.errorMsg.title}</p>
                 </div>
                 <div className="form-group">
                   <div className="upload-label-2">Customer</div>
@@ -277,22 +419,28 @@ class Details extends React.Component {
                     onChange={this.handleInputCustomer}
                     onSelect={(val) => {
                       this.setState({
+                        errorMsg: {
+                          ...this.state.errorMsg,
+                          customer: ''
+                        },
                         customer: val,
                         filteredCustomers: []
                       })
                     }}
                     wrapperStyle={
                       {
-                        fontSize: '15px',
+                        fontSize: '16px',
                         color: '#333333',
-                        height: '38px',
+                        height: '47px',
                         width: '250px',
                         background: '#ffffff',
                         padding: '0.429em',
                         border: '1px solid #ced4da',
                         transition: 'border-color 0.2s, box-shadow 0.2s',
                         appearance: 'none',
-                        borderRadius: '4px'
+                        borderRadius: '4px',
+                        fontWeight: '400',
+                        lineHeight: '1.5'
                       }
                     }
                     menuStyle={
@@ -313,6 +461,7 @@ class Details extends React.Component {
                       }
                     }
                   />
+                  <p className="text-danger font-italic">{this.state.errorMsg.customer}</p>
                 </div>
                 <div className="form-group">
                   <div className="upload-label-2">Type</div>
@@ -320,6 +469,25 @@ class Details extends React.Component {
                     options={this.state.projectTypes}
                     onChange={this.handleInputType}
                   />
+                  <p className="text-danger font-italic">{this.state.errorMsg.type}</p>
+                </div>
+                <div className="form-group">
+                  <div className="upload-label-2">Due Date</div>
+                  <Calendar
+                    id="dueDate"
+                    value={this.state.dueDate}
+                    onChange={(e) => this.setState({
+                      dueDate: e.value,
+                      errorMsg: {
+                        ...this.state.errorMsg,
+                        dueDate: ''
+                      }
+                    })}
+                    monthNavigator={true}
+                    yearNavigator={true}
+                    yearRange="2020:2030"
+                  />
+                  <p className="text-danger font-italic">{this.state.errorMsg.dueDate}</p>
                 </div>
               </div>
               <div className="col-6">
@@ -330,6 +498,7 @@ class Details extends React.Component {
                   disabled={this.props.readOnly}
                   docxOnly={true}
                 />
+                <p className="text-danger font-italic">{this.state.errorMsg.file1}</p>
 
                 <div className="upload-label" >PIPE</div>
                 <FileUpload
@@ -337,6 +506,7 @@ class Details extends React.Component {
                   onFileSelect={this.saveFile2}
                   disabled={this.props.readOnly}
                 />
+                <p className="text-danger font-italic">{this.state.errorMsg.file2}</p>
 
                 <div className="upload-label" >INTERNAL-COATING</div>
                 <FileUpload
@@ -344,16 +514,17 @@ class Details extends React.Component {
                   disabled={this.props.readOnly}
                   onFileSelect={this.saveFile3}
                 />
+                <p className="text-danger font-italic">{this.state.errorMsg.file3}</p>
+
                 <div className="upload-label" >EXTERNAL-COATING</div>
                 <FileUpload
                   className="outer-coating-upload"
                   disabled={this.props.readOnly}
                   onFileSelect={this.saveFile4}
                 />
+                <p className="text-danger font-italic">{this.state.errorMsg.file4}</p>
               </div>
-              <hr />
-              <hr />
-              <hr />
+
               <ButtonHeader type="button" saveEnabled={this.props.saveEnabled} deleteEnabled={this.props.deleteEnabled} className="details-button-header" onSave={() => this.onSave()} onDelete={() => this.onDelete()} />
             </div>
           </form>
@@ -366,6 +537,7 @@ class Details extends React.Component {
   }
 }
 const mapStateToProps = state => ({
+  dueDate: state.dueDate,
   projectId: state.projectId,
   projectType: state.projectType,
   projectTitle: state.projectTitle,
@@ -377,7 +549,7 @@ const mapDispatchToProps = dispatch => ({
   setProjectTitle: (projectTitle) => dispatch(setProjectTitle(projectTitle)),
   setProjectCustomer: (projectCustomer) => dispatch(setProjectCustomer(projectCustomer)),
   setProjectType: (projectType) => dispatch(setProjectType(projectType)),
-  setCurrentURL: (currentURL) => dispatch(setCurrentURL(currentURL))
-
+  setCurrentURL: (currentURL) => dispatch(setCurrentURL(currentURL)),
+  setDueDate: (dueDate) => dispatch(setDueDate(dueDate))
 })
 export default connect(mapStateToProps, mapDispatchToProps)(Details)

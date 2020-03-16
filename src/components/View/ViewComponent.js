@@ -16,6 +16,7 @@ import PastReports from '../Pages/PastReports'
 import CreateNewIncident from '../Pages/CreateNewIncident'
 import OpenIncidents from '../Pages/OpenIncidents'
 import Dashboard from '../Pages/Dashboard'
+import FormatDocForm from '../Pages/FormatDocForm'
 
 class ViewComponent extends React.Component {
   render () {
@@ -35,7 +36,8 @@ class ViewComponent extends React.Component {
 
     routes = this.props.userRole == 'admin' ? [
       { path: '/admin/pending-requests', component: PendingRequests },
-      { path: '/admin/all-users', component: AllUsers }
+      { path: '/admin/all-users', component: AllUsers },
+      { path: '/admin/format-doc-form', component: FormatDocForm }
     ].concat(routes) : routes
 
     const routeComponents = routes.map(({ path, component }) => {

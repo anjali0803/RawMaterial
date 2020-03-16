@@ -74,3 +74,10 @@ export function setDocumentType (fileType) {
     fileType
   }
 }
+
+export function setDueDate (dueDate) {
+  return {
+    type: 'SET_DUE_DATE',
+    dueDate
+  }
+}

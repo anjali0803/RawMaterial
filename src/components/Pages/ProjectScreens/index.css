@@ -54,6 +54,16 @@
 	display: table-cell;
 	width: 250px;;
 }
+#dueDate{
+	display: table-cell;
+	width: 250px;;
+}
+
+#dueDate input{
+	width: 100%;
+	height: 47px;
+	font-size: 16px;
+}
 
 .details-submit{
     width: 100%;
@@ -256,7 +266,6 @@
 	border-radius: 4px;
 	color: whitesmoke;
 	margin-top: 10px;
-	margin-left: 40%;
  }
  .btn-grad {background-image: linear-gradient(to right, #314755 0%, #26a0da 51%, #314755 100%)}
  .btn-grad:hover { background-position: right center; }

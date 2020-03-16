@@ -93,6 +93,11 @@ export default (state = initialState, action) => {
         ...state,
         documentFiletype: action.fileType
       }
+    case 'SET_DUE_DATE':
+      return {
+        ...state,
+        dueDate: action.dueDate
+      }
     default:
       return state
   }
