@@ -19,8 +19,8 @@ import { authenticationUrl } from '../../constant'
 import LoadingScreen from '../../components/Pages/LoadingScreen/loadingScreen'
 
 class TopBanner extends React.Component {
-  constructor () {
-    super()
+  constructor (props) {
+    super(props)
     this.state = {
       displayUpdateForm: false,
       name: get(this.props, 'userData.name', ''),

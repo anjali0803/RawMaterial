@@ -76,8 +76,13 @@ class LoginPage extends React.Component {
   async handleSignIn () {
     const username = this.state.username
     const password = this.state.password
-    const role = this.state.role
-    const referer = this.props.location.state || '/'
+    const referer = this.props.location.state || '/dashboard'
+    if (username.length === 0 || password.length === 0) {
+      this.setState({
+        errorMsg: '*Please enter username and password.'
+      })
+      return
+    }
     this.setState({
       isLoading: true
     })
@@ -90,25 +95,35 @@ class LoginPage extends React.Component {
     )
 
     if (loginResponse) {
-      if (loginResponse.data.status) {
-        this.setState({
-          errorMsg: '*Your username or password is incorrect'
-        })
-      }
-      if (loginResponse.data.data.is_approved) {
-        await this.props.setUserLogin(true)
-        await this.props.setUserName(loginResponse.data.data.username)
-        await this.props.setUserRole(loginResponse.data.data.is_admin ? 'admin' : '')
-        await this.props.setUserData(loginResponse.data.data)
-        localStorage.setItem('isAuthenticated', 'true')
-        localStorage.setItem('username', loginResponse.data.data.username)
-        localStorage.setItem('role', loginResponse.data.data.is_admin ? 'admin' : '')
-
-        history.push(referer)
-      } else {
-        this.setState({
-          errorMsg: '*Your account is not approved by admin!'
-        })
+      switch (loginResponse.data.status_code) {
+        case 3:
+          this.setState({
+            errorMsg: '*Your username or password is incorrect.'
+          })
+          break
+        case 2:
+          this.setState({
+            errorMsg: '*Your username or password is incorrect.'
+          })
+          break
+        case 1:
+          if (loginResponse.data.data.is_approved) {
+            await this.props.setUserLogin(true)
+            await this.props.setUserName(loginResponse.data.data.username)
+            await this.props.setUserRole(loginResponse.data.data.is_admin ? 'admin' : '')
+            await this.props.setUserData(loginResponse.data.data)
+            localStorage.setItem('isAuthenticated', 'true')
+            localStorage.setItem('username', loginResponse.data.data.username)
+            localStorage.setItem('role', loginResponse.data.data.is_admin ? 'admin' : '')
+            history.push(referer)
+          } else {
+            this.setState({
+              errorMsg: '*Your account is not approved by admin. Please contact your admin.'
+            })
+          }
+          break
+        default:
+          break
       }
     }
     this.setState({

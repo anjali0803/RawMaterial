@@ -495,7 +495,7 @@ class Details extends React.Component {
                 <FileUpload
                   className="cost-sheet-upload"
                   onFileSelect={this.saveFile1}
-                  disabled={this.props.readOnly}
+                  disabled={!this.props.newProject}
                   docxOnly={true}
                 />
                 <p className="text-danger font-italic">{this.state.errorMsg.file1}</p>
@@ -504,14 +504,14 @@ class Details extends React.Component {
                 <FileUpload
                   className="pipe-upload"
                   onFileSelect={this.saveFile2}
-                  disabled={this.props.readOnly}
+                  disabled={!this.props.newProject}
                 />
                 <p className="text-danger font-italic">{this.state.errorMsg.file2}</p>
 
                 <div className="upload-label" >INTERNAL-COATING</div>
                 <FileUpload
                   className="inner-coating-upload"
-                  disabled={this.props.readOnly}
+                  disabled={!this.props.newProject}
                   onFileSelect={this.saveFile3}
                 />
                 <p className="text-danger font-italic">{this.state.errorMsg.file3}</p>
@@ -519,13 +519,13 @@ class Details extends React.Component {
                 <div className="upload-label" >EXTERNAL-COATING</div>
                 <FileUpload
                   className="outer-coating-upload"
-                  disabled={this.props.readOnly}
+                  disabled={!this.props.newProject}
                   onFileSelect={this.saveFile4}
                 />
                 <p className="text-danger font-italic">{this.state.errorMsg.file4}</p>
               </div>
 
-              <ButtonHeader type="button" saveEnabled={this.props.saveEnabled} deleteEnabled={this.props.deleteEnabled} className="details-button-header" onSave={() => this.onSave()} onDelete={() => this.onDelete()} />
+              {this.props.newProject && <ButtonHeader type="button" saveEnabled={this.props.saveEnabled} deleteEnabled={this.props.deleteEnabled} className="details-button-header" onSave={() => this.onSave()} onDelete={() => this.onDelete()} />}
             </div>
           </form>
         </div>
