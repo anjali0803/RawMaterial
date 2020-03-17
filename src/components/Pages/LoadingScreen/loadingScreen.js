@@ -16,11 +16,6 @@ class LoadingScreen extends React.Component {
         style={{ margin: '100px' }}
       />
       <h2 style={{ fontWeight: 'light' }}>Loading.....</h2>
-      {/* <ProgressSpinner
-                        style={{ width: "40%", height: "40%" }}
-                        strokeWidth="1"
-                        animationDuration="1s"
-                    ></ProgressSpinner> */}
     </div>
   }
 }

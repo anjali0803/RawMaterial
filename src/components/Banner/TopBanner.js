@@ -9,21 +9,35 @@ import { connect } from 'react-redux'
 import { Menu } from 'primereact/menu'
 import { Dialog } from 'primereact/dialog'
 import { Input } from 'reactstrap'
-import { Password } from 'primereact/password';
+import { Checkbox } from 'primereact/checkbox'
+import { Password } from 'primereact/password'
+import { Messages } from 'primereact/messages'
+import { get } from 'lodash-es'
 import './index.css'
-import Axios from 'axios'
+import axios from 'axios'
 import { authenticationUrl } from '../../constant'
+import LoadingScreen from '../../components/Pages/LoadingScreen/loadingScreen'
 
 class TopBanner extends React.Component {
   constructor () {
     super()
     this.state = {
       displayUpdateForm: false,
-      name: '',
-      designation: '',
-      department: '',
+      name: get(this.props, 'userData.name', ''),
+      designation: get(this.props, 'userData.role', ''),
+      department: get(this.props, 'userData.department', ''),
       oldPassword: '',
-      newPassword: ''
+      newPassword: '',
+      updatePasswordCheck: false,
+      errorMsgs: {
+        name: '',
+        designation: '',
+        department: '',
+        oldPassword: '',
+        newPassword: ''
+      },
+      buttonDisabled: false,
+      message: null
     }
     this.showUpdateProfileForm = this.showUpdateProfileForm.bind(this)
     this.logout = this.logout.bind(this)
@@ -37,30 +51,70 @@ class TopBanner extends React.Component {
   }
 
   saveName (e) {
+    if (e.target.value.length > 0) {
+      this.setState({
+        errorMsgs: {
+          ...this.state.errorMsgs,
+          name: ''
+        }
+      })
+    }
     this.setState({
       name: e.target.value
     })
   }
 
   saveOldPassword (e) {
+    if (e.target.value.length > 0) {
+      this.setState({
+        errorMsgs: {
+          ...this.state.errorMsgs,
+          oldPassword: ''
+        }
+      })
+    }
     this.setState({
       oldPassword: e.target.value
     })
   }
 
   saveNewPassword (e) {
+    if (e.target.value.length > 0) {
+      this.setState({
+        errorMsgs: {
+          ...this.state.errorMsgs,
+          newPassword: ''
+        }
+      })
+    }
     this.setState({
       newPassword: e.target.value
     })
   }
 
   saveDesignation (e) {
+    if (e.target.value.length > 0) {
+      this.setState({
+        errorMsgs: {
+          ...this.state.errorMsgs,
+          designation: ''
+        }
+      })
+    }
     this.setState({
       designation: e.target.value
     })
   }
 
   saveDepartment (e) {
+    if (e.target.value.length > 0) {
+      this.setState({
+        errorMsgs: {
+          ...this.state.errorMsgs,
+          department: ''
+        }
+      })
+    }
     this.setState({
       department: e.target.value
     })
@@ -77,49 +131,140 @@ class TopBanner extends React.Component {
     localStorage.setItem('isAuthenticated', 'false')
   }
 
-  updateProfile () {
-    const updateProfileRes = axios.put(
-      `${authenticationUrl}/api/updateprofile`,{
-        username: this.state.username,
-        name: this.state.name,
-        role: this.state.designation,
-        department: this.state.department
+  vaildateForm () {
+    let fields = Object.keys(this.state.errorMsgs)
+    let flag = false
+    const cErr = this.state.errorMsgs
+    if (!this.state.updatePasswordCheck) {
+      fields = fields.slice(0, 3)
+    }
+    fields.map(field => {
+      if (this.state[field] === '') {
+        cErr[field] = '*it is required field'
+        flag = true
+      }
+    })
+
+    this.setState({
+      errorMsg: cErr
+    })
+    return flag
+  }
+
+  async updateProfile () {
+    if (this.vaildateForm()) {
+      return
+    }
+    this.setState({
+      buttonDisabled: true
+    })
+    let requestBody = {
+      username: this.props.userName,
+      name: this.state.name,
+      role: this.state.designation,
+      department: this.state.department
+    }
+    if (this.state.updatePasswordCheck) {
+      requestBody = {
+        ...requestBody,
+        password: this.state.oldPassword,
+        new_password: this.state.newPassword
+      }
+    }
+
+    const updateProfileRes = await axios.put(
+      `${authenticationUrl}/api/updateprofile`, {
+        ...requestBody
       }
     )
+
+    this.setState({
+      buttonDisabled: false
+    })
+
+    if (updateProfileRes.data.status_code === 1) {
+      this.setState({
+        message: {
+          className: 'success',
+          text: 'Your details are updated'
+        }
+      })
+    } else {
+      this.setState({
+        message: {
+          className: 'danger',
+          text: 'Some issur occured!!'
+        }
+      })
+    }
+    setTimeout(() => {
+      this.setState({
+        message: null
+      })
+      this.resetForm()
+    }, 5000)
   }
 
   renderFooter () {
     return (
       <div>
-        <button type="button" className="btn btn-primary" onClick={this.updateProfile}>Update Profile</button>
+        { this.state.buttonDisabled ? <button type="button" className="btn btn-primary" onClick={this.updateProfile} disabled>Update Profile</button> : <button type="button" className="btn btn-primary" onClick={this.updateProfile}>Update Profile</button>}
       </div>
     )
+  }
+
+  resetForm () {
+    this.setState({
+      displayUpdateForm: false,
+      oldPassword: '',
+      newPassword: '',
+      errorMsgs: {
+        name: '',
+        designation: '',
+        department: '',
+        oldPassword: '',
+        newPassword: ''
+      }
+    })
   }
 
   render () {
     return (
       <>
-        <Dialog header="Update Profile" visible={this.state.displayUpdateForm} style={{ width: '50vw' }} onHide={() => this.setState({ displayUpdateForm: false }) } footer={this.renderFooter('displayBasic')}>
-          <div className="form-group">
-            <div className="upload-label-2">Name</div>
-            <Input value={this.state.name} onChange={this.saveName} placeholder="Please enter name" required/>
-          </div>
-          <div className="form-group">
-            <div className="upload-label-2">Designation</div>
-            <Input value={this.state.designation} onChange={this.saveDesignation} placeholder="Please enter designation" required/>
-          </div>
-          <div className="form-group">
-            <div className="upload-label-2">Department</div>
-            <Input value={this.state.department} onChange={this.saveDepartment} placeholder="Please enter issue CS format" required/>
-          </div>
-          {/* <div className="form-group">
-            <div className="upload-label-2">Old Password</div>
-            <Password value={this.state.oldPassword} onChange={this.saveOldPassword} placeholder="Please enter old password" />
-          </div>
-          <div className="form-group">
-            <div className="upload-label-2">New Password</div>
-            <Password value={this.state.newPassword} onChange={this.saveNewPassword} placeholder="Please enter new password" required/>
-          </div> */}
+        <Dialog header="Update Profile" visible={this.state.displayUpdateForm} style={{ width: '50vw' }} onHide={() => this.resetForm() } footer={this.renderFooter()}>
+          <form>
+            <div className="form-group">
+              <div className="upload-label-2">Name</div>
+              <Input value={this.state.name} onChange={this.saveName} placeholder="Please enter name" required/>
+              <p className="text-danger font-italic">{this.state.errorMsgs.name}</p>
+            </div>
+            <div className="form-group">
+              <div className="upload-label-2">Designation</div>
+              <Input value={this.state.designation} onChange={this.saveDesignation} placeholder="Please enter designation" required/>
+              <p className="text-danger font-italic">{this.state.errorMsgs.designation}</p>
+            </div>
+            <div className="form-group">
+              <div className="upload-label-2">Department</div>
+              <Input value={this.state.department} onChange={this.saveDepartment} placeholder="Please enter issue CS format" required/>
+              <p className="text-danger font-italic">{this.state.errorMsgs.department}</p>
+            </div>
+            <Checkbox onChange={e => this.setState({ updatePasswordCheck: e.checked })} checked={this.state.updatePasswordCheck}></Checkbox>
+            <label className="p-checkbox-label">Do you want to change your password?</label>
+            { this.state.updatePasswordCheck ? <><div className="form-group">
+              <div className="upload-label-2">Old Password</div>
+              <Password value={this.state.oldPassword} onChange={this.saveOldPassword} placeholder="Please enter old password" />
+              <p className="text-danger font-italic">{this.state.errorMsgs.oldPassword}</p>
+            </div>
+            <div className="form-group">
+              <div className="upload-label-2">New Password</div>
+              <Password value={this.state.newPassword} onChange={this.saveNewPassword} placeholder="Please enter new password" required/>
+              <p className="text-danger font-italic">{this.state.errorMsgs.newPassword}</p>
+            </div>
+            { this.state.message && <div className={`alert alert-${this.state.message.className}`} role="alert">
+              {this.state.message.text}
+            </div>}
+            </> : ''}
+          </form>
         </Dialog>
         <div className="banner">
           <div className="logo">
@@ -154,7 +299,8 @@ class TopBanner extends React.Component {
 const mapStateToProps = state => ({
   userLogin: state.userLogin,
   userName: state.userName,
-  userRole: state.userRole
+  userRole: state.userRole,
+  userData: state.userData
 })
 
 const mapDispatchToProps = dispatch => ({

@@ -98,6 +98,11 @@ export default (state = initialState, action) => {
         ...state,
         dueDate: action.dueDate
       }
+    case 'SET_USER_DATA':
+      return {
+        ...state,
+        userData: action.userData
+      }
     default:
       return state
   }

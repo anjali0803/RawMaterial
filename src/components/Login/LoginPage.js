@@ -11,7 +11,8 @@ import {
   setUserLogin,
   setUserName,
   setUserRole,
-  setUserList
+  setUserList,
+  setUserData
 } from '../../actions/loginActions'
 import { InputText } from 'primereact/inputtext'
 import './index.css'
@@ -98,7 +99,7 @@ class LoginPage extends React.Component {
         await this.props.setUserLogin(true)
         await this.props.setUserName(loginResponse.data.data.username)
         await this.props.setUserRole(loginResponse.data.data.is_admin ? 'admin' : '')
-        
+        await this.props.setUserData(loginResponse.data.data)
         localStorage.setItem('isAuthenticated', 'true')
         localStorage.setItem('username', loginResponse.data.data.username)
         localStorage.setItem('role', loginResponse.data.data.is_admin ? 'admin' : '')
@@ -185,7 +186,8 @@ const mapDispatchToProps = dispatch => ({
   setUserLogin: userLogin => dispatch(setUserLogin(userLogin)),
   setUserName: userName => dispatch(setUserName(userName)),
   setUserRole: userRole => dispatch(setUserRole(userRole)),
-  setUserList: userList => dispatch(setUserList(userList))
+  setUserList: userList => dispatch(setUserList(userList)),
+  setUserData: userData => dispatch(setUserData(userData))
 })
 
 export default connect(
