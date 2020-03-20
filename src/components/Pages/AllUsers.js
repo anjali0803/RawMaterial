@@ -130,7 +130,9 @@ class AllUsers extends React.Component {
 
     const userList = []
     this.state.userList.forEach(username => {
-      userList.push({ username: username.username })
+      if(!username.is_admin) {
+        userList.push({ username: username.username })
+      }
     })
 
     return !this.state.isLoading ? (

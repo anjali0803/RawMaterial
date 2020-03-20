@@ -34,7 +34,7 @@ class ViewComponent extends React.Component {
       { path: '/support/open-incidents', component: OpenIncidents }
     ]
 
-    routes = this.props.userRole == 'admin' ? [
+    routes = this.props.userRole === 'admin' ? [
       { path: '/admin/pending-requests', component: PendingRequests },
       { path: '/admin/all-users', component: AllUsers },
       { path: '/admin/format-doc-form', component: FormatDocForm }

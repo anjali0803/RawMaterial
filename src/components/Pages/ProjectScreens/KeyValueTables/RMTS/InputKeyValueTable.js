@@ -1,16 +1,16 @@
-import React from 'react'
-import './index.css'
-import { createHashHistory } from 'history'
-import { connect } from 'react-redux'
-import TableComponent from '../../../../Table/TableComponent2'
-import CostSheetTableComponent from '../../../../Table/CostSheetTableComponent'
-import axios from 'axios'
-import { backendUrl } from '../../../../../constant'
-import LoadingScreen from '../../../LoadingScreen/loadingScreen'
-import { elementData, table2Data } from './stubData'
-import { Dropdown } from 'primereact/dropdown'
-import { cloneDeep, get } from 'lodash-es'
-const history = createHashHistory()
+import React from 'react';
+import './index.css';
+import { createHashHistory } from 'history';
+import { connect } from 'react-redux';
+import TableComponent from '../../../../Table/TableComponent2';
+import CostSheetTableComponent from '../../../../Table/CostSheetTableComponent';
+import axios from 'axios';
+import { backendUrl } from '../../../../../constant';
+import LoadingScreen from '../../../LoadingScreen/loadingScreen';
+import { elementData, table2Data } from './stubData';
+import { Dropdown } from 'primereact/dropdown';
+import { cloneDeep, get } from 'lodash-es';
+const history = createHashHistory();
 
 class RMTS extends React.Component {
   constructor (props) {
@@ -34,20 +34,12 @@ class RMTS extends React.Component {
       keyValueData: [],
       tableData: [],
       keyValueColumnList: [
-        { field: 'element', header: 'Element' },
-        { field: 'x52', header: 'x52' },
-        { field: 'x60', header: 'x60' },
-        { field: 'x65', header: 'x65' },
-        { field: 'x70', header: 'x70' }
+        { field: 'Element', header: 'Element' }
       ],
       table2ColumnList: [
-        { field: 'property', header: 'Property' },
-        { field: 'testingFromRolling', header: 'Testing direction from Rolling' },
-        { field: 'testingTemprature', header: 'Test temp °C' },
-        { field: 'API5LX52M', header: 'API5LX52M PSL2' },
-        { field: 'API5LX60M', header: 'API5LX60M PSL2' },
-        { field: 'API5LX65M', header: 'API5LX65M PSL2' },
-        { field: 'API5LX70M', header: 'API5LX70M PSL2' }
+        { field: 'Property', header: 'Property' },
+        { field: 'Testing direction from rolling', header: 'Testing direction from Rolling' },
+        { field: 'Test Temp, °C', header: 'Test temp °C' },
       ],
       table2ValueData: []
     }
@@ -78,20 +70,37 @@ class RMTS extends React.Component {
 			}
     )
     
-    const tableData = get(data, 'data.data[0].Values', []);
+    const tableData = get(data, 'data.data.Values', []);
+    const grades = get(data, 'data.data.Grade', []);
 
-    const newData = this.structureElementData(tableData[0].tableData)
+    const newTableOneColumns = this.state.keyValueColumnList;
+    const newTableTwoColumns = this.state.table2ColumnList;
+
+    grades.forEach(grade => {
+      newTableOneColumns.push({
+        field: grade,
+        header: grade
+      });
+      newTableTwoColumns.push({
+        field: grade,
+        header: `API5L${grade}M PSL2`
+      })
+    });
 
     const versionMenu = tableData.map((data, index) => {
       return { name: `version ${index + 1}`, code: index }
-    })
+    });
+
     this.setState({
       versionMenu: versionMenu,
       tableData: tableData,
       selectedVerison: { name: 'version 1', code: 0 },
-      keyValueData: cloneDeep(newData),
-      table2ValueData: cloneDeep(this.structureMechAndToughnessData(tableData[0]))
-    })
+      keyValueColumnList: newTableOneColumns,
+      table2ColumnList: newTableTwoColumns,
+      keyValueData: cloneDeep(tableData[0].tableOne),
+      table2ValueData: cloneDeep(tableData[0].tableTwo)
+    });
+    
     if (tableData.length === 1) {
       this.setState({
         editable: true
@@ -175,8 +184,8 @@ class RMTS extends React.Component {
   changeVerison (props) {
     const data = cloneDeep(this.state.tableData[props.value.code])
     this.setState({
-      keyValueData: this.structureElementData(data.tableData),
-      table2ValueData: this.structureMechAndToughnessData(data),
+      keyValueData: data.tableOne,
+      table2ValueData: data.tableTwo,
       selectedVerison: { name: `version ${props.value.code + 1}`, code: props.value.code }
     })
     if (props.value.code === this.state.tableData.length - 1) {
@@ -190,21 +199,17 @@ class RMTS extends React.Component {
     }
   }
 
-  createNewVerison (doc) {
+  createNewVerison () {
     const newTableData = this.state.tableData
     newTableData[this.state.tableData.length - 1] = {
-      ...this.destructureMechAndToughnessData(this.state.table2ValueData),
-      tableData: this.deStructureElementData(this.state.keyValueData)
+      tableOne: this.state.keyValueData,
+      tableTwo: this.state.table2ValueData
     }
     newTableData.push({
-      ...this.destructureMechAndToughnessData(this.state.table2ValueData),
-      tableData: this.deStructureElementData(this.state.keyValueData)
+      tableOne: this.state.keyValueData,
+      tableTwo: this.state.table2ValueData
     })
 
-    // newTableData[this.state.elementData.length - 1] = this.state.keyValueData
-    // newTable2Data[this.state.table2ValueData.length - 1] = this.state.table2ValueData
-    // newTableData.push(this.state.keyValueData)
-    // newTable2Data.push(this.state.table2ValueData)
     const newVersionMenu = this.state.versionMenu
     newVersionMenu.push({ name: `version ${newVersionMenu.length + 1}`, code: newVersionMenu.length })
     this.setState({
@@ -517,6 +522,7 @@ class RMTS extends React.Component {
           handleClickAllSelected={this.handleClickAllSelected}
           editable={this.state.editable}
           acceptButton={false}
+          actionItemNotNeeded={true}
           rejectButton={false}
         />
 
@@ -530,6 +536,7 @@ class RMTS extends React.Component {
           editable={this.state.editable}
           acceptButton={false}
           rejectButton={false}
+          actionItemNotNeeded={true}
         />
       </div>
     ) : (

@@ -322,7 +322,7 @@ export default class TableComponent extends React.Component {
           resizableColumns={true}
           rowClassName={this.props.rowClassName ? (rowData) => this.props.rowClassName(rowData) : () => { }}
         >
-          <Column body={this.actionTemplate} style={{ textAlign: 'center', width: '4em' }}/>
+          {this.props.actionItemNotNeeded != true && <Column body={this.actionTemplate} style={{ textAlign: 'center', width: '4em' }}/>}
           {colList.map((el, index) => {
             const field = el.field
             const header = el.header
