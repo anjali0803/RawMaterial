@@ -33,6 +33,7 @@ class RMTS extends React.Component {
       elementData: [],
       keyValueData: [],
       tableData: [],
+      grades: [],
       keyValueColumnList: [
         { field: 'Element', header: 'Element' }
       ],
@@ -51,10 +52,6 @@ class RMTS extends React.Component {
     this.createNewVerison = this.createNewVerison.bind(this)
     this.renderSaveButton = this.renderSaveButton.bind(this)
     this.editable = this.editable.bind(this)
-    this.structureMechAndToughnessData = this.structureMechAndToughnessData.bind(this)
-    this.destructureMechAndToughnessData = this.destructureMechAndToughnessData.bind(this)
-    this.deStructureElementData = this.deStructureElementData.bind(this)
-    this.structureElementData = this.structureElementData.bind(this)
     this.generateDoc = this.generateDoc.bind(this)
     // // this.onDocIdClick = this.onDocIdClick.bind(this);
   }
@@ -75,7 +72,7 @@ class RMTS extends React.Component {
 
     const newTableOneColumns = this.state.keyValueColumnList;
     const newTableTwoColumns = this.state.table2ColumnList;
-
+    
     grades.forEach(grade => {
       newTableOneColumns.push({
         field: grade,
@@ -98,7 +95,8 @@ class RMTS extends React.Component {
       keyValueColumnList: newTableOneColumns,
       table2ColumnList: newTableTwoColumns,
       keyValueData: cloneDeep(tableData[0].tableOne),
-      table2ValueData: cloneDeep(tableData[0].tableTwo)
+      table2ValueData: cloneDeep(tableData[0].tableTwo),
+      grades: grades
     });
     
     if (tableData.length === 1) {
@@ -215,7 +213,8 @@ class RMTS extends React.Component {
     this.setState({
       tableData: newTableData,
       versionMenu: newVersionMenu
-    })
+    });
+    this.onSave();
   }
 
   showForm () {
@@ -260,11 +259,12 @@ class RMTS extends React.Component {
       isLoading: true
     })
     const generateDocRes = await axios.post(
-			`${backendUrl}/dashboard/itpdoc_download`,
+			`${backendUrl}/dashboard/rmtsdoc_download`,
 			{
         values: this.state.tableData[this.state.selectedVerison.code],
-			  version: this.state.selectedVerison.code,
-			  project_id: this.props.projectId
+			  version: this.state.selectedVerison.code + 1,
+        project_id: this.props.projectId,
+        grade: JSON.stringify(this.state.grades)
 			}
     )
     this.setState({
@@ -274,234 +274,6 @@ class RMTS extends React.Component {
 
   editable () {
     return this.state.elementData.length === (this.state.selectedVerison.code + 1)
-  }
-
-  structureElementData(data){
-    const keys = Object.keys(data)
-    const newData = keys.map(ele => {
-      return {
-        element: ele,
-        ...elementData[0][ele]
-      }
-    })
-    return newData
-  }
-
-  deStructureElementData(data){
-    let obj = {};
-
-    data.map(row => {
-      obj[row.element] = {
-        x52: row.x52,
-        x60: row.x60,
-        x65: row.x65,
-        x70: row.x70
-      }
-    })
-    return obj;
-  }
-
-  structureMechAndToughnessData (data) {
-    const properties = [
-      'YS (0.5% EUL) MPa',
-      'UTS, MPa',
-      "Elogation at 2'' GL, %",
-      'Hardness, Hv10 kgf',
-      'Bend test',
-      'CVN energy, Joule',
-      'CVN shear area, %',
-      'DWTT shear area, %',
-      'DBTT (CVN & DWTT)'
-    ]
-    const testingFromRolling = [
-      'ysTestingDirection',
-      'ysTestingDirection',
-      'ysTestingDirection',
-      'ysTestingDirection',
-      'hardnessTestingDirection',
-      'bendTestDirection',
-      'cvnDirection',
-      'cvnShearDirection',
-      'dwttShearDirection',
-      'dbttDirection'
-    ]
-    const testingTemprature = [
-      'ysTestingTemp',
-      'ysTestingTemp',
-      'ysTestingTemp',
-      'ysTestingTemp',
-      'hardnessTestingTemp',
-      'bendTestTemp',
-      'cvnTemp',
-      'cvnShearTemp',
-      'dwttShearTemp',
-      'dbttDirection'
-    ]
-    const API5LX52M = [
-      'ys52',
-      'uts52',
-      'ysuts52',
-      'el52',
-      'hardnessTesting52',
-      'bendTest52',
-      'cvn52',
-      'cvnShear52',
-      'dwttShear52',
-      'dbtt52'
-    ]
-    const API5LX60M = [
-      'ys60',
-      'uts60',
-      'ysuts60',
-      'el60',
-      'hardnessTesting60',
-      'bendTest60',
-      'cvn60',
-      'cvnShear60',
-      'dwttShear60',
-      'dbtt60'
-    ]
-    const API5LX65M = [
-      'ys65',
-      'uts65',
-      'ysuts65',
-      'el65',
-      'hardnessTesting65',
-      'bendTest65',
-      'cvn65',
-      'cvnShear65',
-      'dwttShear65',
-      'dbtt65'
-    ]
-    const API5LX70M = [
-      'ys70',
-      'uts70',
-      'ysuts70',
-      'el70',
-      'hardnessTesting70',
-      'bendTest70',
-      'cvn70',
-      'cvnShear70',
-      'dwttShear70',
-      'dbtt70'
-    ]
-
-    const fields = [
-      'property',
-      'testingFromRolling',
-      'testingTemprature',
-      'API5LX52M',
-      'API5LX60M',
-      'API5LX65M',
-      'API5LX70M'
-    ]
-    const table = []
-    for (let i = 0; i < 7; i++) {
-      table.push({
-        property: properties[i],
-        testingFromRolling: data[testingFromRolling[i]],
-        testingTemprature: data[testingTemprature[i]],
-        API5LX52M: data[API5LX52M[i]],
-        API5LX60M: data[API5LX60M[i]],
-        API5LX65M: data[API5LX65M[i]],
-        API5LX70M: data[API5LX70M[i]]
-      })
-    }
-
-    return table
-  }
-
-  destructureMechAndToughnessData (data) {
-    const testingFromRolling = [
-      'ysTestingDirection',
-      'ysTestingDirection',
-      'ysTestingDirection',
-      'ysTestingDirection',
-      'hardnessTestingDirection',
-      'bendTestDirection',
-      'cvnDirection',
-      'cvnShearDirection',
-      'dwttShearDirection',
-      'dbttDirection'
-    ]
-    const testingTemprature = [
-      'ysTestingTemp',
-      'ysTestingTemp',
-      'ysTestingTemp',
-      'ysTestingTemp',
-      'hardnessTestingTemp',
-      'bendTestTemp',
-      'cvnTemp',
-      'cvnShearTemp',
-      'dwttShearTemp',
-      'dbttDirection'
-    ]
-    const API5LX52M = [
-      'ys52',
-      'uts52',
-      'ysuts52',
-      'el52',
-      'hardnessTesting52',
-      'bendTest52',
-      'cvn52',
-      'cvnShear52',
-      'dwttShear52',
-      'dbtt52'
-    ]
-    const API5LX60M = [
-      'ys60',
-      'uts60',
-      'ysuts60',
-      'el60',
-      'hardnessTesting60',
-      'bendTest60',
-      'cvn60',
-      'cvnShear60',
-      'dwttShear60',
-      'dbtt60'
-    ]
-    const API5LX65M = [
-      'ys65',
-      'uts65',
-      'ysuts65',
-      'el65',
-      'hardnessTesting65',
-      'bendTest65',
-      'cvn65',
-      'cvnShear65',
-      'dwttShear65',
-      'dbtt65'
-    ]
-    const API5LX70M = [
-      'ys70',
-      'uts70',
-      'ysuts70',
-      'el70',
-      'hardnessTesting70',
-      'bendTest70',
-      'cvn70',
-      'cvnShear70',
-      'dwttShear70',
-      'dbtt70'
-    ]
-    const fields = [
-      'testingFromRolling',
-      'testingTemprature',
-      'API5LX52M',
-      'API5LX60M',
-      'API5LX65M',
-      'API5LX70M'
-    ]
-    const obj = {}
-    data.map((row, i) => {
-      obj[testingFromRolling[i]] = row.testingFromRolling
-      obj[testingTemprature[i]] = row.testingTemprature
-      obj[API5LX52M[i]] = row.API5LX52M
-      obj[API5LX60M[i]] = row.API5LX60M
-      obj[API5LX65M[i]] = row.API5LX65M
-      obj[API5LX70M[i]] = row.API5LX70M
-    })
-    return obj
   }
 
   render () {
