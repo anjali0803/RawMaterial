@@ -25,11 +25,13 @@ class OutputDocument extends React.Component {
       tableColList: [
         { field: 'fileType', header: 'File Type' },
         { field: 'downloadLink', header: 'Download Button' }
-      ]
+      ],
+      showSubmitButton: false
     }
     this.onDocIdClick = this.onDocIdClick.bind(this)
     this.onRefresh = this.onRefresh.bind(this)
     this.createDocumentVersionList = this.createDocumentVersionList.bind(this)
+    this.onSave = this.onSave.bind(this)
   }
 
   async getTableData () {
@@ -85,11 +87,16 @@ class OutputDocument extends React.Component {
     if (data[0].RMTS !== 'Not Available Yet') {
       obj.push({
         fileType: 'RMTS',
-        downloadLink: ''
+        downloadLink: this.createDocumentVersionList(data[0].RMTS)
       })
     }
     this.setState({ tableData: obj })
     this.setState({ isLoading: false })
+    if (data[0].SubmittedOn) {
+      this.setState({
+        showSubmitButton: true
+      })
+    }
   }
 
   componentDidMount () {
@@ -107,8 +114,20 @@ class OutputDocument extends React.Component {
     history.push('/Inquiry/create-new-projects/output-document/second')
   }
 
-  onSave () {
-    console.log('Output document saved......')
+  async onSave () {
+    this.setState({
+      isLoading: true
+    })
+    const saveRes = await Axios.post(
+      `${backendUrl}/dashboard/update_submit_date`,
+      {
+        project_id: this.props.projectId,
+        date: new Date()
+      }
+    );
+    this.setState({
+      isLoading: false
+    });
     history.push('/')
   }
 
@@ -134,8 +153,13 @@ class OutputDocument extends React.Component {
     return !this.state.isLoading ? (
       <div>
         {/* <ButtonHeader saveEnabled={this.state.saveEnabled} deleteEnabled={this.state.deleteEnabled} className="progbar-button-header" onSave={() => this.onSave()} onDelete={() => this.onDelete()} /> */}
-        <TableComponent colList={this.state.tableColList} dataList={this.state.tableData} onDocumentIdClick={this.onDocIdClick} onRefresh={this.onRefresh} />
-        <button className="save-button btn-grad" type="button" label="Save" onClick={this.props.onSave}> Save </button>
+        <TableComponent colList={this.state.tableColList} dataList={this.state.tableData} onDocumentIdClick={this.onDocIdClick} onRefresh={this.onRefresh} actionItemNotNeeded={true}/>
+        <div style={{ display: 'flex'}}>
+          {
+            this.state.showSubmitButton ? <button className="save-button btn-grad" style={{ margin: 'auto', width: '400px', opacity:'0.8'}} type="button" label="Save" disabled> Project Already Submitted </button> : 
+              <button className="save-button btn-grad" style={{ margin: 'auto'}} type="button" label="Save" onClick={this.onSave}> Save </button>
+          }
+        </div>
       </div>
     ) : (
       <LoadingScreen />
