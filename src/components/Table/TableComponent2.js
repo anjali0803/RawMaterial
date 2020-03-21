@@ -41,7 +41,8 @@ export default class TableComponent extends React.Component {
       newItem: false,
       item: {
         ...temp
-      }
+      },
+      expandedRows: null
     }
 
     this.documentIdTemplate = this.documentIdTemplate.bind(this)
@@ -321,7 +322,11 @@ export default class TableComponent extends React.Component {
           autoLayout={true}
           resizableColumns={true}
           rowClassName={this.props.rowClassName ? (rowData) => this.props.rowClassName(rowData) : () => { }}
+          expandedRows={this.state.expandedRows}
+          onRowToggle={(e) => this.setState({expandedRows:e.data})}
+          rowExpansionTemplate={this.props.rowExpansionTemplate}
         >
+          {this.props.rowExpansionTemplate && <Column expander={true} style={{width: '4em'}} />}
           {this.props.actionItemNotNeeded != true && <Column body={this.actionTemplate} style={{ textAlign: 'center', width: '4em' }}/>}
           {colList.map((el, index) => {
             const field = el.field
@@ -334,30 +339,19 @@ export default class TableComponent extends React.Component {
               filterMatchMode: 'startsWith'
             }
             // console.log(header.toLowerCase().replace(/ /g, ''))
-
-            if (acceptanceColumn.indexOf(header.toLowerCase().replace(/ /g, '')) >= 0) {
-              // console.log(el);
-              return <Column
-                {...columnProps}
+            if (this.props.editable) {
+              columnProps = {
+                ...columnProps,
+                editor: this.cellEditor
+              }
+            }
+            return (
+              <Column
                 field={el.field}
-                editor={this.displayAcceptanceForm}
+                {...columnProps}
                 style={{ width: '200px' }}
               />
-            } else {
-              if (this.props.editable) {
-                columnProps = {
-                  ...columnProps,
-                  editor: this.cellEditor
-                }
-              }
-              return (
-                <Column
-                  field={el.field}
-                  {...columnProps}
-                  style={{ width: '200px' }}
-                />
-              )
-            }
+            )
           })}
         </DataTable>
         <Dialog visible={this.state.displayDialog} width="300px" header="New Item Details" modal={true} footer={dialogFooter} onHide={() => this.setState({ displayDialog: false })}>

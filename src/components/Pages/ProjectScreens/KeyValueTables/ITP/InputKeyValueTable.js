@@ -53,7 +53,7 @@ class ITP extends React.Component {
         { field: 'TestingFrequencyExtracted', header: 'Testing Frequency Extracted' },
         { field: 'AcceptanceCriteriaAPI', header: 'Acceptance Criteria API' },
         { field: 'AcceptanceCriteriaExtracted', header: 'Acceptance Criteria Extracted' },
-        { field: 'AcceptanceCriteriaTable', header: 'Acceptance Criteria Table' },
+        // { field: 'AcceptanceCriteriaTable', header: 'Acceptance Criteria Table' },
         { field: 'Documents', header: 'Documents' },
         // { field: 'Section', header: 'Section' },
         // { field: 'Subsection', header: 'Sub Section' },
@@ -79,17 +79,18 @@ class ITP extends React.Component {
   async getKeyValueData () {
     this.setState({ isLoading: true })
 
-    let data = await axios.get(
+    const data = await axios.get(
 			`${backendUrl}/dashboard/get_itp`, {
 			  params: {
 			    ProjectID: this.props.projectId
 			  }
 			}
-    )
+    );
     const pipeData = get(data, 'data.data[0].Values.Pipe', [])
     const coatingData = get(data, 'data.data[0].Values.Coating', [])
 
-    data = cloneDeep(pipeData[0])
+    let keyValueData = cloneDeep(pipeData[0])
+    
     const versionMenu = pipeData.map((data, index) => {
       return { name: `version ${index + 1}`, code: index }
     })
@@ -99,7 +100,7 @@ class ITP extends React.Component {
       coatingData: coatingData,
       selectedVerison: { name: 'version 1', code: 0 }
     })
-    this.setState({ keyValueData: data })
+    this.setState({ keyValueData: keyValueData })
     if (this.state.pipeData.length === 1) {
       this.setState({
         editable: true
@@ -391,6 +392,34 @@ class ITP extends React.Component {
     })
   }
 
+  rowExpansionTemplate(data) {
+    if(data.AcceptanceCriteriaTable === undefined) {
+      return;
+    }
+    // const accCriTable = JSON.parse(get(data, 'AcceptanceCriteriaTable', []));
+    const columnList = Object.keys(data.AcceptanceCriteriaTable[0]).map(key => {
+      return {
+        field: key,
+        header: key
+      }
+    });
+    
+    return (
+      data.AcceptanceCriteriaTable && (
+          <div>
+            <TableComponent
+              colList={columnList}
+              dataList={data.AcceptanceCriteriaTable}
+              editable={true}
+              acceptButton={false}
+              rejectButton={false}
+              actionItemNotNeeded={true}
+            />
+          </div>
+        )
+      )
+  };
+
   render () {
     let view = <div></div>
     // for stubbed data only
@@ -410,6 +439,7 @@ class ITP extends React.Component {
           editable={this.state.editable}
           acceptButton={false}
           rejectButton={false}
+          rowExpansionTemplate={this.rowExpansionTemplate}
         />
 
       </div>
