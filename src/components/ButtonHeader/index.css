@@ -4,7 +4,10 @@
    height: 48px;
    border-radius: 4px;
    color: whitesmoke;
-   margin-top: 10px;
+}
+
+.save-button:hover{
+   box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25), 0 4px 4px 0 rgba(0, 0, 0, 0.25);
 }
 .btn-grad {background-image: linear-gradient(to right, #314755 0%, #26a0da 51%, #314755 100%)}
 .btn-grad:hover { background-position: right center; }

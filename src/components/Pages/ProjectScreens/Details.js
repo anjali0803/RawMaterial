@@ -36,7 +36,8 @@ class Details extends React.Component {
         file1: '',
         file2: '',
         file3: '',
-        file4: ''
+        file4: '',
+        CreateProjectErrorMsg: ''
       },
       dueDate: this.props.newProject ? '' : (props.dueDate || ''),
       projectId: this.props.newProject ? '' : (props.projectId || ''),
@@ -96,7 +97,8 @@ class Details extends React.Component {
     this.displayValueTemplate = this.displayValueTemplate.bind(this)
     this.filterCountryMultiple = this.filterCountryMultiple.bind(this)
     this.renderSuggestion = this.renderSuggestion.bind(this)
-    this.vaildateForm = this.vaildateForm.bind(this)
+    this.validateFormData = this.validateFormData.bind(this)
+    this.upLoadMultipleFiletoS3 = this.upLoadMultipleFiletoS3.bind(this)
   }
 
   uploadHandler () {
@@ -253,7 +255,60 @@ class Details extends React.Component {
     return fileRes
   }
 
-  vaildateForm () {
+  async upLoadMultipleFiletoS3 (file1, file2, file3, file4) {
+    const formData1 = new FormData();
+    formData1.append('file', file1);
+    const formData2 = new FormData();
+    formData2.append('file', file2);
+    const formData3 = new FormData();
+    formData3.append('file', file3);
+    const formData4 = new FormData();
+    formData4.append('file', file4)
+    
+    
+    const [file1Res, file2Res, file3Res, file4Res] = await Promise.all([
+      axios.post(
+        `${backendUrl}/dashboard/uploadfile`,
+        formData1,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }
+      ),
+      axios.post(
+        `${backendUrl}/dashboard/uploadfile`,
+        formData2,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }
+      ),
+      axios.post(
+        `${backendUrl}/dashboard/uploadfile`,
+        formData3,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }
+      ),
+      axios.post(
+        `${backendUrl}/dashboard/uploadfile`,
+        formData4,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }
+      )
+    ]);
+
+    return [file1Res, file2Res, file3Res, file4Res];
+  }
+
+  validateFormData () {
     const fields = Object.keys(this.state.errorMsg)
     let flag = false
     let cErr = this.state.errorMsg
@@ -271,35 +326,43 @@ class Details extends React.Component {
   }
 
   async onSave () {
-    if (this.vaildateForm()) {
+    if (this.validateFormData()) {
       return
     }
 
     this.setState({
       isLoading: true
     })
-    // Commented due to api is not available
+
+    this.interval = setInterval(() => {
+      let val = this.state.isLoadingProgress
+      val += Math.floor(Math.random() * 10) + 2
+      if (val < 40) {
+        this.setState({
+          isLoadingTexts: 'Uploading documents...'
+        })
+      }
+      if (val < 40) {
+        this.setState({
+          isLoadingProgress: val
+        })
+      }
+    }, 2000)
+
+    const { title, customer, type, dueDate } = this.state
+    const { file1, file2, file3, file4 } = this.state
+    const fileResArr = await this.upLoadMultipleFiletoS3(file1,file2, file3, file4);
 
     this.interval = setInterval(() => {
       let val = this.state.isLoadingProgress
       val += Math.floor(Math.random() * 10) + 2
 
-      if (val < 20) {
-        this.setState({
-          isLoadingTexts: 'Uploading documents...'
-        })
-      }
-      if (val > 20 && val < 40) {
-        this.setState({
-          isLoadingTexts: 'Extracting information...'
-        })
-      }
-      if (val > 50 && val < 60) {
+      if (val > 50 && val < 65) {
         this.setState({
           isLoadingTexts: 'Preparing insights...'
         })
       }
-      if (val > 60 && val < 90) {
+      if (val > 65 && val < 90) {
         this.setState({
           isLoadingTexts: 'Creating project...'
         })
@@ -316,39 +379,42 @@ class Details extends React.Component {
       }
     }, 2000)
 
-    const { title, customer, type } = this.state
-    const { file1, file2, file3, file4 } = this.state
-
-    const file1Res = await this.upLoadFiletoS3(file1)
-    const file2Res = await this.upLoadFiletoS3(file2)
-    const file3Res = await this.upLoadFiletoS3(file3)
-    const file4Res = await this.upLoadFiletoS3(file4)
 
     const createProjectRes = await axios.post(
-            `${backendUrl}/dashboard/create_project`,
-            {
-              title: title,
-              client: customer,
-              project_type: type,
-              cost_sheet: file1Res.data.data,
-              specs_pipe: file2Res.data.data,
-              inner_coating: file3Res.data.data,
-              outer_coating: file4Res.data.data,
-              assignedTo: this.props.userName,
-              createdBy: this.props.userName,
-              due_date: this.state.dueDate
-            }
+      `${backendUrl}/dashboard/create_project`,
+      {
+        title: title,
+        client: customer,
+        project_type: type,
+        cost_sheet: fileResArr[0].data.data,
+        specs_pipe: fileResArr[1].data.data,
+        inner_coating: fileResArr[2].data.data,
+        outer_coating: fileResArr[3].data.data,
+        assignedTo: this.props.userName,
+        createdBy: this.props.userName,
+        due_date: this.state.dueDate
+      }
     )
-    const projectId = createProjectRes.data.data.ProjectID
-    this.props.setProjectId(projectId)
-    this.props.setProjectCustomer(customer)
-    this.props.setProjectTitle(title)
-    this.props.setProjectType(type)
-    this.props.setDueDate(dueDate)
-    this.setState({
-      isLoading: false
-    })
-    history.push('/Inquiry/create-new-projects/calculations')
+    if(createProjectRes.data.status === 'error') {
+      this.setState({
+        isLoading: false,
+        errorMsg: {
+          ...this.state.errorMsg,
+          CreateProjectErrorMsg: 'Some issue occured during creating project. Please try again!'
+        }
+      })
+    } else {
+      const projectId = createProjectRes.data.data.ProjectID
+      this.props.setProjectId(projectId)
+      this.props.setProjectCustomer(customer)
+      this.props.setProjectTitle(title)
+      this.props.setProjectType(type)
+      this.props.setDueDate(dueDate)
+      this.setState({
+        isLoading: false
+      })
+      history.push('/Inquiry/create-new-projects/calculations')
+    }
   }
 
   onDelete () {
@@ -524,7 +590,13 @@ class Details extends React.Component {
                 />
                 <p className="text-danger font-italic">{this.state.errorMsg.file4}</p>
               </div>
-
+            </div>
+            <div className="row justify-content-center" style={{marginTop: '10px'}}>
+              {this.state.errorMsg.CreateProjectErrorMsg && <div class="alert alert-danger">
+                {this.state.errorMsg.CreateProjectErrorMsg}
+              </div>}
+            </div>
+            <div className="row justify-content-center">
               {this.props.newProject && <ButtonHeader type="button" saveEnabled={this.props.saveEnabled} deleteEnabled={this.props.deleteEnabled} className="details-button-header" onSave={() => this.onSave()} onDelete={() => this.onDelete()} />}
             </div>
           </form>

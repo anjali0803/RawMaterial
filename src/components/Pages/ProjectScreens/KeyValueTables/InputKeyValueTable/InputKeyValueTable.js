@@ -43,6 +43,10 @@ class InputKeyValueTable extends React.Component {
       weight: '',
       keyValueData: [
       ],
+      tabulateMsg: {
+        class: '',
+        text: ''
+      },
       backUpData: [],
       keyValueColumnList: [],
       tableColList: [
@@ -184,6 +188,44 @@ class InputKeyValueTable extends React.Component {
     this.getKeyValueData()
   }
 
+  async tabulateData () {
+    this.setState({
+      isLoading: true
+    })
+    const tabulateRes = await axios.post(
+      `${backendUrl}/dashboard/tabulate`,
+      {
+        projectID: this.props.projectId,
+        fileType: 'PIPE'
+      }
+    )
+    if(tabulateRes.data.status === 'error') {
+      this.setState({
+        isLoading: false,
+        tabulateMsg: {
+          class: 'danger',
+          text: 'Some issue occured during tabulate call!!'
+        }
+      })
+    } else {
+      this.setState({
+        isLoading: false,
+        tabulateMsg: {
+          class: 'success',
+          text: 'Tabulate call is successful'
+        }
+      })
+    }
+    setTimeout(() => {
+      this.setState({
+        tabulateMsg: {
+          class: '',
+          text: ''
+        }
+      })
+    }, 10000)
+  }
+
   async onSave () {
     this.setState({
       isLoading: true
@@ -199,24 +241,23 @@ class InputKeyValueTable extends React.Component {
       nData.push(t);
     })
 
-    let saveEditedValue
-    saveEditedValue = await axios.post(
-            `${backendUrl}/dashboard/update_calculation_data`,
-            {
-              ProjectID: this.props.projectId,
-              docData: {
-                Values: nData,
-                GrainSize: this.state.keyvalueCostSheetValueList[0].value,
-                HoldTime: this.state.keyvalueCostSheetValueList[1].value,
-                HoopStress: this.state.keyvalueCostSheetValueList[2].value,
-                ReverseBendTest: this.state.keyvalueCostSheetValueList[3].value,
-                RtRm: this.state.keyvalueCostSheetValueList[4].value,
-                SMTS: this.state.keyvalueCostSheetValueList[5].value,
-                Tolerance: this.state.keyvalueCostSheetValueList[6].value,
-                Weight: this.state.keyvalueCostSheetValueList[7].value,
-                PipeLength: this.state.keyvalueCostSheetValueList[8].value
-              }
-            }
+    let saveEditedValue = await axios.post(
+    `${backendUrl}/dashboard/update_calculation_data`,
+    {
+      ProjectID: this.props.projectId,
+      docData: {
+        Values: nData,
+        GrainSize: this.state.keyvalueCostSheetValueList[0].value,
+        HoldTime: this.state.keyvalueCostSheetValueList[1].value,
+        HoopStress: this.state.keyvalueCostSheetValueList[2].value,
+        ReverseBendTest: this.state.keyvalueCostSheetValueList[3].value,
+        RtRm: this.state.keyvalueCostSheetValueList[4].value,
+        SMTS: this.state.keyvalueCostSheetValueList[5].value,
+        Tolerance: this.state.keyvalueCostSheetValueList[6].value,
+        Weight: this.state.keyvalueCostSheetValueList[7].value,
+        PipeLength: this.state.keyvalueCostSheetValueList[8].value
+      }
+    }
     )
     this.setState({
       isLoading: false
@@ -281,6 +322,16 @@ class InputKeyValueTable extends React.Component {
     return !this.state.isLoading ? (
       <div className="container-fluid">
         <div className="row justify-content-end">
+          <div style={{ marginRight: '10px' }}>
+            <ButtonHeader
+              saveEnabled={this.state.tabulateMsg.text ? false : true}
+              deleteEnabled={this.props.deleteEnabled}
+              className="progbar-button-header"
+              onSave={() => this.tabulateData()}
+              onDelete={() => this.onDelete()}
+              buttonText={'Tabulate'}
+            />
+          </div>
           <div style={{ marginRight: '50px' }}>
             <ButtonHeader
               saveEnabled={this.props.saveEnabled}
@@ -291,10 +342,11 @@ class InputKeyValueTable extends React.Component {
             />
           </div>
         </div>
-        {/* <DocumentHeader
-                    documentId={this.state.documentId}
-                    projectId={this.props.projectId}
-                /> */}
+
+        {this.state.tabulateMsg.text && <div class={`alert alert-${this.state.tabulateMsg.class}`} style={{margin: '25px'}}>
+          {this.state.tabulateMsg.text}
+        </div>}
+
         <TableComponent
           colList={this.state.keyValueColumnList}
           dataList={this.state.keyValueData}
