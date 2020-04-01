@@ -393,7 +393,7 @@ class ITP extends React.Component {
   }
 
   rowExpansionTemplate(data) {
-    if(data.AcceptanceCriteriaTable === undefined) {
+    if(data.AcceptanceCriteriaTable === undefined || data.AcceptanceCriteriaTable.length === 0) {
       return;
     }
     // const accCriTable = JSON.parse(get(data, 'AcceptanceCriteriaTable', []));
@@ -440,6 +440,7 @@ class ITP extends React.Component {
           acceptButton={false}
           rejectButton={false}
           rowExpansionTemplate={this.rowExpansionTemplate}
+          broadColumns={['Acceptance Criteria API', "Acceptance Criteria Extracted"]}
         />
 
       </div>

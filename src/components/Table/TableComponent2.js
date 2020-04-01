@@ -345,6 +345,15 @@ export default class TableComponent extends React.Component {
                 editor: this.cellEditor
               }
             }
+            if(this.props.broadColumns && this.props.broadColumns.indexOf(header) >= 0){
+              return (
+                <Column
+                  field={el.field}
+                  {...columnProps}
+                  style={{ width: '500px' }}
+                />
+              );
+            }
             return (
               <Column
                 field={el.field}

@@ -34,7 +34,7 @@ class ProgressBar extends React.Component {
           <div className="progress-wrapper">
             <div className="progress-steps clearfix ">
               {this.props.steps.map((el, index) => {
-                if (URL.search(el.toLowerCase().replace(/ /g, '-')) !== -1) { return < div key={`progress-step-${index}`} onClick={(e) => this.onStepsClick(e, el)} key={`progress-step-${index}`} className="progress-step progress-current" ><span>{el}</span></div> } else { return <div key={`progress-step-${index}`} onClick={(e) => this.onStepsClick(e, el)} key={`progress-step-${index}`} className="progress-step"><span>{el}</span></div> }
+                if (URL.search(el.toLowerCase().replace(/ /g, '-')) !== -1) { return < div key={`progress-step-${index}`} key={`progress-step-${index}`} className="progress-step progress-current" ><span>{el}</span></div> } else { return <div key={`progress-step-${index}`} key={`progress-step-${index}`} className="progress-step"><span>{el}</span></div> }
               })}
             </div>
           </div>

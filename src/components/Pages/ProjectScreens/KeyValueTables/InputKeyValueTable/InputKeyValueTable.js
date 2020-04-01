@@ -77,6 +77,9 @@ class InputKeyValueTable extends React.Component {
   }
 
   async getKeyValueData () {
+    this.setState({
+      isLoading: true
+    })
     const data = await axios.get(
       `${backendUrl}/dashboard/get_calculation_data`, {
         params: {
@@ -145,7 +148,6 @@ class InputKeyValueTable extends React.Component {
       ]
     })
 
-    this.setState({ isLoading: true })
     const xdata = data.data.data[0].Values
 
     const newData = []
