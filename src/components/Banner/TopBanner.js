@@ -245,7 +245,7 @@ class TopBanner extends React.Component {
             </div>
             <div className="form-group">
               <div className="upload-label-2">Department</div>
-              <Input value={this.state.department} onChange={this.saveDepartment} placeholder="Please enter issue CS format" required/>
+              <Input value={this.state.department} onChange={this.saveDepartment} placeholder="Please enter department" required/>
               <p className="text-danger font-italic">{this.state.errorMsgs.department}</p>
             </div>
             <Checkbox onChange={e => this.setState({ updatePasswordCheck: e.checked })} checked={this.state.updatePasswordCheck}></Checkbox>

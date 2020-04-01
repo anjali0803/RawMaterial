@@ -426,7 +426,7 @@ class CommentSheet extends React.Component {
           rejectButton={true}
           saveCommentSheet={this.onSave}
           wdOptions={this.state.wdOptions}
-          broadColumns={['Client Requirements']}
+          broadColumns={['Client Requirements', 'Proposal']}
         />
       </div>
     ) : (

@@ -110,10 +110,6 @@ class InputKeyValueTable extends React.Component {
       actions: [],
       keyvalueCostSheetValueList: [
         {
-          fieldname: 'Grain Size',
-          value: data.data.data[0].GrainSize
-        },
-        {
           fieldname: 'Hold Time',
           value: data.data.data[0].HoldTime
         },
@@ -123,31 +119,39 @@ class InputKeyValueTable extends React.Component {
         },
         {
           fieldname: 'Peaking Factor',
-          value: data.data.data[0].Peaking
+          value: data.data.data[0].PeakingFactor
+        },
+        {
+          fieldname: 'Positive Nominal Weight',
+          value: data.data.data[0].PositiveNominalWeight
+        },
+        {
+          fieldname: 'Negative Nominal Weight',
+          value: data.data.data[0].NegativeNominalWeight
         },
         {
           fieldname: 'Yield Ratio',
-          value: data.data.data[0].RtRm
+          value: data.data.data[0].YieldRatio
         },
         {
-          fieldname: 'SMTS',
-          value: data.data.data[0].SMTS
+          fieldname: 'SMTS Quantity',
+          value: data.data.data[0].SMTSQuantity
         },
         {
-          fieldname: 'Positive Tolerance',
-          value: data.data.data[0].PositiveTolerance
+          fieldname: 'SMTS Percent',
+          value: data.data.data[0].SMTSPercent
         },
         {
-          fieldname: 'Negative Tolerance',
-          value: data.data.data[0].NegativeTolerance
+          fieldname: 'SMYS Quantity',
+          value: data.data.data[0].SMYSQuantity
         },
         {
-          fieldname: 'Weight',
-          value: data.data.data[0].Weight
+          fieldname: 'Plus Tolerance',
+          value: data.data.data[0].PlusTolerance
         },
         {
-          fieldname: 'Pipe length',
-          value: data.data.data[0].PipeLength
+          fieldname: 'Minus Tolerance',
+          value: data.data.data[0].MinusTolerance
         }
       ]
     })
