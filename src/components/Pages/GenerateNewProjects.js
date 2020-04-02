@@ -5,6 +5,8 @@ import { setDocumentArray, setProjectId, setProjectCustomer, setProjectTitle, se
 import { connect } from 'react-redux'
 import { createHashHistory } from 'history'
 import Axios from 'axios'
+import {Dropdown} from 'primereact/dropdown';
+import {Calendar} from 'primereact/calendar';
 import LoadingScreen from './LoadingScreen/loadingScreen'
 import { backendUrl } from '../../constant'
 
@@ -18,6 +20,12 @@ export class GenerateNewProjects extends React.Component {
       fromDate: '',
       isLoading: true,
       tableData: [
+      ],
+      selectedDateType: 'AD',
+      dateOptions: [
+        {label: 'Assigned Date', value: 'AD'},
+        {label: 'Due Date', value: 'DD'},
+        {label: 'Submit Date', value: 'SD'}
       ],
       tableColList: [
         { field: 'ProjectID', header: 'Project Id' },
@@ -79,19 +87,21 @@ export class GenerateNewProjects extends React.Component {
     let dateFrom = this.state.fromDate;
     let dateTo = this.state.toDate;
     
-    
-    
-    let d1 = dateFrom.split("-");
-    let d2 = dateTo.split("-");
-    let from = new Date(d1[0], parseInt(d1[1] - 1), d1[2]);  // -1 because months are from 0 to 11
-    let to   = new Date(d2[0], parseInt(d2[1] - 1), d2[2]);
+    const obj = {
+      AD: 'AssignedOn',
+      DD: 'DueDate',
+      SD: 'SubmittedOn'
+    }
     
     const filterList = this.state.tableData.filter(project => {
-      let dateCheck = project.AssignedOn.substr(0, 10)
-      let c = dateCheck.split("/")
-      let check = new Date(c[2], parseInt(c[0]) - 1, c[1]);
-  
-      return (check > from && check < to)
+      if(project[obj[this.state.selectedDateType]]){
+        let dateCheck = project[obj[this.state.selectedDateType]].substr(0, 10)
+        let c = dateCheck.split("/")
+        let check = new Date(c[2], parseInt(c[0]) - 1, c[1]);
+    
+        return (check >= dateFrom && check <= dateTo)
+      }
+      return false
     });
     
     this.setState({
@@ -102,23 +112,30 @@ export class GenerateNewProjects extends React.Component {
   }
 
   render () {
-    // console.log(typeof this.props.dataList)
     return this.state.isLoading === false ? (
       <div>
-        <div className="container advanceOptions">
+        <div className="advanceOptions">
           <div className="row">
             <h3 className="advanceSearchHeading">Advance Search Options</h3>
             <hr />
             <div className="col-12">
-
+                <Dropdown value={this.state.selectedDateType} options={this.state.dateOptions} onChange={e => this.setState({selectedDateType: e.value})} style={{width: '12em', marginRight: '10px'}}/>
                 <label>
-                  Assigned from:
+                  From:
                 </label>
-                <input className="filterBox" onChange={this.handleFromDate} type="date" />
+                <Calendar value={this.state.fromDate} onChange={(e) => this.setState({fromDate: e.value})} style={{
+                  marginLeft: '10px',
+                  marginRight: '20px'
+                }}></Calendar>
+                {/* <input className="filterBox" onChange={this.handleFromDate} type="date" /> */}
                 <label>
-                  Assigned to:
+                  To:
                 </label>
-                <input className="filterBox" onChange={this.handleToDate} type="date" />
+                <Calendar value={this.state.toDate} onChange={(e) => this.setState({toDate: e.value})} style={{
+                  marginLeft: '10px',
+                  marginRight: '20px'
+                }}></Calendar>
+                {/* <input className="filterBox" onChange={this.handleToDate} type="date" /> */}
                   
               <button type="button" onClick={this.filterProjects} class="btn btn-primary">Search</button>
               <button type="button" style={{ marginLeft: '10px'}} onClick={this.getTableData} class="btn btn-primary">Reset Table</button>

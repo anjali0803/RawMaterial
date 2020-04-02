@@ -414,6 +414,10 @@ class ITP extends React.Component {
               acceptButton={false}
               rejectButton={false}
               actionItemNotNeeded={true}
+              notResizeable={true}
+              style={{
+                width: '1000px'
+              }}
             />
           </div>
         )

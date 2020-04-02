@@ -312,6 +312,7 @@ export default class TableComponent extends React.Component {
     return (
       <div xs={12} className="tableContainer">
         <DataTable
+          style={this.props.style}
           value={dataList || this.state.tableData}
           footer={footer}
           paginator={true}
@@ -319,7 +320,7 @@ export default class TableComponent extends React.Component {
           rows={10}
           scrollable={true}
           editable={this.props.editable}
-          autoLayout={true}
+          autoLayout={this.props.notResizeable ? false : true}
           resizableColumns={true}
           rowClassName={this.props.rowClassName ? (rowData) => this.props.rowClassName(rowData) : () => { }}
           expandedRows={this.state.expandedRows}
