@@ -63,6 +63,8 @@ class AllOngoingProjects extends React.Component {
     this.props.setProjectType(Type)
     this.props.setProjectTitle(Title)
     this.props.setDocumentArray(['', '', '', '', ''])
+    this.props.setAssignedUser(AssignedTo)
+    this.props.setDueDate(DueDate)
     history.push('/Inquiry/create-new-projects/details')
   }
 
@@ -96,7 +98,9 @@ const mapDispatchToProps = dispatch => ({
   setProjectType: (projectTitle) => dispatch(setProjectTitle(projectTitle)),
   setProjectCustomer: (projectCustomer) => dispatch(setProjectCustomer(projectCustomer)),
   setProjectTitle: (projectTitle) => dispatch(setProjectTitle(projectTitle)),
-  setDocumentArray: (documentArray) => dispatch(setDocumentArray(documentArray))
+  setDocumentArray: (documentArray) => dispatch(setDocumentArray(documentArray)),
+  setAssignedUser: (user) => dispatch(setAssignedUser(user)),
+  setDueDate: (date) => dispatch(setDueDate(date))
 })
 export default connect(
   mapStateToProps, mapDispatchToProps

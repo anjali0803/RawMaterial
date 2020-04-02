@@ -154,15 +154,19 @@ class LoginPage extends React.Component {
                     <i className="zmdi zmdi-font"></i>
                   </span>
                   <div className="wrap-input100 validate-input">
+                    <label>
+                      Username
+                    </label>
                     <input className="input100 has-val" type="text" name="username" onChange={this.handleInputChange} value={this.state.username} required/>
-                    <span className="focus-input100" data-placeholder="Username"></span>
                   </div>
                   <div className="wrap-input100 validate-input">
                     <span className="btn-show-pass">
                       <i className="zmdi zmdi-eye"></i>
                     </span>
+                    <label>
+                      Password
+                    </label>
                     <input className="input100 has-val" type="password" name="password" onChange={this.handleInputChange} value={this.state.password} required/>
-                    <span className="focus-input100" data-placeholder="Password"></span>
                   </div>
                   { this.state.errorMsg ? <p className="text-danger">{this.state.errorMsg}</p> : ''}
                   <div className="container-login100-form-btn">

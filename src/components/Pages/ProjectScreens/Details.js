@@ -32,6 +32,10 @@ class Details extends React.Component {
       this.props.setDueDate('')
     }
     this.state = {
+      createdBy: '',
+      projectStatus: '',
+      createdOn: '',
+      submittedOn: '',
       errorMsg: {
         dueDate: '',
         type: '',
@@ -44,7 +48,7 @@ class Details extends React.Component {
         CreateProjectErrorMsg: '',
         assignedUser:''
       },
-      dueDate: this.props.newProject ? '' : (props.dueDate || ''),
+      dueDate: this.props.newProject ? '' : (new Date(props.dueDate) || ''),
       projectId: this.props.newProject ? '' : (props.projectId || ''),
       title: this.props.newProject ? '' : (props.projectTitle || ''),
       type: this.props.newProject ? '' : (props.projectType || ''),
@@ -110,15 +114,31 @@ class Details extends React.Component {
   }
 
   async componentDidMount() {
-    if(this.props.newProject){
-      const userList = await axios.get(
-        `${authenticationUrl}/api/alluser`
+    const userList = await axios.get(
+      `${authenticationUrl}/api/alluser`
+    )
+    let emailList = userList.data.data.map(user => {
+      return user.username;
+    })
+    this.setState({
+      emailList: emailList
+    })
+    if(!this.props.newProject){
+      const projectData = await axios.get(
+        `${backendUrl}/dashboard/project`,
+        {
+          params: {
+          projectid: this.props.projectId
+        }}
       )
-      let emailList = userList.data.data.map(user => {
-        return user.username;
-      })
+      
       this.setState({
-        emailList: emailList
+        assignedTo: projectData.data.data[0].AssignedTo,
+        dueDate: projectData.data.data[0].DueDate,
+        projectStatus: projectData.data.data[0].ProjectStatus,
+        createdBy: projectData.data.data[0].CreatedBy,
+        createdOn: projectData.data.data[0].CreatedOn ? projectData.data.data[0].CreatedOn.substring(0,10): '',
+        submittedOn: projectData.data.data[0].SubmittedOn ? projectData.data.data[0].SubmittedOn.substring(0,10).split('-').reverse().join('/') : 'Not Submitted Yet!!'
       })
     }
   }
@@ -275,6 +295,33 @@ class Details extends React.Component {
             }
     )
     return fileRes
+  }
+
+  async updateProject(){
+    this.setState({
+      isLoading: true
+    })
+    const updateProjectRes = await axios.put(
+      `${backendUrl}/dashboard/project/`,
+      {
+        project_id: this.props.projectId,
+        project_type: this.state.type,
+        project_status: this.state.projectStatus,
+        title: this.state.title,
+        client: this.state.customer,
+        assigned_to: this.state.assignedUser,
+        due_date: this.state.dueDate
+      }
+    )
+
+    if(updateProjectRes.data.status === 'error') {
+      this.setState({
+        CreateProjectErrorMsg: 'Some issue occur in updating project!!'
+      })
+    }
+    this.setState({
+      isLoading: false
+    })
   }
 
   async upLoadMultipleFiletoS3 (file1, file2, file3, file4) {
@@ -486,7 +533,7 @@ class Details extends React.Component {
                     value={this.state.projectId}
                     readOnly={true}
                     disabled={true}
-                  /> : this.state.projectId}
+                  /> : <div className="readOnlyValues">{this.state.projectId}</div>}
                 </div>
                 <div className="form-group">
                   <div className="upload-label-2">Title</div>
@@ -494,7 +541,7 @@ class Details extends React.Component {
                     value={this.state.title}
                     onChange={this.handleInputTitle}
                     readOnly={this.props.readOnly}
-                  /> : this.state.title}
+                  /> : <div className="readOnlyValues">{this.state.title}</div>}
                   <p className="text-danger font-italic">{this.state.errorMsg.title}</p>
                 </div>
                 <div className="form-group">
@@ -506,63 +553,7 @@ class Details extends React.Component {
                     onChange={this.handleInputCustomer}
                     suggestions={this.state.filteredCustomers} 
                     completeMethod={this.filterCountryMultiple}
-                  /> : this.state.customer}
-                  {/* <Autocomplete
-                    className="auto-complete"
-                    getItemValue={(item) => item}
-                    items={this.state.filteredCustomers}
-                    id="customer"
-                    renderItem={(item, isHighlighted) =>
-                      <div style={{ background: isHighlighted ? 'lightgray' : 'white', zIndex: 10000, paddingTop: '5px' }}>
-                        {item}
-                      </div>
-                    }
-                    value={this.state.customer}
-                    onChange={this.handleInputCustomer}
-                    onSelect={(val) => {
-                      this.setState({
-                        errorMsg: {
-                          ...this.state.errorMsg,
-                          customer: ''
-                        },
-                        customer: val,
-                        filteredCustomers: []
-                      })
-                    }}
-                    wrapperStyle={
-                      {
-                        fontSize: '16px',
-                        color: '#333333',
-                        height: '47px',
-                        width: '250px',
-                        background: '#ffffff',
-                        padding: '0.429em',
-                        border: '1px solid #ced4da',
-                        transition: 'border-color 0.2s, box-shadow 0.2s',
-                        appearance: 'none',
-                        borderRadius: '4px',
-                        fontWeight: '400',
-                        lineHeight: '1.5'
-                      }
-                    }
-                    menuStyle={
-                      {
-                        zIndex: 1000,
-                        borderRadius: '3px',
-                        boxShadow: '0 2px 12px rgba(0, 0, 0, 0.1)',
-                        background: 'rgba(255, 255, 255, 0.9)',
-                        paddingLeft: '3px',
-                        paddingBottom: '3px',
-                        position: 'fixed',
-                        overflow: 'auto',
-                        maxHeight: '50%',
-                        fontSize: '14px',
-                        fontFamily: 'Open Sans',
-                        textDecoration: 'none',
-                        minWidth: '240px'
-                      }
-                    }
-                  /> */}
+                  /> : <div className="readOnlyValues">{this.state.customer}</div>}
                   <p className="text-danger font-italic">{this.state.errorMsg.customer}</p>
                 </div>
                 <div className="form-group">
@@ -570,12 +561,12 @@ class Details extends React.Component {
                   {this.props.newProject ? <Dropdown id="type" value={this.state.type}
                     options={this.state.projectTypes}
                     onChange={this.handleInputType}
-                  />: this.state.type}
+                  />: <div className="readOnlyValues">{this.state.type}</div>}
                   <p className="text-danger font-italic">{this.state.errorMsg.type}</p>
                 </div>
                 <div className="form-group">
                   <div className="upload-label-2">Assigned To</div>
-                  {this.props.newProject ? <AutoComplete
+                  {<AutoComplete
                     id="assignedUser"
                     inputStyle={{ width: '100%'}}
                     value={this.state.assignedUser}
@@ -599,12 +590,12 @@ class Details extends React.Component {
                     }}
                     suggestions={this.state.assignedUserSuggestions} 
                     completeMethod={this.suggestEmails.bind(this)}
-                  /> : this.state.assignedUser}
+                  />}
                   <p className="text-danger font-italic">{this.state.errorMsg.assignedUser}</p>
                 </div>
                 <div className="form-group">
                   <div className="upload-label-2">Due Date</div>
-                  {this.props.newProject ? <Calendar
+                  {<Calendar
                     id="dueDate"
                     value={this.state.dueDate}
                     minDate={new Date()}
@@ -618,11 +609,11 @@ class Details extends React.Component {
                     monthNavigator={true}
                     yearNavigator={true}
                     yearRange="2020:2030"
-                  />: this.state.dueDate}
+                  />}
                   <p className="text-danger font-italic">{this.state.errorMsg.dueDate}</p>
                 </div>
               </div>
-              {this.props.newProject && <div className="col-6">
+              {this.props.newProject ? <div className="col-6">
                 <div className="upload-label" >Cost Sheet</div>
                 <FileUpload
                   className="cost-sheet-upload"
@@ -655,6 +646,20 @@ class Details extends React.Component {
                   onFileSelect={this.saveFile4}
                 />
                 <p className="text-danger font-italic">{this.state.errorMsg.file4}</p>
+              </div>: <div className="col-6">
+                  <div className="readOnlyValues">Documents are already uploaded. Please find them on documents section.</div>
+                  <div className="form-group">
+                    <div className="upload-label-2">Created By</div>
+                    <div className="readOnlyValues">{this.state.createdBy || <i className="pi pi-spin pi-spinner" style={{'fontSize': '2em'}}></i>}</div>
+                  </div>
+                  <div className="form-group">
+                    <div className="upload-label-2">Date Created (DD/MM/YYYY)</div>
+                    <div className="readOnlyValues">{this.state.createdOn || <i className="pi pi-spin pi-spinner" style={{'fontSize': '2em'}}></i>}</div>
+                  </div>
+                  <div className="form-group">
+                    <div className="upload-label-2">Date Submitted (DD/MM/YYYY)</div>
+                    <div className="readOnlyValues">{this.state.submittedOn || <i className="pi pi-spin pi-spinner" style={{'fontSize': '2em'}}></i>}</div>
+                  </div>
               </div>}
             </div>
             <div className="row justify-content-center" style={{marginTop: '10px'}}>
@@ -663,7 +668,9 @@ class Details extends React.Component {
               </div>}
             </div>
             <div className="row justify-content-center">
-              {this.props.newProject && <ButtonHeader type="button" saveEnabled={this.props.saveEnabled} deleteEnabled={this.props.deleteEnabled} className="details-button-header" onSave={() => this.onSave()} onDelete={() => this.onDelete()} />}
+              {this.props.newProject ? <ButtonHeader type="button" saveEnabled={this.props.saveEnabled} deleteEnabled={this.props.deleteEnabled} className="details-button-header" onSave={() => this.onSave()} onDelete={() => this.onDelete()} /> : 
+                <ButtonHeader type="button" buttonText={'Update Project'} saveEnabled={this.props.saveEnabled} deleteEnabled={this.props.deleteEnabled} className="details-button-header" onSave={() => this.updateProject()} onDelete={() => this.onDelete()} />
+              }
             </div>
           </form>
         </div>

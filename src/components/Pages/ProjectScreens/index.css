@@ -122,8 +122,8 @@
 	/* border-top: 2px solid rgb(233, 233, 250); */
 	margin : 10px;
 	margin-left: 0px;;
-    padding: 5px;
-    font-family: Rubik;
+	padding: 5px;
+	font-family: Rubik;
 } 
 
 .divider{
@@ -131,12 +131,23 @@
 }
 .upload-label-2{
 	width: 100%;
-	/* border-top: 2px solid rgb(233, 233, 250); */
 	margin-top : 10px;
 	margin-left: 0px;;
-    padding: 5px;
-    font-family: Rubik;
+	padding: 5px;
+	font-weight: bold;
+	font-family: Rubik;
+	font-size: 20px;
 } 
+
+.readOnlyValues{
+	width: 100%;
+	margin-top : 10px;
+	margin-left: 0px;;
+	padding: 5px;
+	font-family: Rubik;
+	font-size: 18px;
+} 
+
 .pipe-upload{
     margin-bottom: 10px;
 }

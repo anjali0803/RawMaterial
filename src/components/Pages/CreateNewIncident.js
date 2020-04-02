@@ -176,7 +176,7 @@ export class CreateNewIncident extends React.Component {
               <p className="text-danger font-italic">{this.state.errorMsg.issueType}</p>
             </div>
             <div className="form-group">
-              <div className="upload-label-2">Issue</div>
+              <div className="upload-label-2">Issue Title</div>
               <Input onChange={this.saveIssue} placeholder="Please enter issue tite" required/>
               <p className="text-danger font-italic">{this.state.errorMsg.issue}</p>
             </div>

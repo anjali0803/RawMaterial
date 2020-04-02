@@ -157,7 +157,7 @@ class OutputDocument extends React.Component {
         <div style={{ display: 'flex'}}>
           {
             this.state.showSubmitButton ? <button className="save-button btn-grad" style={{ margin: 'auto', width: '400px', opacity:'0.8'}} type="button" label="Save" disabled> Project Already Submitted </button> : 
-              <button className="save-button btn-grad" style={{ margin: 'auto'}} type="button" label="Save" onClick={this.onSave}> Save </button>
+              <button className="save-button btn-grad" style={{ margin: 'auto'}} type="button" label="Save" onClick={this.onSave}> Submit Project </button>
           }
         </div>
       </div>

@@ -33,7 +33,6 @@ class InputKeyValueTable extends React.Component {
     this.state = {
       isLoading: false,
       documentId: props.documentId,
-      grainSize: '',
       holdTime: '',
       hoopStress: '',
       reverseBendTest: '',
@@ -93,17 +92,6 @@ class InputKeyValueTable extends React.Component {
     )
     this.setState({
       keyValueColumnList: this.state.keyValueColList
-    })
-    this.setState({
-      grainSize: data.data.data[0].GrainSize,
-      holdTime: data.data.data[0].HoldTime,
-      hoopStress: data.data.data[0].HoopStress,
-      reverseBendTest: data.data.data[0].ReverseBendTest,
-      RtRm: data.data.data[0].RtRm,
-      SMTS: data.data.data[0].SMTS,
-      negativeTolerance: data.data.data[0].NegativeTolerance,
-      weight: data.data.data[0].Weight,
-      pipeLength: data.data.data[0].PipeLength
     })
     this.setState({
       keyValueColumnList: this.state.keyvalueCostSheetColList,
@@ -251,7 +239,6 @@ class InputKeyValueTable extends React.Component {
       ProjectID: this.props.projectId,
       docData: {
         Values: nData,
-        GrainSize: this.state.keyvalueCostSheetValueList[0].value,
         HoldTime: this.state.keyvalueCostSheetValueList[1].value,
         HoopStress: this.state.keyvalueCostSheetValueList[2].value,
         ReverseBendTest: this.state.keyvalueCostSheetValueList[3].value,
@@ -359,6 +346,7 @@ class InputKeyValueTable extends React.Component {
           actionsLabel={this.state.actions}
           handleClickAllSelected={this.handleClickAllSelected}
           editable={true}
+          deleteEnabled={true}
         />
         {view}
       </div>

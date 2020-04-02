@@ -26,6 +26,7 @@ class TopBanner extends React.Component {
       name: get(this.props, 'userData.name', ''),
       designation: get(this.props, 'userData.role', ''),
       department: get(this.props, 'userData.department', ''),
+      mobileNumber: get(this.props, 'userData.mobileNumber', ''),
       oldPassword: '',
       newPassword: '',
       updatePasswordCheck: false,
@@ -33,6 +34,7 @@ class TopBanner extends React.Component {
         name: '',
         designation: '',
         department: '',
+        mobileNumber: '',
         oldPassword: '',
         newPassword: ''
       },
@@ -48,6 +50,7 @@ class TopBanner extends React.Component {
     this.saveNewPassword = this.saveNewPassword.bind(this)
     this.saveDesignation = this.saveDesignation.bind(this)
     this.updateProfile = this.updateProfile.bind(this)
+    this.saveMobileNumber = this.saveMobileNumber.bind(this)
   }
 
   saveName (e) {
@@ -61,6 +64,20 @@ class TopBanner extends React.Component {
     }
     this.setState({
       name: e.target.value
+    })
+  }
+
+  saveMobileNumber (e) {
+    if (e.target.value.length > 0) {
+      this.setState({
+        errorMsgs: {
+          ...this.state.errorMsgs,
+          mobileNumber: ''
+        }
+      })
+    }
+    this.setState({
+      mobileNumber: e.target.value
     })
   }
 
@@ -136,7 +153,7 @@ class TopBanner extends React.Component {
     let flag = false
     const cErr = this.state.errorMsgs
     if (!this.state.updatePasswordCheck) {
-      fields = fields.slice(0, 3)
+      fields = fields.slice(0, 4)
     }
     fields.map(field => {
       if (this.state[field] === '') {
@@ -223,7 +240,8 @@ class TopBanner extends React.Component {
         designation: '',
         department: '',
         oldPassword: '',
-        newPassword: ''
+        newPassword: '',
+        mobileNumber: ''
       }
     })
   }
@@ -237,6 +255,11 @@ class TopBanner extends React.Component {
               <div className="upload-label-2">Name</div>
               <Input value={this.state.name} onChange={this.saveName} placeholder="Please enter name" required/>
               <p className="text-danger font-italic">{this.state.errorMsgs.name}</p>
+            </div>
+            <div className="form-group">
+              <div className="upload-label-2">Mobile Number</div>
+              <Input value={this.state.mobileNumber} keyfilter="num" maxlength={10} onChange={this.saveMobileNumber} placeholder="Please enter your mobile number" required/>
+              <p className="text-danger font-italic">{this.state.errorMsgs.mobileNumber}</p>
             </div>
             <div className="form-group">
               <div className="upload-label-2">Designation</div>
@@ -278,6 +301,7 @@ class TopBanner extends React.Component {
             </span>
           </div>
           {this.props.userLogin ? <>
+            <div style={{ position: 'absolute', right: '60px', cursor: 'auto'}} className="sign-out-icon">{this.props.userName}</div>
             <div className="sign-out-icon">
               <div className="userProfileButton" onClick={(event) => this.menu.toggle(event)}>
                 <Menu model={[
@@ -287,9 +311,7 @@ class TopBanner extends React.Component {
                   }
                 ]} popup={true} ref={el => this.menu = el} />
               </div>
-              <i className="pi pi-sign-out" onClick={() => this.logout()} style={{ fontSize: 40, paddingTop: '5px' }}></i>
             </div></> : null}
-
         </div>
       </>
     )

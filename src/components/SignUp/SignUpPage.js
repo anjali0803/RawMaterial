@@ -78,15 +78,24 @@ class SignUpPage extends React.Component {
       username: '',
       name: '',
       password: '',
-      confirmPassword: '',
+      userType: '',
       email: '',
       department: '',
-      role: ''
+      role: '',
+      errorMsg: {
+        username: '',
+        name: '',
+        password: '',
+        userType: '',
+        email: '',
+        department: ''
+      }
     }
 
     this.submitted = false
     this.handleSignUp = this.handleSignUp.bind(this)
     this.handleInputChange = this.handleInputChange.bind(this)
+    this.validateFormData = this.validateFormData.bind(this)
   }
 
   passwordMatch (confirmation, state) { return (state.password === confirmation) }
@@ -110,24 +119,51 @@ class SignUpPage extends React.Component {
     const value = e.target.value
 
     this.setState({
-      [name]: value
+      [name]: value,
+      errorMsg: {
+        ...this.state.errorMsg,
+        [name]: ''
+      }
     })
   }
+  validateFormData () {
+    const fields = Object.keys(this.state.errorMsg)
+    let flag = false
+    let cErr = this.state.errorMsg
+    fields.map(field => {
+      if (this.state[field] === '') {
+        cErr[field] = '*it is required field'
+        flag = true
+      }
+    })
 
+    this.setState({
+      errorMsg: cErr
+    })
+    return flag
+  }
+
+  
   async handleSignUp () {
+    if (this.validateFormData()) {
+      return
+    }
     const username = this.state.username
     const name = this.state.name
     const password = this.state.password
-    const confirmPassword = this.state.password
+    const userType = this.state.userType
     const email = this.state.email
     const department = this.state.department
     const userData = {
       username: username,
+      department: department,
+      is_admin: (userType.toLowerCase() === 'admin') ? true : false, 
       password: password,
-      email: email
+      email: email,
+      name: name,
     }
 
-    if (this.state.password === this.state.confirmPassword) {
+    if (true) {
       const signUpRes = await axios.post(
         `${authenticationUrl}/api/adduser`,
         userData,
@@ -137,15 +173,6 @@ class SignUpPage extends React.Component {
           }
         }
       )
-      // if (this.state.password === this.state.confirmpassword) {
-      //   history.push("/login");
-      // } else {
-      //   this.messages.show({
-      //     severity: "error",
-      //     summary: "Error Message",
-      //     detail: "Password confirmation failed"
-      //   });
-      // }
 
       const validation = this.validator.validate(this.state)
       this.setState({ validation })
@@ -158,12 +185,7 @@ class SignUpPage extends React.Component {
   }
 
   render () {
-    // const validUsername = this.state.username !== ""
-    // const validName = this.state.name !== ""
-    // const validPassword = this.state.password !== ""
-    // const validConfirmPassword = this.state.confirmpassword !== ""
-    // const validEmail = this.state.email !== ""
-    // const validDepartment = this.state.department !== ""
+
     const validation = this.submitted ? this.validator.validate(this.state) : this.state.validation
     return (
       <Row>
@@ -172,34 +194,55 @@ class SignUpPage extends React.Component {
             <div className="wrap-login100">
 
               <div className="wrap-input100 validate-input">
+                <label>
+                  Username
+                </label>
                 <input className="input100 has-val" type="text" name="username" onChange={this.handleInputChange} value={this.state.username}/>
-                <span className="focus-input100" data-placeholder="Username"></span>
               </div>
+                <p className="text-danger font-italic">{this.state.errorMsg.username}</p>
 
               <div className="wrap-input100 validate-input">
+                <label>
+                  Name
+                </label>
                 <input className="input100 has-val" type="text" name="name" onChange={this.handleInputChange} value={this.state.name}/>
-                <span className="focus-input100" data-placeholder="Name"></span>
               </div>
+                <p className="text-danger font-italic">{this.state.errorMsg.name}</p>
 
               <div className="wrap-input100 validate-input">
+                <label>
+                  Password
+                </label>
                 <input className="input100 has-val" type="password" name="password" onChange={this.handleInputChange} value={this.state.password} />
-                <span className="focus-input100" data-placeholder="Password"></span>
               </div>
+                <p className="text-danger font-italic">{this.state.errorMsg.password}</p>
 
               <div className="wrap-input100 validate-input">
-                <input className="input100 has-val" type="password" name="confirmPassword" onChange={this.handleInputChange} value={this.state.confirmPassword} />
-                <span className="focus-input100" data-placeholder="Confirm Password"></span>
+                <label>
+                  User Type
+                </label>
+                <select className="input100 has-val" name="userType" style={{border: 'none'}} onChange={this.handleInputChange} value={this.state.userType}>
+                  <option value="user">User</option>
+                  <option value="admin">Admin</option>
+                </select>
               </div>
+                <p className="text-danger font-italic">{this.state.errorMsg.userType}</p>
 
               <div className="wrap-input100 validate-input">
+                <label>
+                  Email
+                </label>
                 <input className="input100 has-val" type="email" name="email" onChange={this.handleInputChange} value={this.state.email}/>
-                <span className="focus-input100" data-placeholder="Email"></span>
               </div>
+                <p className="text-danger font-italic">{this.state.errorMsg.email}</p>
 
               <div className="wrap-input100 validate-input">
+                <label>
+                  Department
+                </label>
                 <input className="input100 has-val" type="text" name="department" onChange={this.handleInputChange} value={this.state.department}/>
-                <span className="focus-input100" data-placeholder="Department"></span>
               </div>
+                <p className="text-danger font-italic">{this.state.errorMsg.department}</p>
 
               <div className="container-login100-form-btn">
                 <div className="wrap-login100-form-btn">
