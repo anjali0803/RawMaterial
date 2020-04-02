@@ -33,6 +33,13 @@ export function setProjectTitle (projectTitle) {
   }
 }
 
+export function setAssignedUser (assignedUser) {
+  return {
+    type: 'SET_ASSIGNED_USER',
+    assignedUser
+  }
+}
+
 export function setProjectCustomer (projectCustomer) {
   return {
     type: 'SET_PROJECT_CUSTOMER',

@@ -84,7 +84,6 @@ class MenuComponent extends React.Component {
             <a href="#/inquiry/projects-assigned-by-me"><i className="pi pi-fw pi-align-right"></i>Projects assigned by me</a>
             <a href="#/inquiry/all-ongoing-projects"><i className="pi pi-fw pi-clone"></i>All ongoing projects</a>
             <a href="#/inquiry/closed-projects"><i className="pi pi-fw pi-copy"></i>Closed projects</a>
-            <a href="#/inquiry/archieve-projects"><i className="pi pi-fw pi-envelope"></i>Archive projects</a>
           </div>
           <button className="dropdown-btn dropdown-btn-2" onClick={toggleDropDownMenu}><i className="pi pi-fw pi-file-excel"></i>Report
             <i className="fa fa-caret-down"></i>

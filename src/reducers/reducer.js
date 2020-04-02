@@ -103,6 +103,11 @@ export default (state = initialState, action) => {
         ...state,
         userData: action.userData
       }
+    case 'SET_ASSIGNED_USER':
+      return {
+        ...state,
+        assignedUser: action.assignedUser
+      }
     default:
       return state
   }

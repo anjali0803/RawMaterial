@@ -1,7 +1,7 @@
 import React from 'react'
 import ProjectsTable from '../ProjectsTable/ProjectsTable'
 import './index.css'
-import { setDocumentArray, setProjectId, setProjectCustomer, setProjectTitle, setProjectType } from '../../actions/dataActions'
+import { setDocumentArray, setProjectId, setProjectCustomer, setProjectTitle, setProjectType, setAssignedUser, setDueDate } from '../../actions/dataActions'
 import { connect } from 'react-redux'
 import { createHashHistory } from 'history'
 import Axios from 'axios'
@@ -48,13 +48,14 @@ class ProjectAssignedToMe extends React.Component {
   }
 
   onProjectIdClick (rowData) {
-    // refresh the document array and project id
-    const { ProjectType, Title, Client, ProjectID } = rowData
+    const { ProjectType, Title, Client, ProjectID, AssignedTo, DueDate } = rowData
     // sconsole.log({ Type, Title, Customer, ProjectID })
     this.props.setProjectId(ProjectID)
     this.props.setProjectCustomer(Client)
     this.props.setProjectType(ProjectType)
     this.props.setProjectTitle(Title)
+    this.props.setAssignedUser(AssignedTo)
+    this.props.setDueDate(DueDate)
     history.push('/Inquiry/create-new-projects/details')
   }
 
@@ -101,7 +102,9 @@ const mapDispatchToProps = dispatch => ({
   setProjectType: (projectType) => dispatch(setProjectType(projectType)),
   setProjectCustomer: (projectCustomer) => dispatch(setProjectCustomer(projectCustomer)),
   setProjectTitle: (projectTitle) => dispatch(setProjectTitle(projectTitle)),
-  setDocumentArray: (documentArray) => dispatch(setDocumentArray(documentArray))
+  setDocumentArray: (documentArray) => dispatch(setDocumentArray(documentArray)),
+  setAssignedUser: (user) => dispatch(setAssignedUser(user)),
+  setDueDate: (date) => dispatch(setDueDate(date))
 })
 export default connect(
   mapStateToProps, mapDispatchToProps

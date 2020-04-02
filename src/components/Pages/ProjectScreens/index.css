@@ -46,6 +46,12 @@
 	display: table-cell;
 	width: 250px;;
 }
+
+#assignedUser{
+	display: table-cell;
+	width: 250px;
+}
+
 #type{
 	display: table-cell;
 	width: 250px;;

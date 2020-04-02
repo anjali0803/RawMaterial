@@ -9,13 +9,15 @@ import { Dropdown } from 'primereact/dropdown'
 import { ProgressBar } from 'primereact/progressbar'
 import { createHashHistory } from 'history'
 import './index.css'
-import { setProjectId, setProjectTitle, setProjectType, setProjectCustomer, setCurrentURL, setDueDate } from '../../../actions/dataActions'
+import { setProjectId, setProjectTitle, setProjectType, setProjectCustomer, setCurrentURL, setDueDate, setAssignedUser } from '../../../actions/dataActions'
 import { connect } from 'react-redux'
 import ButtonHeader from '../../ButtonHeader/ButtonHeader'
 import axios from 'axios'
-import { backendUrl } from '../../../constant'
+import { backendUrl, authenticationUrl } from '../../../constant'
 import Autocomplete from 'react-autocomplete'
 import { Input } from 'reactstrap'
+import {AutoComplete} from 'primereact/autocomplete';
+
 const history = createHashHistory()
 
 class Details extends React.Component {
@@ -26,6 +28,8 @@ class Details extends React.Component {
       this.props.setProjectCustomer('')
       this.props.setProjectTitle('')
       this.props.setProjectType('')
+      this.props.setAssignedUser('')
+      this.props.setDueDate('')
     }
     this.state = {
       errorMsg: {
@@ -37,13 +41,15 @@ class Details extends React.Component {
         file2: '',
         file3: '',
         file4: '',
-        CreateProjectErrorMsg: ''
+        CreateProjectErrorMsg: '',
+        assignedUser:''
       },
       dueDate: this.props.newProject ? '' : (props.dueDate || ''),
       projectId: this.props.newProject ? '' : (props.projectId || ''),
       title: this.props.newProject ? '' : (props.projectTitle || ''),
       type: this.props.newProject ? '' : (props.projectType || ''),
       customer: this.props.newProject ? '' : (props.projectCustomer || ''),
+      assignedUser: this.props.newProject ? '' : (props.assignedUser || ''),
       projectTypes: [
         { label: 'HFW', value: 'HFW' },
         { label: 'HSAW', value: 'HSAW' }
@@ -56,6 +62,8 @@ class Details extends React.Component {
       isLoadingProgress: 0,
       isLoadingTexts: '',
       filteredCustomers: [],
+      emailList: [],
+      assignedUserSuggestions: [],
       customerSuggestion: [
         'Boardwalk',
         'Corpac',
@@ -101,6 +109,20 @@ class Details extends React.Component {
     this.upLoadMultipleFiletoS3 = this.upLoadMultipleFiletoS3.bind(this)
   }
 
+  async componentDidMount() {
+    if(this.props.newProject){
+      const userList = await axios.get(
+        `${authenticationUrl}/api/alluser`
+      )
+      let emailList = userList.data.data.map(user => {
+        return user.username;
+      })
+      this.setState({
+        emailList: emailList
+      })
+    }
+  }
+
   uploadHandler () {
     console.log('upload handled')
   }
@@ -121,7 +143,7 @@ class Details extends React.Component {
         }
       })
     }
-    this.filterCountryMultiple(e.target)
+    e.target.query ? this.filterCountryMultiple(e.target) : this.filterCountryMultiple({...e.target, query: e.target.value})
     this.setState({ customer: e.target.value })
   }
 
@@ -390,7 +412,7 @@ class Details extends React.Component {
         specs_pipe: fileResArr[1].data.data,
         inner_coating: fileResArr[2].data.data,
         outer_coating: fileResArr[3].data.data,
-        assignedTo: this.props.userName,
+        assignedTo: this.state.assignedUser,
         createdBy: this.props.userName,
         due_date: this.state.dueDate
       }
@@ -430,13 +452,19 @@ class Details extends React.Component {
   }
 
   filterCountryMultiple (event) {
-    setTimeout(() => {
-      const results = this.state.customerSuggestion.filter((customer) => {
-        return customer.toLowerCase().startsWith(event.value.toLowerCase())
-      })
+    const results = this.state.customerSuggestion.filter((customer) => {
+      return customer.toLowerCase().startsWith(event.query.toLowerCase() || event.value.toLowerCase())
+    })
 
-      this.setState({ filteredCustomers: results })
-    }, 250)
+    this.setState({ filteredCustomers: results })
+  }
+
+  suggestEmails(event) {
+    let results = this.state.emailList.filter((email) => {
+      return email.toLowerCase().startsWith(event.query.toLowerCase());
+    });
+
+    this.setState({ assignedUserSuggestions: results });
   }
 
   renderSuggestion (suggestion) {
@@ -450,28 +478,36 @@ class Details extends React.Component {
       ? (
         <div className="container-fliud">
           <form onSubmit={obj => this.onSave(obj)}>
-            <div className="row justify-content-center">
-              <div className="col-6 justify-content-center divider">
+            <div className="row">
+              <div className="col-6 justify-content-start divider">
                 <div className="form-group">
                   <div className="upload-label-2">Project Id</div>
-                  <Input id="projectId"
+                  { this.props.newProject ? <Input id="projectId"
                     value={this.state.projectId}
                     readOnly={true}
                     disabled={true}
-                  />
+                  /> : this.state.projectId}
                 </div>
                 <div className="form-group">
                   <div className="upload-label-2">Title</div>
-                  <Input id="title"
+                  {this.props.newProject ? <Input id="title"
                     value={this.state.title}
                     onChange={this.handleInputTitle}
                     readOnly={this.props.readOnly}
-                  />
+                  /> : this.state.title}
                   <p className="text-danger font-italic">{this.state.errorMsg.title}</p>
                 </div>
                 <div className="form-group">
                   <div className="upload-label-2">Customer</div>
-                  <Autocomplete
+                  {this.props.newProject ? <AutoComplete
+                    id="customer"
+                    inputStyle={{width: '100%'}}
+                    value={this.state.customer}
+                    onChange={this.handleInputCustomer}
+                    suggestions={this.state.filteredCustomers} 
+                    completeMethod={this.filterCountryMultiple}
+                  /> : this.state.customer}
+                  {/* <Autocomplete
                     className="auto-complete"
                     getItemValue={(item) => item}
                     items={this.state.filteredCustomers}
@@ -526,22 +562,52 @@ class Details extends React.Component {
                         minWidth: '240px'
                       }
                     }
-                  />
+                  /> */}
                   <p className="text-danger font-italic">{this.state.errorMsg.customer}</p>
                 </div>
                 <div className="form-group">
                   <div className="upload-label-2">Type</div>
-                  <Dropdown id="type" value={this.state.type}
+                  {this.props.newProject ? <Dropdown id="type" value={this.state.type}
                     options={this.state.projectTypes}
                     onChange={this.handleInputType}
-                  />
+                  />: this.state.type}
                   <p className="text-danger font-italic">{this.state.errorMsg.type}</p>
                 </div>
                 <div className="form-group">
+                  <div className="upload-label-2">Assigned To</div>
+                  {this.props.newProject ? <AutoComplete
+                    id="assignedUser"
+                    inputStyle={{ width: '100%'}}
+                    value={this.state.assignedUser}
+                    onChange={(e) => {
+                      this.setState({assignedUser: e.value});
+                      if(e.value.length){
+                        this.setState({
+                          errorMsg: {
+                            ...this.state.errorMsg,
+                            assignedUser: ''
+                          }
+                        })
+                      } else {
+                        this.setState({
+                          errorMsg: {
+                            ...this.state.errorMsg,
+                            assignedUser: '*It is required!'
+                          }
+                        })
+                      }
+                    }}
+                    suggestions={this.state.assignedUserSuggestions} 
+                    completeMethod={this.suggestEmails.bind(this)}
+                  /> : this.state.assignedUser}
+                  <p className="text-danger font-italic">{this.state.errorMsg.assignedUser}</p>
+                </div>
+                <div className="form-group">
                   <div className="upload-label-2">Due Date</div>
-                  <Calendar
+                  {this.props.newProject ? <Calendar
                     id="dueDate"
                     value={this.state.dueDate}
+                    minDate={new Date()}
                     onChange={(e) => this.setState({
                       dueDate: e.value,
                       errorMsg: {
@@ -552,11 +618,11 @@ class Details extends React.Component {
                     monthNavigator={true}
                     yearNavigator={true}
                     yearRange="2020:2030"
-                  />
+                  />: this.state.dueDate}
                   <p className="text-danger font-italic">{this.state.errorMsg.dueDate}</p>
                 </div>
               </div>
-              <div className="col-6">
+              {this.props.newProject && <div className="col-6">
                 <div className="upload-label" >Cost Sheet</div>
                 <FileUpload
                   className="cost-sheet-upload"
@@ -589,7 +655,7 @@ class Details extends React.Component {
                   onFileSelect={this.saveFile4}
                 />
                 <p className="text-danger font-italic">{this.state.errorMsg.file4}</p>
-              </div>
+              </div>}
             </div>
             <div className="row justify-content-center" style={{marginTop: '10px'}}>
               {this.state.errorMsg.CreateProjectErrorMsg && <div class="alert alert-danger">
@@ -614,7 +680,9 @@ const mapStateToProps = state => ({
   projectType: state.projectType,
   projectTitle: state.projectTitle,
   projectCustomer: state.projectCustomer,
-  userName: state.userName
+  userName: state.userName,
+  assignedUser: state.assignedUser,
+  dueDate: state.dueDate
 })
 const mapDispatchToProps = dispatch => ({
   setProjectId: (projectId) => dispatch(setProjectId(projectId)),
@@ -622,6 +690,7 @@ const mapDispatchToProps = dispatch => ({
   setProjectCustomer: (projectCustomer) => dispatch(setProjectCustomer(projectCustomer)),
   setProjectType: (projectType) => dispatch(setProjectType(projectType)),
   setCurrentURL: (currentURL) => dispatch(setCurrentURL(currentURL)),
-  setDueDate: (dueDate) => dispatch(setDueDate(dueDate))
+  setDueDate: (dueDate) => dispatch(setDueDate(dueDate)),
+  setAssignedUser: (email) => dispatch(setAssignedUser(email))
 })
 export default connect(mapStateToProps, mapDispatchToProps)(Details)
