@@ -185,6 +185,7 @@ export class CreateNewIncident extends React.Component {
               <Input type="textarea" onChange={this.saveIssueDescription} name="issueDescription" placeholder="Please enter your issue description" required/>
               <p className="text-danger font-italic">{this.state.errorMsg.issueDescription}</p>
             </div>
+            <div className="upload-label-2">Upload related screenshot, images or files</div>
             <FileUpload
               onFileSelect={this.saveIssueFiles}
               multiple

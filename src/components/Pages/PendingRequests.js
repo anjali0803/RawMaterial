@@ -127,13 +127,25 @@ class PendingRequests extends React.Component {
           />
         )
       },
+      {
+        field: 'name',
+        header: 'Name'
+      },
+      {
+        field: 'email',
+        header: 'E-mail'
+      },
+      {
+        field: 'department',
+        header: 'Department'
+      },
       { body: this.approveTemplate },
       { body: this.rejectTemplate }
     ]
     const userList = []
     this.state.userList.forEach(user => {
       if (!user.is_approved) {
-        userList.push({ username: user.username })
+        userList.push(user)
       }
     })
 
@@ -158,6 +170,8 @@ class PendingRequests extends React.Component {
                 body={el.body}
                 filter={false}
                 filterMatchMode="startsWith"
+                autoLayout={true}
+                responsive={true}
               />
             )
           })}

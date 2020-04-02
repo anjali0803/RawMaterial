@@ -124,14 +124,40 @@ class AllUsers extends React.Component {
           />
         )
       },
+      {
+        field: 'name',
+        header: 'Name'
+      },
+      {
+        field: 'email',
+        header: 'E-mail'
+      },
+      {
+        field: 'department',
+        header: 'Department'
+      },
+      {
+        field: 'makeAdmin',
+        header: 'Admin'
+      },
+      {
+        field: 'removeUser',
+        header: 'Remove'
+      },
       { body: this.adminTemplate },
       { body: this.removeTemplate }
     ]
 
     const userList = []
     this.state.userList.forEach(username => {
-      if(!username.is_admin) {
-        userList.push({ username: username.username })
+      if(!username.is_admin ) {
+        userList.push({
+          ...username,
+          makeAdmin: this.adminTemplate,
+          removeUser: this.removeTemplate
+        })
+      } else {
+        userList.push(username)
       }
     })
 
