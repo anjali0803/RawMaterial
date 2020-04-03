@@ -291,7 +291,7 @@ class TopBanner extends React.Component {
         </Dialog>
         <div className="banner">
           <div className="logo">
-          Welspun
+            <img src='../../assests/welspun-logo-1-removebg-preview1.png'></img>
           </div>
           <div className="banner-heading-primary">
                     Customer Inquiry Process

@@ -6,12 +6,12 @@ export default class OpenIncidents extends React.Component {
     super(props)
     this.videoTutorialList = [
       {
-        title: 'video 1',
-        url: ''
+        title: 'MatSci AI Demo 1',
+        url: 'https://youtu.be/WtvErKAoPgI'
       },
       {
-        title: 'video 2',
-        url: ''
+        title: 'MatSci AI Demo 2',
+        url: 'https://youtu.be/WtvErKAoPgI'
       }
     ]
 
@@ -103,7 +103,7 @@ export default class OpenIncidents extends React.Component {
                           </h5>
                         </div>
                         <div className={`collapse-${key}`} style={{ display: 'none' }}>
-                          <iframe className="videoPlayerBox" src="https://www.youtube.com/embed/tgbNymZ7vqY"></iframe>
+                          <iframe className="videoPlayerBox" src={videoElement.url}></iframe>
                         </div>
                       </div>
                     </>
