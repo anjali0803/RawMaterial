@@ -17,7 +17,12 @@ export default class Dashboard extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      data: {}
+      data: {
+        createdCount: [],
+        dueCount: [],
+        submitCount: [],
+        failCount: []
+      }
     }
   }
 
@@ -25,10 +30,31 @@ export default class Dashboard extends React.Component {
     const dashboardRes = await axios.get(
       `${backendUrl}/dashboard/get_dashboard`
     )
-    this.setState({
-      data: dashboardRes.data.data
-    })
-    console.log(dashboardRes.data.data)
+    // this.setState({
+    //   data: dashboardRes.data.data
+    // })
+
+    const keys = Object.keys(dashboardRes.data.data);
+
+    keys.forEach(card => {
+      const ks = Object.keys(dashboardRes.data.data[card]);
+      let obj = [];
+      ks.forEach(k => {
+        obj.push(
+          {
+            label: k,
+            value: dashboardRes.data.data[card][k]
+          }
+        )
+      })
+      let newObj = {
+        ...this.state.data
+      };
+      newObj[card] = obj
+      this.setState({
+        data: newObj
+      })
+    });
   }
 
   render () {

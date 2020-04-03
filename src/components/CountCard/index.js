@@ -23,7 +23,7 @@ const CardItem = ({ linkTo, ...rest }) => (
 )
 
 const CountCard = ({ glyph, title, items }) => (
-  <Col md={4} className="boxAnalytic">
+  <Col md={6} className="boxAnalytic">
     <Container fluid={true}>
       <Row className="cardRow">
         <Col xs={12} className="padd25">
