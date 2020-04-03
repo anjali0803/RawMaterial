@@ -8,7 +8,6 @@ import { getStyle, hexToRgba } from '@coreui/coreui/dist/js/coreui-utilities'
 import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips'
 import dashboardData from '../../utils/dashboard.json'
 import moment from 'moment'
-import { groupBy } from 'lodash.groupBy'
 
 const brandPrimary = getStyle('--primary')
 const brandSuccess = getStyle('--success')
