@@ -75,6 +75,7 @@ class SignUpPage extends React.Component {
     ])
 
     this.state = {
+      signUpResErrorMsg: '',
       username: '',
       name: '',
       password: '',
@@ -173,14 +174,23 @@ class SignUpPage extends React.Component {
           }
         }
       )
-
-      const validation = this.validator.validate(this.state)
-      this.setState({ validation })
-      this.submitted = true
-
-      if (validation.isValid) {
-        history.push('/login')
-      }
+      
+        switch(signUpRes.data.status_code){
+          case 1:
+            history.push('/login')
+          case 2:
+            this.setState({
+              signUpResErrorMsg: 'User already exist. Please try to put different credentials'
+            })
+            return
+          case 3:
+            this.setState({
+              signUpResErrorMsg: 'User already exist. Please try to put different credentials'
+            })
+            return
+          default:
+            history.push('/login')
+        }
     }
   }
 
@@ -244,6 +254,8 @@ class SignUpPage extends React.Component {
               </div>
                 <p className="text-danger font-italic">{this.state.errorMsg.department}</p>
 
+
+                {this.state.signUpResErrorMsg && <p className="text-danger font-italic">{this.state.signUpResErrorMsg}</p>}
               <div className="container-login100-form-btn">
                 <div className="wrap-login100-form-btn">
                   <div className="login100-form-bgbtn"></div>

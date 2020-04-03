@@ -139,7 +139,7 @@ export class ProjectsTable extends React.Component {
               save_alt
               </i>,
               Status: <Badge color={['closed', 'completed'].includes(Status.toLowerCase()) ? 'success' : 'warning'}>{Status}</Badge>,
-              ProjectStatus: <Badge color={['closed', 'completed'].includes(ProjectStatus.toLowerCase()) ? 'success' : 'warning'}>{ProjectStatus}</Badge>
+              ProjectStatus: <Badge color={['submitted', 'completed'].includes(ProjectStatus.toLowerCase()) ? 'success' : 'warning'}>{ProjectStatus}</Badge>
             }
           })}
           getTrProps={(state, record) => {

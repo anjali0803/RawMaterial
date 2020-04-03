@@ -76,7 +76,7 @@ class LoginPage extends React.Component {
   async handleSignIn () {
     const username = this.state.username
     const password = this.state.password
-    const referer = this.props.location.state || '/dashboard'
+    const referer = '/dashboard'
     if (username.length === 0 || password.length === 0) {
       this.setState({
         errorMsg: '*Please enter username and password.'

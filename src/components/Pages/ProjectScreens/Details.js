@@ -23,7 +23,7 @@ const history = createHashHistory()
 class Details extends React.Component {
   constructor (props) {
     super(props)
-    if(!props.projectId){
+    if(!this.props.newProject && !props.projectId){
       history.push('/inquiry/projects-assigned-to-me')
     }
 

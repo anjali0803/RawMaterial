@@ -134,23 +134,8 @@ class SignUpPage extends React.Component {
         `${backendUrl}/auth/register_user`,
         userData
       )
-      // if (this.state.password === this.state.confirmpassword) {
-      //   history.push("/login");
-      // } else {
-      //   this.messages.show({
-      //     severity: "error",
-      //     summary: "Error Message",
-      //     detail: "Password confirmation failed"
-      //   });
-      // }
-
-      const validation = this.validator.validate(this.state)
-      this.setState({ validation })
-      this.submitted = true
-
-      if (validation.isValid) {
-        history.push('/login')
-      }
+      
+      history.push('/login')
     }
   }
 

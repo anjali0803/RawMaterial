@@ -170,7 +170,7 @@ class AllUsers extends React.Component {
           {colList.map(el => {
             return (
               <Column
-                style={{width: '250px'}}
+                style={{width: '200px'}}
                 key={el.header}
                 field={el.field}
                 header={el.header}

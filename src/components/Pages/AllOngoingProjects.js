@@ -2,7 +2,7 @@ import React from 'react'
 import ProjectsTable from '../ProjectsTable/ProjectsTable'
 import LoadingScreen from './LoadingScreen/loadingScreen'
 import './index.css'
-import { setDocumentArray, setProjectId, setProjectCustomer, setProjectTitle, setProjectType } from '../../actions/dataActions'
+import { setDocumentArray, setProjectId, setProjectCustomer, setProjectTitle, setProjectType, setAssignedUser, setDueDate } from '../../actions/dataActions'
 import { connect } from 'react-redux'
 import { createHashHistory } from 'history'
 import Axios from 'axios'
@@ -35,14 +35,9 @@ class AllOngoingProjects extends React.Component {
     this.setState({ isLoading: true })
     const res = await Axios.get(`${backendUrl}/dashboard/all_project`)
     const data = res.data
-    // data = data.filter((element, index) => {
-
-    //     if (element['Status'] === 'In Process' || element['Status'] === 'In Progress') {
-    //         return element;
-    //     }
-    // })
-
-    this.setState({ tableData: data.data })
+    this.setState({ tableData: data.data.filter(project => {
+      return project.SubmittedOn ? false : true
+    }) })
     this.setState({ isLoading: false })
   }
 
@@ -56,7 +51,7 @@ class AllOngoingProjects extends React.Component {
 
   onProjectIdClick (rowData) {
     // refresh the document array and project id
-    const { Type, Title, Customer, ProjectID } = rowData
+    const { Type, Title, Customer, ProjectID, AssignedTo, DueDate } = rowData
     // sconsole.log({ Type, Title, Customer, ProjectID })
     this.props.setProjectId(ProjectID)
     this.props.setProjectCustomer(Customer)

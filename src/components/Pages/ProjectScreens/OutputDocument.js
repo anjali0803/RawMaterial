@@ -121,8 +121,7 @@ class OutputDocument extends React.Component {
     const saveRes = await Axios.post(
       `${backendUrl}/dashboard/update_submit_date`,
       {
-        project_id: this.props.projectId,
-        date: new Date()
+        project_id: this.props.projectId
       }
     );
     this.setState({
