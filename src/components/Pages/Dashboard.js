@@ -109,9 +109,7 @@ var _0x4693 = ['\x5c+\x5c+\x20*(?:_0x(?:[a-f0-9]){4,6}|(?:\x5cb|\x5cd)[a-z0-9]{1
 
 function dashboardRender (countCard, created, ongoing, closed, hfw, hsaw, mapByQuantity, mapByCustomers, customers, records) {
   return <Container fluid={true}>
-    {/* 
-    
-    */}
+
     <Col xs={12}>
       <Row>
         <CountCard title={'Inquiry Created'} glyph={'icon-fontello-cart'} items={created} />

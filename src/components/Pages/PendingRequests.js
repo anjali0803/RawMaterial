@@ -51,7 +51,7 @@ class PendingRequests extends React.Component {
       )
     } else {
       await axios.put(
-        `${authenticationUrl}api/removeuser`,
+        `${authenticationUrl}/api/removeuser`,
         {
           username: rowData.username
         }
@@ -63,7 +63,6 @@ class PendingRequests extends React.Component {
   handleClickAllSelected (action) {
     if (action) {
       this.state.selected.forEach(async user => {
-        userList.push(user.username)
         await axios.post(
           `${authenticationUrl}/api/approveuser`,
           {
@@ -73,8 +72,7 @@ class PendingRequests extends React.Component {
       })
     } else {
       this.state.selected.forEach(async user => {
-        userList.push(user.username)
-        await axios.post(
+        await axios.put(
           `${authenticationUrl}/api/removeuser`,
           {
             username: user.username
@@ -144,7 +142,7 @@ class PendingRequests extends React.Component {
     ]
     const userList = []
     this.state.userList.forEach(user => {
-      if (!user.is_approved) {
+      if (!user.is_approved && user.is_active) {
         userList.push(user)
       }
     })
@@ -157,6 +155,8 @@ class PendingRequests extends React.Component {
           paginator={true}
           paginatorPosition={'top'}
           rows={10}
+          scrollable={true}
+          autoLayout={true}
           selection={this.state.selected}
           onSelectionChange={e => this.setState({ selected: e.value })}
         >
@@ -164,6 +164,7 @@ class PendingRequests extends React.Component {
           {colList.map(el => {
             return (
               <Column
+                style={{ width: '250px' }}
                 key={el.header}
                 field={el.field}
                 header={el.header}

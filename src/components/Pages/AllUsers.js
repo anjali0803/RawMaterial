@@ -32,7 +32,7 @@ class AllUsers extends React.Component {
   async getUserList () {
     this.setState({ isLoading: true })
     const userList = await axios.get(
-      `${authenticationUrl}/api/alluser`
+      `${authenticationUrl}/api/allactiveuser`
     )
     this.props.setUserList(userList.data)
     this.setState({ selected: [], isLoading: false, userList: userList.data.data })
@@ -50,7 +50,7 @@ class AllUsers extends React.Component {
       )
     } else {
       await axios.put(
-        `${authenticationUrl}api/removeuser`,
+        `${authenticationUrl}/api/removeuser`,
         {
           username: rowData.username
         }
@@ -62,7 +62,7 @@ class AllUsers extends React.Component {
   handleClickAllSelected (action) {
     if (action) {
       this.state.selected.forEach(async user => {
-        await axios.post(
+        await axios.put(
           `${authenticationUrl}/api/makeadmin`,
           {
             username: user.username
@@ -71,7 +71,7 @@ class AllUsers extends React.Component {
       })
     } else {
       this.state.selected.forEach(async user => {
-        await axios.post(
+        await axios.put(
           `${authenticationUrl}/api/removeuser`,
           {
             username: user.username
@@ -136,14 +136,6 @@ class AllUsers extends React.Component {
         field: 'department',
         header: 'Department'
       },
-      {
-        field: 'makeAdmin',
-        header: 'Admin'
-      },
-      {
-        field: 'removeUser',
-        header: 'Remove'
-      },
       { body: this.adminTemplate },
       { body: this.removeTemplate }
     ]
@@ -168,6 +160,8 @@ class AllUsers extends React.Component {
           value={userList}
           paginator={true}
           paginatorPosition={'top'}
+          scrollable={true}
+          autoLayout={true}
           rows={10}
           selection={this.state.selected}
           onSelectionChange={e => this.setState({ selected: e.value })}
@@ -176,6 +170,7 @@ class AllUsers extends React.Component {
           {colList.map(el => {
             return (
               <Column
+                style={{width: '250px'}}
                 key={el.header}
                 field={el.field}
                 header={el.header}
