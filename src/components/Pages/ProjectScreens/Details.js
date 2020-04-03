@@ -120,10 +120,14 @@ class Details extends React.Component {
 
   async componentDidMount() {
     const userList = await axios.get(
-      `${authenticationUrl}/api/alluser`
+      `${authenticationUrl}/api/allactiveuser`
     )
-    let emailList = userList.data.data.map(user => {
-      return user.username;
+    let emailList = [];
+
+    userList.data.data.forEach(user => {
+      if( user.is_approved){
+        emailList.push(user.username)
+      }
     })
     this.setState({
       emailList: emailList

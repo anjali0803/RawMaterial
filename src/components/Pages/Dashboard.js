@@ -42,7 +42,7 @@ export default class Dashboard extends React.Component {
       ks.forEach(k => {
         obj.push(
           {
-            label: k,
+            label: (k.charAt(0).toUpperCase() + k.slice(1)).match(/[A-Z][a-z]+|[0-9]+/g).join(" "),
             value: dashboardRes.data.data[card][k]
           }
         )
