@@ -5,6 +5,7 @@ import ButtonHeader from '../../../../ButtonHeader/ButtonHeader'
 import { createHashHistory } from 'history'
 import { connect } from 'react-redux'
 import TableComponent from '../../../../Table/TableComponent2'
+import {default as TableComponent1} from '../../../../Table/TableComponent'
 import CostSheetTableComponent from '../../../../Table/CostSheetTableComponent'
 import axios from 'axios'
 import { InputText } from 'primereact/inputtext'
@@ -407,7 +408,7 @@ class ITP extends React.Component {
     return (
       data.AcceptanceCriteriaTable && (
           <div>
-            <TableComponent
+            <TableComponent1
               colList={columnList}
               dataList={data.AcceptanceCriteriaTable}
               editable={true}
@@ -415,6 +416,7 @@ class ITP extends React.Component {
               rejectButton={false}
               actionItemNotNeeded={true}
               notResizeable={true}
+              deleteEnabled={true}
               style={{
                 width: '1000px'
               }}

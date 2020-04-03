@@ -79,7 +79,8 @@ export default class TableComponent extends React.Component {
 
   cellEditor (props) {
     // console.log(props);
-    return this.inputTextEditor(props, props.field)
+    return this.
+    (props, props.field)
   }
 
   inputTextEditor (props, field) {
@@ -335,11 +336,14 @@ export default class TableComponent extends React.Component {
   actionTemplate (props) {
     const deleteRow = s => {
       console.log(props)
-      const newTableData = (this.state.tableData || this.props.dataList).filter(row => {
-        if (!isEqual(row, props)) {
-          return row
+      let newTableData = this.props.dataList;
+      let flag;
+      this.props.dataList.forEach((row, key) => {
+        if (isEqual(row, props)) {
+          flag = key
         }
       })
+      newTableData.splice(flag, 1)
       this.setState({
         tableData: newTableData
       })
@@ -353,9 +357,9 @@ export default class TableComponent extends React.Component {
     }
 
     return this.props.editable && (<>
-      {/* <i className="material-icons" onClick={deleteRow}>
+      { this.props.deleteEnabled && <i className="material-icons" onClick={deleteRow}>
           delete_outline
-      </i> */}
+      </i>}
       { this.props.acceptButton ? <i className="material-icons" onClick={acceptRow}>
           check
       </i> : ''}
@@ -399,7 +403,7 @@ export default class TableComponent extends React.Component {
     return (
       <div xs={12} className="tableContainer">
         <DataTable
-          value={dataList || this.state.tableData}
+          value={this.state.tableData || dataList}
           footer={footer}
           paginator={true}
           paginatorPosition={'bottom'}

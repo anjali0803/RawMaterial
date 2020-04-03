@@ -321,12 +321,17 @@ class Details extends React.Component {
 
     if(updateProjectRes.data.status === 'error') {
       this.setState({
-        CreateProjectErrorMsg: 'Some issue occur in updating project!!'
+        CreateProjectErrorMsg: 'Some issue occur in updating project. Please try again'
       })
     }
     this.setState({
       isLoading: false
     })
+    setTimeout(()=> {
+      this.setState({
+        CreateProjectErrorMsg: ''
+      })
+    }, 10000)
   }
 
   async upLoadMultipleFiletoS3 (file1, file2, file3, file4) {

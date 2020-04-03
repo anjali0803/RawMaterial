@@ -227,9 +227,9 @@ class InputKeyValueTable extends React.Component {
     let nData = []
     data.map((row, i) => {
       const t = row;
-      t['OD'] = [ row['OD'], this.state.backUpData[i]['OD']];
-      t['Wall thickness'] = [ row['Wall thickness'], this.state.backUpData[i]['Wall thickness']];
-      t['Quantity'] = [ row['Quantity'], this.state.backUpData[i]['Quantity']];
+      t['OD'] = [ row['OD'], this.state.backUpData[i] ? this.state.backUpData[i]['OD'] : 0 ];
+      t['Wall thickness'] = [this.state.backUpData[i] ? this.state.backUpData[i]['Wall thickness'] : 0 , row['Wall thickness']];
+      t['Quantity'] = [ row['Quantity'], this.state.backUpData[i] ? this.state.backUpData[i]['Quantity'] : 0];
       nData.push(t);
     })
 
@@ -239,14 +239,17 @@ class InputKeyValueTable extends React.Component {
       ProjectID: this.props.projectId,
       docData: {
         Values: nData,
-        HoldTime: this.state.keyvalueCostSheetValueList[1].value,
-        HoopStress: this.state.keyvalueCostSheetValueList[2].value,
-        ReverseBendTest: this.state.keyvalueCostSheetValueList[3].value,
-        RtRm: this.state.keyvalueCostSheetValueList[4].value,
-        SMTS: this.state.keyvalueCostSheetValueList[5].value,
-        Tolerance: this.state.keyvalueCostSheetValueList[6].value,
-        Weight: this.state.keyvalueCostSheetValueList[7].value,
-        PipeLength: this.state.keyvalueCostSheetValueList[8].value
+        HoldTime: this.state.keyvalueCostSheetValueList[0].value,
+        HoopStress: this.state.keyvalueCostSheetValueList[1].value,
+        PeakingFactor: this.state.keyvalueCostSheetValueList[2].value,
+        PositiveNominalWeight: this.state.keyvalueCostSheetValueList[3].value,
+        NegativeNominalWeight: this.state.keyvalueCostSheetValueList[4].value,
+        YieldRatio: this.state.keyvalueCostSheetValueList[5].value,
+        SMTSQuantity: this.state.keyvalueCostSheetValueList[6].value,
+        SMTSPercent: this.state.keyvalueCostSheetValueList[7].value,
+        SMYSQuantity: this.state.keyvalueCostSheetValueList[8].value,
+        PlusTolerance: this.state.keyvalueCostSheetValueList[9].value,
+        MinusTolerance: this.state.keyvalueCostSheetValueList[10].value
       }
     }
     )
