@@ -142,13 +142,7 @@ class AllUsers extends React.Component {
 
     const userList = []
     this.state.userList.forEach(username => {
-      if(!username.is_admin ) {
-        userList.push({
-          ...username,
-          makeAdmin: this.adminTemplate,
-          removeUser: this.removeTemplate
-        })
-      } else {
+      if(username.is_approved ) {
         userList.push(username)
       }
     })
