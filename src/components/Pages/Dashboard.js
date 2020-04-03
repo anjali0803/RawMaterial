@@ -114,9 +114,9 @@ function dashboardRender (countCard, created, ongoing, closed, hfw, hsaw, mapByQ
     */}
     <Col xs={12}>
       <Row>
-        <CountCard title={'Inquiry Recieved'} glyph={'icon-fontello-cart'} items={created} />
+        <CountCard title={'Inquiry Created'} glyph={'icon-fontello-cart'} items={created} />
+        <CountCard title={'Inquiry Due'} glyph={'icon-fontello-money'} items={ongoing} />
         <CountCard title={'Inquiry Submitted'} glyph={'icon-fontello-money'} items={ongoing} />
-        <CountCard title={'Inquiry Closed'} glyph={'icon-fontello-money'} items={ongoing} />
         {/* <Col md={6}>
                         <CountCard title={"Inquiry Recieved"} glyph={"icon-fontello-cart"} items={created} />
                     </Col>

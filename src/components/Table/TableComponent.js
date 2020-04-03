@@ -79,8 +79,7 @@ export default class TableComponent extends React.Component {
 
   cellEditor (props) {
     // console.log(props);
-    return this.
-    (props, props.field)
+    return this.inputTextEditor(props, props.field)
   }
 
   inputTextEditor (props, field) {
