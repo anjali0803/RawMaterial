@@ -325,7 +325,8 @@ class Details extends React.Component {
       })
     }
     this.setState({
-      isLoading: false
+      isLoading: false,
+      dueDate: new Date(this.state.dueDate)
     })
     setTimeout(()=> {
       this.setState({

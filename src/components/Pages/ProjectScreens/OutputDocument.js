@@ -125,9 +125,9 @@ class OutputDocument extends React.Component {
       }
     );
     this.setState({
-      isLoading: false
+      isLoading: false,
+      showSubmitButton: true
     });
-    history.push('/')
   }
 
   onDelete () {

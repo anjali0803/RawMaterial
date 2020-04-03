@@ -406,7 +406,7 @@ export default class TableComponent extends React.Component {
           footer={footer}
           paginator={true}
           paginatorPosition={'bottom'}
-
+          style={this.props.style}
           rows={10}
           scrollable={true}
           editable={this.props.editable}
