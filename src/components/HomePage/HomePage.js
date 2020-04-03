@@ -9,8 +9,16 @@ import { connect } from 'react-redux'
 import MenuComponent from '../Menu/MenuComponent'
 import ViewComponent from '../View/ViewComponent'
 import './index.css'
+import { createHashHistory } from 'history'
+
+const history = createHashHistory()
 
 class HomePage extends React.Component {
+  constructor () {
+    super()
+    history.push('/dashboard')
+  }
+
   render () {
     return (
       <div className="home-container">

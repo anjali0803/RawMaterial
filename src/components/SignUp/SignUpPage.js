@@ -232,6 +232,7 @@ class SignUpPage extends React.Component {
                   User Type
                 </label>
                 <select className="input100 has-val" name="userType" style={{border: 'none'}} onChange={this.handleInputChange} value={this.state.userType}>
+                  <option value="">Please Select</option>
                   <option value="user">User</option>
                   <option value="admin">Admin</option>
                 </select>
