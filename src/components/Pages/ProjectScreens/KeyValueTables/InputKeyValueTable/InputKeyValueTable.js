@@ -152,10 +152,10 @@ class InputKeyValueTable extends React.Component {
       const newElement = {
         ...element
       }
-      newElement.OD = newElement.OD[0]
-      newElement['Wall thickness'] = newElement['Wall thickness'][1]
-      newElement['Quantity'] = Number(newElement['Quantity'][1]).toFixed(3)
-      newElement['Quantity (MT)'] = Number(newElement['Quantity (MT)'][0]).toFixed(3)
+      newElement.OD = newElement.OD ? newElement.OD[0] : ''
+      newElement['Wall thickness'] =  newElement['Wall thickness'] ? newElement['Wall thickness'][1] : ''
+      newElement['Quantity'] = newElement['Quantity'] ? Number(newElement['Quantity'][1]).toFixed(3) : ''
+      newElement['Quantity (MT)'] = newElement['Quantity (MT)'] ?  Number(newElement['Quantity (MT)'][0]).toFixed(3) : ''
       newData.push(newElement)
       backUpData.push({
         'OD': element.OD[1],
