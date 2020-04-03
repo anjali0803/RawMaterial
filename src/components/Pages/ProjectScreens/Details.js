@@ -23,9 +23,11 @@ const history = createHashHistory()
 class Details extends React.Component {
   constructor (props) {
     super(props)
-    if(!props.projectId)
-      history.push(`/Inquiry/create-new-projects/details`)
-      
+    if(!props.projectId){
+      history.push('/inquiry/projects-assigned-to-me')
+    }
+
+    
     if (this.props.newProject) {
       this.props.setProjectId('')
       this.props.setProjectCustomer('')
