@@ -44,14 +44,14 @@ class LoginPage extends React.Component {
   }
 
   async getUserInfo () {
-    const userList = await axios.get(
-      `${backendUrl}/dashboard/users`
-    )
-    this.props.setUserList(userList.data)
+    // const userList = await axios.get(
+    //   `${backendUrl}/dashboard/users`
+    // )
+    // this.props.setUserList(userList.data)
   }
 
   componentDidMount () {
-    this.getUserInfo()
+    // this.getUserInfo()
     const referer = this.props.location.state || '/'
     const isAuthenticated = localStorage.getItem('isAuthenticated')
     const username = localStorage.getItem('username')

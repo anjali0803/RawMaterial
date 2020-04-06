@@ -258,7 +258,7 @@ class TopBanner extends React.Component {
             </div>
             <div className="form-group">
               <div className="upload-label-2">Mobile Number</div>
-              <Input value={this.state.mobileNumber} keyfilter="num" maxlength={10} onChange={this.saveMobileNumber} placeholder="Please enter your mobile number" required/>
+              <Input value={this.state.mobileNumber} keyfilter="num" maxLength={10} onChange={this.saveMobileNumber} placeholder="Please enter your mobile number" required/>
               <p className="text-danger font-italic">{this.state.errorMsgs.mobileNumber}</p>
             </div>
             <div className="form-group">

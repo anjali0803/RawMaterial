@@ -7,7 +7,6 @@ import CostSheetTableComponent from '../../../../Table/CostSheetTableComponent';
 import axios from 'axios';
 import { backendUrl } from '../../../../../constant';
 import LoadingScreen from '../../../LoadingScreen/loadingScreen';
-import { elementData, table2Data } from './stubData';
 import { Dropdown } from 'primereact/dropdown';
 import { cloneDeep, get } from 'lodash-es';
 const history = createHashHistory();

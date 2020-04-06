@@ -11,7 +11,6 @@ import axios from 'axios'
 import { InputText } from 'primereact/inputtext'
 import { backendUrl } from '../../../../../constant'
 import LoadingScreen from '../../../LoadingScreen/loadingScreen'
-import { pipeData, coatingData } from './stubData'
 import { Dropdown } from 'primereact/dropdown'
 import { InputSwitch } from 'primereact/inputswitch'
 import { ToggleButton } from 'primereact/togglebutton'
@@ -108,6 +107,7 @@ class ITP extends React.Component {
       })
     }
     this.setState({ isLoading: false })
+    $('.pipeButton').addClass('active')
   }
 
   componentDidMount () {
@@ -154,6 +154,11 @@ class ITP extends React.Component {
     this.setState({
       isLoading: false
     })
+    if(this.state.doc === 'PIPE'){
+      $('.pipeButton').addClass('active')
+    } else {
+      $('.coatingButton').addClass('active')
+    }
   }
 
   onDelete () {
@@ -311,6 +316,7 @@ class ITP extends React.Component {
         versionMenu: newVersionMenu
       })
     }
+    this.onSave();
   }
 
   showForm () {
@@ -340,7 +346,7 @@ class ITP extends React.Component {
         <div className="col-4 justify-content-center">
           <div className="row justify-content-center">
             <div className="col-12">
-              <button type="button pad-left" onClick={this.setPipeCommentSheet} className="pipeButton active">Pipe</button>
+              <button type="button pad-left" onClick={this.setPipeCommentSheet} className="pipeButton">Pipe</button>
               <button type="button pad-left" onClick={this.setCoatingCommentSheet} className="coatingButton">Coating</button>
             </div>
           </div>
