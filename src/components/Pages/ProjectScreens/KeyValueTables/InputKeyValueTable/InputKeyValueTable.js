@@ -8,9 +8,11 @@ import TableComponent from '../../../../Table/TableComponent'
 import CostSheetTableComponent from '../../../../Table/CostSheetTableComponent'
 import axios from 'axios'
 import { InputText } from 'primereact/inputtext'
+import {Growl} from 'primereact/growl';
 import { backendUrl } from '../../../../../constant'
 import LoadingScreen from '../../../LoadingScreen/loadingScreen'
 import { cloneDeep } from 'lodash-es'
+
 const history = createHashHistory()
 const pageMapIndex = [
   'input-key-value',
@@ -215,7 +217,7 @@ class InputKeyValueTable extends React.Component {
           text: ''
         }
       })
-    }, 10000)
+    }, 5000)
   }
 
   async onSave () {
@@ -256,6 +258,11 @@ class InputKeyValueTable extends React.Component {
     this.setState({
       isLoading: false
     })
+    if(saveEditedValue.data.status === 'error'){
+      this.growl.show({severity: 'error', summary: 'Failure', detail: `There is some issue occured while saving the Calculation data.`});
+    } else {
+      this.growl.show({severity: 'success', summary: 'Success', detail: `Calculations data saved.`});
+    }
   }
 
   onDelete () {
@@ -315,6 +322,9 @@ class InputKeyValueTable extends React.Component {
 
     return !this.state.isLoading ? (
       <div className="container-fluid">
+        <Growl style={{
+          marginTop: '15vh'
+        }} ref={(el) => (this.growl = el)} />
         <div className="row justify-content-end">
           <div style={{ marginRight: '10px' }}>
             <ButtonHeader

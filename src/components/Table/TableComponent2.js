@@ -255,11 +255,14 @@ export default class TableComponent extends React.Component {
   actionTemplate (props) {
     const deleteRow = s => {
       console.log(props)
-      const newTableData = (this.state.tableData || this.props.dataList).filter(row => {
-        if (!isEqual(row, props)) {
-          return row
+      let newTableData = this.props.dataList;
+      let flag;
+      this.props.dataList.forEach((row, key) => {
+        if (isEqual(row, props)) {
+          flag = key
         }
       })
+      newTableData.splice(flag, 1)
       this.setState({
         tableData: newTableData
       })
@@ -313,7 +316,7 @@ export default class TableComponent extends React.Component {
       <div xs={12} className="tableContainer">
         <DataTable
           style={this.props.style}
-          value={dataList || this.state.tableData}
+          value={this.state.tableData || dataList}
           footer={footer}
           paginator={true}
           paginatorPosition={'bottom'}

@@ -65,7 +65,8 @@ class FileUpload extends React.Component {
       name: 'chooseFile',
       id: 'chooseFile',
       disabled: this.props.disabled,
-      onChange: (e) => this.onChange(e)
+      onChange: (e) => this.onChange(e),
+      accept: 'application/pdf'
     }
     if (this.props.docxOnly) {
       docUploadProps = {

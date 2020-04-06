@@ -155,6 +155,11 @@ class ITP extends React.Component {
     this.setState({
       isLoading: false
     })
+    if(saveEditedValue.data.status === 'error'){
+      this.growl.show({severity: 'error', summary: 'Failure', detail: `There is some issue occured while saving the ${this.state.doc} data.`});
+    } else {
+      this.growl.show({severity: 'success', summary: 'Success', detail: `${this.state.doc} data saved.`});
+    }
     if(this.state.doc === 'PIPE'){
       $('.pipeButton').addClass('active')
     } else {

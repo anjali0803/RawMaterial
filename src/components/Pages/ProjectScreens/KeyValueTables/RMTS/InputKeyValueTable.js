@@ -131,6 +131,11 @@ class RMTS extends React.Component {
     this.setState({
       isLoading: false
     })
+    if(saveEditedValue.data.status === 'error'){
+      this.growl.show({severity: 'error', summary: 'Failure', detail: `There is some issue occured while saving the RMTS data.`});
+    } else {
+      this.growl.show({severity: 'success', summary: 'Success', detail: `RMTS data saved.`});
+    }
   }
 
   onDelete () {
