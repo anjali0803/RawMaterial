@@ -240,7 +240,7 @@ class InputKeyValueTable extends React.Component {
     {
       ProjectID: this.props.projectId,
       docData: {
-        Values: nData,
+        // Values: nData,
         HoldTime: this.state.keyvalueCostSheetValueList[0].value,
         HoopStress: this.state.keyvalueCostSheetValueList[1].value,
         PeakingFactor: this.state.keyvalueCostSheetValueList[2].value,
@@ -254,15 +254,17 @@ class InputKeyValueTable extends React.Component {
         MinusTolerance: this.state.keyvalueCostSheetValueList[10].value
       }
     }
-    )
-    this.setState({
-      isLoading: false
-    })
-    if(saveEditedValue.data.status === 'error'){
-      this.growl.show({severity: 'error', summary: 'Failure', detail: `There is some issue occured while saving the Calculation data.`});
-    } else {
+    ).then( res => {
+      this.setState({
+        isLoading: false
+      })
       this.growl.show({severity: 'success', summary: 'Success', detail: `Calculations data saved.`});
-    }
+    }).catch(err => {
+      this.setState({
+        isLoading: false
+      })
+      this.growl.show({ sticky: 'true', severity: 'error', summary: `${err.response.data.code}`, detail: `There is some issue occured while saving the Calculation data.`});
+    })
   }
 
   onDelete () {

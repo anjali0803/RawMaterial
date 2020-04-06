@@ -127,21 +127,23 @@ class RMTS extends React.Component {
         ProjectID: this.props.projectId,
         Values: this.state.tableData
       }
-    )
-    this.setState({
-      isLoading: false
-    })
-    if(saveEditedValue.data.status === 'error'){
-      this.growl.show({severity: 'error', summary: 'Failure', detail: `There is some issue occured while saving the RMTS data.`});
-    } else {
+    ).then( res => {
+      this.setState({
+        isLoading: false
+      })
       if(newVersion === true){
         this.growl.show([
-          {severity: 'success', summary: 'Success', detail: `new ${this.state.doc} version created.`},
-          {severity: 'success', summary: 'Success', detail: `${this.state.doc} data saved.`}]);
+          {severity: 'success', summary: 'Success', detail: `new RMTS version created.`},
+          {severity: 'success', summary: 'Success', detail: `RMTS data saved.`}]);
       } else {
-        this.growl.show({severity: 'success', summary: 'Success', detail: `${this.state.doc} data saved.`});
+        this.growl.show({severity: 'success', summary: 'Success', detail: `RMTS data saved.`});
       }
-    }
+    }).catch(err => {
+      this.setState({
+        isLoading: false
+      })
+      this.growl.show({ sticky: 'true', severity: 'error', summary: 'Failure', detail: `There is some issue occured while saving the RMTS data.`});
+    })
   }
 
   onDelete () {

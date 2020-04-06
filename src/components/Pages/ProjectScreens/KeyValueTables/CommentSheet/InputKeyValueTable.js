@@ -257,7 +257,23 @@ class CommentSheet extends React.Component {
 				    Coating: this.state.coatingData
 				  }
 				}
-      )
+      ).then( res => {
+        this.setState({
+          isLoading: false
+        })
+        if(newVersion === true){
+          this.growl.show([
+            {severity: 'success', summary: 'Success', detail: `new ${this.state.doc} version created.`},
+            {severity: 'success', summary: 'Success', detail: `${this.state.doc} data saved.`}]);
+        } else {
+          this.growl.show({severity: 'success', summary: 'Success', detail: `${this.state.doc} data saved.`});
+        }
+      }).catch(err => {
+        this.setState({
+          isLoading: false
+        })
+        this.growl.show({ sticky: 'true', severity: 'error', summary: `${err.response.data.code}`, detail: `There is some issue occured while saving the ${this.state.doc} data.`});
+      })
     } else {
       bckpData = this.state.coatingData
       bckpData[bckpData.length - 1] = this.state.keyValueData
@@ -270,21 +286,23 @@ class CommentSheet extends React.Component {
 				    Coating: bckpData
 				  }
 				}
-      )
-    }
-    this.setState({
-      isLoading: false
-    })
-    if(saveEditedValue.data.status === 'error'){
-      this.growl.show({severity: 'error', summary: 'Failure', detail: `There is some issue occured while saving the ${this.state.doc} data.`});
-    } else {
-      if(newVersion === true){
-        this.growl.show([
-          {severity: 'success', summary: 'Success', detail: `new ${this.state.doc} version created.`},
-          {severity: 'success', summary: 'Success', detail: `${this.state.doc} data saved.`}]);
-      } else {
-        this.growl.show({severity: 'success', summary: 'Success', detail: `${this.state.doc} data saved.`});
-      }
+      ).then( res => {
+        this.setState({
+          isLoading: false
+        })
+        if(newVersion === true){
+          this.growl.show([
+            {severity: 'success', summary: 'Success', detail: `new ${this.state.doc} version created.`},
+            {severity: 'success', summary: 'Success', detail: `${this.state.doc} data saved.`}]);
+        } else {
+          this.growl.show({severity: 'success', summary: 'Success', detail: `${this.state.doc} data saved.`});
+        }
+      }).catch(err => {
+        this.setState({
+          isLoading: false
+        })
+        this.growl.show({ sticky: 'true', severity: 'error', summary: `${err.response.data.code}`, detail: `There is some issue occured while saving the ${this.state.doc} data.`});
+      })
     }
     if(this.state.doc === 'PIPE'){
       $('.pipeButton').addClass('active')
@@ -521,15 +539,18 @@ class CommentSheet extends React.Component {
 			  version: this.state.selectedVerison.code + 1,
 			  project_id: this.props.projectId
 			}
-    )
-    this.setState({
-      isLoading: false
-    })
-    if(generateDocRes.data.status === 'error'){
-      this.growl.show({severity: 'error', summary: 'Failure', detail: 'Some Issue occured while creating you document.'});
-    } else {
+    ).then( res => {
+      this.setState({
+        isLoading: false
+      })
       this.growl.show({severity: 'success', summary: 'Success', detail: 'Document created successfully.'});
-    }
+    }).catch(err => {
+      this.setState({
+        isLoading: false
+      })
+      this.growl.show({severity: 'error', summary: 'Failure', detail: 'Some Issue occured while creating you document.'});
+    })
+
     if(this.state.doc === 'PIPE'){
       $('.pipeButton').addClass('active')
     } else {
