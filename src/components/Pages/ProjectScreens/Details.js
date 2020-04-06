@@ -478,8 +478,19 @@ class Details extends React.Component {
         createdBy: this.props.userName,
         due_date: this.state.dueDate
       }
-    )
-    if(createProjectRes.data.status === 'error') {
+    ).then(res => {
+      const projectId = res.data.data.ProjectID
+      this.props.setProjectId(projectId)
+      this.props.setProjectCustomer(customer)
+      this.props.setProjectTitle(title)
+      this.props.setProjectType(type)
+      this.props.setDueDate(dueDate)
+      this.props.setAssignedUser(this.state.assignedUser)
+      this.setState({
+        isLoading: false
+      })
+      history.push('/Inquiry/create-new-projects/calculations')
+    }).catch(err => {
       this.setState({
         isLoading: false,
         errorMsg: {
@@ -487,18 +498,7 @@ class Details extends React.Component {
           CreateProjectErrorMsg: 'Some issue occured during creating project. Please try again!'
         }
       })
-    } else {
-      const projectId = createProjectRes.data.data.ProjectID
-      this.props.setProjectId(projectId)
-      this.props.setProjectCustomer(customer)
-      this.props.setProjectTitle(title)
-      this.props.setProjectType(type)
-      this.props.setDueDate(dueDate)
-      this.setState({
-        isLoading: false
-      })
-      history.push('/Inquiry/create-new-projects/calculations')
-    }
+    })
   }
 
   onDelete () {

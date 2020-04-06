@@ -126,7 +126,7 @@ function dashboardRender (countCard, created, ongoing, closed, hfw, hsaw, mapByQ
                     </Col>    */}
       </Row>
     </Col>
-    {/* <Col xs={12}>
+    <Col xs={12}>
       <Row>
         <Col md={6} className="pieCol">
           <Row className="pieRow">
@@ -173,7 +173,7 @@ function dashboardRender (countCard, created, ongoing, closed, hfw, hsaw, mapByQ
           </Row>
         </Col>
       </Row>
-    </Col> */}
+    </Col>
 
     {/* <Col xs={12}>
                 <Card>

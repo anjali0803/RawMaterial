@@ -1,5 +1,6 @@
 import React from 'react'
 import './index.css'
+import LoadingScreen from './LoadingScreen/loadingScreen'
 import { connect } from 'react-redux'
 import { Container, Row, Col, Card, CardTitle, CardBody, CardFooter, Progress } from 'reactstrap'
 import Charts from '../Charts'
@@ -17,16 +18,24 @@ export default class Dashboard extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
+      isLoading: false,
       data: {
         createdCount: [],
         dueCount: [],
         submitCount: [],
         failCount: []
-      }
+      },
+      piechartCreated: {},
+      piechartSubmitted: {},
+      piechartDelayed: {},
+      piechartOnTime: {}
     }
   }
 
   async componentDidMount(){
+    this.setState({
+      isLoading: true
+    })
     const dashboardRes = await axios.get(
       `${backendUrl}/dashboard/get_dashboard`
     )
@@ -51,14 +60,22 @@ export default class Dashboard extends React.Component {
         ...this.state.data
       };
       newObj[card] = obj
+
       this.setState({
-        data: newObj
+        data: newObj,
       })
     });
+    this.setState({
+      piechartCreated: dashboardRes.data.data.piechartCreated,
+      piechartSubmitted: dashboardRes.data.data.piechartSubmitted,
+      piechartDelayed: dashboardRes.data.data.piechartDelayed,
+      piechartOnTime: dashboardRes.data.data.piechartOnTime,
+      isLoading: false
+    })
   }
 
   render () {
-    return (
+    return this.state.isLoading === false ? (
       <Container fluid={true}>
         <Col xs={12}>
           <Row>
@@ -70,7 +87,57 @@ export default class Dashboard extends React.Component {
             <CountCard title={'Inquiry Delayed'} glyph={'icon-fontello-money'} items={this.state.data.failCount} />
           </Row>
         </Col>
+        <Col xs={12}>
+      <Row>
+        <Col md={6} className="pieCol">
+          <Row className="pieRow">
+            <Col sm={6}>
+              <h5 className={'pieTitle'}>{'Project Created'}</h5>
+              <Charts
+                title="Request"
+                type="doughnut"
+                labels={['HFW', 'HSAW',]}
+                records={[this.state.piechartCreated['hfw'], this.state.piechartCreated['hsaw']]}
+              />
+            </Col>
+            <Col sm={6}>
+              <h5 className={'pieTitle'}>{'Project Submitted'}</h5>
+              <Charts
+                title="Request"
+                type="doughnut"
+                labels={['HFW', 'HSAW']}
+                records={[this.state.piechartSubmitted['hfw'], this.state.piechartSubmitted['hsaw']]}
+              />
+            </Col>
+          </Row>
+        </Col>
+        <Col md={6} className="pieCol">
+          <Row className="pieRow">
+            <Col sm={6}>
+              <h5 className={'pieTitle'}>{'Project Delayed'}</h5>
+              <Charts
+                title="Request"
+                type="doughnut"
+                labels={['HFW', 'HSAW']}
+                records={[this.state.piechartDelayed['hfw'], this.state.piechartDelayed['hsaw']]}
+              />
+            </Col>
+            <Col sm={6}>
+              <h5 className={'pieTitle'}>{'Project on Time'}</h5>
+              <Charts
+                title="Request"
+                type="doughnut"
+                labels={['HFW', 'HSAW']}
+                records={[this.state.piechartOnTime['onTime'], this.state.piechartOnTime['delayed']]}
+              />
+            </Col>
+          </Row>
+        </Col>
+      </Row>
+    </Col>
       </Container>
+    ) : (
+      <LoadingScreen />
     )
   }
 }

@@ -51,11 +51,11 @@ class AllOngoingProjects extends React.Component {
 
   onProjectIdClick (rowData) {
     // refresh the document array and project id
-    const { Type, Title, Customer, ProjectID, AssignedTo, DueDate } = rowData
+    const { ProjectType, Title, Client, ProjectID, AssignedTo, DueDate } = rowData
     // sconsole.log({ Type, Title, Customer, ProjectID })
     this.props.setProjectId(ProjectID)
-    this.props.setProjectCustomer(Customer)
-    this.props.setProjectType(Type)
+    this.props.setProjectCustomer(Client)
+    this.props.setProjectType(ProjectType)
     this.props.setProjectTitle(Title)
     this.props.setDocumentArray(['', '', '', '', ''])
     this.props.setAssignedUser(AssignedTo)
@@ -90,7 +90,7 @@ const mapStateToProps = state => ({
 })
 const mapDispatchToProps = dispatch => ({
   setProjectId: (projectId) => dispatch(setProjectId(projectId)),
-  setProjectType: (projectTitle) => dispatch(setProjectTitle(projectTitle)),
+  setProjectType: (projectTitle) => dispatch(setProjectType(projectTitle)),
   setProjectCustomer: (projectCustomer) => dispatch(setProjectCustomer(projectCustomer)),
   setProjectTitle: (projectTitle) => dispatch(setProjectTitle(projectTitle)),
   setDocumentArray: (documentArray) => dispatch(setDocumentArray(documentArray)),
