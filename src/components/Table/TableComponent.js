@@ -37,6 +37,7 @@ export default class TableComponent extends React.Component {
       isLoading: false,
       displayDialog: false,
       displayWorkDescriptionForm: false,
+      displayRejectWorkDescriptionForm: false,
       workItemDescription: '',
       newItem: false,
       item: {
@@ -65,6 +66,8 @@ export default class TableComponent extends React.Component {
     this.updateWorkDescription = this.updateWorkDescription.bind(this)
     this.saveWorkDescription = this.saveWorkDescription.bind(this)
     this.filterOptionsMultiple = this.filterOptionsMultiple.bind(this)
+    this.rejectWorkDescription = this.rejectWorkDescription.bind(this)
+    this.statusTemplate = this.statusTemplate.bind(this)
   }
 
   documentIdTemplate (rowData) {
@@ -332,6 +335,25 @@ export default class TableComponent extends React.Component {
     this.props.saveCommentSheet(newTableData)
   }
 
+  rejectWorkDescription(){
+    let newTableData = this.props.dataList
+    const newRow = this.state.selectedCommentSheetRow
+    newRow.Status = 'Rejected'
+    newTableData = this.props.dataList.filter(row => {
+    if (!isEqual(row, this.state.selectedCommentSheetRow)) {
+        return row
+      }
+    })
+    newTableData.push(newRow)
+    this.setState({
+      displayWorkDescriptionForm: false,
+      workItemDescription: '',
+      selectedCommentSheetRow: {},
+      tableData: newTableData
+    })
+    this.props.saveCommentSheet(newTableData)
+  }
+
   actionTemplate (props) {
     const deleteRow = s => {
       console.log(props)
@@ -355,6 +377,14 @@ export default class TableComponent extends React.Component {
       })
     }
 
+    const rejectRow = x => {
+      this.setState({
+        selectedCommentSheetRow: props,
+        displayRejectWorkDescriptionForm: true
+      })
+      // this.rejectWorkDescription();
+    }
+
     return this.props.editable && (<>
       { this.props.deleteEnabled && <i className="material-icons" onClick={deleteRow}>
           delete_outline
@@ -362,10 +392,17 @@ export default class TableComponent extends React.Component {
       { this.props.acceptButton ? <i className="material-icons" onClick={acceptRow}>
           check
       </i> : ''}
-      { this.props.rejectButton ? <i className="material-icons">
+      { this.props.rejectButton ? <i className="material-icons" onClick={rejectRow}>
           close
       </i> : ''}
     </>)
+  }
+
+  statusTemplate (rowData, column){
+    let status = rowData.Status;
+    let fontColor = status === 'Accepted' ? 'green' : 'red';
+
+    return <span style={{color: fontColor}}>{status}</span>;
   }
 
   render () {
@@ -434,6 +471,12 @@ export default class TableComponent extends React.Component {
                 style={{ width: '200px' }}
               />
             } else {
+              if(header === 'Status'){
+                columnProps = {
+                  ...columnProps,
+                  body: this.statusTemplate
+                }
+              }
               if (this.props.editable) {
                 columnProps = {
                   ...columnProps,
@@ -472,6 +515,19 @@ export default class TableComponent extends React.Component {
           {
             <div className="p-grid p-fluid">
               {workDescriptionModal}
+            </div>
+          }
+        </Dialog>
+        <Dialog visible={this.state.displayRejectWorkDescriptionForm} width="600px" header="Are you sure you want to reject?" modal={true} footer={<></>} onHide={() => this.setState({ displayRejectWorkDescriptionForm: false })}>
+          {
+            <div className="p-grid p-fluid justify-content-center">
+              <div className="container">
+                <div className="row justify-content-center">
+                  <button className="btn btn-danger" onClick={this.rejectWorkDescription}>
+                    Reject
+                  </button>
+                </div>
+              </div>
             </div>
           }
         </Dialog>
