@@ -240,7 +240,7 @@ class InputKeyValueTable extends React.Component {
     {
       ProjectID: this.props.projectId,
       docData: {
-        // Values: nData,
+        Values: nData,
         HoldTime: this.state.keyvalueCostSheetValueList[0].value,
         HoopStress: this.state.keyvalueCostSheetValueList[1].value,
         PeakingFactor: this.state.keyvalueCostSheetValueList[2].value,

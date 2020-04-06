@@ -14,7 +14,8 @@ class Charts extends React.Component { // eslint-disable-line react/prefer-state
   componentDidMount () {
     const { records, labels, title, type, labelCurrency = '' } = this.props
     const ctx = this.chart.getContext('2d')
-    const chartColors = ['#E84423', '#ECCB2F', '#5D9A20', '#710026', '#8CBBF5', '#A6CD19', '#4A176A', '#EA9223', '#253E7C']
+    // const chartColors = ['#E84423', '#ECCB2F', '#5D9A20', '#710026', '#8CBBF5', '#A6CD19', '#4A176A', '#EA9223', '#253E7C']
+    const chartColors = ['#5899E2', '#253E7C']
     const stepSize = records ? Math.ceil(records.reduce((acc, i) => {
       if (!isNaN(i)) {
         return acc > i ? acc : i

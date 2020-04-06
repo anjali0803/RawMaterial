@@ -18,6 +18,7 @@ import { Col, Row, Badge } from 'reactstrap'
 import ReactTable from 'react-table'
 import Autocomplete from 'react-autocomplete'
 import checkboxHOC from 'react-table/lib/hoc/selectTable'
+
 import { head } from 'lodash-es'
 // import { isEqual } from 'lodash-es';
 const ReactTableWrapper = checkboxHOC(ReactTable)
@@ -400,9 +401,9 @@ export default class TableComponent extends React.Component {
 
   statusTemplate (rowData, column){
     let status = rowData.Status;
-    let fontColor = status === 'Accepted' ? 'green' : 'red';
+    let fontColor = status === 'Accepted' ? 'success' : 'danger';
 
-    return <span style={{color: fontColor}}>{status}</span>;
+    return <Badge color={fontColor} style={{ fontSize: '16px'}}>{status}</Badge>;
   }
 
   render () {

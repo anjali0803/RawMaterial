@@ -149,6 +149,10 @@ class Details extends React.Component {
         createdOn: projectData.data.data[0].CreatedOn ? projectData.data.data[0].CreatedOn.substring(0,10): '',
         submittedOn: projectData.data.data[0].SubmittedOn ? projectData.data.data[0].SubmittedOn.substring(0,10).split('-').reverse().join('/') : 'Not Submitted Yet!!'
       })
+    } else {
+      this.setState({
+        assignedUser: this.props.userName
+      })
     }
   }
 
@@ -551,7 +555,7 @@ class Details extends React.Component {
                   /> : <div className="readOnlyValues">{this.state.projectId}</div>}
                 </div>
                 <div className="form-group">
-                  <div className="upload-label-2">Title</div>
+                  <div className="upload-label-2">Project Name</div>
                   {this.props.newProject ? <Input id="title"
                     value={this.state.title}
                     onChange={this.handleInputTitle}

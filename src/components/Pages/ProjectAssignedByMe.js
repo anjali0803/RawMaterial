@@ -19,7 +19,7 @@ class ProjectAssignedByMe extends React.Component {
       ],
       tableColList: [
         { field: 'ProjectID', header: 'Project Id' },
-        { field: 'Title', header: 'Title' },
+        { field: 'Title', header: 'Project Name' },
         { field: 'Client', header: 'Customer' },
         { field: 'ProjectType', header: 'Type' },
         { field: 'AssignedOn', header: 'Assigned Date' },
