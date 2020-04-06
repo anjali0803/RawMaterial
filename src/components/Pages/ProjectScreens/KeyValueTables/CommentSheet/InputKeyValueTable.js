@@ -239,7 +239,7 @@ class CommentSheet extends React.Component {
     this.getKeyValueData()
   }
 
-  async onSave (newTableData) {
+  async onSave (newVersion) {
     this.setState({
       isLoading: true
     })
@@ -278,7 +278,13 @@ class CommentSheet extends React.Component {
     if(saveEditedValue.data.status === 'error'){
       this.growl.show({severity: 'error', summary: 'Failure', detail: `There is some issue occured while saving the ${this.state.doc} data.`});
     } else {
-      this.growl.show({severity: 'success', summary: 'Success', detail: `${this.state.doc} data saved.`});
+      if(newVersion === true){
+        this.growl.show([
+          {severity: 'success', summary: 'Success', detail: `new ${this.state.doc} version created.`},
+          {severity: 'success', summary: 'Success', detail: `${this.state.doc} data saved.`}]);
+      } else {
+        this.growl.show({severity: 'success', summary: 'Success', detail: `${this.state.doc} data saved.`});
+      }
     }
     if(this.state.doc === 'PIPE'){
       $('.pipeButton').addClass('active')

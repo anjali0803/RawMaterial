@@ -46,13 +46,13 @@ class ITP extends React.Component {
       selectedVerison: 0,
       displayAcceptanceForm: false,
       editable: false,
-      keyValueColumnList: [
+      keyValueColumnList: [],
+      keyValueColumnList1: [
         { field: 'WorkDescription', header: 'Work Description' },
-        { field: 'ReferenceStandardAPI', header: 'Reference Standard API' },
+        { field: 'ReferenceStandardAPI', header: 'Reference Standard API/CSA' },
         { field: 'ReferenceStandardExtracted', header: 'Reference Standard Extracted' },
-        { field: 'TestingFrequencyAPI', header: 'Testing Frequency API' },
-        { field: 'TestingFrequencyExtracted', header: 'Testing Frequency Extracted' },
-        { field: 'AcceptanceCriteriaAPI', header: 'Acceptance Criteria API' },
+        { field: 'TestingFrequencyAPI', header: 'Testing Frequency' },
+        { field: 'AcceptanceCriteriaAPI', header: 'Acceptance Criteria API/CSA' },
         { field: 'AcceptanceCriteriaExtracted', header: 'Acceptance Criteria Extracted' },
         // { field: 'AcceptanceCriteriaTable', header: 'Acceptance Criteria Table' },
         { field: 'Documents', header: 'Documents' },
@@ -61,7 +61,23 @@ class ITP extends React.Component {
         { field: 'TPI', header: 'TPI' },
         { field: 'WTL', header: 'WTL' },
         { field: 'Comment', header: 'Comment' }
-      ]
+      ],
+      keyValueColumnList2: [
+        { field: 'WorkDescription', header: 'Work Description' },
+        { field: 'ReferenceStandardAPI', header: 'Reference Standard Nace' },
+        { field: 'ReferenceStandardExtracted', header: 'Reference Standard Extracted' },
+        { field: 'TestingFrequencyAPI', header: 'Testing Frequency' },
+        { field: 'AcceptanceCriteriaAPI', header: 'Acceptance Criteria Nace' },
+        { field: 'AcceptanceCriteriaExtracted', header: 'Acceptance Criteria Extracted' },
+        // { field: 'AcceptanceCriteriaTable', header: 'Acceptance Criteria Table' },
+        { field: 'Documents', header: 'Documents' },
+        // { field: 'Section', header: 'Section' },
+        // { field: 'Subsection', header: 'Sub Section' },
+        { field: 'TPI', header: 'TPI' },
+        { field: 'WTL', header: 'WTL' },
+        { field: 'Comment', header: 'Comment' }
+      ],
+
     }
     this.onRefresh = this.onRefresh.bind(this)
     this.handleClickAllSelected = this.handleClickAllSelected.bind(this)
@@ -99,7 +115,8 @@ class ITP extends React.Component {
       versionMenu: versionMenu,
       pipeData: pipeData,
       coatingData: coatingData,
-      selectedVerison: { name: 'version 1', code: 0 }
+      selectedVerison: { name: 'version 1', code: 0 },
+      keyValueColumnList: this.state.keyValueColumnList1
     })
     this.setState({ keyValueData: keyValueData })
     if (this.state.pipeData.length === 1) {
@@ -119,7 +136,7 @@ class ITP extends React.Component {
     this.getKeyValueData()
   }
 
-  async onSave () {
+  async onSave (newVersion) {
     this.setState({
       isLoading: true
     })
@@ -158,7 +175,13 @@ class ITP extends React.Component {
     if(saveEditedValue.data.status === 'error'){
       this.growl.show({severity: 'error', summary: 'Failure', detail: `There is some issue occured while saving the ${this.state.doc} data.`});
     } else {
-      this.growl.show({severity: 'success', summary: 'Success', detail: `${this.state.doc} data saved.`});
+      if(newVersion === true){
+        this.growl.show([
+          {severity: 'success', summary: 'Success', detail: `new ${this.state.doc} version created.`},
+          {severity: 'success', summary: 'Success', detail: `${this.state.doc} data saved.`}]);
+      } else {
+        this.growl.show({severity: 'success', summary: 'Success', detail: `${this.state.doc} data saved.`});
+      }
     }
     if(this.state.doc === 'PIPE'){
       $('.pipeButton').addClass('active')
@@ -261,7 +284,8 @@ class ITP extends React.Component {
     this.setState({
       versionMenu: versionMenu,
       selectedVerison: { name: 'version 1', code: 0 },
-      doc: 'PIPE'
+      doc: 'PIPE',
+      keyValueColumnList: this.state.keyValueColumnList1
     })
     if (this.state.pipeData.length === 1) {
       this.setState({
@@ -287,7 +311,8 @@ class ITP extends React.Component {
     this.setState({
       versionMenu: versionMenu,
       selectedVerison: { name: 'version 1', code: 0 },
-      doc: 'COATING'
+      doc: 'COATING',
+      keyValueColumnList: this.state.keyValueColumnList2
     })
     if (this.state.coatingData.length === 1) {
       this.setState({
@@ -322,7 +347,7 @@ class ITP extends React.Component {
         versionMenu: newVersionMenu
       })
     }
-    this.onSave();
+    this.onSave(true);
   }
 
   showForm () {
