@@ -9,6 +9,8 @@ import { backendUrl } from '../../../../../constant';
 import LoadingScreen from '../../../LoadingScreen/loadingScreen';
 import { Dropdown } from 'primereact/dropdown';
 import { cloneDeep, get } from 'lodash-es';
+import {Growl} from 'primereact/growl';
+
 const history = createHashHistory();
 
 class RMTS extends React.Component {
@@ -51,7 +53,7 @@ class RMTS extends React.Component {
     this.createNewVerison = this.createNewVerison.bind(this)
     this.renderSaveButton = this.renderSaveButton.bind(this)
     this.editable = this.editable.bind(this)
-    this.generateDoc = this.generateDoc.bind(this)
+    this.generateDoc = this.generateDoc.bind(this);
     // // this.onDocIdClick = this.onDocIdClick.bind(this);
   }
 
@@ -269,6 +271,11 @@ class RMTS extends React.Component {
     this.setState({
       isLoading: false
     })
+    if(generateDocRes.data.status === 'error'){
+      this.growl.show({severity: 'error', summary: 'Failure', detail: 'Some Issue occured while creating you document.'});
+    } else {
+      this.growl.show({severity: 'success', summary: 'Success', detail: 'Document created successfully.'});
+    }
   }
 
   editable () {
@@ -276,12 +283,14 @@ class RMTS extends React.Component {
   }
 
   render () {
-    let view = <div></div>
-    // for stubbed data only
-    view = this.renderButtonMenu()
+    let view = <div></div>;
+    view = this.renderButtonMenu();
 
     return !this.state.isLoading ? (
       <div className="container-fluid">
+        <Growl style={{
+          marginTop: '15vh'
+        }} ref={(el) => (this.growl = el)} />
         {view}
         <hr style={{ marginTop: '10px', marginBottom: '0px' }} />
         <TableComponent

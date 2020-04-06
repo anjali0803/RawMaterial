@@ -13,6 +13,7 @@ import { backendUrl } from '../../../../../constant'
 import LoadingScreen from '../../../LoadingScreen/loadingScreen'
 import { Dropdown } from 'primereact/dropdown'
 import { InputSwitch } from 'primereact/inputswitch'
+import {Growl} from 'primereact/growl';
 import { ToggleButton } from 'primereact/togglebutton'
 import { Button } from 'primereact/button'
 import { cloneDeep, get } from 'lodash-es'
@@ -397,6 +398,16 @@ class ITP extends React.Component {
     this.setState({
       isLoading: false
     })
+    if(generateDocRes.data.status === 'error'){
+      this.growl.show({severity: 'error', summary: 'Failure', detail: 'Some Issue occured while creating you document.'});
+    } else {
+      this.growl.show({severity: 'success', summary: 'Success', detail: 'Document created successfully.'});
+    }
+    if(this.state.doc === 'PIPE'){
+      $('.pipeButton').addClass('active')
+    } else {
+      $('.coatingButton').addClass('active')
+    }
   }
 
   rowExpansionTemplate(data) {
@@ -439,6 +450,9 @@ class ITP extends React.Component {
 
     return !this.state.isLoading ? (
       <div className="container-fluid">
+        <Growl style={{
+          marginTop: '15vh'
+        }} ref={(el) => (this.growl = el)} />
         {view}
         <hr style={{ marginTop: '10px', marginBottom: '0px' }}/>
         <TableComponent
