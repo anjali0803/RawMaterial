@@ -580,11 +580,11 @@ class Details extends React.Component {
                 </div>
                 <div className="form-group">
                   <div className="upload-label-2">Project Name</div>
-                  {this.props.newProject ? <Input id="title"
+                  {<Input id="title"
                     value={this.state.title}
                     onChange={this.handleInputTitle}
                     readOnly={this.props.readOnly}
-                  /> : <div className="readOnlyValues">{this.state.title}</div>}
+                  />}
                   <p className="text-danger font-italic">{this.state.errorMsg.title}</p>
                 </div>
                 <div className="form-group">
