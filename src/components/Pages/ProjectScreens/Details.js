@@ -121,19 +121,27 @@ class Details extends React.Component {
   }
 
   async componentDidMount() {
-    const userList = await axios.get(
-      `${authenticationUrl}/api/allactiveuser`
-    )
     let emailList = [];
-
-    userList.data.data.forEach(user => {
-      if( user.is_approved){
-        emailList.push(user.username)
-      }
-    })
-    this.setState({
-      emailList: emailList
-    })
+    await Promise.all([
+      axios.get(
+        `${backendUrl}/dashboard/all_client`
+      ),
+      axios.get(
+        `${authenticationUrl}/api/allactiveuser`
+      )
+    ]).then(res => {
+      res[1].data.data.forEach(user => {
+        if( user.is_approved){
+          emailList.push(user.username)
+        }
+      })
+      this.setState({
+        emailList: emailList,
+        customerSuggestion: res[0].data.data
+      })
+    }).catch(err => {
+      // handling error
+    });
     if(!this.props.newProject){
       const projectData = await axios.get(
         `${backendUrl}/dashboard/project`,
@@ -152,7 +160,7 @@ class Details extends React.Component {
         submittedOn: projectData.data.data[0].SubmittedOn ? projectData.data.data[0].SubmittedOn.substring(0,10).split('-').reverse().join('/') : 'Not Submitted Yet!!',
         pipeSpecNumber: projectData.data.data[0].PipeSpecNumber,
         coatingSpecNumber: projectData.data.data[0].CoatingSpecNumber,
-        purchasedOrderNo: projectData.data.data[0].PurcahseOrder
+        purchasedOrderNo: projectData.data.data[0].PurchaseOrder
       })
       if(projectData.data.data[0].ProjectStatus  === 'Cancelled') {
         this.setState({
