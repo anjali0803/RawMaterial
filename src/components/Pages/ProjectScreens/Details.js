@@ -42,6 +42,8 @@ class Details extends React.Component {
       createdOn: '',
       submittedOn: '',
       errorMsg: {
+        pipeSpecNumber: '',
+        coatingSpecNumber: '',
         dueDate: '',
         type: '',
         customer: '',
@@ -147,7 +149,10 @@ class Details extends React.Component {
         projectStatus: projectData.data.data[0].ProjectStatus,
         createdBy: projectData.data.data[0].CreatedBy,
         createdOn: projectData.data.data[0].CreatedOn ? projectData.data.data[0].CreatedOn.substring(0,10): '',
-        submittedOn: projectData.data.data[0].SubmittedOn ? projectData.data.data[0].SubmittedOn.substring(0,10).split('-').reverse().join('/') : 'Not Submitted Yet!!'
+        submittedOn: projectData.data.data[0].SubmittedOn ? projectData.data.data[0].SubmittedOn.substring(0,10).split('-').reverse().join('/') : 'Not Submitted Yet!!',
+        pipeSpecNumber: projectData.data.data[0].pipeSpecNumber,
+        coatingSpecNumber: projectData.data.data[0].coatingSpecNumber,
+        purchasedOrderNo: projectData.data.data[0].purchasedOrderNo
       })
       if(projectData.data.data[0].ProjectStatus  === 'Cancelled') {
         this.setState({
@@ -328,7 +333,10 @@ class Details extends React.Component {
         title: this.state.title,
         client: this.state.customer,
         assigned_to: this.state.assignedUser,
-        due_date: this.state.dueDate
+        due_date: this.state.dueDate,
+        pipespec_number: this.state.pipeSpecNumber,
+        coatingspec_number: this.state.coatingSpecNumber,
+        purchase_order: this.state.purchasedOrderNo
       }
     )
 
@@ -485,7 +493,10 @@ class Details extends React.Component {
         outer_coating: fileResArr[3].data.data,
         assignedTo: this.state.assignedUser,
         createdBy: this.props.userName,
-        due_date: this.state.dueDate
+        due_date: this.state.dueDate,
+        pipespec_number: this.state.pipeSpecNumber,
+        coatingspec_number: this.state.coatingSpecNumber,
+        purchase_order: this.state.purchasedOrderNo
       }
     ).then(res => {
       const projectId = res.data.data.ProjectID
@@ -638,7 +649,80 @@ class Details extends React.Component {
                 </div>
               </div>
               {this.props.newProject ? <div className="col-6">
-                <div className="upload-label" >Cost Sheet</div>
+                <div className="form-group">
+                  <div className="upload-label-2">Pipe Spec Number</div>
+                  {<AutoComplete
+                    id="assignedUser"
+                    inputStyle={{ width: '100%'}}
+                    value={this.state.pipeSpecNumber}
+                    onChange={(e) => {
+                      this.setState({pipeSpecNumber: e.value});
+                      if(e.value.length){
+                        this.setState({
+                          errorMsg: {
+                            ...this.state.errorMsg,
+                            pipeSpecNumber: ''
+                          }
+                        })
+                      } else {
+                        this.setState({
+                          errorMsg: {
+                            ...this.state.errorMsg,
+                            pipeSpecNumber: '*It is required!'
+                          }
+                        })
+                      }
+                    }}
+                    suggestions={this.state.assignedUserSuggestions} 
+                    completeMethod={this.suggestEmails.bind(this)}
+                  />}
+                  <p className="text-danger font-italic">{this.state.errorMsg.assignedUser}</p>
+                </div>
+                <div className="form-group">
+                  <div className="upload-label-2">Coating Spec Number</div>
+                  {<AutoComplete
+                    id="assignedUser"
+                    inputStyle={{ width: '100%'}}
+                    value={this.state.coatingSpecNumber}
+                    onChange={(e) => {
+                      this.setState({coatingSpecNumber: e.value});
+                      if(e.value.length){
+                        this.setState({
+                          errorMsg: {
+                            ...this.state.errorMsg,
+                            coatingSpecNumber: ''
+                          }
+                        })
+                      } else {
+                        this.setState({
+                          errorMsg: {
+                            ...this.state.errorMsg,
+                            coatingSpecNumber: '*It is required!'
+                          }
+                        })
+                      }
+                    }}
+                    suggestions={this.state.assignedUserSuggestions} 
+                    completeMethod={this.suggestEmails.bind(this)}
+                  />}
+                  <p className="text-danger font-italic">{this.state.errorMsg.assignedUser}</p>
+                </div>
+                <div className="form-group">
+                  <div className="upload-label-2">Purchase Order No</div>
+                  {<AutoComplete
+                    id="assignedUser"
+                    inputStyle={{ width: '100%'}}
+                    value={this.state.purchasedOrderNo}
+                    onChange={(e) => {
+                      this.setState({purchasedOrderNo: e.value});
+                    }}
+                    suggestions={this.state.assignedUserSuggestions} 
+                    completeMethod={this.suggestEmails.bind(this)}
+                  />}
+                  <p className="text-danger font-italic">{this.state.errorMsg.assignedUser}</p>
+                </div>
+
+                <div className="upload-label-2" >Cost Sheet</div>
                 <FileUpload
                   className="cost-sheet-upload"
                   onFileSelect={this.saveFile1}
@@ -647,7 +731,7 @@ class Details extends React.Component {
                 />
                 <p className="text-danger font-italic">{this.state.errorMsg.file1}</p>
 
-                <div className="upload-label" >PIPE</div>
+                <div className="upload-label-2" >PIPE</div>
                 <FileUpload
                   className="pipe-upload"
                   onFileSelect={this.saveFile2}
@@ -655,7 +739,7 @@ class Details extends React.Component {
                 />
                 <p className="text-danger font-italic">{this.state.errorMsg.file2}</p>
 
-                <div className="upload-label" >INTERNAL-COATING</div>
+                <div className="upload-label-2" >INTERNAL-COATING</div>
                 <FileUpload
                   className="inner-coating-upload"
                   disabled={!this.props.newProject}
@@ -663,7 +747,7 @@ class Details extends React.Component {
                 />
                 <p className="text-danger font-italic">{this.state.errorMsg.file3}</p>
 
-                <div className="upload-label" >EXTERNAL-COATING</div>
+                <div className="upload-label-2" >EXTERNAL-COATING</div>
                 <FileUpload
                   className="outer-coating-upload"
                   disabled={!this.props.newProject}

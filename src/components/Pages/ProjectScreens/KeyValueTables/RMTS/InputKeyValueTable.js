@@ -77,7 +77,7 @@ class RMTS extends React.Component {
     grades.forEach(grade => {
       newTableOneColumns.push({
         field: grade,
-        header: grade
+        header: grade + 'M'
       });
       newTableTwoColumns.push({
         field: grade,
