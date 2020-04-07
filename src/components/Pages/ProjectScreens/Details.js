@@ -150,9 +150,9 @@ class Details extends React.Component {
         createdBy: projectData.data.data[0].CreatedBy,
         createdOn: projectData.data.data[0].CreatedOn ? projectData.data.data[0].CreatedOn.substring(0,10): '',
         submittedOn: projectData.data.data[0].SubmittedOn ? projectData.data.data[0].SubmittedOn.substring(0,10).split('-').reverse().join('/') : 'Not Submitted Yet!!',
-        pipeSpecNumber: projectData.data.data[0].pipeSpecNumber,
-        coatingSpecNumber: projectData.data.data[0].coatingSpecNumber,
-        purchasedOrderNo: projectData.data.data[0].purchasedOrderNo
+        pipeSpecNumber: projectData.data.data[0].PipeSpecNumber,
+        coatingSpecNumber: projectData.data.data[0].CoatingSpecNumber,
+        purchasedOrderNo: projectData.data.data[0].PurcahseOrder
       })
       if(projectData.data.data[0].ProjectStatus  === 'Cancelled') {
         this.setState({
@@ -756,6 +756,78 @@ class Details extends React.Component {
                 <p className="text-danger font-italic">{this.state.errorMsg.file4}</p>
               </div>: <div className="col-6">
                   <div className="readOnlyValues">Documents are already uploaded. Please find them on documents section.</div>
+                  <div className="form-group">
+                  <div className="upload-label-2">Pipe Spec Number</div>
+                  {<AutoComplete
+                    id="assignedUser"
+                    inputStyle={{ width: '100%'}}
+                    value={this.state.pipeSpecNumber}
+                    onChange={(e) => {
+                      this.setState({pipeSpecNumber: e.value});
+                      if(e.value.length){
+                        this.setState({
+                          errorMsg: {
+                            ...this.state.errorMsg,
+                            pipeSpecNumber: ''
+                          }
+                        })
+                      } else {
+                        this.setState({
+                          errorMsg: {
+                            ...this.state.errorMsg,
+                            pipeSpecNumber: '*It is required!'
+                          }
+                        })
+                      }
+                    }}
+                    suggestions={this.state.assignedUserSuggestions} 
+                    completeMethod={this.suggestEmails.bind(this)}
+                  />}
+                  <p className="text-danger font-italic">{this.state.errorMsg.assignedUser}</p>
+                </div>
+                <div className="form-group">
+                  <div className="upload-label-2">Coating Spec Number</div>
+                  {<AutoComplete
+                    id="assignedUser"
+                    inputStyle={{ width: '100%'}}
+                    value={this.state.coatingSpecNumber}
+                    onChange={(e) => {
+                      this.setState({coatingSpecNumber: e.value});
+                      if(e.value.length){
+                        this.setState({
+                          errorMsg: {
+                            ...this.state.errorMsg,
+                            coatingSpecNumber: ''
+                          }
+                        })
+                      } else {
+                        this.setState({
+                          errorMsg: {
+                            ...this.state.errorMsg,
+                            coatingSpecNumber: '*It is required!'
+                          }
+                        })
+                      }
+                    }}
+                    suggestions={this.state.assignedUserSuggestions} 
+                    completeMethod={this.suggestEmails.bind(this)}
+                  />}
+                  <p className="text-danger font-italic">{this.state.errorMsg.assignedUser}</p>
+                </div>
+                <div className="form-group">
+                  <div className="upload-label-2">Purchase Order No</div>
+                  {<AutoComplete
+                    id="assignedUser"
+                    inputStyle={{ width: '100%'}}
+                    value={this.state.purchasedOrderNo}
+                    onChange={(e) => {
+                      this.setState({purchasedOrderNo: e.value});
+                    }}
+                    suggestions={this.state.assignedUserSuggestions} 
+                    completeMethod={this.suggestEmails.bind(this)}
+                  />}
+                  <p className="text-danger font-italic">{this.state.errorMsg.assignedUser}</p>
+                </div>
                   <div className="form-group">
                     <div className="upload-label-2">Created By</div>
                     <div className="readOnlyValues">{this.state.createdBy || <i className="pi pi-spin pi-spinner" style={{'fontSize': '2em'}}></i>}</div>
