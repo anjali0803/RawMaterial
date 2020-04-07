@@ -10,6 +10,7 @@ import ProjectAssignedToMe from '../Pages/ProjectAssignedToMe'
 import ProjectAssignedByMe from '../Pages/ProjectAssignedByMe'
 import AllOngoingProjects from '../Pages/AllOngoingProjects'
 import ClosedProjects from '../Pages/ClosedProjects'
+import CancelledProjects from '../Pages/CancelledProjects'
 import ArchieveProjects from '../Pages/ArchieveProjects'
 import GenerateNewProjects from '../Pages/GenerateNewProjects'
 import PastReports from '../Pages/PastReports'
@@ -27,6 +28,7 @@ class ViewComponent extends React.Component {
       { path: '/inquiry/projects-assigned-by-me', component: ProjectAssignedByMe },
       { path: '/inquiry/all-ongoing-projects', component: AllOngoingProjects },
       { path: '/inquiry/closed-projects', component: ClosedProjects },
+      { path: '/inquiry/cancelled-projects', component: CancelledProjects },
       { path: '/inquiry/archieve-projects', component: ArchieveProjects },
       { path: '/report/generate-new-reports', component: GenerateNewProjects },
       { path: '/report/past-reports', component: PastReports },

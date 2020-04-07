@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { setDocumentArray } from '../../../actions/dataActions'
 import './index.css'
 import TableComponent from '../../Table/TableComponent'
+import {Growl} from 'primereact/growl';
 import ButtonHeader from '../../ButtonHeader/ButtonHeader'
 import LoadingScreen from '../LoadingScreen/loadingScreen'
 import Axios from 'axios'
@@ -21,6 +22,7 @@ class OutputDocument extends React.Component {
       isLoading: false,
       saveEnabled: true,
       deleteEnabled: true,
+      msg: '',
       tableData: [],
       tableColList: [
         { field: 'fileType', header: 'File Type' },
@@ -31,7 +33,8 @@ class OutputDocument extends React.Component {
     this.onDocIdClick = this.onDocIdClick.bind(this)
     this.onRefresh = this.onRefresh.bind(this)
     this.createDocumentVersionList = this.createDocumentVersionList.bind(this)
-    this.onSave = this.onSave.bind(this)
+    this.submitProject = this.submitProject.bind(this)
+    this.cancelProject = this.cancelProject.bind(this)
   }
 
   async getTableData () {
@@ -94,7 +97,14 @@ class OutputDocument extends React.Component {
     this.setState({ isLoading: false })
     if (data[0].SubmittedOn) {
       this.setState({
-        showSubmitButton: true
+        showSubmitButton: true,
+        msg: 'Project is Already Submitted!'
+      })
+    }
+    if(data[0].ProjectStatus === 'Cancelled'){
+      this.setState({
+        showSubmitButton: true,
+        msg: 'Project is Cancelled!'
       })
     }
   }
@@ -114,7 +124,7 @@ class OutputDocument extends React.Component {
     history.push('/Inquiry/create-new-projects/output-document/second')
   }
 
-  async onSave () {
+  async submitProject () {
     this.setState({
       isLoading: true
     })
@@ -123,11 +133,43 @@ class OutputDocument extends React.Component {
       {
         project_id: this.props.projectId
       }
-    );
+    ).then( res => {
+      this.setState({
+        isLoading: false,
+        showSubmitButton: true,
+        msg: 'Project is Already Submitted!'
+      });
+      this.growl.show({severity: 'success', summary: 'Project Submitted Successfully!', detail: ''});
+    }).catch(err => {
+      this.setState({
+        isLoading: false,
+      });
+      this.growl.show({ sticky: 'true', severity: 'error', summary: `${err.response.data.code}`, detail: 'Some issue occur while submitting project.'});
+    })
+  }
+
+  async cancelProject () {
     this.setState({
-      isLoading: false,
-      showSubmitButton: true
-    });
+      isLoading: true
+    })
+    const saveRes = await Axios.post(
+      `${backendUrl}/dashboard/cancel_project`,
+      {
+        project_id: this.props.projectId
+      }
+    ).then( res => {
+      this.setState({
+        isLoading: false,
+        showSubmitButton: true,
+        msg: 'Project is Cancelled!'
+      });
+      this.growl.show({severity: 'success', summary: 'Project Cancel Successfully!', detail: ''});
+    }).catch(err => {
+      this.setState({
+        isLoading: false,
+      });
+      this.growl.show({ sticky: 'true', severity: 'error', summary: `${err.response.data.code}`, detail: 'Some issue occur while canceling project.'});
+    })
   }
 
   onDelete () {
@@ -151,12 +193,16 @@ class OutputDocument extends React.Component {
   render () {
     return !this.state.isLoading ? (
       <div>
-        {/* <ButtonHeader saveEnabled={this.state.saveEnabled} deleteEnabled={this.state.deleteEnabled} className="progbar-button-header" onSave={() => this.onSave()} onDelete={() => this.onDelete()} /> */}
+        <Growl style={{ top: '15%'}} ref={(el) => this.growl = el} />
         <TableComponent colList={this.state.tableColList} dataList={this.state.tableData} onDocumentIdClick={this.onDocIdClick} onRefresh={this.onRefresh} actionItemNotNeeded={true}/>
         <div style={{ display: 'flex'}}>
           {
-            this.state.showSubmitButton ? <button className="save-button btn-grad" style={{ margin: 'auto', width: '400px', opacity:'0.8'}} type="button" label="Save" disabled> Project Already Submitted </button> : 
-              <button className="save-button btn-grad" style={{ margin: 'auto'}} type="button" label="Save" onClick={this.onSave}> Submit Project </button>
+            this.state.showSubmitButton ? <></> : 
+              <button className="save-button btn-grad" style={{ margin: 'auto',  width: '400px'}} type="button" label="Cancel" onClick={this.cancelProject}> Cancel Project </button>
+          }
+          {
+            this.state.showSubmitButton ? <button className="save-button btn-grad" style={{ margin: 'auto', width: '400px', opacity:'0.8', cursor: 'not-allowed'}} type="button" label="Save" disabled> {this.state.msg} </button> : 
+              <button className="save-button btn-grad" style={{ margin: 'auto',  width: '400px'}} type="button" label="Save" onClick={this.submitProject}> Submit Project </button>
           }
         </div>
       </div>

@@ -10,7 +10,7 @@ import { backendUrl } from '../../constant'
 
 const history = createHashHistory()
 
-class ClosedProjects extends React.Component {
+class CancelledProjects extends React.Component {
   constructor () {
     super()
     this.state = {
@@ -23,8 +23,7 @@ class ClosedProjects extends React.Component {
         { field: 'Client', header: 'Customer' },
         { field: 'ProjectType', header: 'Type' },
         { field: 'AssignedOn', header: 'Assigned Date' },
-        { field: 'ProjectStatus', header: 'Status' },
-        { field: 'SubmittedOn', header: 'Submitted On' }
+        { field: 'ProjectStatus', header: 'Status' }
       ]
     }
 
@@ -37,7 +36,7 @@ class ClosedProjects extends React.Component {
     const res = await Axios.get(`${backendUrl}/dashboard/all_project`)
     const data = res.data
     this.setState({ tableData: data.data.filter(project => {
-      return project.SubmittedOn ? true : false
+      return project.ProjectStatus === 'Cancelled' ? true : false
     }) })
     this.setState({ isLoading: false })
   }
@@ -100,4 +99,4 @@ const mapDispatchToProps = dispatch => ({
 })
 export default connect(
   mapStateToProps, mapDispatchToProps
-)(ClosedProjects)
+)(CancelledProjects)

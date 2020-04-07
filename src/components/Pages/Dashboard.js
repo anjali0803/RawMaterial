@@ -60,7 +60,6 @@ export default class Dashboard extends React.Component {
         ...this.state.data
       };
       newObj[card] = obj
-
       this.setState({
         data: newObj,
       })

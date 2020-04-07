@@ -79,11 +79,12 @@ class MenuComponent extends React.Component {
             <i className="fa fa-caret-down"></i>
           </button>
           <div className="dropdown-container dropdown-container-1">
-            <a href="#/inquiry/create-new-projects/new"><i className="pi pi-fw pi-plus"></i>Create new projects</a>
-            <a href="#/inquiry/projects-assigned-to-me"><i className="pi pi-fw pi-align-left"></i>Projects assigned to me</a>
-            <a href="#/inquiry/projects-assigned-by-me"><i className="pi pi-fw pi-align-right"></i>Projects assigned by me</a>
-            <a href="#/inquiry/all-ongoing-projects"><i className="pi pi-fw pi-clone"></i>All ongoing projects</a>
-            <a href="#/inquiry/closed-projects"><i className="pi pi-fw pi-copy"></i>Closed projects</a>
+            <a href="#/inquiry/create-new-projects/new"><i className="pi pi-fw pi-plus"></i>Create New Projects</a>
+            <a href="#/inquiry/projects-assigned-to-me"><i className="pi pi-fw pi-align-left"></i>Projects Assigned to me</a>
+            <a href="#/inquiry/projects-assigned-by-me"><i className="pi pi-fw pi-align-right"></i>Projects Assigned by me</a>
+            <a href="#/inquiry/all-ongoing-projects"><i className="pi pi-fw pi-clone"></i>All Ongoing Projects</a>
+            <a href="#/inquiry/closed-projects"><i className="pi pi-fw pi-copy"></i>Submitted Projects</a>
+            <a href="#/inquiry/cancelled-projects"><i class="pi pi-times"></i>Cancelled Projects</a>
           </div>
           <button className="dropdown-btn dropdown-btn-2" onClick={toggleDropDownMenu}><i className="pi pi-fw pi-file-excel"></i>Report
             <i className="fa fa-caret-down"></i>
