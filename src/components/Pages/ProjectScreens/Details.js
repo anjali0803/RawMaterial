@@ -37,6 +37,8 @@ class Details extends React.Component {
       this.props.setDueDate('')
     }
     this.state = {
+      pipeSpecNumber: '',
+      coatingSpecNumber: '',
       createdBy: '',
       projectStatus: '',
       createdOn: '',
@@ -51,7 +53,6 @@ class Details extends React.Component {
         file1: '',
         file2: '',
         file3: '',
-        file4: '',
         CreateProjectErrorMsg: '',
         assignedUser:''
       },
@@ -371,11 +372,8 @@ class Details extends React.Component {
     formData2.append('file', file2);
     const formData3 = new FormData();
     formData3.append('file', file3);
-    const formData4 = new FormData();
-    formData4.append('file', file4)
     
-    
-    const [file1Res, file2Res, file3Res, file4Res] = await Promise.all([
+    const [file1Res, file2Res, file3Res] = await Promise.all([
       axios.post(
         `${backendUrl}/dashboard/uploadfile`,
         formData1,
@@ -402,8 +400,14 @@ class Details extends React.Component {
             'Content-Type': 'multipart/form-data'
           }
         }
-      ),
-      axios.post(
+      )
+    ]);
+
+    let file4Res = null;
+    if(file4){
+      const formData4 = new FormData();
+      formData4.append('file', file4);
+      file4Res = await axios.post(
         `${backendUrl}/dashboard/uploadfile`,
         formData4,
         {
@@ -412,7 +416,7 @@ class Details extends React.Component {
           }
         }
       )
-    ]);
+    }
 
     return [file1Res, file2Res, file3Res, file4Res];
   }
@@ -498,7 +502,7 @@ class Details extends React.Component {
         cost_sheet: fileResArr[0].data.data,
         specs_pipe: fileResArr[1].data.data,
         inner_coating: fileResArr[2].data.data,
-        outer_coating: fileResArr[3].data.data,
+        outer_coating: fileResArr[3] ? fileRes3.data.data : '',
         assignedTo: this.state.assignedUser,
         createdBy: this.props.userName,
         due_date: this.state.dueDate,
@@ -684,7 +688,7 @@ class Details extends React.Component {
                     suggestions={this.state.assignedUserSuggestions} 
                     completeMethod={this.suggestEmails.bind(this)}
                   />}
-                  <p className="text-danger font-italic">{this.state.errorMsg.assignedUser}</p>
+                  <p className="text-danger font-italic">{this.state.errorMsg.pipeSpecNumber}</p>
                 </div>
                 <div className="form-group">
                   <div className="upload-label-2">Coating Spec Number</div>
@@ -713,10 +717,10 @@ class Details extends React.Component {
                     suggestions={this.state.assignedUserSuggestions} 
                     completeMethod={this.suggestEmails.bind(this)}
                   />}
-                  <p className="text-danger font-italic">{this.state.errorMsg.assignedUser}</p>
+                  <p className="text-danger font-italic">{this.state.errorMsg.coatingSpecNumber}</p>
                 </div>
                 <div className="form-group">
-                  <div className="upload-label-2">Purchase Order No</div>
+                  <div className="upload-label-2">Purchase Order No <span className="optional-field">(Optional)</span> <span className="optional-field">(Optional)</span></div>
                   {<AutoComplete
                     id="assignedUser"
                     inputStyle={{ width: '100%'}}
@@ -755,7 +759,7 @@ class Details extends React.Component {
                 />
                 <p className="text-danger font-italic">{this.state.errorMsg.file3}</p>
 
-                <div className="upload-label-2" >EXTERNAL-COATING</div>
+                <div className="upload-label-2" >EXTERNAL-COATING <span className="optional-field">(Optional)</span></div>
                 <FileUpload
                   className="outer-coating-upload"
                   disabled={!this.props.newProject}
@@ -791,7 +795,7 @@ class Details extends React.Component {
                     suggestions={this.state.assignedUserSuggestions} 
                     completeMethod={this.suggestEmails.bind(this)}
                   />}
-                  <p className="text-danger font-italic">{this.state.errorMsg.assignedUser}</p>
+                  <p className="text-danger font-italic">{this.state.errorMsg.pipeSpecNumber}</p>
                 </div>
                 <div className="form-group">
                   <div className="upload-label-2">Coating Spec Number</div>
@@ -820,10 +824,10 @@ class Details extends React.Component {
                     suggestions={this.state.assignedUserSuggestions} 
                     completeMethod={this.suggestEmails.bind(this)}
                   />}
-                  <p className="text-danger font-italic">{this.state.errorMsg.assignedUser}</p>
+                  <p className="text-danger font-italic">{this.state.errorMsg.coatingSpecNumber}</p>
                 </div>
                 <div className="form-group">
-                  <div className="upload-label-2">Purchase Order No</div>
+                  <div className="upload-label-2">Purchase Order No <span className="optional-field">(Optional)</span></div>
                   {<AutoComplete
                     id="assignedUser"
                     inputStyle={{ width: '100%'}}

@@ -286,3 +286,9 @@
  }
  .btn-grad {background-image: linear-gradient(to right, #314755 0%, #26a0da 51%, #314755 100%)}
  .btn-grad:hover { background-position: right center; }
+
+ .optional-field {
+	font-weight: 400;
+	font-family: Rubik;
+	font-size: 16px;
+ }
