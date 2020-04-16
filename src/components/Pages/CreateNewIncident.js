@@ -189,6 +189,7 @@ export class CreateNewIncident extends React.Component {
             <FileUpload
               onFileSelect={this.saveIssueFiles}
               multiple
+              acceptAll={true}
             />
             <p className="text-danger font-italic">{this.state.errorMsg.issueFiles}</p>
             <hr />

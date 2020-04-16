@@ -80,6 +80,12 @@ class FileUpload extends React.Component {
         multiple: true
       }
     }
+    if(this.props.acceptAll){
+      docUploadProps = {
+        ...docUploadProps,
+        accept: '*'
+      }
+    }
     return (
       <div className={this.state.classString}>
         <div className="file-select">

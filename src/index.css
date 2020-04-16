@@ -10,7 +10,7 @@ body {
 
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: white;;
+  background: #E7E7E8 !important;
   /* background-image: linear-gradient(
       to right bottom,
       rgb(225, 242, 247),rgb(55, 84, 161,0.8)
