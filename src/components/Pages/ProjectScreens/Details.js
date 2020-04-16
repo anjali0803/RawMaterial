@@ -720,7 +720,7 @@ class Details extends React.Component {
                   <p className="text-danger font-italic">{this.state.errorMsg.coatingSpecNumber}</p>
                 </div>
                 <div className="form-group">
-                  <div className="upload-label-2">Purchase Order No <span className="optional-field">(Optional)</span> <span className="optional-field">(Optional)</span></div>
+                  <div className="upload-label-2">Purchase Order No <span className="optional-field">(Optional)</span></div>
                   {<AutoComplete
                     id="assignedUser"
                     inputStyle={{ width: '100%'}}

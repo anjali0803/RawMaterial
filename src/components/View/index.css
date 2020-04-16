@@ -1,7 +1,7 @@
 .view-container {
     float: right;
     /* text-align: center; */
-    margin-left: 16%;
+    margin-left: 18%;
     margin-top: 85px;
     /* width: 100%; */
 
@@ -16,20 +16,12 @@
     overflow-y: scroll;
     -webkit-overflow-scrolling: touch;
     -ms-overflow-style: -ms-autohiding-scrollbar;
-    padding-top: 30px;
-    padding-bottom: 25px;
-    padding-left: 25px;
-    padding-right: 25px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
     background: #E7E7E8;
 }
 body {
     overflow: hidden;
-}
-
-
-
-@media (max-width: 991.98px){
-    .view-container {
-        margin-left: 0px !important;
-    }
 }

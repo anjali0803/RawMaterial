@@ -88,7 +88,7 @@ export default class Dashboard extends React.Component {
         </Col>
         <Col xs={12}>
       <Row>
-        <Col md={6} className="pieCol">
+        <Col md={6} className="pieCol-1">
           <Row className="pieRow">
             <Col sm={6}>
               <h5 className={'pieTitle'}>{'Project Created'}</h5>
@@ -110,7 +110,7 @@ export default class Dashboard extends React.Component {
             </Col>
           </Row>
         </Col>
-        <Col md={6} className="pieCol">
+        <Col md={6} className="pieCol-2">
           <Row className="pieRow">
             <Col sm={6}>
               <h5 className={'pieTitle'}>{'Project Delayed'}</h5>

@@ -10,7 +10,7 @@
 
     /* add width  and height to top level, provided by props */
     width: 100vw;
-    height: 85px;
+    height: 70px;
     align-content: center;
     top: 0px;
     position: fixed;
@@ -19,13 +19,29 @@
     display: flex;
     justify-content: space-between;
 }
+
+@media (min-width: 1500px){
+
+  .banner{
+    height: 85px;
+  }
+
+  .sign-out-icon{
+    margin-top: 10px;
+  }
+
+  .banner-heading-primary{
+    padding-top: 18px !important;
+  }
+
+}
+
 .banner-heading-primary{
     font-size: 30px;
     text-align: center;
     padding-top: 10px;
     letter-spacing: 1.5px;
     color:white;
-    padding-top: 18px;
 }
 
 .copyright {
@@ -48,15 +64,19 @@
 
   .sign-out-icon {
     float: right;
-    margin-top: 10px;
     margin-right: 20px;
-    font-size: 30px;
+    font-size: 31px;
     text-align: center;
     padding-top: 10px;
     letter-spacing: 1.5px;
     color:white;
     display: inherit;
     cursor: pointer;
+  }
+
+  .username-text{
+    font-size: 25px;
+    padding-top: 3px;
   }
 
 .sidebar .nav-link.active .nav-icon {
@@ -113,7 +133,9 @@
 
 .userProfileButton {
   border-radius: 50%;
-  background-color: whitesmoke;
+  /* background-color: whitesmoke; */
   width: 50px;
   height: 50px;
+  padding-bottom: 5px;
+  border: 1px solid white;
 }
