@@ -85,9 +85,15 @@ class AllUsers extends React.Component {
   adminTemplate (rowData, column) {
     const enable =
     (JSON.stringify(this.state.selected[0]) === JSON.stringify(rowData)) && this.state.selected.length === 1
+
+    if(rowData.is_admin === true){
+      return (
+        <span>Admin</span>
+      )
+    }
     return (
       <Button
-        label="Admin"
+        label="Make Admin"
         onClick={() => this.handleClick(rowData, true)}
         disabled={!enable}
       />
@@ -99,7 +105,7 @@ class AllUsers extends React.Component {
       (JSON.stringify(this.state.selected[0]) === JSON.stringify(rowData)) && this.state.selected.length === 1
     return (
       <Button
-        label="Remove"
+        label="Remove User"
         onClick={() => this.handleClick(rowData, false)}
         disabled={!enable}
       />
@@ -115,14 +121,7 @@ class AllUsers extends React.Component {
     const colList = [
       {
         field: 'username',
-        header: (
-          <Dropdown
-            options={actions}
-            onChange={e => this.handleClickAllSelected(e.value)}
-            placeholder="Select Action"
-            disabled={this.state.selected.length <= 1}
-          />
-        )
+        header: 'Username'
       },
       {
         field: 'name',
@@ -136,8 +135,11 @@ class AllUsers extends React.Component {
         field: 'department',
         header: 'Department'
       },
-      { body: this.adminTemplate },
-      { body: this.removeTemplate }
+      { 
+        header: 'User Type',
+        body: this.adminTemplate },
+      { header: 'Remove User',
+        body: this.removeTemplate }
     ]
 
     const userList = []
@@ -149,6 +151,13 @@ class AllUsers extends React.Component {
 
     return !this.state.isLoading ? (
       <div>
+        <Dropdown
+            options={actions}
+            onChange={e => this.handleClickAllSelected(e.value)}
+            placeholder="Select Action"
+            disabled={this.state.selected.length <= 1}
+            style={{ margin: '10px'}}
+        />
         <DataTable
           className="hidden-header"
           value={userList}

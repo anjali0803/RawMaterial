@@ -92,6 +92,11 @@
 	display: block;
 }
 
+.dropdown-container a.active-menu {
+  color: white;
+  text-shadow: 0px 4px 5px rgba(0, 0, 0, 0.5);
+}
+
 .dropdown-container a:hover{
 	color: #f1f1f1;
 	text-decoration: none;

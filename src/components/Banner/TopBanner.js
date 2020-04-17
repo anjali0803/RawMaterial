@@ -249,7 +249,7 @@ class TopBanner extends React.Component {
   render () {
     return (
       <>
-        <Dialog header="Update Profile" visible={this.state.displayUpdateForm} style={{ width: '50vw' }} onHide={() => this.resetForm() } footer={this.renderFooter()}>
+        <Dialog header="Update Profile" visible={this.state.displayUpdateForm} style={{ width: '50vw', maxHeight: '80vh', overflowY: 'auto' }} onHide={() => this.resetForm() } footer={this.renderFooter()}>
           <form>
             <div className="form-group">
               <div className="upload-label-2">Name</div>
@@ -275,12 +275,12 @@ class TopBanner extends React.Component {
             <label className="p-checkbox-label">Do you want to change your password?</label>
             { this.state.updatePasswordCheck ? <><div className="form-group">
               <div className="upload-label-2">Old Password</div>
-              <Password value={this.state.oldPassword} onChange={this.saveOldPassword} placeholder="Please enter old password" />
+              <Password value={this.state.oldPassword} style={{ width:'100%'}} onChange={this.saveOldPassword} placeholder="Please enter your old password" />
               <p className="text-danger font-italic">{this.state.errorMsgs.oldPassword}</p>
             </div>
             <div className="form-group">
               <div className="upload-label-2">New Password</div>
-              <Password value={this.state.newPassword} onChange={this.saveNewPassword} placeholder="Please enter new password" required/>
+              <Password value={this.state.newPassword} style={{ width:'100%'}} onChange={this.saveNewPassword} placeholder="Please enter your new password" required/>
               <p className="text-danger font-italic">{this.state.errorMsgs.newPassword}</p>
             </div>
             { this.state.message && <div className={`alert alert-${this.state.message.className}`} role="alert">

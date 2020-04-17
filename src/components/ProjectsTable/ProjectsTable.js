@@ -2,9 +2,6 @@ import React from 'react'
 import 'primereact/resources/primereact.min.css'
 import 'primeicons/primeicons.css'
 import 'primereact/resources/themes/nova-light/theme.css'
-import { DataTable } from 'primereact/datatable'
-import { Column } from 'primereact/column'
-import { Dropdown } from 'primereact/dropdown'
 import './index.css'
 import './react-table.css'
 import { connect } from 'react-redux'
@@ -13,7 +10,6 @@ import { backendUrl } from '../../constant'
 import ReactTable from 'react-table'
 import { Col, Row, Badge } from 'reactstrap'
 import checkboxHOC from 'react-table/lib/hoc/selectTable'
-import ReactTableFilters from './filters'
 
 const ReactTableWrapper = checkboxHOC(ReactTable)
 

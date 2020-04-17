@@ -63,7 +63,7 @@ class PendingRequests extends React.Component {
   handleClickAllSelected (action) {
     if (action) {
       this.state.selected.forEach(async user => {
-        await axios.post(
+        await axios.put(
           `${authenticationUrl}/api/approveuser`,
           {
             username: user.username
@@ -116,14 +116,7 @@ class PendingRequests extends React.Component {
     const colList = [
       {
         field: 'username',
-        header: (
-          <Dropdown
-            options={actions}
-            onChange={e => this.handleClickAllSelected(e.value)}
-            placeholder="Select Action"
-            disabled={this.state.selected.length <= 1}
-          />
-        )
+        header: 'Username'
       },
       {
         field: 'name',
@@ -137,8 +130,14 @@ class PendingRequests extends React.Component {
         field: 'department',
         header: 'Department'
       },
-      { body: this.approveTemplate },
-      { body: this.rejectTemplate }
+      { 
+        body: this.approveTemplate,
+        header: 'Approve User'
+      },
+      { 
+        body: this.rejectTemplate,
+        header: 'Remove User'
+      }
     ]
     const userList = []
     this.state.userList.forEach(user => {
@@ -149,12 +148,20 @@ class PendingRequests extends React.Component {
 
     return !this.state.isLoading ? (
       <div>
+        <Dropdown
+            options={actions}
+            onChange={e => this.handleClickAllSelected(e.value)}
+            placeholder="Select Action"
+            disabled={this.state.selected.length <= 1}
+            style={{ margin: '10px'}}
+        />
         <DataTable
           className="hidden-header"
           value={userList}
           paginator={true}
-          paginatorPosition={'top'}
+          paginatorPosition={'bottom'}
           rows={10}
+          responsive={true}
           scrollable={true}
           autoLayout={true}
           selection={this.state.selected}

@@ -19,8 +19,7 @@ export class CreateNewIncident extends React.Component {
       errorMsg: {
         issue: '',
         issueDescription: '',
-        issueType: '',
-        issueFiles: ''
+        issueType: ''
       }
     }
     this.onSave = this.onSave.bind(this)
@@ -78,14 +77,15 @@ export class CreateNewIncident extends React.Component {
           issueFiles: ''
         }
       })
-    } else {
-      this.setState({
-        errorMsg: {
-          ...this.state.errorMsg,
-          issueFiles: '*It is required field!'
-        }
-      })
     }
+    // } else {
+    //   this.setState({
+    //     errorMsg: {
+    //       ...this.state.errorMsg,
+    //       issueFiles: '*It is required field!'
+    //     }
+    //   })
+    // }
   }
 
   saveIssueType (e) {
