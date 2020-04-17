@@ -166,20 +166,30 @@ export class CreateNewIncident extends React.Component {
             </h2>
             <hr />
             <div className="form-group">
-              <div className="upload-label-2">Issue Type</div>
-              <CustomInput type="select" id="exampleCustomSelect" name="customSelect" onChange={this.saveIssueType} placeholder="Please select issue type" required>
-                <option value="">Please select your issue type</option>
-                <option>Technical</option>
-                <option>Business Flow</option>
-                <option>Other</option>
-              </CustomInput>
-              <p className="text-danger font-italic">{this.state.errorMsg.issueType}</p>
-            </div>
-            <div className="form-group">
               <div className="upload-label-2">Issue Title</div>
               <Input onChange={this.saveIssue} placeholder="Please enter issue tite" required/>
               <p className="text-danger font-italic">{this.state.errorMsg.issue}</p>
             </div>
+            
+            <div className="form-group">
+              <div className="upload-label-2">Issue Type</div>
+              <CustomInput type="select" id="exampleCustomSelect" name="customSelect" onChange={this.saveIssueType} placeholder="Please select issue type" required>
+                <option value="">Please select your issue type</option>
+                <option>Admin functionalities</option> 
+                <option>Dashboard</option> 
+                <option>Documents Download</option> 
+                <option>Log In</option>
+                <option>Project Creation</option>
+                <option>Project Editings</option> 
+                <option>Report Generation</option> 
+                <option>Server Down</option> 
+                <option>Sign up</option> 
+                <option>User Manual</option> 
+                <option>Others</option>
+              </CustomInput>
+              <p className="text-danger font-italic">{this.state.errorMsg.issueType}</p>
+            </div>
+            
             <div className="form-group">
               <div className="upload-label-2">Issue Description</div>
               <Input type="textarea" onChange={this.saveIssueDescription} name="issueDescription" placeholder="Please enter your issue description" required/>
