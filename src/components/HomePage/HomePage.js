@@ -16,44 +16,13 @@ const history = createHashHistory()
 class HomePage extends React.Component {
   constructor () {
     super()
-    this.state = {
-      viewMargin: '18%'
-    }
-    
+  
     history.push('/dashboard')
-    this.toggleSideNavBar = this.toggleSideNavBar.bind(this)
-  }
-
-  toggleSideNavBar () {
-    $(".sideBar").toggle()
-    if(this.state.viewMargin === '18%'){
-      $('.view-container').css({
-        'margin-left' : '0'
-      });
-      this.setState({
-        viewMargin: '0'
-      })
-    } else {
-      $('.view-container').css({
-        'margin-left' : '18%'
-      });
-      this.setState({
-        viewMargin: '18%'
-      })
-    }
   }
 
   render () {
     return (
       <>
-        <div className="navBarShowHide">
-          <div className="sidebarShowHide-icon" onClick={this.toggleSideNavBar}>
-            <span class="tooltiptext">Show/Hide Side Bar</span>
-            <span class="material-icons" style={{ marginTop: '11px'}}>
-              reorder
-            </span>
-          </div>
-        </div>
         <div className="home-container">
           <MenuComponent />
           <ViewComponent />

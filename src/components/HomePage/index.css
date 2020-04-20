@@ -4,19 +4,20 @@
 
 .navBarShowHide{
     position: absolute;
-    bottom: 20px;
-    right: 50px;
+    top: 80vh;
+    left: 18%;
     z-index: 1000;
     color: white;
     text-align: center;
 }
 
 .sidebarShowHide-icon{
-    height: 50px;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+    height: 100px;
     width: 50px;
-    border-radius: 50%;
-    border: 1px solid #0A1359;
-    background-color: #0A1359;
+    /* border: 1px solid #0A1359; */
+    background-color: #142850;
     cursor: pointer;
 }
 

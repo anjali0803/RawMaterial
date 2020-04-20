@@ -41,7 +41,8 @@
 	left: 0;
 	background-color: #142850;
 	overflow-x: hidden;
-	padding-top: 20px;
+  padding-top: 20px;
+  transition: visibilty 2000ms, display 2000ms;
 }
 
 .sideBar a, .dropdown-btn{

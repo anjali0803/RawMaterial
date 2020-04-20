@@ -11,24 +11,17 @@ import { backendUrl } from '../../constant'
 import * as router from 'react-router-dom'
 
 class MenuComponent extends React.Component {
-  async componentDidMount () {
-    let data
-    data = await Axios.get(
-			`${backendUrl}/dashboard/all_project`
-    )
-    this.props.setDataList(data.data.data.Items)
-
-    const colList = [
-      { field: 'ProjectID', header: 'Project Id' },
-      { field: 'Title', header: 'Title' },
-      { field: 'Client', header: 'Customer' },
-      { field: 'ProjectType', header: 'Type' },
-      { field: 'AssignedOn', header: 'Assigned Date' },
-      { field: 'ProjectStatus', header: 'Status' },
-      { field: 'AssignedTo', header: 'Assigned To' },
-      { field: 'CreatedBy', header: 'Created By' }
-    ]
-    this.props.setColList(colList)
+  constructor(){
+    super()
+    this.state = {
+      viewMargin: '18%',
+      arrow: 'arrow-right'
+    }
+  }
+  componentDidMount () {
+    this.setState({
+      arrow: 'left'
+    })
   }
 
   render () {
@@ -57,7 +50,46 @@ class MenuComponent extends React.Component {
       this.props.history.push('/dashboard')
     }
 
+    const toggleSideNavBar = () => {
+      $(".sideBar").toggle()
+      if(this.state.viewMargin === '18%'){
+        $('.view-container').css({
+          'margin-left' : '0'
+        });
+        $('.navBarShowHide').css({
+          'left' : '0'
+        });
+        this.setState({
+          viewMargin: '0',
+          arrow: 'arrow_right'
+        })
+      } else {
+        $('.view-container').css({
+          'margin-left' : '18%'
+        });
+        $('.navBarShowHide').css({
+          'left' : '18%'
+        });
+        this.setState({
+          viewMargin: '18%',
+          arrow: 'arrow_left'
+        })
+      }
+    }
+  
+
     return (
+      <>
+      <div className="navBarShowHide">
+          <div className="sidebarShowHide-icon" onClick={toggleSideNavBar}>
+          <span class="material-icons" style={{
+            marginTop: '50%',
+            fontSize: '50px'
+          }}>
+           {this.state.arrow}
+          </span>
+        </div>
+      </div>
       <div className="sideBar">
         <div className="navMenu">
           {
@@ -101,6 +133,7 @@ class MenuComponent extends React.Component {
           </div>
         </div>
       </div>
+      </>
     )
   }
 }
