@@ -1,4 +1,54 @@
 .home-container {
     width : 100%;
-    
 }
+
+.navBarShowHide{
+    position: absolute;
+    bottom: 20px;
+    right: 50px;
+    z-index: 1000;
+    color: white;
+    text-align: center;
+}
+
+.sidebarShowHide-icon{
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    border: 1px solid #0A1359;
+    background-color: #0A1359;
+    cursor: pointer;
+}
+
+  /* Tooltip text */
+ .tooltiptext {
+    visibility: hidden;
+    width: 200px;
+    background-color: #3a47a7;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+   
+    /* Position the tooltip text - see examples below! */
+    position: absolute;
+    z-index: 1;
+    bottom: 8px;
+    right: 60px;
+  }
+  
+  /* Show the tooltip text when you mouse over the tooltip container */
+  .sidebarShowHide-icon:hover .tooltiptext {
+    visibility: visible;
+  }
+
+  .tooltiptext::after {
+    content: " ";
+    position: absolute;
+    top: 50%;
+    left: 100%; /* To the right of the tooltip */
+    margin-top: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent transparent #3a47a7;
+  }

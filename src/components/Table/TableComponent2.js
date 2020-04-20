@@ -354,7 +354,7 @@ export default class TableComponent extends React.Component {
                 <Column
                   field={el.field}
                   {...columnProps}
-                  style={{ width: '500px' }}
+                  style={{ width: '400px' }}
                 />
               );
             }
