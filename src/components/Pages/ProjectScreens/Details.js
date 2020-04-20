@@ -406,7 +406,7 @@ class Details extends React.Component {
     if(file4){
       const formData4 = new FormData();
       formData4.append('file', file4);
-      file4Res = await axios.post(
+      await axios.post(
         `${backendUrl}/dashboard/uploadfile`,
         formData4,
         {
@@ -414,7 +414,11 @@ class Details extends React.Component {
             'Content-Type': 'multipart/form-data'
           }
         }
-      )
+      ).then(res => {
+        file4Res = res
+      }).catch(err => {
+        file4Res = ''
+      })
     }
 
     return [file1Res, file2Res, file3Res, file4Res];
@@ -501,7 +505,7 @@ class Details extends React.Component {
         cost_sheet: fileResArr[0].data.data,
         specs_pipe: fileResArr[1].data.data,
         inner_coating: fileResArr[2].data.data,
-        outer_coating: fileResArr[3] ? fileRes3.data.data : '',
+        outer_coating: fileResArr[3] ? fileResArr[3].data.data : '',
         assignedTo: this.state.assignedUser,
         createdBy: this.props.userName,
         due_date: this.state.dueDate,
