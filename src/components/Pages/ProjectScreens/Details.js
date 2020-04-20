@@ -671,7 +671,7 @@ class Details extends React.Component {
               </div>
               {this.props.newProject ? <div className="col-6">
                 <div className="form-group">
-                  <div className="upload-label-2">Pipe Spec Number</div>
+                  <div className="upload-label-2">Pipe Spec Number <span className="optional-field">(Optional)</span></div>
                   {<AutoComplete
                     id="assignedUser"
                     inputStyle={{ width: '100%'}}
@@ -700,7 +700,7 @@ class Details extends React.Component {
                   <p className="text-danger font-italic">{this.state.errorMsg.pipeSpecNumber}</p>
                 </div>
                 <div className="form-group">
-                  <div className="upload-label-2">Coating Spec Number</div>
+                  <div className="upload-label-2">Coating Spec Number <span className="optional-field">(Optional)</span> </div>
                   {<AutoComplete
                     id="assignedUser"
                     inputStyle={{ width: '100%'}}
@@ -777,7 +777,7 @@ class Details extends React.Component {
               </div>: <div className="col-6">
                   <div className="readOnlyValues">Documents are already uploaded. Please find them on documents section.</div>
                   <div className="form-group">
-                  <div className="upload-label-2">Pipe Spec Number</div>
+                  <div className="upload-label-2">Pipe Spec Number <span className="optional-field">(Optional)</span></div>
                   {<AutoComplete
                     id="assignedUser"
                     inputStyle={{ width: '100%'}}
@@ -806,7 +806,7 @@ class Details extends React.Component {
                   <p className="text-danger font-italic">{this.state.errorMsg.pipeSpecNumber}</p>
                 </div>
                 <div className="form-group">
-                  <div className="upload-label-2">Coating Spec Number</div>
+                  <div className="upload-label-2">Coating Spec Number <span className="optional-field">(Optional)</span></div>
                   {<AutoComplete
                     id="assignedUser"
                     inputStyle={{ width: '100%'}}
