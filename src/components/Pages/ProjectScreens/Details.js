@@ -732,7 +732,6 @@ class Details extends React.Component {
                     suggestions={this.state.assignedUserSuggestions} 
                     completeMethod={this.suggestEmails.bind(this)}
                   />}
-                  <p className="text-danger font-italic">{this.state.errorMsg.assignedUser}</p>
                 </div>
 
                 <div className="upload-label-2" >Cost Sheet</div>
@@ -744,7 +743,7 @@ class Details extends React.Component {
                 />
                 <p className="text-danger font-italic">{this.state.errorMsg.file1}</p>
 
-                <div className="upload-label-2" >PIPE</div>
+                <div className="upload-label-2" >Pipe</div>
                 <FileUpload
                   className="pipe-upload"
                   onFileSelect={this.saveFile2}
@@ -752,7 +751,7 @@ class Details extends React.Component {
                 />
                 <p className="text-danger font-italic">{this.state.errorMsg.file2}</p>
 
-                <div className="upload-label-2" >INTERNAL-COATING</div>
+                <div className="upload-label-2" >Internal Coating</div>
                 <FileUpload
                   className="inner-coating-upload"
                   disabled={!this.props.newProject}
@@ -760,7 +759,7 @@ class Details extends React.Component {
                 />
                 <p className="text-danger font-italic">{this.state.errorMsg.file3}</p>
 
-                <div className="upload-label-2" >EXTERNAL-COATING <span className="optional-field">(Optional)</span></div>
+                <div className="upload-label-2" >External Coating<span className="optional-field">(Optional)</span></div>
                 <FileUpload
                   className="outer-coating-upload"
                   disabled={!this.props.newProject}
@@ -839,7 +838,6 @@ class Details extends React.Component {
                     suggestions={this.state.assignedUserSuggestions} 
                     completeMethod={this.suggestEmails.bind(this)}
                   />}
-                  <p className="text-danger font-italic">{this.state.errorMsg.assignedUser}</p>
                 </div>
                   <div className="form-group">
                     <div className="upload-label-2">Created By</div>

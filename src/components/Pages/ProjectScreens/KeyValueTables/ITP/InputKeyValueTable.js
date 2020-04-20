@@ -406,7 +406,8 @@ class ITP extends React.Component {
             <div className="col-12">
               { this.renderSaveButton() ? <button type="button pad-left" onClick={this.onSave} className="actionBtn btn-success">Save</button> : ''}
               { this.renderSaveButton() ? <button type="button pad-left" onClick={this.createNewVerison} className="actionBtn btn-primary">Create New Ver.</button> : ''}
-              <button type="button pad-left" className="actionBtn btn-dark" onClick={this.generateDoc}>
+              <button type="button pad-left" className="actionBtn btn-dark"  style={{top: '3px',
+    position: 'relative'}} onClick={this.generateDoc}>
                 <i className="material-icons">
 									save
                 </i>

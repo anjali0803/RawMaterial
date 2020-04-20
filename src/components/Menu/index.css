@@ -107,3 +107,10 @@
   float: right;
   padding-right: 8px;
 }
+
+
+@media only screen and (max-width: 1280px) {
+  .sideBar a, .dropdown-btn{
+   font-size: 12px !important;
+  }
+}

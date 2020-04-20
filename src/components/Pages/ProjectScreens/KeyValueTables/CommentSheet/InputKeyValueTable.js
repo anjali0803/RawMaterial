@@ -502,7 +502,8 @@ class CommentSheet extends React.Component {
             <div className="col-12">
               { this.renderSaveButton() ? <button type="button pad-left" onClick={this.onSave} className="actionBtn btn-success">Save</button> : ''}
               { this.renderSaveButton() ? <button type="button pad-left" onClick={this.createNewVerison} className="actionBtn btn-primary">Create New Ver.</button> : ''}
-              <button type="button pad-left" onClick={this.generateDoc} className="actionBtn btn-dark">
+              <button type="button pad-left" onClick={this.generateDoc} style={{top: '3px',
+    position: 'relative'}}  className="actionBtn btn-dark">
                 <i className="material-icons">
 									save
                 </i>
