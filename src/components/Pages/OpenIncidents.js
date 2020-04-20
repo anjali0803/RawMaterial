@@ -7,18 +7,18 @@ export default class OpenIncidents extends React.Component {
     this.videoTutorialList = [
       {
         title: 'MatSci AI Demo 1',
-        url: 'https://youtu.be/WtvErKAoPgI'
+        url: 'https://www.youtube.com/embed/WtvErKAoPgI'
       },
       {
         title: 'MatSci AI Demo 2',
-        url: 'https://youtu.be/WtvErKAoPgI'
+        url: 'https://www.youtube.com/embed/WtvErKAoPgI'
       }
     ]
 
     this.documentationList = [
       {
         text: 'Create New Project',
-        url: ''
+        url: 'https://www.lrde.epita.fr/~adl/ens/algo/algo.errata.2019.pdf'
       },
       {
         text: 'Admin Controls',
@@ -79,7 +79,7 @@ export default class OpenIncidents extends React.Component {
               {
                 this.documentationList.map(listElement => {
                   return (
-                    <a style={{ color: 'black', fontSize: '16px' }} href={listElement.url}><li className="list-group-item">{listElement.text}</li></a>
+                    <a style={{ color: 'black', fontSize: '16px' }} target="_blank"  href={listElement.url}><li className="list-group-item">{listElement.text}</li></a>
                   )
                 })
               }

@@ -45,8 +45,6 @@ class Details extends React.Component {
       createdOn: '',
       submittedOn: '',
       errorMsg: {
-        pipeSpecNumber: '',
-        coatingSpecNumber: '',
         dueDate: '',
         type: '',
         customer: '',
@@ -512,17 +510,27 @@ class Details extends React.Component {
         purchase_order: this.state.purchasedOrderNo
       }
     ).then(res => {
-      const projectId = res.data.data.ProjectID
-      this.props.setProjectId(projectId)
-      this.props.setProjectCustomer(customer)
-      this.props.setProjectTitle(title)
-      this.props.setProjectType(type)
-      this.props.setDueDate(dueDate)
-      this.props.setAssignedUser(this.state.assignedUser)
-      this.setState({
-        isLoading: false
-      })
-      history.push('/Inquiry/create-new-projects/calculations')
+      if(res.data.status === 'error'){
+        this.setState({
+          isLoading: false,
+          errorMsg: {
+            ...this.state.errorMsg,
+            CreateProjectErrorMsg: 'Some issue occured during creating project. Please try again!'
+          }
+        })
+      } else {
+        const projectId = res.data.data.ProjectID
+        this.props.setProjectId(projectId)
+        this.props.setProjectCustomer(customer)
+        this.props.setProjectTitle(title)
+        this.props.setProjectType(type)
+        this.props.setDueDate(dueDate)
+        this.props.setAssignedUser(this.state.assignedUser)
+        this.setState({
+          isLoading: false
+        })
+        history.push('/Inquiry/create-new-projects/calculations')
+      }
     }).catch(err => {
       this.setState({
         isLoading: false,

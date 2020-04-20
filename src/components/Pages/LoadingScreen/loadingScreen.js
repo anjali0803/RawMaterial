@@ -15,7 +15,13 @@ class LoadingScreen extends React.Component {
         src="./../../../assests/44.gif"
         style={{ margin: '100px' }}
       />
-      <h2 style={{ fontWeight: 'light' }}>Loading.....</h2>
+      <h2 style={{
+        color: '#142850',
+        fontWeight: 'light', 
+        position: 'relative',
+        top: '-50px' }}>
+          Loading.....
+      </h2>
     </div>
   }
 }
