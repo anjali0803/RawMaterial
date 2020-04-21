@@ -15,12 +15,12 @@ class MenuComponent extends React.Component {
     super()
     this.state = {
       viewMargin: '18%',
-      arrow: 'arrow-right'
+      arrow: 'arrow_right'
     }
   }
   componentDidMount () {
     this.setState({
-      arrow: 'left'
+      arrow: 'arrow_left'
     })
   }
 
