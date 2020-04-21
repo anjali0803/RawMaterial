@@ -12,10 +12,10 @@
 }
 
 .sidebarShowHide-icon{
-  border-top-right-radius: 20px;
-  border-bottom-right-radius: 20px;
-    height: 100px;
-    width: 50px;
+  border-top-right-radius: 40px;
+  border-bottom-right-radius: 40px;
+    height: 80px;
+    width: 40px;
     /* border: 1px solid #0A1359; */
     background-color: #142850;
     cursor: pointer;

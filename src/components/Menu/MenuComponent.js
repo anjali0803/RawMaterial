@@ -83,8 +83,10 @@ class MenuComponent extends React.Component {
       <div className="navBarShowHide">
           <div className="sidebarShowHide-icon" onClick={toggleSideNavBar}>
           <span class="material-icons" style={{
-            marginTop: '50%',
-            fontSize: '50px'
+               marginTop: '40%',
+               fontSize: '50px',
+               position: 'relative',
+               left: '-8px'
           }}>
            {this.state.arrow}
           </span>

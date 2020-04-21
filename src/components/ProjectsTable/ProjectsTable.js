@@ -123,7 +123,7 @@ export class ProjectsTable extends React.Component {
           filterable
           columns={colList.map((col) => Object.assign(
             { Header: col.header, accessor: col.field, filterMethod: (filter, row) => row[filter.id].toLowerCase().includes(filter.value.toLowerCase()), ...col }))}
-          defaultFilterMethod={(filter, row) => String(row[filter.id]) === filter.value}
+          defaultFilterMethod={(filter, row) => String(row[filter.CreatedOn]) === filter.value}
           data={this.filterRows(dataList, colList, searchText).map(item => {
             const _id = item.ProjectID
             const { ProjectStatus = '', Status = '', Download = '' } = item

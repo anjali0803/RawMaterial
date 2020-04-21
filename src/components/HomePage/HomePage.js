@@ -16,8 +16,10 @@ const history = createHashHistory()
 class HomePage extends React.Component {
   constructor () {
     super()
-  
-    history.push('/dashboard')
+    
+    if(window.location.hash === '#/' || window.location.hash === '/' || window.location.hash === '#'){
+      history.push('/dashboard')
+    }
   }
 
   render () {
