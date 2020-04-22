@@ -229,9 +229,13 @@ class InputKeyValueTable extends React.Component {
     let nData = []
     data.map((row, i) => {
       const t = row;
-      t['OD'] = [ row['OD'], this.state.backUpData[i] ? this.state.backUpData[i]['OD'] : 0 ];
-      t['Wall thickness'] = [this.state.backUpData[i] ? this.state.backUpData[i]['Wall thickness'] : 0 , row['Wall thickness']];
-      t['Quantity'] = [ row['Quantity'], this.state.backUpData[i] ? this.state.backUpData[i]['Quantity'] : 0];
+      t['Bare / Coated External/Coated (Ext+Intl)'] =  Array.isArray(t['Bare / Coated External/Coated (Ext+Intl)']) ?  t['Bare / Coated External/Coated (Ext+Intl)'] : [t['Bare / Coated External/Coated (Ext+Intl)']];
+      t['Each Pipe Length'] =  Array.isArray(t['Each Pipe Length']) ?  t['Each Pipe Length'] : [Number(t['Each Pipe Length'])];
+      t['Grade'] = Array.isArray(t['Grade']) ? t['Grade'] : [t['Grade']];
+      t['Quantity (MT)'] =Array.isArray( t['Quantity (MT)']) ? t['Quantity (MT)'] : [Number(t['Quantity (MT)'])];
+      t['OD'] = [ Number(row['OD']), this.state.backUpData[i] ? this.state.backUpData[i]['OD'] : 0 ];
+      t['Wall thickness'] = [this.state.backUpData[i] ? this.state.backUpData[i]['Wall thickness'] : 0 , Number(row['Wall thickness'])];
+      t['Quantity'] = [ Number(row['Quantity']), this.state.backUpData[i] ? this.state.backUpData[i]['Quantity'] : 0];
       nData.push(t);
     })
 

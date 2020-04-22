@@ -771,7 +771,7 @@ class Details extends React.Component {
                 />
                 <p className="text-danger font-italic">{this.state.errorMsg.file3}</p>
 
-                <div className="upload-label-2" >External Coating<span className="optional-field">(Optional)</span></div>
+                <div className="upload-label-2" >External Coating</div>
                 <FileUpload
                   className="outer-coating-upload"
                   disabled={!this.props.newProject}
