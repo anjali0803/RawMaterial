@@ -140,12 +140,6 @@ class LoginPage extends React.Component {
           </div>
         </div>
         : <div>
-          <Helmet
-            title={'AutoCIP'}
-            meta={[
-              { name: 'description', content: '' }
-            ]}
-          />
           <Row>
             <div className="limiter">
               <div className="container-login100">
