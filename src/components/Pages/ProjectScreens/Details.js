@@ -345,12 +345,19 @@ class Details extends React.Component {
         pipespec_number: this.state.pipeSpecNumber,
         coatingspec_number: this.state.coatingSpecNumber,
         purchase_order: this.state.purchasedOrderNo
+      },
+      {
+        timeout: 60000
       }
-    )
+    ).catch(err => {
+      this.setState({
+        CreateProjectErrorMsg: 'Time limit exceeded for request. Please try again.'
+      })
+    })
 
     if(updateProjectRes.data.status === 'error') {
       this.setState({
-        CreateProjectErrorMsg: 'Some issue occur in updating project. Please try again'
+        CreateProjectErrorMsg: 'Some issue occur in updating project. Please try again.'
       })
     }
     this.setState({
@@ -512,6 +519,9 @@ class Details extends React.Component {
         pipespec_number: this.state.pipeSpecNumber,
         coatingspec_number: this.state.coatingSpecNumber,
         purchase_order: this.state.purchasedOrderNo
+      },
+      {
+        timeout: 90000
       }
     ).then(res => {
       if(res.data.status === 'error'){
@@ -540,7 +550,7 @@ class Details extends React.Component {
         isLoading: false,
         errorMsg: {
           ...this.state.errorMsg,
-          CreateProjectErrorMsg: 'Some issue occured during creating project. Please try again!'
+          CreateProjectErrorMsg: 'Time limit exceeded for request. Please try again!'
         }
       })
     })

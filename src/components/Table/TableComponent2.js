@@ -350,7 +350,6 @@ export default class TableComponent extends React.Component {
               id: el.header,
               header: el.header,
               filter: true,
-              sortable: true,
               filterMatchMode: 'startsWith'
             }
             // console.log(header.toLowerCase().replace(/ /g, ''))

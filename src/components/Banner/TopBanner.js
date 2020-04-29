@@ -166,7 +166,7 @@ class TopBanner extends React.Component {
     let flag = false
     const cErr = this.state.errorMsgs
     if (!this.state.updatePasswordCheck) {
-      fields = fields.slice(0, 4)
+      fields = fields.slice(0, 3)
     }
     fields.map(field => {
       if (this.state[field] === '') {
