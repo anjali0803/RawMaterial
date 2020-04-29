@@ -66,11 +66,13 @@ class ClosedProjects extends React.Component {
 
   render () {
     // console.log(typeof this.props.dataList)
+    const sortedList = this.state.tableData.sort((a,b) => new Date(b.CreatedOn).getTime() - new Date(a.CreatedOn).getTime());
+    
     return this.state.isLoading === false ? (
       <div>
         <ProjectsTable
           colList={this.state.tableColList}
-          dataList={this.state.tableData}
+          dataList={sortedList}
           onProjectIdClick={this.onProjectIdClick}
           onRefresh={this.onRefresh}
         />

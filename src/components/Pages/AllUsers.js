@@ -165,12 +165,26 @@ class AllUsers extends React.Component {
           paginatorPosition={'top'}
           scrollable={true}
           autoLayout={true}
+          resizableColumns={true}
           rows={10}
           selection={this.state.selected}
           onSelectionChange={e => this.setState({ selected: e.value })}
         >
           <Column selectionMode="multiple" style={{ width: '3em' }}/>
           {colList.map(el => {
+            if(el.field === 'email'){
+              return (
+                <Column
+                  style={{width: '350px'}}
+                  key={el.header}
+                  field={el.field}
+                  header={el.header}
+                  body={el.body}
+                  filter={true}
+                  filterMatchMode="startsWith"
+                />
+              )
+            }
             return (
               <Column
                 style={{width: '200px'}}
@@ -178,7 +192,7 @@ class AllUsers extends React.Component {
                 field={el.field}
                 header={el.header}
                 body={el.body}
-                filter={false}
+                filter={true}
                 filterMatchMode="startsWith"
               />
             )

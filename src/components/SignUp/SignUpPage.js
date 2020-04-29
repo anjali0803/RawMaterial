@@ -127,6 +127,7 @@ class SignUpPage extends React.Component {
       }
     })
   }
+
   validateFormData () {
     const fields = Object.keys(this.state.errorMsg)
     let flag = false
@@ -207,7 +208,7 @@ class SignUpPage extends React.Component {
                 <label>
                   Username
                 </label>
-                <input className="input100 has-val" type="text" name="username" onChange={this.handleInputChange} value={this.state.username}/>
+                <input className="input100 has-val" type="text" name="username" maxLength={10} onChange={this.handleInputChange} value={this.state.username}/>
               </div>
                 <p className="text-danger font-italic">{this.state.errorMsg.username}</p>
 

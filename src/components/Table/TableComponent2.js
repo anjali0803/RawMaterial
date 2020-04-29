@@ -81,7 +81,18 @@ export default class TableComponent extends React.Component {
   }
 
   inputTextEditor (props, field) {
-    return <InputTextarea value={props.rowData[field]} onBlur={(e) => console.log(props.rowData[field])} onChange={(e) => this.onEditorValueChange(e.target.value, props)} rows={3} cols={5}/>
+    if( props.rowData[field] === undefined){
+      return <InputTextarea value={props.rowData[field]} onBlur={(e) => console.log(props.rowData[field])} onChange={(e) => this.onEditorValueChange(e.target.value, props)} rows={1} cols={30}/>
+    }
+    if(props.rowData[field].toString().length < 10){
+      return <InputTextarea value={props.rowData[field]} onBlur={(e) => console.log(props.rowData[field])} onChange={(e) => this.onEditorValueChange(e.target.value, props)} rows={2} cols={30}/>
+    } else if (props.rowData[field].toString().length < 100) {
+      return <InputTextarea value={props.rowData[field]} onBlur={(e) => console.log(props.rowData[field])} onChange={(e) => this.onEditorValueChange(e.target.value, props)} rows={4} cols={30}/>
+    } else if (props.rowData[field].toString().length < 500) {
+      return <InputTextarea value={props.rowData[field]} onBlur={(e) => console.log(props.rowData[field])} onChange={(e) => this.onEditorValueChange(e.target.value, props)} rows={7} cols={30}/>
+    } else {
+      return <InputTextarea value={props.rowData[field]} onBlur={(e) => console.log(props.rowData[field])} onChange={(e) => this.onEditorValueChange(e.target.value, props)} rows={12} cols={30}/>
+    }
   }
 
   onEditorValueChange (value, props) {
@@ -320,7 +331,7 @@ export default class TableComponent extends React.Component {
           footer={footer}
           paginator={true}
           paginatorPosition={'bottom'}
-          rows={10}
+          rows={5}
           scrollable={true}
           editable={this.props.editable}
           autoLayout={this.props.notResizeable ? false : true}

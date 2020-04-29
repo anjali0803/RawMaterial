@@ -87,7 +87,18 @@ export default class TableComponent extends React.Component {
   }
 
   inputTextEditor (props, field) {
-    return <InputTextarea value={props.rowData[field]} onBlur={(e) => console.log(props.rowData[field])} onChange={(e) => this.onEditorValueChange(e.target.value, props)} rows={10} cols={30}/>
+    if( props.rowData[field] === undefined){
+      return <InputTextarea value={props.rowData[field]} onBlur={(e) => console.log(props.rowData[field])} onChange={(e) => this.onEditorValueChange(e.target.value, props)} rows={1} cols={30}/>
+    }
+    if(props.rowData[field].toString().length < 20){
+      return <InputTextarea value={props.rowData[field]} onBlur={(e) => console.log(props.rowData[field])} onChange={(e) => this.onEditorValueChange(e.target.value, props)} rows={2} cols={30}/>
+    } else if (props.rowData[field].toString().length < 100) {
+      return <InputTextarea value={props.rowData[field]} onBlur={(e) => console.log(props.rowData[field])} onChange={(e) => this.onEditorValueChange(e.target.value, props)} rows={4} cols={30}/>
+    } else if (props.rowData[field].toString().length < 500) {
+      return <InputTextarea value={props.rowData[field]} onBlur={(e) => console.log(props.rowData[field])} onChange={(e) => this.onEditorValueChange(e.target.value, props)} rows={7} cols={30}/>
+    } else {
+      return <InputTextarea value={props.rowData[field]} onBlur={(e) => console.log(props.rowData[field])} onChange={(e) => this.onEditorValueChange(e.target.value, props)} rows={12} cols={30}/>
+    }
   }
 
   onEditorValueChange (value, props) {
@@ -445,7 +456,7 @@ export default class TableComponent extends React.Component {
           paginator={true}
           paginatorPosition={'bottom'}
           style={this.props.style}
-          rows={10}
+          rows={5}
           scrollable={true}
           editable={this.props.editable}
           autoLayout={true}
@@ -459,9 +470,7 @@ export default class TableComponent extends React.Component {
             let columnProps = {
               id: el.header,
               header: el.header,
-              filter: true,
-              sortable: true,
-              filterMatchMode: 'startsWith'
+              filter: true
             }
             // console.log(header.toLowerCase().replace(/ /g, ''))
 
@@ -469,7 +478,7 @@ export default class TableComponent extends React.Component {
               return <Column
                 id={`table-${index}`}
                 {...columnProps}
-                style={{ width: '200px' }}
+                style={{ width: '100px' }}
               />
             } else {
               if(header === 'Status'){
@@ -497,7 +506,7 @@ export default class TableComponent extends React.Component {
                 <Column
                   field={el.field}
                   {...columnProps}
-                  style={{ width: '200px' }}
+                  style={{ width: '100px' }}
                 />
               );
             }

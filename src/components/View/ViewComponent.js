@@ -27,7 +27,7 @@ class ViewComponent extends React.Component {
       { path: '/inquiry/projects-assigned-to-me', component: ProjectAssignedToMe },
       { path: '/inquiry/projects-assigned-by-me', component: ProjectAssignedByMe },
       { path: '/inquiry/all-ongoing-projects', component: AllOngoingProjects },
-      { path: '/inquiry/closed-projects', component: ClosedProjects },
+      { path: '/inquiry/submitted-projects', component: ClosedProjects },
       { path: '/inquiry/cancelled-projects', component: CancelledProjects },
       { path: '/inquiry/archieve-projects', component: ArchieveProjects },
       { path: '/report/generate-new-reports', component: GenerateNewProjects },

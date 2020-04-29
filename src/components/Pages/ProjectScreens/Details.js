@@ -698,7 +698,7 @@ class Details extends React.Component {
                         })
                       }
                     }}
-                    suggestions={this.state.assignedUserSuggestions} 
+                    suggestions={[]} 
                     completeMethod={this.suggestEmails.bind(this)}
                   />}
                   <p className="text-danger font-italic">{this.state.errorMsg.pipeSpecNumber}</p>
@@ -727,7 +727,7 @@ class Details extends React.Component {
                         })
                       }
                     }}
-                    suggestions={this.state.assignedUserSuggestions} 
+                    suggestions={[]} 
                     completeMethod={this.suggestEmails.bind(this)}
                   />}
                   <p className="text-danger font-italic">{this.state.errorMsg.coatingSpecNumber}</p>
@@ -741,7 +741,7 @@ class Details extends React.Component {
                     onChange={(e) => {
                       this.setState({purchasedOrderNo: e.value});
                     }}
-                    suggestions={this.state.assignedUserSuggestions} 
+                    suggestions={[]} 
                     completeMethod={this.suggestEmails.bind(this)}
                   />}
                 </div>
@@ -804,7 +804,7 @@ class Details extends React.Component {
                         })
                       }
                     }}
-                    suggestions={this.state.assignedUserSuggestions} 
+                    suggestions={[]} 
                     completeMethod={this.suggestEmails.bind(this)}
                   />}
                   <p className="text-danger font-italic">{this.state.errorMsg.pipeSpecNumber}</p>
@@ -833,7 +833,7 @@ class Details extends React.Component {
                         })
                       }
                     }}
-                    suggestions={this.state.assignedUserSuggestions} 
+                    suggestions={[]} 
                     completeMethod={this.suggestEmails.bind(this)}
                   />}
                   <p className="text-danger font-italic">{this.state.errorMsg.coatingSpecNumber}</p>
@@ -847,7 +847,7 @@ class Details extends React.Component {
                     onChange={(e) => {
                       this.setState({purchasedOrderNo: e.value});
                     }}
-                    suggestions={this.state.assignedUserSuggestions} 
+                    suggestions={[]} 
                     completeMethod={this.suggestEmails.bind(this)}
                   />}
                 </div>

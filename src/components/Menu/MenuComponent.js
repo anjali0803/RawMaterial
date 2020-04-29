@@ -117,7 +117,7 @@ class MenuComponent extends React.Component {
             <a href="#/inquiry/projects-assigned-to-me" className={ window.location.href.replace(window.location.origin, '') === '/#/inquiry/projects-assigned-to-me' ? 'active-menu' : ''}><i className="pi pi-fw pi-align-left"></i>Projects Assigned to me</a>
             <a href="#/inquiry/projects-assigned-by-me" className={ window.location.href.replace(window.location.origin, '') === '/#/inquiry/projects-assigned-by-me' ? 'active-menu' : ''}><i className="pi pi-fw pi-align-right"></i>Projects Assigned by me</a>
             <a href="#/inquiry/all-ongoing-projects" className={ window.location.href.replace(window.location.origin, '') === '/#/inquiry/all-ongoing-projects' ? 'active-menu' : ''}><i className="pi pi-fw pi-clone"></i>All Ongoing Projects</a>
-            <a href="#/inquiry/closed-projects" className={ window.location.href.replace(window.location.origin, '') === '/#/inquiry/closed-projects' ? 'active-menu' : ''}><i className="pi pi-fw pi-copy"></i>Submitted Projects</a>
+            <a href="#/inquiry/submitted-projects" className={ window.location.href.replace(window.location.origin, '') === '/#/inquiry/submitted-projects' ? 'active-menu' : ''}><i className="pi pi-fw pi-copy"></i>Submitted Projects</a>
             <a href="#/inquiry/cancelled-projects" className={ window.location.href.replace(window.location.origin, '') === '/#/inquiry/cancelled-projects' ? 'active-menu' : ''}><i class="pi pi-times"></i>Cancelled Projects</a>
           </div>
           <button className="dropdown-btn dropdown-btn-2" onClick={toggleDropDownMenu}><i className="pi pi-fw pi-file-excel"></i>Report

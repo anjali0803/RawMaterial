@@ -162,6 +162,7 @@ class PendingRequests extends React.Component {
           paginatorPosition={'bottom'}
           rows={10}
           responsive={true}
+          resizableColumns={true}
           scrollable={true}
           autoLayout={true}
           selection={this.state.selected}
@@ -169,6 +170,19 @@ class PendingRequests extends React.Component {
         >
           <Column selectionMode="multiple" style={{ width: '3em' }} />
           {colList.map(el => {
+            if(el.field === 'email'){
+              return (
+                <Column
+                  style={{width: '350px'}}
+                  key={el.header}
+                  field={el.field}
+                  header={el.header}
+                  body={el.body}
+                  filter={true}
+                  filterMatchMode="startsWith"
+                />
+              )
+            }
             return (
               <Column
                 style={{ width: '200px' }}
@@ -176,10 +190,8 @@ class PendingRequests extends React.Component {
                 field={el.field}
                 header={el.header}
                 body={el.body}
-                filter={false}
+                filter={true}
                 filterMatchMode="startsWith"
-                autoLayout={true}
-                responsive={true}
               />
             )
           })}

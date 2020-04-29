@@ -305,7 +305,7 @@ class TopBanner extends React.Component {
             </span>
           </div>
           {this.props.userLogin ? <>
-            <div style={{ position: 'absolute', right: '60px', cursor: 'auto'}} className="sign-out-icon"><span className="username-text"> {this.props.userName} </span></div>
+            <div style={{ position: 'absolute', right: '60px', cursor: 'auto'}} className="sign-out-icon"><span className="username-text"> {this.props.userName.split('@')[0]} </span></div>
             <div className="sign-out-icon">
               <div className="userProfileButton" onClick={(event) => this.menu.toggle(event)}>
               <span class="material-icons">perm_identity</span>

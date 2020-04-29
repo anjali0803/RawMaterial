@@ -66,6 +66,12 @@ class ProjectAssignedByMe extends React.Component {
 
   render () {
     // console.log(typeof this.props.dataList)
+    const assignedByMeList = this.state.tableData.filter(element => {
+      if (element.CreatedBy == this.props.userName) return element
+    });
+
+    const sortedAssigedByMeList = assignedByMeList.sort((a,b) => new Date(b.CreatedOn).getTime() - new Date(a.CreatedOn).getTime());
+    
     return this.state.isLoading === false ? (
       <div>
         <ProjectsTable
@@ -74,9 +80,7 @@ class ProjectAssignedByMe extends React.Component {
               return element
             }
           })}
-          dataList={this.state.tableData.filter(element => {
-            if (element.CreatedBy == this.props.userName) return element
-          })}
+          dataList={sortedAssigedByMeList}
 
           onProjectIdClick={this.onProjectIdClick}
           onRefresh={this.onRefresh}
