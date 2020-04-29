@@ -158,6 +158,7 @@ class CommentSheet extends React.Component {
     this.onSave = this.onSave.bind(this)
     this.onDelete = this.onDelete.bind(this)
     this.state = {
+      x: 0,
       isLoading: false,
       documentId: props.documentId,
       checked1: true,
@@ -195,6 +196,8 @@ class CommentSheet extends React.Component {
     this.renderSaveButton = this.renderSaveButton.bind(this)
     this.editable = this.editable.bind(this)
     this.generateDoc = this.generateDoc.bind(this)
+    this.scrollLeft= this.scrollLeft.bind(this)
+    this.scrollRight = this.scrollRight.bind(this)
     // // this.onDocIdClick = this.onDocIdClick.bind(this);
   }
 
@@ -404,7 +407,7 @@ class CommentSheet extends React.Component {
     })
     this.setState({
       versionMenu: versionMenu,
-      wdOptions: this,pipeWDOptions,
+      wdOptions: this.pipeWDOptions,
       selectedVerison: { name: 'version 1', code: 0 },
       doc: 'PIPE'
     })
@@ -559,6 +562,30 @@ class CommentSheet extends React.Component {
     }
   }
 
+  scrollLeft(){
+    const target = $("#app > div > div.home-container > div.view-container > div > div.subscreens > div > div.tableContainer > div.p-datatable.p-component.p-datatable-resizable.p-datatable-resizable-fit.p-datatable-scrollable.p-datatable-auto-layout > div.p-datatable-scrollable-wrapper > div > div.p-datatable-scrollable-body");
+    target.animate({
+      scrollLeft: this.state.x - 300
+    })
+    if( this.state.x > 0){
+      this.setState({
+        x: this.state.x - 300
+      })
+    }
+  }
+
+  scrollRight(){
+    const target = $("#app > div > div.home-container > div.view-container > div > div.subscreens > div > div.tableContainer > div.p-datatable.p-component.p-datatable-resizable.p-datatable-resizable-fit.p-datatable-scrollable.p-datatable-auto-layout > div.p-datatable-scrollable-wrapper > div > div.p-datatable-scrollable-body");
+    target.animate({
+      scrollLeft: this.state.x + 300
+    })
+    if(this.state.x < 1980 ){
+      this.setState({
+        x: this.state.x + 300
+      })
+    }
+  }
+
   render () {
     let view = <div></div>
     // for stubbed data only
@@ -586,6 +613,17 @@ class CommentSheet extends React.Component {
           wdOptions={this.state.wdOptions}
           broadColumns={['Client Requirements', 'Proposal']}
         />
+        <div className="scroll-left-button" onClick={this.scrollLeft}>
+          <span class="material-icons">
+            navigate_before
+          </span>
+        </div>
+
+        <div className="scroll-right-button" onClick={this.scrollRight}>
+          <span class="material-icons">
+            navigate_next
+          </span>
+        </div>
       </div>
     ) : (
       <LoadingScreen />

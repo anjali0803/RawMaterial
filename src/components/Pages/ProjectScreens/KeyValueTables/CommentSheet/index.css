@@ -50,6 +50,34 @@
     border-radius: 5px;
 }
 
+.scroll-right-button, .scroll-left-button{
+    position: fixed;
+    bottom: 40%;
+    height: 40px;
+    width: 40px;
+    background-color: darkblue;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    cursor: pointer;
+    opacity: 0.5;
+}
+
+.scroll-right-button:hover, .scroll-left-button:hover{
+    opacity: 1;
+}
+
+.scroll-right-button{
+    right: 50px;
+}
+
+.scroll-left-button{
+    right: 120px;
+}
+
 @media only screen and (max-width: 1280px) {
 	.pipeButton, .coatingButton {
 		height: 40px !important;

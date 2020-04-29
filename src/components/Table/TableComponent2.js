@@ -331,7 +331,7 @@ export default class TableComponent extends React.Component {
           footer={footer}
           paginator={true}
           paginatorPosition={'bottom'}
-          rows={5}
+          rows={this.props.rows ? this.props.rows : 5}
           scrollable={true}
           editable={this.props.editable}
           autoLayout={this.props.notResizeable ? false : true}

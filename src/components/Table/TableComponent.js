@@ -418,8 +418,6 @@ export default class TableComponent extends React.Component {
   }
 
   render () {
-    console.log('props', this.props)
-    console.log('state', this.state)
     let { colList, dataList } = this.props
     const { selected, selectAll } = this.state
     const actions = this.props.actionsLabel
@@ -456,7 +454,7 @@ export default class TableComponent extends React.Component {
           paginator={true}
           paginatorPosition={'bottom'}
           style={this.props.style}
-          rows={5}
+          rows={this.props.rows ? this.props.rows : 5}
           scrollable={true}
           editable={this.props.editable}
           autoLayout={true}
@@ -499,14 +497,14 @@ export default class TableComponent extends React.Component {
                     field={el.field}
                     {...columnProps}
                     style={{ width: '400px' }}
-                  />
+                />
                 );
               }
               return (
                 <Column
                   field={el.field}
                   {...columnProps}
-                  style={{ width: '100px' }}
+                  style={{ width: '200px' }}
                 />
               );
             }

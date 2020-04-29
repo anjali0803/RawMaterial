@@ -318,6 +318,7 @@ class RMTS extends React.Component {
           acceptButton={false}
           actionItemNotNeeded={true}
           rejectButton={false}
+          rows={20}
         />
 
         <TableComponent
@@ -331,6 +332,7 @@ class RMTS extends React.Component {
           acceptButton={false}
           rejectButton={false}
           actionItemNotNeeded={true}
+          rows={20}
         />
       </div>
     ) : (

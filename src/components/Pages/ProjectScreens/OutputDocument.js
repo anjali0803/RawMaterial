@@ -194,7 +194,7 @@ class OutputDocument extends React.Component {
     return !this.state.isLoading ? (
       <div>
         <Growl style={{ top: '15%'}} ref={(el) => this.growl = el} />
-        <TableComponent colList={this.state.tableColList} dataList={this.state.tableData} onDocumentIdClick={this.onDocIdClick} onRefresh={this.onRefresh} actionItemNotNeeded={true}/>
+        <TableComponent colList={this.state.tableColList} dataList={this.state.tableData} onDocumentIdClick={this.onDocIdClick} onRefresh={this.onRefresh} rows={10} actionItemNotNeeded={true}/>
         <div style={{ display: 'flex'}}>
           {
             this.state.showSubmitButton ? <></> : 
