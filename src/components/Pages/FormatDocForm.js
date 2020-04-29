@@ -77,7 +77,6 @@ export class FormatDocForm extends React.Component {
           <div className="col-12 justify-content-center">
             <h2>Format Document Form</h2>
             <hr />
-            <hr />
             <div className="form-group">
               <div className="upload-label-2">ITP Format Number</div>
               <Input value={this.state.itpFormat} onChange={this.saveITPFormat} placeholder="Please enter issue ITP format" required/>
@@ -91,7 +90,9 @@ export class FormatDocForm extends React.Component {
               <Input value={this.state.csFormat} onChange={this.saveCSFormat} placeholder="Please enter issue CS format" required/>
             </div>
             <button className="saveButton" onClick={this.onSave} type="submit">Update Format</button>
-            <Dialog header="Please Wait..." visible={this.state.visible} style={{ width: '50vw' }} modal={true} onHide={() => {}}>
+            <Dialog header="Please Wait..." visible={this.state.visible} style={{ width: '50vw' }} modal={true} onHide={() => {this.setState({
+              visible: false
+            })}}>
               Your response is getting submitted!!
             </Dialog>
           </div>

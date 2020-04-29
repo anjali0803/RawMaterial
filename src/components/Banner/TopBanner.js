@@ -34,7 +34,6 @@ class TopBanner extends React.Component {
         name: '',
         designation: '',
         department: '',
-        mobileNumber: '',
         oldPassword: '',
         newPassword: ''
       },
@@ -137,7 +136,21 @@ class TopBanner extends React.Component {
     })
   }
 
-  showUpdateProfileForm () {
+  async showUpdateProfileForm () {
+    await axios(
+      `${authenticationUrl}/api/user`,
+      {
+        params: {
+          username: this.props.userName
+        }
+      }
+    ).then( res => {
+      this.setState({
+        name: res.data.data.name,
+        designation: res.data.data.role,
+        department: res.data.data.department   
+      })
+    })
     this.setState({
       displayUpdateForm: true
     })
@@ -179,6 +192,7 @@ class TopBanner extends React.Component {
       username: this.props.userName,
       name: this.state.name,
       role: this.state.designation,
+      mobileNumber: this.state.mobileNumber,
       department: this.state.department
     }
     if (this.state.updatePasswordCheck) {
@@ -255,11 +269,6 @@ class TopBanner extends React.Component {
               <div className="upload-label-2">Name</div>
               <Input value={this.state.name} onChange={this.saveName} placeholder="Please enter name" required/>
               <p className="text-danger font-italic">{this.state.errorMsgs.name}</p>
-            </div>
-            <div className="form-group">
-              <div className="upload-label-2">Mobile Number</div>
-              <Input value={this.state.mobileNumber} keyfilter="num" maxLength={10} onChange={this.saveMobileNumber} placeholder="Please enter your mobile number" required/>
-              <p className="text-danger font-italic">{this.state.errorMsgs.mobileNumber}</p>
             </div>
             <div className="form-group">
               <div className="upload-label-2">Designation</div>
