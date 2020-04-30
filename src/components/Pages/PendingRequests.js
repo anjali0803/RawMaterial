@@ -8,6 +8,7 @@ import {
 } from '../../actions/loginActions'
 import './index.css'
 import axios from 'axios'
+import {Growl} from 'primereact/growl';
 import { connect } from 'react-redux'
 import { authenticationUrl } from '../../constant'
 import LoadingScreen from './LoadingScreen/loadingScreen'
@@ -18,7 +19,8 @@ class PendingRequests extends React.Component {
     this.state = {
       selected: [],
       isLoading: false,
-      userList: []
+      userList: [],
+      userMsgs: []
     }
 
     this.approveTemplate = this.approveTemplate.bind(this)
@@ -30,9 +32,20 @@ class PendingRequests extends React.Component {
     this.setState({ isLoading: true })
     const userList = await axios.get(
       `${authenticationUrl}/api/alluser`
-    )
-    this.props.setUserList(userList.data)
-    this.setState({ selected: [], isLoading: false, userList: userList.data.data })
+    ).then(res=> {
+      this.setState({ selected: [], isLoading: false, userList: res.data.data })
+      const growlMsgs = this.state.userMsgs.map(msg => {
+        return {severity: 'success', summary: msg, detail: ''}
+      })
+      if(growlMsgs.length > 0){
+        this.growl.show(growlMsgs)
+        this.setState({
+          userMsgs: []
+        })
+      }
+    }).catch(err=> {
+
+    })
   }
 
   componentDidMount () {
@@ -40,27 +53,38 @@ class PendingRequests extends React.Component {
   }
 
   async handleClick (rowData, action) {
-    const userList = []
-    userList.push(rowData.username)
     if (action) {
       await axios.put(
         `${authenticationUrl}/api/approveuser`,
         {
           username: rowData.username
         }
-      )
+      ).then(res => {
+        this.setState({
+          userMsgs: [`${rowData.username} Approved`]
+        })
+      }).catch(err => {
+
+      })
     } else {
       await axios.put(
         `${authenticationUrl}/api/removeuser`,
         {
           username: rowData.username
         }
-      )
+      ).then(res => {
+        this.setState({
+          userMsgs: [`${rowData.username} Removed`]
+        })
+      }).catch(err => {
+        
+      })
     }
     this.getUserList()
   }
 
   handleClickAllSelected (action) {
+    let userMsg;
     if (action) {
       this.state.selected.forEach(async user => {
         await axios.put(
@@ -68,7 +92,15 @@ class PendingRequests extends React.Component {
           {
             username: user.username
           }
-        )
+        ).then(res => {
+          let msgs = this.state.userMsgs;
+          msgs.push(`${user.username} Approved`)
+          this.setState({
+            userMsgs: msgs
+          })
+        }).catch(err => {
+          
+        })
       })
     } else {
       this.state.selected.forEach(async user => {
@@ -77,7 +109,15 @@ class PendingRequests extends React.Component {
           {
             username: user.username
           }
-        )
+        ).then(res => {
+          let msgs = this.state.userMsgs;
+          msgs.push(`${user.username} Removed`)
+          this.setState({
+            userMsgs: msgs
+          })
+        }).catch(err => {
+          
+        })
       })
     }
     this.getUserList()
@@ -148,6 +188,7 @@ class PendingRequests extends React.Component {
 
     return !this.state.isLoading ? (
       <div>
+        <Growl style={{ top: '15%'}} ref={(el) => this.growl = el}></Growl>
         <Dropdown
             options={actions}
             onChange={e => this.handleClickAllSelected(e.value)}

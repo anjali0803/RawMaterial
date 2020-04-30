@@ -866,11 +866,11 @@ class Details extends React.Component {
                     <div className="readOnlyValues">{this.state.createdBy || <i className="pi pi-spin pi-spinner" style={{'fontSize': '2em'}}></i>}</div>
                   </div>
                   <div className="form-group">
-                    <div className="upload-label-2">Date Created (DD/MM/YYYY)</div>
+                    <div className="upload-label-2">Date Created (MM/DD/YYYY)</div>
                     <div className="readOnlyValues">{this.state.createdOn || <i className="pi pi-spin pi-spinner" style={{'fontSize': '2em'}}></i>}</div>
                   </div>
                   <div className="form-group">
-                    <div className="upload-label-2">Date Submitted (DD/MM/YYYY)</div>
+                    <div className="upload-label-2">Date Submitted (MM/DD/YYYY)</div>
                     <div className="readOnlyValues">{this.state.submittedOn || <i className="pi pi-spin pi-spinner" style={{'fontSize': '2em'}}></i>}</div>
                   </div>
               </div>}

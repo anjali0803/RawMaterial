@@ -2,6 +2,7 @@ import React from 'react'
 import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
 import { Button } from 'primereact/button'
+import {Growl} from 'primereact/growl';
 import { Dropdown } from 'primereact/dropdown'
 import './index.css'
 import axios from 'axios'
@@ -16,7 +17,8 @@ class AllUsers extends React.Component {
     this.state = {
       selected: [],
       isLoading: false,
-      userList: []
+      userList: [],
+      userMsgs: []
     }
 
     this.adminTemplate = this.adminTemplate.bind(this)
@@ -33,9 +35,20 @@ class AllUsers extends React.Component {
     this.setState({ isLoading: true })
     const userList = await axios.get(
       `${authenticationUrl}/api/allactiveuser`
-    )
-    this.props.setUserList(userList.data)
-    this.setState({ selected: [], isLoading: false, userList: userList.data.data })
+    ).then(res=> {
+      this.setState({ selected: [], isLoading: false, userList: res.data.data })
+      const growlMsgs = this.state.userMsgs.map(msg => {
+        return {severity: 'success', summary: msg, detail: ''}
+      })
+      if(growlMsgs.length > 0){
+        this.growl.show(growlMsgs)
+        this.setState({
+          userMsgs: []
+        })
+      }
+    }).catch(err=> {
+
+    })
   }
 
   async handleClick (rowData, action) {
@@ -47,14 +60,26 @@ class AllUsers extends React.Component {
         {
           username: rowData.username
         }
-      )
+      ).then(res => {
+        this.setState({
+          userMsgs: [`${rowData.username} Approved`]
+        })
+      }).catch(err => {
+
+      })
     } else {
       await axios.put(
         `${authenticationUrl}/api/removeuser`,
         {
           username: rowData.username
         }
-      )
+      ).then(res => {
+        this.setState({
+          userMsgs: [`${rowData.username} Removed`]
+        })
+      }).catch(err => {
+        
+      })
     }
     this.getUserList()
   }
@@ -67,7 +92,15 @@ class AllUsers extends React.Component {
           {
             username: user.username
           }
-        )
+        ).then(res => {
+          let msgs = this.state.userMsgs;
+          msgs.push(`${user.username} Approved`)
+          this.setState({
+            userMsgs: msgs
+          })
+        }).catch(err => {
+          
+        })
       })
     } else {
       this.state.selected.forEach(async user => {
@@ -76,7 +109,15 @@ class AllUsers extends React.Component {
           {
             username: user.username
           }
-        )
+        ).then(res => {
+          let msgs = this.state.userMsgs;
+          msgs.push(`${user.username} Removed`)
+          this.setState({
+            userMsgs: msgs
+          })
+        }).catch(err => {
+          
+        })
       })
     }
     this.getUserList()
@@ -151,6 +192,7 @@ class AllUsers extends React.Component {
 
     return !this.state.isLoading ? (
       <div>
+        <Growl style={{ top: '15%'}} ref={(el) => this.growl = el}></Growl>
         <Dropdown
             options={actions}
             onChange={e => this.handleClickAllSelected(e.value)}
