@@ -333,6 +333,7 @@ export default class TableComponent extends React.Component {
           paginatorPosition={'bottom'}
           rows={this.props.rows ? this.props.rows : 5}
           scrollable={true}
+          scrollHeight={`${window.innerHeight * 0.65}px`}
           editable={this.props.editable}
           autoLayout={this.props.notResizeable ? false : true}
           resizableColumns={true}

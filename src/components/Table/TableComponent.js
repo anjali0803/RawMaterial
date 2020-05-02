@@ -456,6 +456,7 @@ export default class TableComponent extends React.Component {
           style={this.props.style}
           rows={this.props.rows ? this.props.rows : 5}
           scrollable={true}
+          scrollHeight={`${window.innerHeight * 0.65}px`}
           editable={this.props.editable}
           autoLayout={true}
           resizableColumns={true}
