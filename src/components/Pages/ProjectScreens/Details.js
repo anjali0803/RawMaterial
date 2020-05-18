@@ -50,8 +50,6 @@ class Details extends React.Component {
         customer: '',
         title: '',
         file1: '',
-        file2: '',
-        file3: '',
         CreateProjectErrorMsg: '',
         assignedUser:''
       },
@@ -379,36 +377,63 @@ class Details extends React.Component {
     const formData3 = new FormData();
     formData3.append('file', file3);
     
-    const [file1Res, file2Res, file3Res] = await Promise.all([
-      axios.post(
+    let file1Res = null;
+    if(file1){
+      const formData4 = new FormData();
+      formData4.append('file', file1);
+      await axios.post(
         `${backendUrl}/dashboard/uploadfile`,
-        formData1,
+        formData4,
         {
           headers: {
             'Content-Type': 'multipart/form-data'
           }
         }
-      ),
-      axios.post(
+      ).then(res => {
+        file1Res = res
+      }).catch(err => {
+        file1Res = ''
+      })
+    }
+    
+    let file2Res = null;
+    if(file2){
+      const formData4 = new FormData();
+      formData4.append('file', file2);
+      await axios.post(
         `${backendUrl}/dashboard/uploadfile`,
-        formData2,
+        formData4,
         {
           headers: {
             'Content-Type': 'multipart/form-data'
           }
         }
-      ),
-      axios.post(
+      ).then(res => {
+        file2Res = res
+      }).catch(err => {
+        file2Res = ''
+      })
+    }
+    
+    let file3Res = null;
+    if(file3){
+      const formData4 = new FormData();
+      formData4.append('file', file3);
+      await axios.post(
         `${backendUrl}/dashboard/uploadfile`,
-        formData3,
+        formData4,
         {
           headers: {
             'Content-Type': 'multipart/form-data'
           }
         }
-      )
-    ]);
-
+      ).then(res => {
+        file3Res = res
+      }).catch(err => {
+        file3Res = ''
+      })
+    }
+    
     let file4Res = null;
     if(file4){
       const formData4 = new FormData();
@@ -510,9 +535,9 @@ class Details extends React.Component {
         client: customer,
         project_type: type,
         cost_sheet: fileResArr[0].data.data,
-        specs_pipe: fileResArr[1].data.data,
-        inner_coating: fileResArr[2].data.data,
-        outer_coating: fileResArr[3] ? fileResArr[3].data.data : '',
+        specs_pipe: fileResArr[1] ? fileResArr[1].data.data : undefined,
+        inner_coating: fileResArr[2] ? fileResArr[2].data.data : undefined,
+        outer_coating: fileResArr[3] ? fileResArr[3].data.data : undefined,
         assignedTo: this.state.assignedUser,
         createdBy: this.props.userName,
         due_date: this.state.dueDate,
@@ -765,7 +790,7 @@ class Details extends React.Component {
                 />
                 <p className="text-danger font-italic">{this.state.errorMsg.file1}</p>
 
-                <div className="upload-label-2" >Pipe</div>
+                <div className="upload-label-2" >Pipe <span className="optional-field">(Optional)</span></div>
                 <FileUpload
                   className="pipe-upload"
                   onFileSelect={this.saveFile2}
@@ -773,7 +798,7 @@ class Details extends React.Component {
                 />
                 <p className="text-danger font-italic">{this.state.errorMsg.file2}</p>
 
-                <div className="upload-label-2" >Internal Coating</div>
+                <div className="upload-label-2" >Internal Coating <span className="optional-field">(Optional)</span></div>
                 <FileUpload
                   className="inner-coating-upload"
                   disabled={!this.props.newProject}
@@ -781,7 +806,7 @@ class Details extends React.Component {
                 />
                 <p className="text-danger font-italic">{this.state.errorMsg.file3}</p>
 
-                <div className="upload-label-2" >External Coating</div>
+                <div className="upload-label-2" >External Coating <span className="optional-field">(Optional)</span></div>
                 <FileUpload
                   className="outer-coating-upload"
                   disabled={!this.props.newProject}
