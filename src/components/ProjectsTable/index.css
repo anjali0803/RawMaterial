@@ -12,7 +12,7 @@ body .p-datatable .p-datatable-tbody > tr > td {
     background: none;
     border: none;
     padding: 13px;
-    font-family: 'Courier New', Courier, monospace;
+    font-family: Rubik;
     color : black;  
 }
 
@@ -24,6 +24,14 @@ body .p-datatable .p-datatable-thead > tr > th {
     color:#333333;
     background-color:#f4f4f4;
     text-align: center;
+}
+
+.ReactTable .rt-thead.-filters input, .ReactTable .rt-thead.-filters select {
+    max-width: 200px!important;
+    width: 100%;
+    border: 2px solid #c8c8c8 !important;
+    border-radius: 3px;
+    text-indent: 5px;
 }
 
 /* body .p-inputtext{
@@ -45,3 +53,264 @@ border: 1px solid rgb(13, 100, 199);
 .p-datatable-footer {
     text-align: left !important;
 }
+
+
+.ReactTable .rt-tbody .rt-td {
+    color: gray;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    font-weight: 400;
+}
+
+.rt-td {
+  overflow:inherit !important;
+}
+
+.ReactTable {
+  border: none !important;
+  display: block !important;
+  font-family: Rubik;
+}
+
+.ReactTable .rt-thead.-header {
+  box-shadow: none !important;
+}
+
+.ReactTable .rt-tbody .rt-td {
+  border-right:none !important;
+  font-weight: normal !important;
+  color: #404041;
+  word-break: break-all;
+  padding:10px !important;
+}
+
+.ReactTable .rt-tbody .rt-tr-group {
+  border-top: 1px solid #ddd !important;
+  border-bottom: none !important;
+  cursor:pointer;
+}
+ 
+
+.ReactTable .pagination-bottom {
+  text-align:right;
+}
+
+.ReactTable .-pagination .-btn {
+    background: none !important;
+  }
+
+  .ReactTable .-pagination .-btn:not([disabled]):hover {
+    background: none !important;
+    color: #404041 !important;
+  }
+  
+.ReactTable .rt-noData { 
+  background: none !important;
+  text-align: left;
+  padding: 0 20px;
+  opacity: 0.75;
+  color: #404041;
+  left: 7%;
+  font-family: Rubik;
+  font-size: 14px;
+  font-weight: 400;
+ }
+ 
+
+.ReactTable .rt-thead .rt-th {
+  border-right:none !important;
+  font-weight: bold !important;
+  text-align: left !important;
+  font-size: 14px;
+  line-height: 1.78571;
+  border-top: 0;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  hyphens: auto;
+  display: inline-block;
+  white-space: initial;
+  padding:10px !important;
+}
+
+
+
+.ReactTable .rt-td {
+    white-space: normal !important; 
+  }
+  
+  
+    .ReactTable .-pagination .-previous, .ReactTable .-pagination .-next {
+      flex:inherit !important;
+      font-weight:400px !important;
+    }
+  
+    .ReactTable .-pagination .-center {
+      flex:inherit !important;
+    }
+  
+    .ReactTable .-pagination {
+      justify-content: flex-end !important;
+      box-shadow: none !important;
+      border-top:none !important;
+    }
+  
+    .ReactTable .-pagination .-btn {
+      background: none !important;
+    }
+  
+    .ReactTable .-pagination .-btn:not([disabled]):hover {
+      color: rgba(0,0,0,0.6);
+    }
+  
+  
+    .ReactTable .-pagination .-pageInfo .-currentPage {
+      font-size: 1.35rem;
+      box-sizing: border-box;
+      display: inline-block;
+      color: #ccc;
+      height: 3rem;
+      width: 3rem;
+      line-height: 3rem;
+      text-align: center;
+      border-radius: 100%;
+      transition: 0.25s all;
+      background: #818284;
+      color: #fff;
+      margin-right: 4px;
+    }
+  
+    .ReactTable .-pagination .-pageInfo .-currentPage:hover {
+      background: #3a47a7;
+      color: #fff;
+    }
+
+    
+    .tableContainer {
+        padding: 25px;
+        background: #ffff;
+        border-radius: 10px;
+    }
+
+
+
+
+.ReactTable .rt-tbody .rt-td input, .ReactTable .rt-thead .rt-th input {
+    -webkit-appearance: none;
+	background-color: transparent;
+	border: 1px solid #3a47a7;
+	box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05);
+	padding: 9px;
+	border-radius: 3px;
+	display: inline-block;
+	position: relative;
+}
+
+
+
+.ReactTable .rt-tbody .rt-td input:checked, .ReactTable .rt-thead .rt-th input:checked {
+	background-color: #3a47a7;
+	border: 1px solid #3a47a7;
+	color: #ffff;
+}
+
+
+.ReactTable .rt-tbody .rt-td input:checked:after, .ReactTable .rt-thead .rt-th input:checked:after {
+	content: '\2714';
+	font-size: 14px;
+	position: absolute;
+	top: 0px;
+	left: 3px;
+}
+
+
+.reactTableSizepicker {
+    float: left;
+    text-align: left;
+    cursor: pointer;
+    width: 50%;
+}
+
+.reactTableSizepickerSelectfield {
+    margin: 0 5px;
+    width: 75px;
+}
+
+
+.reactTableSearch {
+    text-align: right;
+    float: right;
+    width: 50%;
+}
+
+.reactTableSearchLabel {
+    display: block;
+    margin-top: 0 !important;
+}
+
+.reactTableSearchInput {
+    cursor: pointer;
+    margin-left: 10px;
+    max-width: 200px !important;
+}
+
+.ReactFilter {
+    background: white;
+    border-top-right-radius: 8px;
+    display: inline-flex;
+    width:100%;
+    padding: 0px !important;
+}
+
+
+.reactTableSearch input, .reactTableSearch input:focus {
+    cursor: pointer;
+    margin-left: 10px;
+    max-width: 200px!important;
+    width: 100%;
+    border: 2px solid #c8c8c8 !important;
+    border-radius: 2px;
+    margin-top: .5em;
+    line-height: 2em;
+    text-indent: 5px;
+    position: relative;
+}
+
+.dropdownAction {
+    padding-top: 7px;
+    padding-left: 9px;
+    width: 220px;
+
+}
+
+.dropdownAction .p-dropdown{
+    border: 2px solid #a6a6a6 !important;
+    outline: none !important;
+}
+
+.dropdownAction .p-dropdown:focus {
+    outline: none !important;
+}
+
+
+.ReactTable .rt-tbody .rt-td {
+    font-size: 0.875rem;
+    text-transform: capitalize;
+    padding: 0.75rem !important;
+    display: grid;
+}
+
+.ReactTable .-pagination .-btn {
+    font-weight: bold !important;
+}
+
+.ReactTable .rt-tr-group:nth-child(odd) {
+    background: #EEEEEE !important;
+  }
+
+  .ReactTable .badge-warning, .ReactTable .badge-success{
+    padding: 0.45em .4em;
+    font-size: 85%;
+    width: 80px;
+  }

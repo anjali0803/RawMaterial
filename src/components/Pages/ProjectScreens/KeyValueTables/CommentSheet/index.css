@@ -1,0 +1,92 @@
+.table-on-green{
+    background: rgb(57, 158, 102) !important;  
+}
+
+.table-on-red{
+    background: rgb(194, 78, 46) !important;  
+
+}
+
+.details-project-id-container{
+	display: table-row;
+}
+.details-input-label{
+	
+	display: table-cell;
+	
+    font-family: Rubik;
+    font-weight: lighter;
+    font-size:14px;
+}
+.fright{
+    float: right !important;
+}
+
+.pad-left{
+    padding-left: 2px;
+}
+
+.pipeButton, .coatingButton{
+    margin-left: 5px;
+    margin-right: 5px;
+    color: whitesmoke;
+    background-color: cornflowerblue;
+    height: 50px;
+    width: 100px;
+}
+
+.active{
+    background-color: #202b7d;
+    box-shadow: 2px 1px 12px rgba(0, 0, 0, 0.7);
+}
+
+.actionBtn{
+    margin-left: 5px;
+    margin-right: 5px;
+    color: whitesmoke;
+    height: 50px;
+    padding-right: 10px;
+    padding-left: 10px;
+    border-radius: 5px;
+}
+
+.scroll-right-button, .scroll-left-button{
+    position: fixed;
+    bottom: 40%;
+    height: 40px;
+    width: 40px;
+    background-color: darkblue;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    cursor: pointer;
+    opacity: 0.5;
+}
+
+.scroll-right-button:hover, .scroll-left-button:hover{
+    opacity: 1;
+}
+
+.scroll-right-button{
+    right: 50px;
+}
+
+.scroll-left-button{
+    right: 120px;
+}
+
+@media only screen and (max-width: 1280px) {
+	.pipeButton, .coatingButton {
+		height: 40px !important;
+		font-size: 12px !important;
+		width: 80px !important;
+	}
+
+	.actionBtn{
+		height: 40px !important;
+		font-size: 12px !important;
+	}
+}

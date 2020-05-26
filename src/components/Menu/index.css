@@ -31,3 +31,96 @@
     /* background-color: blue; */
     
 }
+
+.sideBar{
+	height: 100%;
+	width: 18%;
+	position: fixed;
+	z-index: 1;
+	top: 0;
+	left: 0;
+	background-color: #142850;
+	overflow-x: hidden;
+  padding-top: 20px;
+  transition: visibilty 2000ms, display 2000ms;
+}
+
+.sideBar a, .dropdown-btn{
+	padding: 6px 0px 6px 0px;
+  text-decoration: none;
+  font-size: 16px;
+  color: #a6b1e1;
+  border: none;
+  background: none;
+	width:100%;
+	min-height: 40px;
+  text-align: left;
+  cursor: pointer;
+	outline: none;
+	margin-top: auto;
+}
+
+.navMenu{
+	margin-top: 85px;
+}
+
+.sideBar a:hover, .dropdown-btn:hover {
+  color: #f1f1f1;
+}
+
+/* Main content */
+.main {
+  margin-left: 200px; /* Same as the width of the sideBar */
+  font-size: 20px; /* Increased text to enable scrolling */
+  padding: 0px 10px;
+}
+
+/* Add an active class to the active dropdown button */
+.active {
+  background-color: #1A4D84;
+  color: white;
+}
+
+/* Dropdown container (hidden by default). Optional: add a lighter background color and some left padding to change the design of the dropdown content */
+.dropdown-container {
+  display: none;
+  background-color: #133860;
+  padding-left: 8px;
+}
+
+.dropdown-container a {
+	padding-left: 16px;
+	display: block;
+}
+
+.dropdown-container a.active-menu {
+  color: white;
+  text-shadow: 0px 4px 5px rgba(0, 0, 0, 0.5);
+}
+
+.dropdown-container a:hover{
+	color: #f1f1f1;
+	text-decoration: none;
+}
+
+/* Optional: Style the caret down icon */
+.fa-caret-down {
+  float: right;
+  padding-right: 8px;
+}
+
+.sideBarHideShow{
+  color:  #a6b1e1;
+  text-align: center;
+}
+
+.sideBarHideShow-icon{
+  border-radius: 50%;
+  border: 2px solid #a6b1e1;
+}
+
+@media only screen and (max-width: 1280px) {
+  .sideBar a, .dropdown-btn{
+   font-size: 12px !important;
+  }
+}

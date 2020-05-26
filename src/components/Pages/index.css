@@ -18,6 +18,7 @@ tr.p-highlight {
 }
 
 .spinner-container {
+    margin-top: 10vh;
     text-align: center;
 }
 
@@ -37,3 +38,102 @@ tr.p-highlight {
         stroke: #1a54b3;
     }
 } */
+
+
+.pieRow {
+    padding: 25px;
+    background: #fff;
+    border-radius: 7px;
+    padding-bottom: 60px;
+    position: relative;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: row;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0,0,0,.125);
+}
+
+.pieCol-1 {
+    padding-left: 30px !important;
+    padding-right: 30px !important;
+}
+
+.pieCol-2 {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+}
+
+.card {
+    margin-left: -7px !important;
+    margin-right: -7px !important;
+    margin-top: 25px;
+    border-radius: 7px !important;
+}
+
+.barTitle {
+    padding-bottom: 25px;
+}
+
+.subscreens {
+    padding: 25px;
+    background: #ffff;
+    border-radius: 10px;
+}
+
+.progress-container {
+    margin-bottom: 10px;
+}
+
+.saveButton{
+    height: 50px;
+    width: 200px;
+    border-radius: 5px;
+    color: whitesmoke;
+    font-weight: 500;
+    font-style: bold;
+    background-image: linear-gradient(to right, #314755 0%, #26a0da 51%, #314755 100%)
+}
+
+.refreshButton{
+    height: 35px;
+    width: 150px;
+    border-radius: 2px;
+    border: 1px solid gray;
+    top: 2px;
+    color: gray;
+    position: relative;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background-color: azure;
+}
+
+.videoPlayerBox{
+    height: 400px;
+    width: 90%;
+    margin: 5%;
+    border-radius: 10px;
+}
+
+.advanceOptions{
+    background-color: white;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    padding: 5px;
+}
+
+.filterBox{
+    border: 2px solid lightgray;
+    color: grey;
+    margin-left: 10px;
+    border-radius: 2px;
+    margin-right: 10px;
+}
+
+.advanceSearchHeading{
+    padding-left: 15px;
+    width: 100%;
+    font-weight: 300;
+}

@@ -1,23 +1,13 @@
-.button-header{
-   margin-left:83%;
-   padding: 10px;
-   padding-right:0px;
-   width: auto;
-  
-   display: table;
-   /* overflow: auto; */
-   
+
+.save-button{
+   width: 200px;
+   height: 48px;
+   border-radius: 4px;
+   color: whitesmoke;
 }
 
-.save-container{
-   display: table-cell;
-   padding-right: 7px;
-   width: auto;
+.save-button:hover{
+   box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25), 0 4px 4px 0 rgba(0, 0, 0, 0.25);
 }
-
-.delete-container{
-   display: table-cell;
-   width: auto;
-  
-
-}
+.btn-grad {background-image: linear-gradient(to right, #314755 0%, #26a0da 51%, #314755 100%)}
+.btn-grad:hover { background-position: right center; }

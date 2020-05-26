@@ -6,3 +6,15 @@
     background: rgb(194, 78, 46) !important;  
 
 }
+
+.details-project-id-container{
+	display: table-row;
+}
+.details-input-label{
+	
+	display: table-cell;
+	
+    font-family: Rubik;
+    font-weight: lighter;
+    font-size:14px;
+}

@@ -1,6 +1,6 @@
 .document-header-container{
     margin-left: 10px;
-    background-color: #23468c;
+    background-color: #3a47a7;
     width: 98%;
     height: 70px;
     font-size: 20px;
@@ -13,21 +13,18 @@
 }
 .document-id-container{
     text-align: center;
-    margin: 5px;
-    width:600px;
+    width:50%;
     height : 100%;
     float:left;
     border-right: 2px solid white;
+    margin-right: 20px;
 }
 
 .project-id-container{
     text-align: center;
-    margin : 5px;
-    width: 500px;
-
+    width: 45%;
     height:100%;
-   float: left;
-    
+    float: right;
 }
 
 .clearfix::after {

@@ -33,7 +33,7 @@
 	
 	display: table-cell;
 	
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-family: Rubik;
     font-weight: lighter;
     font-size:14px;
 }
@@ -46,6 +46,12 @@
 	display: table-cell;
 	width: 250px;;
 }
+
+#assignedUser{
+	display: table-cell;
+	width: 250px;
+}
+
 #type{
 	display: table-cell;
 	width: 250px;;
@@ -53,6 +59,16 @@
 #projectId{
 	display: table-cell;
 	width: 250px;;
+}
+#dueDate{
+	display: table-cell;
+	width: 250px;;
+}
+
+#dueDate input{
+	width: 100%;
+	height: 47px;
+	font-size: 16px;
 }
 
 .details-submit{
@@ -103,12 +119,35 @@
 
 .upload-label{
 	width: 100%;
-	border-top: 2px solid rgb(233, 233, 250);
+	/* border-top: 2px solid rgb(233, 233, 250); */
 	margin : 10px;
 	margin-left: 0px;;
-    padding: 5px;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+	padding: 5px;
+	font-family: Rubik;
 } 
+
+.divider{
+	border-right: 1px solid #ced4da;
+}
+.upload-label-2{
+	width: 100%;
+	margin-top : 10px;
+	margin-left: 0px;;
+	padding: 5px;
+	/* font-weight: bold; */
+	font-family: Rubik;
+	font-size: 16px;
+} 
+
+.readOnlyValues{
+	width: 100%;
+	margin-top : 10px;
+	margin-left: 0px;;
+	padding: 5px;
+	font-family: Rubik;
+	font-size: 18px;
+} 
+
 .pipe-upload{
     margin-bottom: 10px;
 }
@@ -126,43 +165,40 @@
 }
 
 .progress-container {
-	font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+	font-family: Rubik;
 	width: 100%;
 	margin-top: 10px;
-	margin-left : 9px;
+	/* margin-left : 8px; */
 }
 
 .progress-wrapper {
-	display: table-cell;
+	margin-left: 5px;
+	/* display: table-cell; */
     /* height: 400px; */
     
 	/* vertical-align: middle; */
 }
 
-
-
-
 .progress-steps .progress-step {
-	
-	font-size: 14px;
+	font-size: 16px;
+	width: 16.2%;
 	text-align: center;
 	color: white;
 	cursor: pointer;
-	margin: 0 3px;
+	margin: 0 2px;
 	
-	padding: 10px 10px 10px 30px;
-	min-width: 181px;
+	padding: 10px 10px 10px 10px;
 	float: left;
 	position: relative;
-	background-color: #547bc4;
+	/* background-color: #3a47a7; */
 	-webkit-user-select: none;
 	/* -moz-user-select: none; */
 	-ms-user-select: none;
-	user-select: none; 
+	background-image: linear-gradient(to bottom, #3a47a7 0%, #202b7d 51%, #04273d 100%);
   transition: background-color 0.2s ease;
 }
 
-.progress-steps .progress-step:after,
+/* .progress-steps .progress-step:after,
 .progress-steps .progress-step:before {
 	
 	content: " ";
@@ -172,27 +208,11 @@
 	width: 0;
 	height: 0;
 	border-top: 19px solid transparent;
-	border-bottom: 17px solid transparent;
-	border-left: 17px solid #547bc4;	
+	border-bottom: 21px solid transparent;
+	border-left: 17px solid #3a47a7;	
 	z-index: 2;
   transition: border-color 0.2s ease;
-}
-
-.progress-steps .progress-step:before {
-	right: auto;
-	left: 0;
-	border-left: 17px solid #fff;	
-	z-index: 0;
-}
-
-.progress-steps .progress-step:first-child:before {
-	border: none;
-}
-
-.progress-steps .progress-step:first-child {
-	border-top-left-radius: 4px;
-	border-bottom-left-radius: 4px;
-}
+} */
 
 .progress-steps .progress-step span {
 	position: relative;
@@ -216,9 +236,58 @@
 
 .progress-steps .progress-step.progress-current {
 	color: #fff;
-	background-color: #23468c;
+	border-bottom: 4px solid #007eff;
+	box-shadow: 0 10px 6px -6px black;
 }
 
 .progress-steps .progress-step.progress-current:after {
-	border-left: 17px solid #23468c;	
+	border-left: 17px solid #0A1359;	
 }
+
+.loading-bar{
+	margin-top: 200px;
+}
+
+.auto-complete {
+	font-size: 14px;
+    color: #333333;
+    background: #ffffff;
+    padding: 0.429em;
+    border: 1px solid #a6a6a6;
+    -moz-transition: border-color 0.2s, box-shadow 0.2s;
+    -o-transition: border-color 0.2s, box-shadow 0.2s;
+    -webkit-transition: border-color 0.2s, box-shadow 0.2s;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+}
+
+.downloadButton{
+	margin-right: 2px;
+	border: 1px solid black;
+	width: 100px;
+	height: 35px;
+	border-radius: 2px;
+	padding: 5px;
+}
+
+
+.save-button{
+	width: 20%;
+	height: 48px;
+	border-radius: 4px;
+	color: whitesmoke;
+	margin-top: 10px;
+ }
+ .btn-grad {background-image: linear-gradient(to right, #314755 0%, #26a0da 51%, #314755 100%)}
+ .btn-grad:hover { background-position: right center; }
+
+ .optional-field {
+	font-weight: 400;
+	font-family: Rubik;
+	font-size: 16px;
+ }
