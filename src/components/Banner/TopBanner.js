@@ -300,8 +300,8 @@ class TopBanner extends React.Component {
         </Dialog>
         <div className="banner">
           <div className="logo">
-            <img src='../../assests/welspun-logo-3-preview.png' style={{
-              width: '325px',
+            <img src='../../assests/full-logo-away-1.png' style={{
+              width: '200px',
               height: '40px',
               marginTop: '10px'
             }}></img>
