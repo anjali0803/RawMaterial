@@ -29,7 +29,7 @@ class MenuComponent extends React.Component {
       var dropdownEle = document.activeElement.className
       const collapsedDropDown = []
       $('.dashboard').removeClass('active')
-      for (let i = 0; i <= 3; i++) {
+      for (let i = 0; i <= 4; i++) {
         if (dropdownEle.indexOf(i.toString()) < 0) {
           $(`.dropdown-container-${i}`).hide()
           $(`.dropdown-btn-${i}`).removeClass('active')
@@ -43,7 +43,7 @@ class MenuComponent extends React.Component {
     const redirectToDashboard = () => {
       var activeElement = document.activeElement.className
       $('.dashboard').addClass('active')
-      for (let i = 0; i <= 3; i++) {
+      for (let i = 0; i <= 4; i++) {
         $(`.dropdown-container-${i}`).hide()
         $(`.dropdown-btn-${i}`).removeClass('active')
       }
@@ -109,27 +109,34 @@ class MenuComponent extends React.Component {
             )
           }
           <button className="dropdown-btn dashboard" onClick={redirectToDashboard}><i className="pi pi-fw pi-home"></i> Dashboard</button>
-          <button className="dropdown-btn dropdown-btn-1" onClick={toggleDropDownMenu}><i className="pi pi-fw pi-question"></i>Inquiry
+          <button className="dropdown-btn dropdown-btn-1" onClick={toggleDropDownMenu}><i className="pi pi-fw pi-copy"></i>Data
             <i className="fa fa-caret-down"></i>
           </button>
           <div className="dropdown-container dropdown-container-1">
-            <a href="#/inquiry/create-new-projects/new" className={ window.location.href.replace(window.location.origin, '') === '/#/inquiry/create-new-projects/new' ? 'active-menu' : ''} ><i className="pi pi-fw pi-plus"></i>Create New Projects</a>
-            <a href="#/inquiry/projects-assigned-to-me" className={ window.location.href.replace(window.location.origin, '') === '/#/inquiry/projects-assigned-to-me' ? 'active-menu' : ''}><i className="pi pi-fw pi-align-left"></i>Projects Assigned to me</a>
-            <a href="#/inquiry/projects-assigned-by-me" className={ window.location.href.replace(window.location.origin, '') === '/#/inquiry/projects-assigned-by-me' ? 'active-menu' : ''}><i className="pi pi-fw pi-align-right"></i>Projects Assigned by me</a>
-            <a href="#/inquiry/all-ongoing-projects" className={ window.location.href.replace(window.location.origin, '') === '/#/inquiry/all-ongoing-projects' ? 'active-menu' : ''}><i className="pi pi-fw pi-clone"></i>All Ongoing Projects</a>
-            <a href="#/inquiry/submitted-projects" className={ window.location.href.replace(window.location.origin, '') === '/#/inquiry/submitted-projects' ? 'active-menu' : ''}><i className="pi pi-fw pi-copy"></i>Submitted Projects</a>
-            <a href="#/inquiry/cancelled-projects" className={ window.location.href.replace(window.location.origin, '') === '/#/inquiry/cancelled-projects' ? 'active-menu' : ''}><i class="pi pi-times"></i>Cancelled Projects</a>
+            <a href="#/inquiry/create-new-projects/new" className={ window.location.href.replace(window.location.origin, '') === '/#/inquiry/create-new-projects/new' ? 'active-menu' : ''} ><i className="pi pi-fw pi-plus"></i>Raw Materials</a>
+            <a href="#/inquiry/all-ongoing-projects" className={ window.location.href.replace(window.location.origin, '') === '/#/inquiry/all-ongoing-projects' ? 'active-menu' : ''}><i className="pi pi-fw pi-clone"></i>Products</a>
+            <a href="#/inquiry/projects-assigned-to-me" className={ window.location.href.replace(window.location.origin, '') === '/#/inquiry/projects-assigned-to-me' ? 'active-menu' : ''}><i className="pi pi-fw pi-align-left"></i>Intermediates</a>
+            <a href="#/inquiry/projects-assigned-by-me" className={ window.location.href.replace(window.location.origin, '') === '/#/inquiry/projects-assigned-by-me' ? 'active-menu' : ''}><i className="pi pi-fw pi-align-right"></i>By-Products</a>
+            <a href="#/inquiry/submitted-projects" className={ window.location.href.replace(window.location.origin, '') === '/#/inquiry/submitted-projects' ? 'active-menu' : ''}><i className="pi pi-fw pi-copy"></i>Processes</a>
           </div>
-          <button className="dropdown-btn dropdown-btn-2" onClick={toggleDropDownMenu}><i className="pi pi-fw pi-file-excel"></i>Report
+          <button className="dropdown-btn dropdown-btn-2" onClick={toggleDropDownMenu}><i className="pi pi-fw pi-th-large"></i>Workflow
             <i className="fa fa-caret-down"></i>
           </button>
           <div className="dropdown-container dropdown-container-2">
-            <a href="#/report/generate-new-reports" className={ window.location.href.replace(window.location.origin, '') === '/#/report/generate-new-reports' ? 'active-menu' : ''}><i className="pi pi-fw pi-plus"></i>Generate new reports</a>
+            <a href="#/report/generate-new-reports" className={ window.location.href.replace(window.location.origin, '') === '/#/report/generate-new-reports' ? 'active-menu' : ''}><i className="pi pi-fw pi-plus"></i>Existing Workflows</a>
+            <a href="#/report/generate-new-reports" className={ window.location.href.replace(window.location.origin, '') === '/#/report/generate-new-reports' ? 'active-menu' : ''}><i className="pi pi-fw pi-plus"></i>Create New Workflows</a>
           </div>
-          <button className="dropdown-btn dropdown-btn-3" onClick={toggleDropDownMenu}><i className="pi  pi-info"></i>Support
+          <button className="dropdown-btn dropdown-btn-3" onClick={toggleDropDownMenu}><i className="pi pi-fw pi-file"></i>Reports
             <i className="fa fa-caret-down"></i>
           </button>
           <div className="dropdown-container dropdown-container-3">
+            <a href="#/report/generate-new-reports" className={ window.location.href.replace(window.location.origin, '') === '/#/report/generate-new-reports' ? 'active-menu' : ''}><i className="pi pi-fw pi-plus"></i>Existing Reports</a>
+            <a href="#/report/generate-new-reports" className={ window.location.href.replace(window.location.origin, '') === '/#/report/generate-new-reports' ? 'active-menu' : ''}><i className="pi pi-fw pi-plus"></i>Generate New Workflows</a>
+          </div>
+          <button className="dropdown-btn dropdown-btn-4" onClick={toggleDropDownMenu}><i className="pi  pi-info"></i>Support
+            <i className="fa fa-caret-down"></i>
+          </button>
+          <div className="dropdown-container dropdown-container-4">
             <a href="#/support/create-new-incident" className={ window.location.href.replace(window.location.origin, '') === '/#/support/create-new-incident' ? 'active-menu' : ''}><i className="pi pi-eye"></i>Create new Incident</a>
             <a href="#/support/open-incidents" className={ window.location.href.replace(window.location.origin, '') === '/#/support/open-incidents' ? 'active-menu' : ''}><i className="pi pi-circle-off"></i>User Manual</a>
           </div>

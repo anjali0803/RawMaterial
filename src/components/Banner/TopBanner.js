@@ -307,7 +307,7 @@ class TopBanner extends React.Component {
             }}></img>
           </div>
           <div className="banner-heading-primary">
-                    Customer Inquiry Process
+                    Material Costimizer
             <span className="copyright">
                     &copy; by
               <a href="https://www.matsci.ai/" target="_blank" className="copyright-link"> MatSci AI</a>
