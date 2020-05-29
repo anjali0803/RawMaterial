@@ -27,7 +27,7 @@ class HomePage extends React.Component {
       <>
         <div className="home-container">
           <MenuComponent />
-          {/* <ViewComponent /> */}
+          <ViewComponent />
         </div>
       </>
     )

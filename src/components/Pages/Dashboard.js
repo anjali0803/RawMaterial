@@ -36,47 +36,51 @@ export default class Dashboard extends React.Component {
     this.setState({
       isLoading: true
     })
-    const dashboardRes = await axios.get(
-      `${backendUrl}/dashboard/get_dashboard`
-    )
+    // const dashboardRes = await axios.get(
+    //   `${backendUrl}/dashboard/get_dashboard`
+    // )
+    // // this.setState({
+    // //   data: dashboardRes.data.data
+    // // })
+
+    // const keys = Object.keys(dashboardRes.data.data);
+
+    // keys.forEach(card => {
+    //   const ks = Object.keys(dashboardRes.data.data[card]);
+    //   let obj = [];
+    //   ks.forEach(k => {
+    //     obj.push(
+    //       {
+    //         label: (k.charAt(0).toUpperCase() + k.slice(1)).match(/[A-Z][a-z]+|[0-9]+/g).join(" "),
+    //         value: dashboardRes.data.data[card][k]
+    //       }
+    //     )
+    //   })
+    //   let newObj = {
+    //     ...this.state.data
+    //   };
+    //   newObj[card] = obj
+    //   this.setState({
+    //     data: newObj,
+    //   })
+    // });
     // this.setState({
-    //   data: dashboardRes.data.data
+    //   piechartCreated: dashboardRes.data.data.piechartCreated,
+    //   piechartSubmitted: dashboardRes.data.data.piechartSubmitted,
+    //   piechartDelayed: dashboardRes.data.data.piechartDelayed,
+    //   piechartOnTime: dashboardRes.data.data.piechartOnTime,
+    //   isLoading: false
     // })
-
-    const keys = Object.keys(dashboardRes.data.data);
-
-    keys.forEach(card => {
-      const ks = Object.keys(dashboardRes.data.data[card]);
-      let obj = [];
-      ks.forEach(k => {
-        obj.push(
-          {
-            label: (k.charAt(0).toUpperCase() + k.slice(1)).match(/[A-Z][a-z]+|[0-9]+/g).join(" "),
-            value: dashboardRes.data.data[card][k]
-          }
-        )
-      })
-      let newObj = {
-        ...this.state.data
-      };
-      newObj[card] = obj
-      this.setState({
-        data: newObj,
-      })
-    });
     this.setState({
-      piechartCreated: dashboardRes.data.data.piechartCreated,
-      piechartSubmitted: dashboardRes.data.data.piechartSubmitted,
-      piechartDelayed: dashboardRes.data.data.piechartDelayed,
-      piechartOnTime: dashboardRes.data.data.piechartOnTime,
-      isLoading: false
+      isLoading:false
     })
   }
 
   render () {
-    return this.state.isLoading === false ? (
+    return this.state.isLoading === false ? 
       <Container fluid={true}>
-        <Col xs={12}>
+        Dashboard
+        {/* <Col xs={12}>
           <Row>
             <CountCard title={'Inquiry Created'} glyph={'icon-fontello-cart'} items={this.state.data.createdCount} />
             <CountCard title={'Inquiry Due'} glyph={'icon-fontello-money'} items={this.state.data.dueCount} />
@@ -133,10 +137,10 @@ export default class Dashboard extends React.Component {
           </Row>
         </Col>
       </Row>
-    </Col>
+    </Col> */}
       </Container>
-    ) : (
+     : 
       <LoadingScreen />
-    )
+    
   }
 }

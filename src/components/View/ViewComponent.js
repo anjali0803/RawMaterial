@@ -19,6 +19,13 @@ import OpenIncidents from '../Pages/OpenIncidents'
 import Dashboard from '../Pages/Dashboard'
 import FormatDocForm from '../Pages/FormatDocForm'
 
+import RawMaterial from '../DataPages/rawMaterial'
+import Product from '../DataPages/product'
+import Process from '../DataPages/process'
+import ByProduct from '../DataPages/byProduct'
+import Intermediate from '../DataPages/intermediate'
+
+
 class ViewComponent extends React.Component {
   render () {
     var routes = [
@@ -33,7 +40,13 @@ class ViewComponent extends React.Component {
       { path: '/report/generate-new-reports', component: GenerateNewProjects },
       { path: '/report/past-reports', component: PastReports },
       { path: '/support/create-new-incident', component: CreateNewIncident },
-      { path: '/support/open-incidents', component: OpenIncidents }
+      { path: '/support/open-incidents', component: OpenIncidents },
+
+      { path: '/data/raw-material', component: RawMaterial },
+      { path: '/data/process', component: Process },
+      { path: '/data/by-product', component: ByProduct },
+      { path: '/data/intermediate', component: Intermediate },
+      { path: '/data/product', component: Product }
     ]
 
     routes = this.props.userRole === 'admin' ? [

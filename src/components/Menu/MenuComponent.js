@@ -113,11 +113,11 @@ class MenuComponent extends React.Component {
             <i className="fa fa-caret-down"></i>
           </button>
           <div className="dropdown-container dropdown-container-1">
-            <a href="#/inquiry/create-new-projects/new" className={ window.location.href.replace(window.location.origin, '') === '/#/inquiry/create-new-projects/new' ? 'active-menu' : ''} ><i className="pi pi-fw pi-plus"></i>Raw Materials</a>
-            <a href="#/inquiry/all-ongoing-projects" className={ window.location.href.replace(window.location.origin, '') === '/#/inquiry/all-ongoing-projects' ? 'active-menu' : ''}><i className="pi pi-fw pi-clone"></i>Products</a>
-            <a href="#/inquiry/projects-assigned-to-me" className={ window.location.href.replace(window.location.origin, '') === '/#/inquiry/projects-assigned-to-me' ? 'active-menu' : ''}><i className="pi pi-fw pi-align-left"></i>Intermediates</a>
-            <a href="#/inquiry/projects-assigned-by-me" className={ window.location.href.replace(window.location.origin, '') === '/#/inquiry/projects-assigned-by-me' ? 'active-menu' : ''}><i className="pi pi-fw pi-align-right"></i>By-Products</a>
-            <a href="#/inquiry/submitted-projects" className={ window.location.href.replace(window.location.origin, '') === '/#/inquiry/submitted-projects' ? 'active-menu' : ''}><i className="pi pi-fw pi-copy"></i>Processes</a>
+            <a href="#/data/raw-material" className={ window.location.href.replace(window.location.origin, '') === '/#/data/raw-material' ? 'active-menu' : ''} ><i className="pi pi-fw pi-plus"></i>Raw Materials</a>
+            <a href="#/data/product" className={ window.location.href.replace(window.location.origin, '') === '/#/data/product' ? 'active-menu' : ''}><i className="pi pi-fw pi-clone"></i>Products</a>
+            <a href="#/data/intermediate" className={ window.location.href.replace(window.location.origin, '') === '/#/data/intermediate' ? 'active-menu' : ''}><i className="pi pi-fw pi-align-left"></i>Intermediates</a>
+            <a href="#/data/by-product" className={ window.location.href.replace(window.location.origin, '') === '/#/data/by-product' ? 'active-menu' : ''}><i className="pi pi-fw pi-align-right"></i>By-Products</a>
+            <a href="#/data/process" className={ window.location.href.replace(window.location.origin, '') === '/#/data/process' ? 'active-menu' : ''}><i className="pi pi-fw pi-copy"></i>Processes</a>
           </div>
           <button className="dropdown-btn dropdown-btn-2" onClick={toggleDropDownMenu}><i className="pi pi-fw pi-th-large"></i>Workflow
             <i className="fa fa-caret-down"></i>
