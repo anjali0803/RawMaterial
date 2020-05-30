@@ -97,7 +97,7 @@ class MenuComponent extends React.Component {
           {
             (this.props.userRole == 'admin') && (
               <>
-                <button className="dropdown-btn dropdown-btn-0" onClick={toggleDropDownMenu}><i className="pi pi-user"></i>Admin
+                <button className="dropdown-btn dropdown-btn-0" onClick={toggleDropDownMenu}><i className="pi pi-fw pi-user"></i>Admin
                   <i className="fa fa-caret-down"></i>
                 </button>
                 <div className="dropdown-container dropdown-container-0">
@@ -133,7 +133,7 @@ class MenuComponent extends React.Component {
             <a href="#/report/generate-new-reports" className={ window.location.href.replace(window.location.origin, '') === '/#/report/generate-new-reports' ? 'active-menu' : ''}><i className="pi pi-fw pi-plus"></i>Existing Reports</a>
             <a href="#/report/generate-new-reports" className={ window.location.href.replace(window.location.origin, '') === '/#/report/generate-new-reports' ? 'active-menu' : ''}><i className="pi pi-fw pi-plus"></i>Generate New Workflows</a>
           </div>
-          <button className="dropdown-btn dropdown-btn-4" onClick={toggleDropDownMenu}><i className="pi  pi-info"></i>Support
+          <button className="dropdown-btn dropdown-btn-4" onClick={toggleDropDownMenu}><i className="pi pi-fw pi-info"></i>Support
             <i className="fa fa-caret-down"></i>
           </button>
           <div className="dropdown-container dropdown-container-4">
