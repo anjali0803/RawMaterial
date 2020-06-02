@@ -24,6 +24,8 @@ import Product from '../DataPages/product'
 import Process from '../DataPages/process'
 import ByProduct from '../DataPages/byProduct'
 import Intermediate from '../DataPages/intermediate'
+import ExistingWorkflow from '../Workflow/existingWorkflow'
+import NewWorkflow from '../Workflow/newWorkflow'
 
 
 class ViewComponent extends React.Component {
@@ -46,7 +48,10 @@ class ViewComponent extends React.Component {
       { path: '/data/process', component: Process },
       { path: '/data/by-product', component: ByProduct },
       { path: '/data/intermediate', component: Intermediate },
-      { path: '/data/product', component: Product }
+      { path: '/data/product', component: Product },
+
+      {path: '/workflow/existing-workflow', component: ExistingWorkflow },
+      {path: '/workflow/create-new-workflow', component: NewWorkflow}
     ]
 
     routes = this.props.userRole === 'admin' ? [

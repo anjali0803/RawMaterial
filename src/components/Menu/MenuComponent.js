@@ -123,8 +123,8 @@ class MenuComponent extends React.Component {
             <i className="fa fa-caret-down"></i>
           </button>
           <div className="dropdown-container dropdown-container-2">
-            <a href="#/report/generate-new-reports" className={ window.location.href.replace(window.location.origin, '') === '/#/report/generate-new-reports' ? 'active-menu' : ''}><i className="pi pi-fw pi-plus"></i>Existing Workflows</a>
-            <a href="#/report/generate-new-reports" className={ window.location.href.replace(window.location.origin, '') === '/#/report/generate-new-reports' ? 'active-menu' : ''}><i className="pi pi-fw pi-plus"></i>Create New Workflows</a>
+            <a href="#/workflow/existing-workflow" className={ window.location.href.replace(window.location.origin, '') === '/#/workflow/existing-workflow' ? 'active-menu' : ''}><i className="pi pi-fw pi-file"></i>Existing Workflows</a>
+            <a href="#/workflow/create-new-workflow" className={ window.location.href.replace(window.location.origin, '') === '/#/workflow/create-new-workflow' ? 'active-menu' : ''}><i className="pi pi-fw pi-plus"></i>Create New Workflows</a>
           </div>
           <button className="dropdown-btn dropdown-btn-3" onClick={toggleDropDownMenu}><i className="pi pi-fw pi-file"></i>Reports
             <i className="fa fa-caret-down"></i>
