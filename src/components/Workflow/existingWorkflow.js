@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Container, Row, Col, Card, CardTitle, CardSubtitle, CardText, CardBody, CardFooter, Progress, Button } from 'reactstrap'
-// import './workflow.scss'
+import './workflow.scss'
 
 // import {Card} from 'primereact/card';
 // import {Button} from 'primereact/button';
@@ -32,8 +32,8 @@ const WorkflowCard = (props) => {
                     <CardText>{props.text}</CardText>
                     {/* <CardLink href="#">Card Link</CardLink>
             <CardLink href="#">Another Link</CardLink> */}
-                    <Button style={{margin:'10px'}}>Save</Button>
-                    <Button style={{margin:'10px'}}>Cancel</Button>
+                    <button className = "control-button save-btn">Save</button>
+                    <button className = "control-button delete-button">Cancel</button>
                 </CardBody>
             </Card>
             </Container>
