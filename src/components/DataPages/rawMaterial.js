@@ -4,7 +4,7 @@ import { Container, Row, Col, Card, CardTitle, CardBody, CardFooter, Progress } 
 export default class RawMaterial extends React.Component{
     render(){
         return <Container fluid = {true}>
-            Raw Material
+            Raw RawMaterialnpm
         </Container>
     }
 }

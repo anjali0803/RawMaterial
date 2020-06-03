@@ -4,7 +4,7 @@ import { Container, Row, Col, Card, CardTitle, CardBody, CardFooter, Progress } 
 export default class Process extends React.Component{
     render(){
         return <Container fluid = {true}>
-            Process
+            Processes
         </Container>
     }
 }
