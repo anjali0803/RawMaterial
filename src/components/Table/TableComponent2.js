@@ -142,14 +142,54 @@ export default class TableComponent extends React.Component {
         </>
       )
     })
-    return modal
+
+    const addKeyIntoFeatureList = () => {
+      let values = this.state.item.value || {};
+      values[this.state.item.key] = this.state.item.v;
+      this.setState({
+        item: {
+          ...this.state.item,
+          value: values,
+          key: '',
+          v: ''
+        }
+      })
+    }
+
+    const addFeature = () => {
+      return (
+        <>
+          <h6>Add new key-value pair:</h6>
+          <div className="p-col-4" style={{ padding: '.5em' }}>
+            <input placeholder=" Key" className="dialog-box-input-field" id={'key'} onChange={(e) => { this.updateProperty(`key`, e.target.value) }} value={this.state.item['key']}/>
+            <input placeholder=" Value" className="dialog-box-input-field" id={'v'} onChange={(e) => { this.updateProperty(`v`, e.target.value) }} value={this.state.item['v']}/>
+            <Button style={{ float: 'right', height: '35px', width: '100px' }} label="Add" icon="pi pi-plus" onClick={addKeyIntoFeatureList}/>
+          </div>
+        </>
+      );
+    }
+
+    const renderFeatureList = () => {
+      
+    }
+    return (
+      <>
+        {modal}
+        {addFeature()}
+        {
+          (Object.keys(this.state.item.value || {})).map(key => (
+            <p> {key} | {this.state.item.value[key]}</p>
+            ))
+        }
+      </>
+    )
   }
 
   save () {
     const items = this.state.tableData
     if (this.state.newItem) { items.push(this.state.item) }
 
-    this.setState({ tableData: items, selected: [], item: null, displayDialog: false, newItem: false })
+    this.setState({ tableData: items, selected: [], displayDialog: false,item: {key: '', v: ''}, newItem: false })
   }
 
   delete () {
@@ -264,18 +304,36 @@ export default class TableComponent extends React.Component {
   }
 
   actionTemplate (props) {
-    const deleteRow = s => {
-      console.log(props)
-      let newTableData = this.props.dataList;
-      let flag;
-      this.props.dataList.forEach((row, key) => {
-        if (isEqual(row, props)) {
-          flag = key
-        }
-      })
-      newTableData.splice(flag, 1)
+    const deleteRow = async s => {
       this.setState({
-        tableData: newTableData
+        isLoading: true
+      })
+
+      await Axios.delete(
+        `http://rmp-product-lb-756577841.us-east-1.elb.amazonaws.com/rawmaterial/deleterawmaterial`,
+        {
+          data: { 
+            id_list: [
+              props.id
+            ]
+          }
+        }
+
+      ).then(res => {
+        let newTableData = this.props.dataList;
+        let flag;
+        this.props.dataList.forEach((row, key) => {
+          if (isEqual(row, props)) {
+            flag = key
+          }
+        })
+        newTableData.splice(flag, 1)
+        this.setState({
+          isLoading: false,
+          tableData: newTableData
+        })
+      }).catch(err => {
+
       })
     }
 
@@ -359,15 +417,6 @@ export default class TableComponent extends React.Component {
                 ...columnProps,
                 editor: this.cellEditor
               }
-            }
-            if(this.props.broadColumns && this.props.broadColumns.indexOf(header) >= 0){
-              return (
-                <Column
-                  field={el.field}
-                  {...columnProps}
-                  style={{ width: '400px' }}
-                />
-              );
             }
             return (
               <Column
